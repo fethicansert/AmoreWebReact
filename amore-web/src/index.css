@@ -1,0 +1,155 @@
+@font-face {
+  font-family: "Ambit";
+  src: url('./assets/fonts/Ambit-Light.ttf');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ambit";
+  src: url('./assets/fonts/Ambit-Regular.ttf');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ambit";
+  src: url('./assets/fonts/Ambit-SemiBold.ttf');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ambit";
+  src: url('./assets/fonts/Ambit-Bold.ttf');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url('./assets/fonts/Euclid-Circular-A-Bold.ttf'), format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Background Colors */
+  --backGround1: #E649971A;
+  --backGround2: #F9F9F9;
+  --backGround3: #FFFFFF;
+  --backGround4: #412A78;
+
+  /* Brand Colors */
+  --brand1: #E64997;
+  --brand2: #DD88CF;
+
+  /* Icon Colors */
+  --icon: #18181C;
+  --menuIcon: #4B164C;
+  --fadedIcon: #B0B0B0;
+
+  /* Basic Colors */
+  --onlineColor: #1CE761;
+  --blue: #497BE6;
+  --negative: #D10B0B;
+  --negativeBlack: #343434;
+
+  /* Boder Colors */
+  --borderColor1: #EBE9E1;
+  --borderColor2: #252241;
+
+  /* Text Colors */
+  --darkText: #18181C;
+  --fadedText: #B0B0B0;
+  --lowFadedText: #747477;
+  --whiteText: #FFFFFF;
+  --lowWhiteText: #FFFFFF1A;
+
+  /* IpnutColors */
+  --input1: #F7F7F7;
+
+  /* Other Colors */
+  --lowPink: #DD88CF0F;
+  --lowGreen: #30CF6D0F;
+  --midBlack: #00000066;
+  --midwhite: #FFFFFF66;
+}
+
+body {
+  font-family: 'Ambit', sans-serif;
+  font-weight: 700;
+  overflow-x: hidden;
+}
+
+.basic-button {
+  border: none;
+  font-family: inherit;
+  font-weight: 600;
+  /* border-radius: 81px; */
+}
+
+.hero-section {
+  height: 100vh;
+  background: var(--backGround1);
+}
+
+header {
+  user-select: none;
+  max-width: 900px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+  border-radius: 81px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+header h1 {
+  font-size: 20px;
+  font-family: 'Euclid Circular A', sans-serif;
+  font-weight: 700;
+}
+
+header a {
+  text-decoration: none;
+  font-family: 'Ambit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+}
+
+.fixed-navbar {
+  position: absolute;
+  padding: .7rem;
+  top: 110%;
+  right: 1%;
+  transform: translateX(200%);
+  border-radius: 10px;
+  align-items: start;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 999;
+  animation: showNavBar 500ms ease forwards;
+}
+
+@keyframes showNavBar {
+  0% {
+    transform: translateX(200%);
+  }
+
+
+  100% {
+    transform: translateX(0%);
+  }
+}
