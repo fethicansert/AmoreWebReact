@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 @font-face {
   font-family: "Ambit";
   src: url('./assets/fonts/Ambit-Light.ttf');
@@ -45,6 +47,7 @@
   --backGround2: #F9F9F9;
   --backGround3: #FFFFFF;
   --backGround4: #412A78;
+  --backGround5: #E05775;
 
   /* Brand Colors */
   --brand1: #E64997;
@@ -82,24 +85,55 @@
   --midwhite: #FFFFFF66;
 }
 
+
+
+.div {
+  background-color: red;
+  width: 50%;
+  height: 30px;
+}
+
+/* common syles */
+
+header a,
+.basic-button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+
 body {
   font-family: 'Ambit', sans-serif;
-  font-weight: 700;
+  font-weight: 400;
   overflow-x: hidden;
 }
 
+/* Component Styles */
 .basic-button {
   border: none;
   font-family: inherit;
   font-weight: 600;
-  /* border-radius: 81px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+
+  &:hover {
+    opacity: .8;
+  }
+
+  &:active {
+    opacity: .8;
+  }
 }
 
-.hero-section {
-  height: 100vh;
-  background: var(--backGround1);
+.padding-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+/* GENERAL STYLES */
 header {
   user-select: none;
   max-width: 900px;
@@ -121,11 +155,7 @@ header h1 {
 
 header a {
   text-decoration: none;
-  font-family: 'Ambit', sans-serif;
   font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-
 }
 
 .fixed-navbar {
@@ -133,23 +163,15 @@ header a {
   padding: .7rem;
   top: 110%;
   right: 1%;
-  transform: translateX(200%);
   border-radius: 10px;
   align-items: start;
   display: flex;
   flex-direction: column;
   gap: 8px;
   z-index: 999;
-  animation: showNavBar 500ms ease forwards;
+  transition: transform 450ms ease;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
 }
 
-@keyframes showNavBar {
-  0% {
-    transform: translateX(200%);
-  }
 
-
-  100% {
-    transform: translateX(0%);
-  }
-}
+/* ANIMATIONS */

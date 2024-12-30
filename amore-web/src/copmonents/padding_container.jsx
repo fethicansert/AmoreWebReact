@@ -1,8 +1,8 @@
 import React from 'react'
 
-const PaddingContainer = ({ children, top = 0, right = 0, bottom = 0, left = 0 }) => {
+const PaddingContainer = ({ children, className, top = '0px', right = '0px', bottom = '0px', left = '0px', height = 'fit-content' }) => {
     return (
-        <div style={{ padding: `${top} ${right} ${bottom} ${left}` }}>
+        <div className={`padding-container ${className ? className : ''}`} style={{ padding: `${top} ${right} ${bottom} ${left}`, height }}>
             {children}
         </div>
     )

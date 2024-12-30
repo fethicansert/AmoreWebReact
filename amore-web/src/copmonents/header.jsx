@@ -1,17 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import FlexBox from './flex_box'
 import { Link } from 'react-router-dom'
+import FlexBox from './flex_box'
 import BasicButton from './basic_button'
 import colors from '../theme/colors'
 import { useMediaPredicate } from "react-media-hook";
-import { FiMenu } from "react-icons/fi";
-import { CgMenuRight } from "react-icons/cg";
 import { TbMenu2 } from "react-icons/tb";
 
 
-
 const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor, menuIconColor, borderColor }) => {
-
 
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
@@ -23,7 +19,6 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
             setShowNav(false);
         }
     }, [hideButtons])
-
 
 
     return (
@@ -68,13 +63,16 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
             {/* if burger menu clicked  and buttons are not showed thans render fixed nav*/}
 
             {
-                !hideButtons && <TbMenu2 onClick={() => setShowNav(prev => !prev)} color={menuIconColor} size={30} />
+                !hideButtons && <TbMenu2 onClick={() => setShowNav(prev => !prev)} color={menuIconColor} size={30} style={{ cursor: 'pointer' }} />
             }
 
 
             {/* if burger menu clicked  and buttons are not showed thans render fixed nav*/}
+
             {
-                (showNav && !hideButtons) && <div className='fixed-navbar' style={{ backgroundColor: backgroundColor }}>
+                !hideButtons && <div
+                    className='fixed-navbar'
+                    style={{ backgroundColor: backgroundColor, transform: `translateX(${showNav && !hideButtons ? '0' : '200'}%)` }}>
 
                     <Link style={{ color: colors.whiteText, backgroundColor: colors.brand2, width: '100%', padding: '.6rem', borderRadius: '4px' }} to={'/about'}>Oturum Aç</Link>
 
@@ -86,7 +84,6 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
 
                 </div>
             }
-
 
         </header>
     )

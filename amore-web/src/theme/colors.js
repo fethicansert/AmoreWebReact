@@ -19,7 +19,12 @@ const colors = {
 
     /* Boder Colors */
     borderColor1: "EBE9E1",
-    borderColor2: "#252241"
+    borderColor2: "#252241",
+
+
+    //Black
+
+    darkButton: "#18181C",
 }
 
 

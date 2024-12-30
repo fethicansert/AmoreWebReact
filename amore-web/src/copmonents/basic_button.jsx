@@ -1,9 +1,12 @@
 import React from 'react'
 
-const BasicButton = ({ children, backgroundColor, color, borderRadius, width, height }) => {
+const BasicButton = ({ children, fontSize, backgroundColor, color, borderRadius, width, height, gap, onClick }) => {
 
     return (
-        <button className='basic-button' style={{ width, height, backgroundColor, color, borderRadius }}>
+        <button
+            onClick={onClick}
+            className='basic-button'
+            style={{ width, height, backgroundColor, color, borderRadius, gap: gap, fontSize }}>
             {children}
         </button>
     )

@@ -1,0 +1,104 @@
+.info-section {
+    text-align: center;
+}
+
+.info-title {
+    color: var(--darkText);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 5vw, 1.7rem)
+}
+
+.info-title span {
+    color: var(--brand1);
+}
+
+.avatar-carousel-wrapper {
+    margin-top: 2rem;
+    overflow-x: hidden;
+}
+
+.avatar-carousel {
+    display: flex;
+    justify-content: space-between;
+    overflow-x: scroll;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 .3rem;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.avatar-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.avatar-carousel {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.avatar {
+    height: clamp(147px, 14vw, 180px);
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.avatar-image {
+    width: clamp(105px, 10vw, 130px);
+    height: clamp(105px, 10vw, 130px);
+    border-radius: 50%;
+    background-color: var(--brand1);
+    position: relative;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.avatar-image img {
+    width: 99%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.avatar span {
+    color: var(--darkText);
+}
+
+.info-container {
+    max-width: 1300px;
+    color: var(--darkText);
+    margin: 0 auto;
+}
+
+
+.info-text {
+    font-weight: 400;
+    font-size: clamp(34px, 4.5vw, 50px);
+}
+
+.info-text span {
+    font-weight: 700;
+    color: var(--brand1);
+}
+
+.info-container p {
+    margin: clamp(1rem, 2vw, 2.3rem) 0 clamp(1.8rem, 2vw, 2.3rem) 0;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-size: clamp(13.5px, 1.2vw, 16px);
+}
+
+.info-container button {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-size: .9rem;
+}
+
+.info-container img {
+    width: 76%;
+}
