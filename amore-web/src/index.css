@@ -109,6 +109,7 @@ body {
 }
 
 /* Component Styles */
+.blur-button,
 .basic-button {
   border: none;
   font-family: inherit;
@@ -116,6 +117,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
 
   &:hover {
@@ -126,6 +128,7 @@ body {
     opacity: .8;
   }
 }
+
 
 .padding-container {
   height: 100%;

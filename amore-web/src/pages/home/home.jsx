@@ -5,6 +5,7 @@ import Hero from './sections/hero';
 import Info from './sections/info';
 import InfoImages from './sections/info_images';
 import Introduction from './sections/introduction';
+import Footer from './sections/footer';
 
 const Home = () => {
     return (
@@ -13,6 +14,7 @@ const Home = () => {
             <Info />
             <InfoImages />
             <Introduction />
+            <Footer />
         </div>
     )
 }

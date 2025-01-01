@@ -1,8 +1,8 @@
 import React from 'react'
 
-const FlexBox = ({ children, alignItems = 'center', flexDirection = 'row', justifyContent, gap, width, margin }) => {
+const FlexBox = ({ children, className = '', alignItems = 'center', flexDirection = 'row', justifyContent, gap, width, margin }) => {
     return (
-        <div style={{ display: 'flex', flexDirection, alignItems: alignItems, justifyContent: justifyContent, gap: gap, width: width, margin, }}>
+        <div className={className} style={{ display: 'flex', flexDirection, alignItems: alignItems, justifyContent: justifyContent, gap: gap, width: width, margin, }}>
             {children}
         </div>
     )

@@ -15,7 +15,7 @@ const InfoImages = () => {
     const flexRow = useMediaPredicate("(min-width: 820px)");
 
     return (
-        <div className='info-images-section'>
+        <section className='info-images-section'>
             <PaddingContainer className={'info-images-container'} top='50px' bottom='50px' left='25px' right='25px'>
                 <h2 style={{ textAlign: flexRow ? 'start' : 'center' }}>
                     Tamamen gerçek insanlarla{flexRow ? <br /> : null} sohbet et
@@ -24,7 +24,7 @@ const InfoImages = () => {
                     {[image1, image2, image3].map(image => <InfoImageBox imgSrc={image} />)}
                 </FlexBox>
             </PaddingContainer>
-        </div>
+        </section>
     )
 }
 

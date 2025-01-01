@@ -9,6 +9,7 @@ import { useMediaPredicate } from "react-media-hook";
 import appleLogoWhite from '../../../assets/icons/apple_logo_white.png';
 import googleLogo from '../../../assets/icons/google_logo.png';
 import phoneImage from '../../../assets/images/phone1.png'
+
 import HeroBox from '../hero_box';
 import BasicButton from '../../../copmonents/basic_button';
 
