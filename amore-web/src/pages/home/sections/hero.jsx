@@ -31,7 +31,7 @@ const Hero = () => {
 
     return (
         <section className='hero-section'>
-            <PaddingContainer right={'10px'} left={'10px'} top={'25px'} height={'100%'}>
+            <PaddingContainer right={'10px'} left={'10px'} top={'clamp(15px,5vw,25px)'} height={'100%'}>
 
                 <Header
                     title={'Amore'}

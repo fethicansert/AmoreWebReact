@@ -22,7 +22,7 @@ const Footer = () => {
             style={{
                 height: !columnButtons ? '19vw' : 'unset',
                 minHeight: !columnButtons ? '185px' : 'unset',
-                maxHeight: !columnButtons ? '258px' : 'unset',
+                maxHeight: !columnButtons ? '255px' : 'unset',
                 marginTop: hideImage ? '0' : '10rem'
             }}>
             <div
@@ -43,7 +43,7 @@ const Footer = () => {
                 <div className='footer-buttons-grid'
                     style={{
                         marginTop: columnButtons ? '1rem' : '0',
-                        gap: columnButtons ? '15px' : '0',
+                        gap: columnButtons ? '13px' : '0',
                         gridTemplateColumns: !columnButtons ? 'repeat(3,auto)' : 'repeat(2,1fr)',
                         width: !hideImage ? '50%' : !columnButtons ? '65%' : '100%',
                         justifyContent: hideImage ? 'space-evenly' : 'space-between',
