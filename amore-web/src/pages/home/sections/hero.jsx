@@ -34,6 +34,8 @@ const Hero = () => {
             <PaddingContainer right={'10px'} left={'10px'} top={'clamp(15px,5vw,25px)'} height={'100%'}>
 
                 <Header
+
+                    hasShadow={true}
                     title={'Amore'}
                     titleColor={colors.brand1}
                     icon={amoreIcon}

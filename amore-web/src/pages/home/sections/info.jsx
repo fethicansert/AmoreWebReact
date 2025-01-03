@@ -14,6 +14,8 @@ import BasicButton from '../../../copmonents/basic_button';
 import colors from '../../../theme/colors';
 import { useMediaPredicate } from "react-media-hook";
 import phoneImage from '../../../assets/images/image3.png'
+import { v4 as uuidv4 } from 'uuid';
+
 
 const Info = () => {
 
@@ -29,9 +31,9 @@ const Info = () => {
             </PaddingContainer>
 
 
-            <div classaName='avatar-carousel-wrapper'>
+            <div className='avatar-carousel-wrapper'>
                 <div className='avatar-carousel'>
-                    {userImages.map((user, index) => <AvatarContainer name={userNames[index]} image={[userImages[index]]} />)}
+                    {userImages.map((user, index) => <AvatarContainer key={uuidv4()} name={userNames[index]} image={[userImages[index]]} />)}
                 </div>
             </div>
 

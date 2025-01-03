@@ -129,7 +129,6 @@ body {
   }
 }
 
-
 .padding-container {
   height: 100%;
   display: flex;
@@ -147,7 +146,6 @@ header {
   width: 80%;
   margin: 0 auto;
   border-radius: 81px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 header h1 {
@@ -173,7 +171,7 @@ header a {
   gap: 8px;
   z-index: 9999;
   transition: transform 450ms ease;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 

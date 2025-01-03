@@ -5,10 +5,10 @@ import BasicButton from './basic_button'
 import colors from '../theme/colors'
 import { useMediaPredicate } from "react-media-hook";
 import { TbMenu2 } from "react-icons/tb";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 
-const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor, menuIconColor, borderColor }) => {
+const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor, menuIconColor, borderColor, hasShadow, hasBorder }) => {
 
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
@@ -16,20 +16,21 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
 
     const navigate = useNavigate();
 
-
     useEffect(() => {
         if (hideButtons) {
             setShowNav(false);
         }
     }, [hideButtons])
 
-    const navigateRegister = (path) => {
-        navigate(path);
-    }
 
 
     return (
-        <header style={{ backgroundColor: backgroundColor, padding: !hideButtons ? '12px 17px' : '9px 17px' }}>
+        <header style={{
+            backgroundColor: backgroundColor,
+            padding: !hideButtons ? '12px 17px' : '9px 17px',
+            boxShadow: hasShadow ? '1px 1px 3px rgba(0, 0, 0, 0.2)' : null,
+            border: hasBorder ? 'solid 1.5px var(--borderColor1)' : null
+        }}>
 
             <FlexBox gap={'10px'}>
                 <img src={icon} width={iconWidth}></img>

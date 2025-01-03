@@ -11,22 +11,21 @@
     flex: 1;
     margin: 0 auto;
     width: 95%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: relative;
 }
 
 .register-container {
     width: 100%;
     max-width: 400px;
-    border: 1px solid var(--borderColor1);
-    border-radius: 12px;
+    /* border: 1px solid var(--borderColor1); */
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem 1.5rem;
-    /* box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); */
-
+    padding: 1.5rem;
+    position: absolute;
+    left: 50%;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .register-back-button {
@@ -37,6 +36,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+    transition: scale 200ms ease;
+
+
+    &:active {
+        scale: 1.1;
+    }
 }
 
 .register-position-wrapper {
@@ -48,33 +54,35 @@
 
 .register-position {
     height: 100%;
+    transition: width 350ms ease;
     background: var(--brand1);
     border-radius: 5px;
 }
 
 .position-count {
     font-weight: 600;
-    font-size: .9rem;
+    font-size: clamp(.8rem, 3vw, .9rem);
 }
 
 .register-name {
-    margin-top: 1.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
 
-.register-name h3 {
+.register-container h3 {
+    align-self: self-start;
+    margin-top: 1.5rem;
     font-weight: 600;
     font-size: clamp(14px, 3.5vw, 16px);
     color: var(--darkText);
 }
 
-.register-name-input-wrapper {
+.register-input-wrapper {
     margin-top: .5rem;
     width: 100%;
-    height: clamp(43px, 11.5vw, 52px);
+    height: clamp(54px, 11vw, 56px);
     padding: 0 .7rem;
     border-radius: 12px;
     border: 1px solid var(--borderColor1);
@@ -86,6 +94,9 @@
 .register-name-input {
     border: none;
     outline: none;
+    width: 100%;
+    color: var(--darkText);
+    font-size: 1rem;
 }
 
 .register-name-input:focus {
@@ -94,14 +105,64 @@
 }
 
 .register-name-input::placeholder {
-    font-size: inherit;
+    font-family: inherit;
     color: var(--fadedText);
-    font-size: clamp(.77rem, 2.1vw, .82rem);
+    font-size: clamp(.8rem, 2.1vw, .9rem);
 }
 
-.register-name p {
-    margin: 1.5rem 0;
+.register-info-text {
+    align-self: self-start;
+    margin: 1rem 0 1.5rem 0;
     color: var(--lowFadedText);
     font-weight: 300;
     font-size: clamp(12px, 3.7vw, 15px);
+}
+
+.input-user-icon {
+    width: 3vw;
+    height: 3.1vw;
+    min-width: 21px;
+    min-height: 22px;
+    max-width: 24.5px;
+    max-height: 25.5px;
+}
+
+.register-error-text {
+    margin-bottom: 1.5rem;
+    color: var(--negative);
+}
+
+.register-birth-date {
+    align-items: center;
+    display: flex;
+    gap: 0 8px;
+    height: 80px;
+}
+
+.register-birth-date input {
+    width: 33%;
+    height: clamp(55px, 14.5vw, 65px);
+    border: 1px solid var(--borderColor1);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--darkText);
+}
+
+.register-birth-date input::placeholder {
+    font-weight: 600;
+    color: var(--fadedText);
+    font-size: .9rem;
+}
+
+/* Chrome, Safari, Edge, Opera */
+.register-birth-date input::-webkit-outer-spin-button,
+.register-birth-date input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.register-birth-date input[type=number] {
+    -moz-appearance: textfield;
 }

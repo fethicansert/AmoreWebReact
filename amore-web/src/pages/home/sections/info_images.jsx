@@ -8,6 +8,7 @@ import FlexBox from '../../../copmonents/flex_box';
 
 import { useMediaPredicate } from "react-media-hook";
 import InfoImageBox from '../info_image_box';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const InfoImages = () => {
@@ -21,7 +22,7 @@ const InfoImages = () => {
                     Tamamen gerçek insanlarla{flexRow ? <br /> : null} sohbet et
                 </h2>
                 <FlexBox gap={'17.5px'} margin={'2rem 0 0 0'} flexDirection={`${flexRow ? 'row' : 'column'}`}>
-                    {[image1, image2, image3].map(image => <InfoImageBox imgSrc={image} />)}
+                    {[image1, image2, image3].map(image => <InfoImageBox key={uuidv4()} imgSrc={image} />)}
                 </FlexBox>
             </PaddingContainer>
         </section>

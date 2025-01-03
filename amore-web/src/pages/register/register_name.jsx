@@ -1,18 +1,24 @@
 import React from 'react'
 import { UserIcon } from '../../assets/svg/svg_package'
 
-const RegisterName = () => {
+const TEXT_REGEX = /^[A-Za-z_ ]+$/;
+const RegisterName = ({ username, setUsername }) => {
+
+    const handleUsernameValidation = (e) => {
+        if (TEXT_REGEX.test(e.target.value) || e.target.value === '')
+            setUsername(e.target.value)
+    }
     return (
         <div className='register-name'>
-            <h3>İsmin ne ?</h3>
-            <div className='register-name-input-wrapper'>
-                <UserIcon width={21} height={22} />
-                <input className='register-name-input' type='text' placeholder='İsim Yazın' />
-
+            <div className='register-input-wrapper'>
+                <UserIcon className={'input-user-icon'} />
+                <input
+                    value={username}
+                    onChange={(e) => handleUsernameValidation(e)}
+                    className='register-name-input'
+                    type='text'
+                    placeholder='İsim Yazın' />
             </div>
-            <p className='register-name-text'>
-                Takma adın gerçekten harika olabilir, ancak seni doğru şekilde tanımlayabilmemiz için gerçek adına ihtiyacımız var.
-            </p>
         </div>
     )
 }
