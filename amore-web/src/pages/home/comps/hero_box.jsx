@@ -1,5 +1,5 @@
 import React from 'react';
-import gropUsers from '../../assets/images/group_users.png';
+import gropUsers from '../../../assets/images/group_users.png';
 
 const HeroBox = ({ children, width, height, backgroundColor, showPhotos, rotate, xPosition, justifyContent = 'center', alignItems = 'center' }) => {
     return (

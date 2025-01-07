@@ -1,7 +1,7 @@
 import React from 'react'
 import PaddingContainer from '../../../copmonents/padding_container';
 import Header from '../../../copmonents/header';
-import colors from '../../../theme/colors';
+import { colors } from '../../../theme/theme';
 import amoreIcon from '../../../assets/icons/amore_icon.png';
 
 import FlexBox from '../../../copmonents/flex_box';
@@ -10,7 +10,7 @@ import appleLogoWhite from '../../../assets/icons/apple_logo_white.png';
 import googleLogo from '../../../assets/icons/google_logo.png';
 import phoneImage from '../../../assets/images/phone1.png'
 
-import HeroBox from '../hero_box';
+import HeroBox from '../comps/hero_box';
 import BasicButton from '../../../copmonents/basic_button';
 
 import '../../../css/home/hero_section.css';

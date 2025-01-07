@@ -54,7 +54,7 @@
     border-radius: 50%;
     background-color: var(--brand1);
     position: relative;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--lowShadow);
 }
 
 .avatar-image img {
@@ -74,7 +74,6 @@
     color: var(--darkText);
     margin: 0 auto;
 }
-
 
 .info-text {
     font-weight: 400;

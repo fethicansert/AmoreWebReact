@@ -7,7 +7,7 @@ import image3 from '../../../assets/images/3.png';
 import FlexBox from '../../../copmonents/flex_box';
 
 import { useMediaPredicate } from "react-media-hook";
-import InfoImageBox from '../info_image_box';
+import InfoImageBox from '../comps/info_image_box';
 import { v4 as uuidv4 } from 'uuid';
 
 

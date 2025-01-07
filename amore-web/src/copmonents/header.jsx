@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FlexBox from './flex_box'
 import BasicButton from './basic_button'
-import colors from '../theme/colors'
+import { colors } from '../theme/theme'
 import { useMediaPredicate } from "react-media-hook";
 import { TbMenu2 } from "react-icons/tb";
 import { useNavigate } from 'react-router-dom';
@@ -23,12 +23,11 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
     }, [hideButtons])
 
 
-
     return (
         <header style={{
             backgroundColor: backgroundColor,
             padding: !hideButtons ? '12px 17px' : '9px 17px',
-            boxShadow: hasShadow ? '1px 1px 3px rgba(0, 0, 0, 0.2)' : null,
+            boxShadow: hasShadow ? '.5px .5px 3px rgba(0, 0, 0, 0.15)' : null,
             border: hasBorder ? 'solid 1.5px var(--borderColor1)' : null
         }}>
 

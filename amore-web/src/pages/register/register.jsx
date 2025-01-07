@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useRef } from 'react';
+import { useMediaPredicate } from "react-media-hook";
 import FlexBox from '../../copmonents/flex_box';
 import Header from '../../copmonents/header';
 
 import amoreIcon from '../../assets/icons/amore_icon.png';
 import '../../css/register/register.css'
-import colors from '../../theme/colors';
+import { colors } from '../../theme/theme';
 import BasicButton from '../../copmonents/basic_button';
 
 import { ArrowLeftIcon } from '../../assets/svg/svg_package';
 import PaddingContainer from '../../copmonents/padding_container';
-import RegisterName from './register_name';
+import RegisterName from './sections/register_name';
 
-import { useMediaPredicate } from "react-media-hook";
-import RegisterBirthDate from './register_birth_date';
-import RegisterGender from './register_gender';
+import RegisterBirthDate from './sections/register_birth_date';
+import RegisterGender from './sections/register_gender';
+import RegisterHobbies from './sections/register_hobbies';
+import useScroll from '../../hooks/use_scroll';
+import RegisterUserPhotos from './sections/register_user_photos';
+
+
+
 
 const titles = ['İsmin ne ?', 'Doğum tarihin ne?', 'Cinsiyetiniz Nedir?', 'İlgi Alanlarınız Nedir?', 'Fotoğraf Yükle', 'Nerde Yaşıyorsun?'];
 const infos = [
@@ -24,54 +30,100 @@ const infos = [
     '',
     '',
     'Bulunduğunuz ülke ve şehri seçerek size en uygun deneyimi sunmamıza yardımcı olun.'];
+
 const startPosition = 16.7;
-
-
 const DAY_REGEX = /(0[1-9]|[12]\d|3[01])/;
+const NUMBER_REGEX = /^$|^(?:-(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))|(?:0|(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))))(?:.\d+|)$/;
+
+
 const Register = () => {
 
     const [username, setUsername] = useState('');
     const [day, setDay] = useState('');
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
+    const [gender, setGender] = useState('male');
+    const [selectedHobbies, setSelectedHobbies] = useState([]);
 
-    const [currentPageIndex, setCurrentPageIndex] = useState(0);
+    const [showPreviewImage, setShowPreviewImage] = useState(false);
+
+    /////
+
+
+    const [currentPageIndex, setCurrentPageIndex] = useState(4);
+
     const [error, setError] = useState('');
-    const centerContainer = useMediaPredicate("(min-width: 550px)");
 
+    const scroll = useScroll();
+
+
+    const [userImages, setUserImages] = useState([]);
+
+
+    useEffect(() => {
+        scroll({ top: 0 })
+    }, [currentPageIndex])
+
+    useEffect(() => {
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
+    }, []);
+
+
+    // userImages.forEach((e, index) => console.log(e));
+
+
+
+    const handleImageChange = async (e, index) => {
+
+
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            let file = e.target.files[0];
+            reader.onloadend = () => {
+
+
+                setUserImages(prev => [...prev, reader.result]);
+            }
+            reader.readAsDataURL(file);
+        }
+    }
 
     const getPosition = () => {
         let calculatedPosition = startPosition * (currentPageIndex + 1);
         if (calculatedPosition > 100) calculatedPosition = 100;
         return calculatedPosition;
-    }
+    };
 
     const navigateForward = () => {
         if (checkError()) return;
-
         if (currentPageIndex === 5) return;
         setCurrentPageIndex(currentPageIndex + 1);
         setError('');
-    }
+    };
 
-    const navigateBack = () => {
-        if (currentPageIndex === 0) return;
-        setCurrentPageIndex(currentPageIndex - 1);
-    }
+
 
     const checkError = () => {
         let error = false;
         if (currentPageIndex === 0) {
             if (!username) {
-                setError('Lütfen isiminizi yazınız');
+                setError('Devam etmek için ismini yazmalısın !');
                 error = true;
             } else if (username.length < 3) {
-                setError('İsminiz en az üç harf içermelidir');
+                setError('İsmin en az üç harf içermelidir !');
                 error = true;
             }
         } else if (currentPageIndex === 1) {
             if (!day || !month || !year) {
-                setError('Lütfen doğum tarihinizi giriniz');
+                setError('Lütfen boşluklara doğum tarihini gir !');
+                error = true;
+            } else if (!NUMBER_REGEX.test(day + month + year)) {
+                setError('Lütfen geçerli bir tarih gir !');
+                error = true;
+            }
+        } else if (currentPageIndex === 3) {
+            if (selectedHobbies.length < 3) {
+                setError('En az üç hobi seçmelisin !');
                 error = true;
             }
         }
@@ -79,17 +131,12 @@ const Register = () => {
         return error;
     }
 
-
-    useEffect(() => {
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFFFF');
-    }, [])
-
-
-
     const getCurrentSection = () => {
         switch (currentPageIndex) {
             case 0:
-                return <RegisterName username={username} setUsername={setUsername} />
+                return <RegisterName
+                    username={username}
+                    setUsername={setUsername} />
             case 1:
                 return <RegisterBirthDate
                     day={day}
@@ -99,11 +146,18 @@ const Register = () => {
                     year={year}
                     setYear={setYear} />
             case 2:
-                return <RegisterGender />
+                return <RegisterGender
+                    gender={gender}
+                    setGender={setGender} />
             case 3:
-                return <p>Hello 4</p>
+                return <RegisterHobbies
+                    selectedHobbies={selectedHobbies}
+                    setSelectedHobbies={setSelectedHobbies} />
             case 4:
-                return <p>Hello 5</p>
+                return <RegisterUserPhotos
+                    userImages={userImages}
+                    handleImageChange={handleImageChange}
+                    setShowPreviewImage={setShowPreviewImage} />
             case 5:
                 return <p>Hello 6</p>
 
@@ -116,6 +170,7 @@ const Register = () => {
         <div className='register'>
             <Header
                 hasShadow={true}
+                hasBorder={false}
                 backgroundColor={colors.backGround3}
                 title={'Amore'}
                 titleColor={colors.brand1}
@@ -127,11 +182,7 @@ const Register = () => {
 
             <div className='register-wrapper'>
                 <div
-                    className='register-container'
-                    style={{
-                        transform: centerContainer ? 'translate(-50%,-50%)' : 'translateX(-50%)',
-                        top: centerContainer ? '50%' : '10%'
-                    }}>
+                    className='register-container'>
                     <FlexBox justifyContent={'space-between'} width={'100%'} gap={'0 15px'}>
                         <div className='register-back-button' onClick={() => navigateBack()}>
                             <ArrowLeftIcon />
@@ -144,7 +195,9 @@ const Register = () => {
                         </FlexBox>
                     </FlexBox>
 
-                    <h3>{titles[currentPageIndex]}</h3>
+
+
+                    <h2 style={{ alignSelf: (currentPageIndex === 3 || currentPageIndex === 4) ? 'center' : 'flex-start' }}>{titles[currentPageIndex]}</h2>
 
                     <PaddingContainer top='10px' bottom='10px'>
                         {getCurrentSection()}
@@ -156,10 +209,10 @@ const Register = () => {
                         </p>
                     }
 
-
                     {error && <span className='register-error-text'>{error}</span>}
 
                     <BasicButton
+                        type='submit'
                         fontSize={'.85rem'}
                         onClick={() => navigateForward()}
                         width={'100%'}
@@ -171,9 +224,23 @@ const Register = () => {
                     </BasicButton>
                 </div>
             </div>
+
+
+            {showPreviewImage && <div className='resgister-user-image-preview' onClick={() => setShowPreviewImage(prev => !prev)}>
+                <img src={userImages[0]} />
+            </div>}
         </div>
     )
+
+
+    function navigateBack() {
+        if (currentPageIndex === 0) return;
+        setCurrentPageIndex(currentPageIndex - 1);
+        setError('');
+    };
 }
+
+
 
 export default Register
 

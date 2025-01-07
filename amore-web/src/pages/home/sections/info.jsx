@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../../css/home/info_section.css'
 import PaddingContainer from '../../../copmonents/padding_container';
-import AvatarContainer from '../avatar_container';
+import AvatarContainer from '../comps/avatar_container';
 import user1 from '../../../assets/images/avatar1.png'
 import user2 from '../../../assets/images/avatar2.png'
 import user3 from '../../../assets/images/avatar3.png'
@@ -11,7 +11,7 @@ import user6 from '../../../assets/images/avatar6.png'
 import user7 from '../../../assets/images/avatar7.png'
 import FlexBox from '../../../copmonents/flex_box';
 import BasicButton from '../../../copmonents/basic_button';
-import colors from '../../../theme/colors';
+import { colors } from '../../../theme/theme';
 import { useMediaPredicate } from "react-media-hook";
 import phoneImage from '../../../assets/images/image3.png'
 import { v4 as uuidv4 } from 'uuid';

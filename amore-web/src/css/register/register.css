@@ -1,31 +1,51 @@
 .register {
-    overflow: hidden;
-    padding-top: 25px;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    padding-top: clamp(15px, 5vw, 25px);
+    min-height: 100vh;
+    padding: clamp(15px, 5vw, 18px) 0;
+    background: var(--backGround2);
+    position: relative;
+}
+
+.resgister-user-image-preview {
+    height: 80%;
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    /* background: red; */
+}
+
+.resgister-user-image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .register-wrapper {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
     margin: 0 auto;
-    width: 95%;
+    width: 90%;
     position: relative;
+    margin-top: 1rem;
 }
 
 .register-container {
     width: 100%;
-    max-width: 400px;
-    /* border: 1px solid var(--borderColor1); */
+    max-width: 430px;
+    background: var(--backGround3);
+    box-shadow: var(--extraLowShadow);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1.5rem;
-    position: absolute;
-    left: 50%;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    padding: 1.3rem;
+    transition: height 500ms ease;
 }
 
 .register-back-button {
@@ -38,7 +58,6 @@
     justify-content: center;
     cursor: pointer;
     transition: scale 200ms ease;
-
 
     &:active {
         scale: 1.1;
@@ -71,21 +90,19 @@
     justify-content: flex-start;
 }
 
-.register-container h3 {
-    align-self: self-start;
+.register-container h2 {
     margin-top: 1.5rem;
     font-weight: 600;
-    font-size: clamp(14px, 3.5vw, 16px);
+    font-size: 1.031rem;
     color: var(--darkText);
 }
 
 .register-input-wrapper {
     margin-top: .5rem;
     width: 100%;
-    height: clamp(54px, 11vw, 56px);
+    height: clamp(50px, 11.2vw, 56px);
     padding: 0 .7rem;
     border-radius: 12px;
-    border: 1px solid var(--borderColor1);
     display: flex;
     align-items: center;
     gap: 0 5px;
@@ -93,14 +110,12 @@
 
 .register-name-input {
     border: none;
-    outline: none;
     width: 100%;
     color: var(--darkText);
     font-size: 1rem;
 }
 
 .register-name-input:focus {
-    border: none;
     outline: none;
 }
 
@@ -149,6 +164,12 @@
     color: var(--darkText);
 }
 
+
+.register-birth-date input:focus {
+    outline: 1px solid var(--brand1);
+    border: none;
+}
+
 .register-birth-date input::placeholder {
     font-weight: 600;
     color: var(--fadedText);
@@ -165,4 +186,171 @@
 /* Firefox */
 .register-birth-date input[type=number] {
     -moz-appearance: textfield;
+}
+
+.register-gender-radio {
+    font-size: clamp(.8rem, 2vw, .95rem)
+}
+
+.register-hobbies {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px 7px;
+}
+
+.hobbie-check-box {
+    width: fit-content;
+    padding: 0 clamp(.75rem, 1.9vw, 1rem);
+    height: 45px;
+    display: flex;
+    gap: 0 4px;
+    align-items: center;
+    border-radius: 15px;
+    font-size: clamp(.8rem, 2vw, .85rem);
+    cursor: pointer;
+}
+
+.hobbie-check-box span:nth-last-child(2) {
+    font-size: clamp(.85rem, 2.1vw, .9rem);
+}
+
+.register-user-photos {
+    margin: 1rem 0;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.register-user-photo,
+.register-user-photo-avatar {
+    border: 1px solid var(--borderColor1);
+    position: relative;
+}
+
+.register-user-photo-avatar {
+    width: clamp(105px, 17vw, 120px);
+    height: clamp(105px, 17vw, 120px);
+    border-radius: 50%;
+    background-color: var(--backGround2);
+    display: flex;
+    align-items: center;
+}
+
+.register-user-photo-avatar img {
+    width: 100%;
+    height: 100%;
+    clip-path: circle(50% at 50% 50%);
+    display: block;
+    object-fit: cover;
+}
+
+.input-file {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    border-radius: 50%;
+
+    &:active {
+        background-color: var(--brand1);
+    }
+}
+
+.image-add-icon {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.register-container h3 {
+    margin-top: .85rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.register-photo-group {
+    margin-block: 2.5rem .5rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 7px;
+    /* height: 300px; */
+}
+
+.register-user-photo {
+    width: clamp(95px, 10vw, 105px);
+    height: clamp(92px, 9.9vw, 102px);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.register-user-photo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.user-image-change-icon,
+.user-image-show-icon,
+.user-image-remove-icon {
+    cursor: pointer;
+}
+
+.register-user-photos-options {
+    position: absolute;
+    right: -23%;
+
+    display: flex;
+    height: 85%;
+    width: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    animation: slide_image_options 200ms ease forwards;
+}
+
+
+
+
+@media (min-width: 320px) {
+    .register-wrapper {
+        margin-top: 2rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .register-wrapper {
+        align-items: center;
+    }
+
+    .register-photo-group {
+        gap: 13px 10px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .register-wrapper {
+        margin-top: 0;
+    }
+}
+
+
+@keyframes slide_image_options {
+    0% {
+        opacity: 0;
+        transform: translate(15%)
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(0%);
+    }
 }

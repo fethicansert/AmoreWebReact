@@ -1,14 +1,12 @@
-const colors = {
+export const colors = {
 
     backGround1: "#E649971A",
     backGround2: "#F9F9F9",
     backGround3: "#FFFFFF",
     backGround4: "#412A78",
 
-
     brand1: "#E64997",
     brand2: "#DD88CF",
-
 
     darkText: "#18181C",
     fadedText: "#B0B0B0",
@@ -16,17 +14,25 @@ const colors = {
     whiteText: "#FFFFFF",
     lowWhiteText: "#FFFFFF1A",
 
-
     /* Boder Colors */
-    borderColor1: "EBE9E1",
+    borderColor1: "#EBE9E1",
     borderColor2: "#252241",
 
-
     //Black
-
     darkButton: "#18181C",
+
+
+    /* Basic Colors */
+    onlineColor: "#1CE761",
+    blue: "#497BE6",
+    negative: "#D10B0B",
+    negativeBlack: "#343434"
+
+}
+
+const shadows = {
+    lowShadow: '1px 1px 3px black'
 }
 
 
 
-export default colors;

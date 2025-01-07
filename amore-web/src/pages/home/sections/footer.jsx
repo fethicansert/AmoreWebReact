@@ -5,10 +5,8 @@ import '../../../css/home/footer.css';
 
 import FlexBox from '../../../copmonents/flex_box';
 
-import groupPhonesCutted from '../../../assets/images/group_phones_cutted.png';
-import groupPhones from '../../../assets/images/group_phones.png';
 import phones from '../../../assets/images/phones.png';
-import BlurButton from '../blur_button';
+import BlurButton from '../comps/blur_button';
 import appleLogo from '../../../assets/icons/app_store_logo.png';
 import googleLogo from '../../../assets/icons/google_logo_white.png';
 import amoreLogo from '../../../assets/icons/amore_icon.png';

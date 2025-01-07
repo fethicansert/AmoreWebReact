@@ -83,24 +83,20 @@
   --lowGreen: #30CF6D0F;
   --midBlack: #00000066;
   --midwhite: #FFFFFF66;
+
+  /* Shadows */
+  --extraLowShadow: .5px .5px 3px rgba(0, 0, 0, 0.15);
+  --lowShadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  --lowMidShadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
+  --midShadow: 1px 1px 3px rgba(0, 0, 0, 0.45);
 }
 
-
-
-.div {
-  background-color: red;
-  width: 50%;
-  height: 30px;
-}
-
-/* common syles */
 
 header a,
 .basic-button {
   cursor: pointer;
   font-weight: 600;
 }
-
 
 body {
   font-family: 'Ambit', sans-serif;
@@ -118,11 +114,8 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: var(--extraLowShadow);
 
-  &:hover {
-    opacity: .8;
-  }
 
   &:active {
     opacity: .8;
@@ -171,8 +164,24 @@ header a {
   gap: 8px;
   z-index: 9999;
   transition: transform 450ms ease;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--lowShadow)
 }
 
 
 /* ANIMATIONS */
+
+
+
+
+@media (min-width: 500px) {
+
+  .blur-button,
+  .basic-button {
+
+
+    &:hover {
+      opacity: .8;
+    }
+
+  }
+}
