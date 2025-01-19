@@ -1,87 +1,72 @@
 
+import { useTranslation } from 'react-i18next';
 import useScroll from '../../../hooks/use_scroll';
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
+import { colors, shadows } from '../../../utils/theme';
+import BasicButton from '../../../copmonents/basic_button';
+import { IoIosCloseCircleOutline } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
+
+
 const NUMBER_REGEX = /^$|^(?:-(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))|(?:0|(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))))(?:.\d+|)$/;
 
-const RegisterBirthDate = ({ day, setDay, month, setMonth, year, setYear }) => {
+const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }) => {
+
+  const date = selectedDate ? new Date(selectedDate) : null;
+
+  const dateObj = date ? {
+    day: String(date.getDate()).padStart(2, '0'),
+    month: String(date.getMonth() + 1).padStart(2, '0'),
+    year: date.getFullYear()
+  } : null;
 
   const scroll = useScroll();
 
-  const handleDayValidation = (e) => {
-    const value = e.target.value;
+  const { t, i18n } = useTranslation();
 
-    if (value === '' || (NUMBER_REGEX.test(value) && value.length <= 2)) {
-      let parsedValue = parseInt(value);
-
-      if (parsedValue > 31) parsedValue = 31;
-      else if (parsedValue <= 0) parsedValue = 1;
-
-      setDay(parsedValue || '');
-    }
+  const handleShowDate = () => {
+    setShowDatePicker(true);
   }
 
-  const handleMonthValidation = (e) => {
-    const value = e.target.value;
-
-    if (value === '' || (NUMBER_REGEX.test(value) && value.length <= 2)) {
-      let parsedValue = parseInt(value);
-
-      if (parsedValue > 12) parsedValue = 12;
-      else if (parsedValue <= 0) parsedValue = 1;
-
-      setMonth(parsedValue || '');
-    }
-  }
-
-  const handleYearValidation = (e) => {
-    const value = e.target.value;
-
-    if (value === '' || (NUMBER_REGEX.test(value) && value.length <= 4)) {
-      const currentYear = new Date().getFullYear();
-      let parsedValue = parseInt(value);
-
-      if (parsedValue > currentYear || parsedValue > currentYear - 18 || parsedValue <= 0) {
-        parsedValue = currentYear - 18;
-      }
-
-      setYear(parsedValue || '');
-    }
-  }
 
   return (
-    <div className='register-birth-date'>
+    <div className='register-birth-date' onClick={handleShowDate}>
 
-      <input
-        type='number'
-        placeholder='GG'
-        value={day}
-        onBlur={() => {
-          if (parseInt(day) < 10) {
-            setDay(`0${day}`);
-          }
-          scroll({ top: 0 });
-        }}
-        onFocus={() => setDay('')}
-        onChange={(e) => handleDayValidation(e)}
-      />
+      <div className={`register-date-wrapper ${showDatePicker ? 'active' : null}`}>
+        <IoIosClose className='date-close-button' size={24} style={{ cursor: 'pointer' }} onClick={() => setShowDatePicker(false)} />
+        <DayPicker
+          onDayClick={(day, m) => setTimeout(() => setShowDatePicker(false), 100)}
+          required
+          role='application'
+          selected={selectedDate}
+          hideNavigation={true}
+          onSelect={setSelectedDate}
+          captionLayout='dropdown'
+          id='register-date'
+          mode='single'
+        />
+      </div>
 
-      <input
-        type='number'
-        placeholder='AA'
-        value={month}
-        onBlur={() => { if (parseInt(month) < 10) setMonth(`0${month}`); scroll({ top: 0 }); }}
-        onFocus={() => setMonth('')}
-        onChange={(e) => handleMonthValidation(e)} />
 
-      <input
-        type='number'
-        placeholder='YYYY'
-        value={year}
-        onBlur={() => {
-          if (year.toString().length < 4) setYear(``); scroll({ top: 0 })
-        }}
-        onFocus={() => setYear('')}
-        onChange={(e) => handleYearValidation(e)}
-      />
+      <div className='date-box'>
+        <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
+          {selectedDate !== undefined ? dateObj.day : t('register.birthDate.dayPlaceholder')}
+        </span>
+      </div>
+
+      <div className='date-box'>
+        <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
+          {selectedDate !== undefined ? dateObj.month : t('register.birthDate.monthPlaceholder')}
+        </span>
+      </div>
+
+
+      <div className='date-box'>
+        <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
+          {selectedDate !== undefined ? dateObj.year : t('register.birthDate.yearPlaceholder')}
+        </span>
+      </div>
 
     </div>
   )

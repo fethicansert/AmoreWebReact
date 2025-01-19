@@ -1,7 +1,8 @@
 
-import { Route, Routes } from 'react-router-dom'
-import Home from './pages/home/home'
-import Register from './pages/register/register'
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/home/home';
+import Register from './pages/register/register';
+import './localization/i18n_localization';
 
 function App() {
   return (
@@ -9,10 +10,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path='/register' element={<Register />}></Route>
     </Routes>
-
-
-
-  )
+  );
 }
 
 export default App

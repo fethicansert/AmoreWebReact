@@ -1,7 +1,7 @@
 import React from 'react'
 import PaddingContainer from '../../../copmonents/padding_container';
 import Header from '../../../copmonents/header';
-import { colors } from '../../../theme/theme';
+import { colors } from '../../../utils/theme';
 import amoreIcon from '../../../assets/icons/amore_icon.png';
 
 import FlexBox from '../../../copmonents/flex_box';
@@ -14,7 +14,8 @@ import HeroBox from '../comps/hero_box';
 import BasicButton from '../../../copmonents/basic_button';
 
 import '../../../css/home/hero_section.css';
-const Hero = () => {
+import { useTranslation } from 'react-i18next';
+const Hero = ({ showLogin, setShowLogin }) => {
 
     const alignHeaders = useMediaPredicate("(min-width: 380px)");
     const smallButtonText = useMediaPredicate("(min-width: 1000px)");
@@ -29,12 +30,13 @@ const Hero = () => {
         window.open(link, "_blank");
     };
 
+    const { t, i18n } = useTranslation();
+
     return (
         <section className='hero-section'>
-            <PaddingContainer right={'10px'} left={'10px'} top={'clamp(15px,5vw,25px)'} height={'100%'}>
+            <PaddingContainer right={'10px'} left={'10px'} top={'clamp(15px,5vw,25px)'} bottom={'clamp(15px,5vw,25px)'} height='100%'>
 
                 <Header
-
                     hasShadow={true}
                     title={'Amore'}
                     titleColor={colors.brand1}
@@ -43,13 +45,14 @@ const Hero = () => {
                     backgroundColor={colors.backGround4}
                     textColor={colors.whiteText}
                     menuIconColor={colors.backGround2}
+                    languageIconColor={colors.whiteText}
                 />
 
                 <div className='hero-container'>
 
-                    <h2 style={{ alignSelf: startPosition }}>Tadı Damağında Kalacak</h2>
+                    <h2 style={{ alignSelf: startPosition }}>{t('home.hero.title')}</h2>
 
-                    <h3 style={{ alignSelf: startPosition }}>Sohbet Et ve Flörtleş</h3>
+                    <h3 style={{ alignSelf: startPosition }}>{t('home.hero.subTitle')}</h3>
 
                     <FlexBox gap={'10px'} width={'100%'} justifyContent={startPosition} margin={'2rem 0 2.5rem 0'}>
 
@@ -98,8 +101,8 @@ const Hero = () => {
                                     rotate={'-6.64deg'}
                                     justifyContent='space-between'
                                     alignItems='flex-start'>
-                                    <p className='hero-box-bold-big'>Sadece gerçek <br /> insanlar</p>
-                                    <p className='hero-box-semi-small'>Amore’da sahte profillere yer yok.</p>
+                                    <p className='hero-box-bold-big'>{t('home.hero.boxLeft.text')}</p>
+                                    <p className='hero-box-semi-small'>{t('home.hero.boxLeft.subText')}</p>
                                 </HeroBox>
 
                                 <HeroBox
@@ -109,8 +112,8 @@ const Hero = () => {
                                     backgroundColor={colors.brand1}
                                     xPosition={'108%'}
                                     rotate={'6.38deg'}>
-                                    <p className='hero-box-medium'>Tanış, Konuş, Görüş</p>
-                                    <p className='hero-box-bold-small'>Aşka açılan kapı</p>
+                                    <p className='hero-box-medium'>{t('home.hero.boxRight.text')}</p>
+                                    <p className='hero-box-bold-small'>{t('home.hero.boxRight.subText')}</p>
                                 </HeroBox></>
                         }
 

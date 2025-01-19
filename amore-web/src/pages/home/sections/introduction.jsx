@@ -7,6 +7,7 @@ import image1 from '../../../assets/images/image_1.png';
 import image2 from '../../../assets/images/image_2.png';
 import image3 from '../../../assets/images/image_3.png';
 import { useMediaPredicate } from "react-media-hook";
+import { useTranslation } from 'react-i18next';
 
 
 const Introduction = () => {
@@ -15,6 +16,8 @@ const Introduction = () => {
     const midPadding = useMediaPredicate("(max-width: 500px)");
 
     const indicators = () => (<div className="indicator"></div>);
+
+    const { t, i18n } = useTranslation();
 
 
     const responsiveSettings = [
@@ -37,10 +40,10 @@ const Introduction = () => {
     return (
         <section className='introduction-section'>
             <PaddingContainer top={midPadding ? '70px' : '100px'} bottom={midPadding ? '70px' : '100px'} left='10px' right='10px'>
-                <h2>Diğer Dating’lerden Farklıyız<br></br><span>Çünkü</span></h2>
+                <h2>{t('home.introduction.title')}<br></br><span>{t('home.introduction.subTitle')}</span></h2>
 
                 <p>
-                    Amore, sadece eşleşmeleri değil, anlamlı ve uzun soluklu ilişkiler kurmayı hedefler. Kullanıcı dostu tasarımı, güvenli ortamı ve samimi topluluğu ile burada aradığınız sevgi ve dostluğu bulmanız için her şey hazır!
+                    {t('home.introduction.text')}
                 </p>
 
                 <Slide

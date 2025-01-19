@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-const BlurButton = ({ children, icon, iconWidth, textSmall, textBig, style }) => {
+const FooterButton = ({ children, icon, iconWidth, textSmall, textBig, style }) => {
 
 
     return (
@@ -13,4 +13,4 @@ const BlurButton = ({ children, icon, iconWidth, textSmall, textBig, style }) =>
     )
 }
 
-export default BlurButton
+export default FooterButton;

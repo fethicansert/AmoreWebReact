@@ -1,5 +1,6 @@
 .register {
     overflow-x: hidden;
+    overflow-y: hidden;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -8,20 +9,95 @@
     position: relative;
 }
 
+.register-date-wrapper {
+
+    position: absolute;
+    left: 50%;
+    top: 110px;
+    transform: translateX(-50%) translateY(100vh);
+    /* box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); */
+    border: 1.7px solid #e64997d1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: .5rem .8rem;
+
+    background: var(--backGround3);
+
+    z-index: 999;
+    border-radius: 12px;
+    position: absolute;
+
+    transition: transform 350ms ease;
+    transform-origin: right;
+
+
+    max-width: 395px;
+    width: 92%;
+}
+
+.register-date-wrapper.active {
+    transform: translateX(-50%) translateY(0%);
+}
+
+#register-date {
+    --rdp-accent-color: var(--brand1);
+    --rdp-day_button-border-radius: 12px;
+    --rdp-selected-border: 1.5px solid var(--brand1);
+    --rdp-day_button-height: clamp(32px, 7.5vw, 47px);
+    --rdp-day_button-width: clamp(32px, 7vw, 47px);
+    --rdp-today-color: var(--darkText);
+    font-size: 1rem;
+    color: var(--brand1);
+}
+
+.rdp-caption_label {
+    font-weight: 600;
+}
+
 .resgister-user-image-preview {
-    height: 80%;
+    height: fit-content;
     width: 80%;
+    max-width: 480px;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    /* background: red; */
+
+    padding: .4rem;
+    border-radius: 8px;
+    z-index: 2;
+    background: var(--backGround2);
+    box-shadow: var(--LowShadow)
 }
 
 .resgister-user-image-preview img {
     width: 100%;
-    height: 100%;
+    display: block;
     object-fit: contain;
+    border-radius: 8px;
+}
+
+.register-preview-button-icon {
+    margin-right: .2rem;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms ease;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 1;
+}
+
+.overlay.active {
+    visibility: visible;
+    opacity: 1;
 }
 
 .register-wrapper {
@@ -29,10 +105,9 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin: 0 auto;
+    margin: 1rem auto;
     width: 90%;
     position: relative;
-    margin-top: 1rem;
 }
 
 .register-container {
@@ -46,6 +121,8 @@
     align-items: center;
     padding: 1.3rem;
     transition: height 500ms ease;
+
+    position: relative;
 }
 
 .register-back-button {
@@ -100,9 +177,9 @@
 .register-input-wrapper {
     margin-top: .5rem;
     width: 100%;
-    height: clamp(50px, 11.2vw, 56px);
+    height: clamp(50px, 11.2vw, 58px);
     padding: 0 .7rem;
-    border-radius: 12px;
+    border-radius: 12.5px;
     display: flex;
     align-items: center;
     gap: 0 5px;
@@ -127,7 +204,7 @@
 
 .register-info-text {
     align-self: self-start;
-    margin: 1rem 0 1.5rem 0;
+    margin: .5rem 0 1.5rem 0;
     color: var(--lowFadedText);
     font-weight: 300;
     font-size: clamp(12px, 3.7vw, 15px);
@@ -145,46 +222,44 @@
 .register-error-text {
     margin-bottom: 1.5rem;
     color: var(--negative);
+    text-align: center;
+    font-size: .9rem;
 }
 
 .register-birth-date {
+    margin: 1rem 0;
     align-items: center;
+    justify-content: center;
     display: flex;
     gap: 0 8px;
     height: 80px;
 }
 
-.register-birth-date input {
-    width: 33%;
-    height: clamp(55px, 14.5vw, 65px);
+.register-birth-date:active .date-box {
+    border: 1px solid var(--brand1);
+    cursor: pointer;
+}
+
+.date-box {
     border: 1px solid var(--borderColor1);
     border-radius: 12px;
-    text-align: center;
-    font-size: 1rem;
-    color: var(--darkText);
-}
-
-
-.register-birth-date input:focus {
-    outline: 1px solid var(--brand1);
-    border: none;
-}
-
-.register-birth-date input::placeholder {
-    font-weight: 600;
-    color: var(--fadedText);
-    font-size: .9rem;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Chrome, Safari, Edge, Opera */
-.register-birth-date input::-webkit-outer-spin-button,
-.register-birth-date input::-webkit-inner-spin-button {
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
 /* Firefox */
-.register-birth-date input[type=number] {
+input[type=number] {
+    appearance: textfield;
     -moz-appearance: textfield;
 }
 
@@ -217,7 +292,7 @@
 }
 
 .register-user-photos {
-    margin: 1rem 0;
+    margin-top: 1rem;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -236,6 +311,13 @@
     background-color: var(--backGround2);
     display: flex;
     align-items: center;
+
+    transition: transform 200ms ease;
+
+    &:hover {
+        transform: scale(1.03);
+        border: 1px solid var(--brand1);
+    }
 }
 
 .register-user-photo-avatar img {
@@ -244,6 +326,7 @@
     clip-path: circle(50% at 50% 50%);
     display: block;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .input-file {
@@ -254,7 +337,6 @@
     left: 0;
     opacity: 0;
     cursor: pointer;
-    border-radius: 50%;
 
     &:active {
         background-color: var(--brand1);
@@ -280,7 +362,6 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px 7px;
-    /* height: 300px; */
 }
 
 .register-user-photo {
@@ -288,6 +369,11 @@
     height: clamp(92px, 9.9vw, 102px);
     border-radius: 12px;
     overflow: hidden;
+    position: relative;
+
+    &:active {
+        border: 1px solid var(--brand1);
+    }
 }
 
 .register-user-photo img {
@@ -295,62 +381,211 @@
     height: 100%;
     display: block;
     object-fit: cover;
-}
-
-.user-image-change-icon,
-.user-image-show-icon,
-.user-image-remove-icon {
     cursor: pointer;
 }
 
-.register-user-photos-options {
-    position: absolute;
-    right: -23%;
-
-    display: flex;
-    height: 85%;
-    width: 10px;
-    flex-direction: column;
-    align-items: center;
+.register-location-dropdown {
+    border: 1px solid var(--borderColor1);
+    margin: 1rem auto .5rem auto;
     justify-content: space-between;
+    padding: 0 1rem;
+    position: relative;
 
-    animation: slide_image_options 200ms ease forwards;
+    cursor: pointer;
 }
 
+.register-location-dropdown.active {
+    border: .7px solid var(--brand1);
+    /* background: red; */
+}
 
+.arrow-down-icon {
+    cursor: pointer;
 
+    stroke: var(--darkText);
+
+    &:active {
+        stroke: var(--brand1);
+    }
+}
+
+.register-location-dropdown-list {
+    width: 100%;
+    max-height: 240px;
+    background: white;
+    position: absolute;
+    left: 0%;
+    bottom: -247px;
+    transition: scale 200ms ease;
+
+    border-radius: 12px;
+
+    border: .7px solid var(--brand1);
+    scale: 1 0;
+    visibility: hidden;
+    transform-origin: top;
+    z-index: 2;
+
+    overflow: scroll;
+    user-select: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.register-location-dropdown-list.active {
+    scale: 1 1;
+    visibility: visible;
+}
+
+.register-location-item {
+
+    padding: .9rem;
+
+    &:active {
+        background: #E64997;
+        color: white;
+    }
+}
+
+.register-verify {
+    margin: .5rem 0;
+}
+
+.verify-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0 clamp(7px, 1.8vw, 10px);
+    height: 19vw;
+    min-height: 60px;
+    max-height: 80px;
+}
+
+.verify-input-container {
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--borderColor1);
+
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    animation: otp_input_border 900ms ease 250ms forwards;
+}
+
+.verify-input-container input {
+    border: none;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 1.4rem;
+    color: var(--darkText);
+
+    cursor: pointer;
+}
+
+.register-verify-send-again-button {
+    cursor: pointer;
+    display: block;
+    font-size: .9rem;
+    color: var(--darkText);
+
+    display: flex;
+    align-items: center;
+    gap: 0 4px;
+
+    &:hover {
+        color: var(--brand1);
+    }
+}
+
+.verify-input-container input:hover {
+    outline: 1.8px solid var(--brand1);
+}
+
+.verify-input-container input:focus {
+    outline: 1.8px solid var(--brand1);
+}
+
+.date-close-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: .85rem;
+    color: var(--brand1);
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
 
 @media (min-width: 320px) {
     .register-wrapper {
-        margin-top: 2rem;
+        margin: 1.75rem auto 1rem auto;
     }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 550px) {
     .register-wrapper {
         align-items: center;
+        margin: 1rem auto
     }
+
+    .register-birth-date:hover .date-box {
+        border: 1.7px solid var(--brand1);
+        cursor: pointer;
+    }
+
+}
+
+@media (min-width: 768px) {
 
     .register-photo-group {
         gap: 13px 10px;
     }
+
+    .register {
+        padding: clamp(15px, 5vw, 18px) 0 0 0;
+    }
+
+    .register-location-item {
+        &:hover {
+            background: #E64997;
+            color: white;
+        }
+    }
+
+    .register-container {
+        padding: 1.5rem 1.8rem;
+    }
+
 }
 
 @media (min-width: 1024px) {
-    .register-wrapper {
-        margin-top: 0;
+
+    .register-user-photo {
+
+        &:hover {
+            border: 1px solid var(--brand1);
+        }
     }
 }
 
-
-@keyframes slide_image_options {
+/* ANIMATIONS */
+@keyframes otp_input_border {
     0% {
-        opacity: 0;
-        transform: translate(15%)
+        border: 1px solid var(--borderColor1);
+    }
+
+    50% {
+        border: 1.9px solid var(--brand1);
     }
 
     100% {
-        opacity: 1;
-        transform: translate(0%);
+        border: 1px solid var(--borderColor1);
     }
 }

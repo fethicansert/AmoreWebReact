@@ -1,27 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import FlexBox from './flex_box'
 import BasicButton from './basic_button'
-import { colors } from '../theme/theme'
+import { colors } from '../utils/theme'
 import { useMediaPredicate } from "react-media-hook";
 import { TbMenu2 } from "react-icons/tb";
-import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
+import { GrLanguage } from "react-icons/gr";
+import { useIPLocation } from '../hooks/use_ip_location'
+import { useLoginPopup } from '../hooks/use_login_popup'
 
-
-const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor, menuIconColor, borderColor, hasShadow, hasBorder }) => {
+const Header = ({
+    backgroundColor,
+    title,
+    titleColor,
+    icon,
+    iconWidth,
+    textColor,
+    menuIconColor,
+    hasShadow,
+    hasBorder,
+    languageIconColor }) => {
 
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
     const [showNav, setShowNav] = useState(false);
+    const { t, i18n } = useTranslation();
+    const { language, setLanguage } = useIPLocation();
 
     const navigate = useNavigate();
+
+    const { setShowLoginPopup } = useLoginPopup()
 
     useEffect(() => {
         if (hideButtons) {
             setShowNav(false);
         }
     }, [hideButtons])
-
 
     return (
         <header style={{
@@ -38,8 +53,8 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
 
             {
                 hideNavigation && <FlexBox gap={'25px'}>
-                    <Link style={{ color: textColor }} to={'/about'}>Amore Hakkında</Link>
-                    <Link style={{ color: textColor }} to={'/about'}>Amore Nedir ?</Link>
+                    <Link style={{ color: textColor }} to={'/about'}>{t('header.amoreLink1')}</Link>
+                    <Link style={{ color: textColor }} to={'/about'}>{t('header.amoreLink2')}</Link>
                 </FlexBox>
             }
 
@@ -47,26 +62,30 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
                 hideButtons && <FlexBox gap={'10px'}>
 
                     <BasicButton
-                        width={'125px'}
+                        fontSize={'.85rem'}
+                        onClick={() => setShowLoginPopup(true)}
+                        width={'145px'}
                         height={'48px'}
                         borderRadius={'81px'}
                         backgroundColor={colors.brand1}
                         color={colors.whiteText}>
-                        Oturum Aç
+                        {t('header.loginButton')}
                     </BasicButton>
 
-                    <BasicButton
-                        onClick={() => navigate('/register')}
-                        width={'125px'}
-                        height={'48px'}
-                        borderRadius={'81px'}
-                        backgroundColor={colors.brand2}
-                        color={colors.whiteText}>
-                        Kayıt Ol
-                    </BasicButton>
+
+                    <FlexBox
+                        style={{ cursor: 'pointer' }}
+                        gap='0 3.5px'
+                        alignItems='center'
+                        justifyContent='center'
+                        onClick={() => setLanguage(prev => prev === 'tr' ? 'en' : 'tr')}>
+                        <GrLanguage color={languageIconColor} size={22} />
+                        <span style={{ color: languageIconColor, fontSize: 14 }}>{language}</span>
+                    </FlexBox>
 
                 </FlexBox>
             }
+
 
             {/* if burger menu clicked  and buttons are not showed thans render fixed nav*/}
 
@@ -82,13 +101,18 @@ const Header = ({ backgroundColor, title, titleColor, icon, iconWidth, textColor
                     className='fixed-navbar'
                     style={{ backgroundColor: backgroundColor, transform: `translateX(${showNav && !hideButtons ? '0' : '200'}%)` }}>
 
-                    <Link style={{ color: colors.whiteText, backgroundColor: colors.brand2, width: '100%', padding: '.6rem', borderRadius: '4px' }} to={'/about'}>Oturum Aç</Link>
+                    <BasicButton
+                        onClick={() => {
+                            setShowLoginPopup(true);
+                            setShowNav(false);
+                        }}
+                        fontSize={'.8rem'}
+                        style={{ color: colors.whiteText, backgroundColor: colors.brand1, width: '100%', padding: '.6rem', borderRadius: '4px' }} >
+                        {t('header.loginButton')}</BasicButton>
 
-                    <Link style={{ color: colors.whiteText, marginTop: '4px', backgroundColor: colors.brand1, width: '100%', padding: '.6rem', borderRadius: '4px' }} to={'/register'}>Kayıt Ol</Link>
+                    <Link style={{ color: textColor, marginTop: '5px', textAlign: 'center', width: '100%' }} to={'/about'}>Amore Hakkında</Link>
 
-                    <Link style={{ color: textColor, marginTop: '5px' }} to={'/about'}>Amore Hakkında</Link>
-
-                    <Link style={{ color: textColor, marginTop: '5px' }} to={'/about'}>Amore Nedir ?</Link>
+                    <Link style={{ color: textColor, marginTop: '5px', textAlign: 'center', width: '100%' }} to={'/about'}>Amore Nedir ?</Link>
 
                 </div>
             }

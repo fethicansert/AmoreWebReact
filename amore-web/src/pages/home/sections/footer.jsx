@@ -6,14 +6,18 @@ import '../../../css/home/footer.css';
 import FlexBox from '../../../copmonents/flex_box';
 
 import phones from '../../../assets/images/phones.png';
-import BlurButton from '../comps/blur_button';
+import FotterButton from '../comps/footer_button';
 import appleLogo from '../../../assets/icons/app_store_logo.png';
 import googleLogo from '../../../assets/icons/google_logo_white.png';
 import amoreLogo from '../../../assets/icons/amore_icon.png';
+import { useTranslation } from 'react-i18next';
+import FooterButton from '../comps/footer_button';
 
 const Footer = () => {
     const hideImage = useMediaPredicate("(max-width: 1045px)");
     const columnButtons = useMediaPredicate("(max-width: 755px)");
+
+    const { t, i18n } = useTranslation();
 
     return (
         <footer className='footer-section'
@@ -41,20 +45,21 @@ const Footer = () => {
                 <div className='footer-buttons-grid'
                     style={{
                         marginTop: columnButtons ? '1rem' : '0',
-                        gap: columnButtons ? '13px' : '0',
-                        gridTemplateColumns: !columnButtons ? 'repeat(3,auto)' : 'repeat(2,1fr)',
+                        gap: columnButtons ? '13px' : '10px',
+                        gridTemplateColumns: !columnButtons ? 'auto repeat(2,1fr)' : 'repeat(2,1fr)',
                         width: !hideImage ? '50%' : !columnButtons ? '65%' : '100%',
                         justifyContent: hideImage ? 'space-evenly' : 'space-between',
                         alignItems: 'center'
                     }}>
 
                     {<p style={{ gridColumn: columnButtons ? '1/3' : 'unset', justifySelf: columnButtons ? 'center' : 'unset' }} className='footer-text'>
-                        Uygulamamızı
+                        {t('home.footer.text')}
                         {!columnButtons ? <br /> : ' '}
-                        <span>indirmediniz mi ?</span></p>}
+                        <span> {t('home.footer.subText')}</span></p>}
 
-                    <BlurButton style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={"Download On The"} textBig={'AppStore'} />
-                    <BlurButton icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={"Get It On"} textBig={'Play Store'} />
+
+                    <FooterButton style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={t('home.footer.appleButton')} textBig={'AppStore'} />
+                    <FooterButton icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={t('home.footer.googleButton')} textBig={'Play Store'} />
                 </div>
 
             </div>

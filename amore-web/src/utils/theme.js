@@ -30,8 +30,8 @@ export const colors = {
 
 }
 
-const shadows = {
-    lowShadow: '1px 1px 3px black'
+export const shadows = {
+    lowShadow: '1px 1px 3px rgba(0,0,0,0.25)'
 }
 
 

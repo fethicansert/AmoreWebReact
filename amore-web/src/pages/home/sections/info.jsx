@@ -11,29 +11,45 @@ import user6 from '../../../assets/images/avatar6.png'
 import user7 from '../../../assets/images/avatar7.png'
 import FlexBox from '../../../copmonents/flex_box';
 import BasicButton from '../../../copmonents/basic_button';
-import { colors } from '../../../theme/theme';
+import { colors } from '../../../utils/theme';
 import { useMediaPredicate } from "react-media-hook";
 import phoneImage from '../../../assets/images/image3.png'
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation, Trans } from 'react-i18next';
 
 
 const Info = () => {
 
-    const userImages = [user1, user2, user3, user4, user5, user6, user7]
-    const userNames = ['Ahsen', 'Burçin', 'Damla', 'Ayça', 'Aleyna', 'Ateş', 'Alev'];
+    const girls = [
+        { image: user1, name: "Ahsen" },
+        { image: user2, name: "Burçin" },
+        { image: user3, name: "Damla" },
+        { image: user4, name: "Ayça" },
+        { image: user5, name: "Aleyna" },
+        { image: user6, name: "Ateş" },
+        { image: user7, name: "Alev" }
+    ];
 
     const flexRow = useMediaPredicate("(min-width: 820px)");
+
+    const { t, i18n } = useTranslation();
 
     return (
         <section className='info-section'>
             <PaddingContainer top={`${flexRow ? '50' : '40'}px`} bottom='20px'>
-                <h2 className='info-title'>40.000’dan fazla <span>kullanıcı</span></h2>
+                <h2 className='info-title'>
+                    <Trans
+                        i18nKey={'home.info.title'}
+                        components={
+                            { pink: <span /> }
+                        }
+                    />
+                </h2>
             </PaddingContainer>
-
 
             <div className='avatar-carousel-wrapper'>
                 <div className='avatar-carousel'>
-                    {userImages.map((user, index) => <AvatarContainer key={uuidv4()} name={userNames[index]} image={[userImages[index]]} />)}
+                    {girls.map((user, index) => <AvatarContainer key={uuidv4()} name={girls[index].name} image={girls[index].image} />)}
                 </div>
             </div>
 
@@ -48,9 +64,15 @@ const Info = () => {
                     <FlexBox alignItems={`${flexRow ? 'flex-start' : 'center'}`} flexDirection='column' width={`${flexRow ? '50' : '95'}%`}>
 
                         <h2
-                            style={{ textAlign: flexRow ? 'start' : 'center' }} className='info-text'>Dating’den<span> Çooooook </span> <br />
-                            Daha Fazlası</h2>
-                        <p style={{ textAlign: flexRow ? 'start' : 'center' }}>Amore, sadece bir dating uygulaması değil; anlamlı ilişkiler, samimi sohbetler ve gerçek bağlar kurabileceğiniz özel bir platform. Yeni arkadaşlıklar keşfedin, sevginizi bulun ve hayatınıza değer katacak deneyimlere adım atın!</p>
+                            style={{ textAlign: flexRow ? 'start' : 'center' }} className='info-text'>
+                            <Trans
+                                i18nKey={'home.info.subTitle'}
+                                components={
+                                    { pink: <span /> }
+                                }
+                            />
+                        </h2>
+                        <p style={{ textAlign: flexRow ? 'start' : 'center' }}>{t('home.info.text')}</p>
 
                         <BasicButton
                             backgroundColor={colors.brand1}
@@ -58,7 +80,7 @@ const Info = () => {
                             width={`${flexRow ? '150px' : '100%'}`}
                             height={`${flexRow ? '47.5' : '52'}px`}
                             borderRadius={'25px'}>
-                            Hemen Kaydol
+                            {t('home.info.infoButton')}
                         </BasicButton>
 
                     </FlexBox>

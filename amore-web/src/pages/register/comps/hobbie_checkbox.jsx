@@ -1,11 +1,14 @@
-import { colors } from "../../../theme/theme";
+import { useTranslation } from "react-i18next";
+import { colors } from "../../../utils/theme";
 
 
-const HobbieCheckBox = ({ icon, text, value, isActive = false, addHobbie }) => {
+const HobbieCheckBox = ({ interest, isActive = false, addHobbie }) => {
+
+    const { t, i18n } = useTranslation();
 
     const handleClick = () =>
-        !isActive ? addHobbie(prev => [...prev, value])
-            : addHobbie(prev => prev.filter((hobbie) => hobbie !== value));
+        !isActive ? addHobbie(prev => [...prev, interest._id])
+            : addHobbie(prev => prev.filter((hobbie) => hobbie !== interest._id));
 
     return <div
         onClick={handleClick}
@@ -15,7 +18,7 @@ const HobbieCheckBox = ({ icon, text, value, isActive = false, addHobbie }) => {
             border: !isActive ? `1px solid ${colors.borderColor1}` : '1px solid transparent',
             color: isActive ? colors.whiteText : colors.darkText
         }}>
-        <span>{icon}</span><span>{text}</span>
+        <span>{interest.emoji}</span><span>{t(`register.interests.interestItems.${interest.name}`)}</span>
     </div>
 }
 

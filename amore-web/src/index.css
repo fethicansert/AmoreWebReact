@@ -116,6 +116,7 @@ body {
   cursor: pointer;
   box-shadow: var(--extraLowShadow);
 
+  position: relative;
 
   &:active {
     opacity: .8;
@@ -169,10 +170,6 @@ header a {
 
 
 /* ANIMATIONS */
-
-
-
-
 @media (min-width: 500px) {
 
   .blur-button,

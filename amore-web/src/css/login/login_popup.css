@@ -1,0 +1,73 @@
+.login-popup {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    animation: fadePopup 500ms ease forwards;
+    z-index: 999;
+}
+
+@keyframes fadePopup {
+    0% {
+        background: rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        background: rgba(0, 0, 0, 0.45);
+    }
+}
+
+.login-popup-container {
+    width: 75%;
+    border-radius: 12px;
+    border: 1px solid var(--borderColor1);
+    background: var(--brand2);
+    position: relative;
+    max-width: 340px;
+}
+
+.login-popup-container img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+    mix-blend-mode: luminosity;
+}
+
+.login-grain-texture {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: url('../../assets/images/login_grain.png');
+    background-blend-mode: hard-light;
+}
+
+.login {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 2rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: var(--whiteText);
+}
+
+.close-icon {
+    position: absolute;
+    z-index: 999;
+    right: 0;
+    top: 0;
+    transform: translate(10px, -10px);
+    cursor: pointer;
+}

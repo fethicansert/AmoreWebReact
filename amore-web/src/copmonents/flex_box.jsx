@@ -1,10 +1,23 @@
 import React from 'react'
 
-const FlexBox = ({ children, className = '', alignItems = 'center', flexDirection = 'row', justifyContent = 'unset', gap = 'unset', width, margin, flex }) => {
+const FlexBox = ({
+    style,
+    children,
+    className = '',
+    alignItems = 'center',
+    flexDirection = 'row',
+    justifyContent = 'unset',
+    gap = 'unset',
+    width,
+    margin,
+    flex,
+    onClick = null }) => {
     return (
         <div
+            onClick={onClick}
             className={className}
             style={{
+                ...style,
                 flex,
                 display: 'flex',
                 flexDirection,
