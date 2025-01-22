@@ -11,7 +11,9 @@ const OtpRegister = ({ phone, setPhone }) => {
 
     const { ipLocation } = useIPLocation();
 
-    const countryCode = ipLocation?.country?.countryCode ? ipLocation?.country?.countryCode.toLowerCase() : 'tr';
+    //IF ipLocatiob has no error use ipLocation Country Code OR 
+    //Use Device Language to select Country Flag and Code
+    const countryCode = ipLocation?.country?.countryCode?.toLowerCase() || navigator.language;
 
 
     return (

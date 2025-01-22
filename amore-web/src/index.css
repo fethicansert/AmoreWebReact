@@ -118,7 +118,7 @@ body {
   box-shadow: var(--extraLowShadow);
 
   position: relative;
-  z-index: 98;
+  /* z-index: 98; */
 
   &:active {
     opacity: .8;

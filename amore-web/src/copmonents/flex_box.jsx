@@ -6,8 +6,8 @@ const FlexBox = ({
     className = '',
     alignItems = 'center',
     flexDirection = 'row',
-    justifyContent = 'unset',
-    gap = 'unset',
+    justifyContent = '',
+    gap = '',
     width,
     height,
     margin,
@@ -18,8 +18,7 @@ const FlexBox = ({
             onClick={onClick}
             className={className}
             style={{
-                ...style,
-                flex,
+                flex: flex,
                 display: 'flex',
                 flexDirection,
                 alignItems: alignItems,
@@ -28,9 +27,12 @@ const FlexBox = ({
                 width: width,
                 height,
                 margin,
+                ...style,
             }}>
             {children}
         </div>
+
+
     )
 }
 

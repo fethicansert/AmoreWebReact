@@ -27,7 +27,7 @@ import { useIPLocation } from '../../hooks/use_ip_location';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
-import { createOtp, objectToFormData, login, isAdult } from '../../utils/functions';
+import { createOtp, objectToFormData, login, isAdult, scrollPage } from '../../utils/functions';
 import Lottie from "lottie-react";
 import amoreAnimation from "../../assets/lottie/amore-loading.json";
 import { useNavigate } from 'react-router-dom';
@@ -81,10 +81,6 @@ const Register = () => {
 
     const [selectedDate, setSelectedDate] = useState();
 
-    console.log(userImages);
-
-
-
     const [smsCode, setSmsCode] = useState({
         digit1: '',
         digit2: '',
@@ -107,7 +103,7 @@ const Register = () => {
     }, [ipLocation]);
 
     useEffect(() => {
-        scroll({ top: 0 })
+        scrollPage({ top: 0 })
     }, [currentPageIndex]);
 
     useEffect(() => {
@@ -278,9 +274,6 @@ const Register = () => {
     )
 
     //FUNCTIONS
-
-
-
     async function handleLogin() {
         const request = await login({
             phone: `+${phone}`,
@@ -292,7 +285,6 @@ const Register = () => {
 
         return request;
     };
-
 
     async function verifyOtp() {
         if (validateInputs()) return;
@@ -411,13 +403,7 @@ const Register = () => {
             formDataObject.append(`files`, file);
         });
 
-        for (const file of selectedFiles) {
-
-        }
-
-
         const formData = objectToFormData(body);
-        console.log(formData);
 
 
         try {

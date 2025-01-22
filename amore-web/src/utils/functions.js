@@ -104,8 +104,28 @@ export function objectToFormData(obj, formData = new FormData(), parentKey = '')
     return formData;
 };
 
+
+//CHEKCS if given date adult age
 export const isAdult = (birthDate) => {
     const today = new Date();
     const adultDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     return birthDate <= adultDate;
 }
+
+
+//SCROLL Page
+export const scrollPage = () => {
+    return ({
+        top,
+        left,
+        behavior = 'smooth'
+    }) => {
+        window.scrollTo({
+            top,
+            left,
+            behavior
+        });
+    }
+}
+
+

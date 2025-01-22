@@ -38,7 +38,7 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
 
         <DayPicker
           defaultMonth={new Date(1999, 0)}
-          onDayClick={(day, m) => setTimeout(() => setShowDatePicker(false), 100)}
+          onDayClick={(day, m) => setShowDatePicker(false)}
           required
           role='application'
           selected={selectedDate}
