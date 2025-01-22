@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BasicButton = ({ style = {}, children, fontSize, backgroundColor, color, borderRadius, width, height, gap, onClick, type = 'button', margin = '' }) => {
+const BasicButton = ({ style = {}, children, fontSize, backgroundColor, color = '#FFFFFF', borderRadius, width, height, gap, onClick, type = 'button', margin = '' }) => {
 
     return (
         <button

@@ -35,7 +35,9 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
 
       <div className={`register-date-wrapper ${showDatePicker ? 'active' : null}`}>
         <IoIosClose className='date-close-button' size={24} style={{ cursor: 'pointer' }} onClick={() => setShowDatePicker(false)} />
+
         <DayPicker
+          defaultMonth={new Date(1999, 0)}
           onDayClick={(day, m) => setTimeout(() => setShowDatePicker(false), 100)}
           required
           role='application'

@@ -1,4 +1,4 @@
 export const CONSTANTS = {
     title: "Amore",
-    appId: "67865d9fa29f57945c18ad9d"
+    appId: "6a3dbc21-7e77-4c8b-b9ea-885d2dc0407"
 }

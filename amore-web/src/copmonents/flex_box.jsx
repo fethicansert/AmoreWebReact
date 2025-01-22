@@ -9,6 +9,7 @@ const FlexBox = ({
     justifyContent = 'unset',
     gap = 'unset',
     width,
+    height,
     margin,
     flex,
     onClick = null }) => {
@@ -25,6 +26,7 @@ const FlexBox = ({
                 justifyContent: justifyContent,
                 gap: gap,
                 width: width,
+                height,
                 margin,
             }}>
             {children}

@@ -37,7 +37,7 @@ footer {
     text-align: start;
     color: var(--whiteText);
     font-weight: 600;
-    font-size: clamp(.9rem, 1.4vw, 1.423rem);
+    font-size: clamp(.9rem, 1.4vw, 1.323rem);
 }
 
 .footer-text span {

@@ -1,4 +1,4 @@
-import { axiosAmore } from "../api/axios"
+import { axiosAuth } from "../api/axios"
 
 
 export const createOtp = async ({
@@ -20,12 +20,15 @@ export const createOtp = async ({
     }
 
     try {
-        request.response = await axiosAmore.post('/otp/create', body);
+        request.response = await axiosAuth.post('/otp/create', body,);
         if (request.response?.status === 200) {
             request.status = request.response?.status
             request.otpId = request.response?.data?.data?.oneTimePasswordId;
         }
+
     } catch (e) {
+
+        console.log(e);
 
         request.status = request?.response?.status || 400
         request.error = e;
@@ -58,7 +61,10 @@ export const login = async ({ phone, otpId, otpCode, onStart,
         errorMessage: '',
     };
     try {
-        const response = await axiosAmore.post('user/login', body);
+        const response = await axiosAuth.post('user/login', body);
+        console.log(body);
+        console.log(response);
+
         if (response.status === 200) {
             request.response = response;
             request.status = response.status;
@@ -75,13 +81,31 @@ export const login = async ({ phone, otpId, otpCode, onStart,
     return request;
 }
 
-export function getFormData(obj) {
-    const formData = new FormData();
-
-    for (const key in obj) {
-        if (obj.hasOwnProperty(key)) {
-            formData.append(key, obj[key]);
+export function objectToFormData(obj, formData = new FormData(), parentKey = '') {
+    if (obj && typeof obj === 'object' && !(obj instanceof Date) && !(obj instanceof File)) {
+        // Eğer nesne bir dizi ise
+        if (Array.isArray(obj)) {
+            obj.forEach((value, index) => {
+                objectToFormData(value, formData, `${parentKey}[${index}]`);
+            });
+        } else {
+            // Eğer nesne bir nesne ise
+            Object.keys(obj).forEach(key => {
+                const value = obj[key];
+                const newKey = parentKey ? `${parentKey}.${key}` : key;
+                objectToFormData(value, formData, newKey);
+            });
         }
+    } else {
+        // Temel değerleri FormData'ya ekleyin
+        formData.append(parentKey, obj);
     }
+
     return formData;
+};
+
+export const isAdult = (birthDate) => {
+    const today = new Date();
+    const adultDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    return birthDate <= adultDate;
 }

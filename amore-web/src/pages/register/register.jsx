@@ -21,13 +21,13 @@ import { MdOutlineChangeCircle } from "react-icons/md";
 import { CgCloseO } from "react-icons/cg";
 import RegisterLocation from './sections/register_location';
 import { dummyLocationData } from '../../data/dummy_data';
-import { axiosAmore } from '../../api/axios';
+import { axiosAmore, axiosAuth } from '../../api/axios';
 import { useTranslation } from 'react-i18next';
 import { useIPLocation } from '../../hooks/use_ip_location';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
-import { createOtp, getFormData, login } from '../../utils/functions';
+import { createOtp, objectToFormData, login, isAdult } from '../../utils/functions';
 import Lottie from "lottie-react";
 import amoreAnimation from "../../assets/lottie/amore-loading.json";
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +43,7 @@ const Register = () => {
     //STATE AND HOOKS
     const { t, i18n } = useTranslation();
 
-    const [phone, setPhone] = useState('905555555555');
+    const [phone, setPhone] = useState('905555555552');
 
     const { ipLocation, language } = useIPLocation();
 
@@ -80,6 +80,9 @@ const Register = () => {
     const [isDataLoading, setIsDataLoading] = useState(false);
 
     const [selectedDate, setSelectedDate] = useState();
+
+    console.log(userImages);
+
 
 
     const [smsCode, setSmsCode] = useState({
@@ -287,9 +290,6 @@ const Register = () => {
             onFinally: () => setIsLoading(false),
         });
 
-        console.log(request);
-
-
         return request;
     };
 
@@ -304,21 +304,26 @@ const Register = () => {
         };
 
         try {
-            const response = await axiosAmore.post('/otp/verify', body);
-            //Eger code yanlış olsada response status 200 döndüğünden 
-            //Data içerisine girip ayrıca bir status almak gerekiyor !
+            const response = await axiosAuth.post('/otp/verify', body);
             const status = response.data.data.status;
+
             if (status === true) {
                 const loginReq = await handleLogin();
-                if (loginReq.status == 200) navigate('user');
+                console.log(loginReq);
+
+                if (loginReq.status == 200) navigate('/dashboard/user-home');
                 else navigateForward({ checkError: false });
             }
-            else if (status === false) setError("Code is Wrong !");
+            else if (status === false)
+                setError("Code is Wrong !");
 
         } catch (e) {
+
             const responsMessage = e?.response?.data?.response?.message;
             if (responsMessage === 'OTP_ALREADY_VERIFIED')
                 setError('Code already used !');
+            else if (responsMessage === 'OTP_TIMEOUT')
+                setError('Suresi gecti kazin !');
             else
                 setError('Something went wrong !');
         } finally {
@@ -382,14 +387,41 @@ const Register = () => {
             files: userImages,
         };
 
-        console.log(body);
+        const formDataObject = new FormData();
 
-        const formData = getFormData(body);
+        formDataObject.append('otpId', otpId.current);
+        formDataObject.append('otpCode', otpCode);
+        formDataObject.append('name', username);
+        formDataObject.append('phone', `+${phone}`);
+        formDataObject.append('isoCode', userLocation.countryCode);
+        formDataObject.append('country', userLocation.countryId);
+        formDataObject.append('city', userLocation.stateId);
+        formDataObject.append('birthday', birthday);
+        formDataObject.append('deviceType', deviveType);
+        formDataObject.append('language', language);
+        formDataObject.append('gender', gender);
+
+        // 'interests' dizisini ekleme
+        selectedHobbies.forEach((hobby, index) => {
+            formDataObject.append(`interests[${index}]`, hobby);
+        });
+
+        // 'files' dizisini ekleme
+        userImages.forEach((file, index) => {
+            formDataObject.append(`files`, file);
+        });
+
+        for (const file of selectedFiles) {
+
+        }
+
+
+        const formData = objectToFormData(body);
         console.log(formData);
 
 
         try {
-            const response = await axiosAmore.post('user/register', formData);
+            const response = await axiosAuth.post('user/register', formDataObject);
             console.log(response);
 
         } catch (e) {
@@ -568,6 +600,12 @@ const Register = () => {
             setError(t('register.birthDate.errorText'));
             return true;
         }
+
+        else if (!isAdult(new Date(selectedDate))) {
+            setError(t('TOO_YOUNG'));
+            return true;
+        }
+
         return false;
     }
 

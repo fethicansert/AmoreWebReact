@@ -392,6 +392,8 @@ input[type=number] {
     position: relative;
 
     cursor: pointer;
+
+    background-color: var(--backGround3);
 }
 
 .register-location-dropdown.active {
@@ -424,7 +426,7 @@ input[type=number] {
     scale: 1 0;
     visibility: hidden;
     transform-origin: top;
-    z-index: 2;
+    z-index: 999;
 
     overflow: scroll;
     user-select: none;
