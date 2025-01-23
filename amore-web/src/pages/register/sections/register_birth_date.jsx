@@ -1,15 +1,9 @@
-
 import { useTranslation } from 'react-i18next';
 import useScroll from '../../../hooks/use_scroll';
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-import { colors, shadows } from '../../../utils/theme';
-import BasicButton from '../../../copmonents/basic_button';
-import { IoIosCloseCircleOutline } from "react-icons/io";
+import { colors } from '../../../utils/theme';
 import { IoIosClose } from "react-icons/io";
-
-
-const NUMBER_REGEX = /^$|^(?:-(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))|(?:0|(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))))(?:.\d+|)$/;
 
 const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setShowDatePicker }) => {
 
@@ -33,23 +27,6 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
   return (
     <div className='register-birth-date' onClick={handleShowDate}>
 
-      <div className={`register-date-wrapper ${showDatePicker ? 'active' : null}`}>
-        <IoIosClose className='date-close-button' size={24} style={{ cursor: 'pointer' }} onClick={() => setShowDatePicker(false)} />
-
-        <DayPicker
-          defaultMonth={new Date(1999, 0)}
-          onDayClick={(day, m) => setShowDatePicker(false)}
-          required
-          role='application'
-          selected={selectedDate}
-          hideNavigation={true}
-          onSelect={setSelectedDate}
-          captionLayout='dropdown'
-          id='register-date'
-          mode='single'
-        />
-      </div>
-
 
       <div className='date-box'>
         <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
@@ -68,6 +45,25 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
         <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
           {selectedDate !== undefined ? dateObj.year : t('register.birthDate.yearPlaceholder')}
         </span>
+      </div>
+
+      <div className={`register-date-wrapper ${showDatePicker ? 'active' : null}`}>
+
+        <IoIosClose className='date-close-button' size={24} style={{ cursor: 'pointer' }} onClick={() => setShowDatePicker(false)} />
+
+        <DayPicker
+          defaultMonth={new Date(1999, 0)}
+          onDayClick={(day, m) => setShowDatePicker(false)}
+          required
+          role='application'
+          selected={selectedDate}
+          hideNavigation={true}
+          onSelect={setSelectedDate}
+          captionLayout='dropdown'
+          id='register-date'
+          mode='single'
+        />
+
       </div>
 
     </div>

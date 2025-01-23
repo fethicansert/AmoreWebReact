@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { UserIcon } from '../../../assets/svg/svg_package'
-import useScroll from '../../../hooks/use_scroll';
 import { colors } from '../../../utils/theme';
 import { useTranslation } from 'react-i18next';
+import { scrollPage } from '../../../utils/functions';
 
 
 const TEXT_REGEX = /^[A-Za-z_ ]+$/;
 const RegisterName = ({ username, setUsername }) => {
 
-    const scroll = useScroll();
     const { t, i18n } = useTranslation();
 
     const [usernameFocus, setUsernameFocus] = useState(false);
@@ -27,7 +26,7 @@ const RegisterName = ({ username, setUsername }) => {
                     value={username}
                     onFocus={() => setUsernameFocus(true)}
                     onBlur={() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                        scrollPage({ top: 0 })
                         setUsernameFocus(false);
                     }}
                     onChange={(e) => handleUsernameValidation(e)}

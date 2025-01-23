@@ -1,7 +1,8 @@
 .user-home {
     display: grid;
     grid-template-columns: auto 3fr 2fr;
-    gap: 0 .8rem;
+    gap: 0 clamp(.4rem, .8vw, .8rem);
+
 }
 
 .grid-item {

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react'
+import { scrollPage } from '../../../utils/functions';
 
 const OtpIpnut = ({ value, setValue, digit, isFocused }) => {
 
@@ -10,6 +11,7 @@ const OtpIpnut = ({ value, setValue, digit, isFocused }) => {
     return (
         <div className='verify-input-container' >
             <input
+                onBlur={() => scrollPage({ top: 0 })}
                 ref={inputRef}
                 type='number'
                 value={value}

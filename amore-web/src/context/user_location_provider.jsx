@@ -8,16 +8,16 @@ export const IPLocationProvider = ({ children }) => {
     const [ipLocation, setIpLocation] = useState({});
     const [language, setLanguage] = useState(navigator.language.slice(0, 2));
 
+    //IF ipLocattion has no ERROR use ipLocayion country code else Device language
     useEffect(() => {
-        i18n.changeLanguage(language);
-    }, [language]);
+        const currentLanguage = ipLocation?.country?.countryCode.toLowerCase() || language;
+        i18n.changeLanguage(currentLanguage);
+    }, [language, ipLocation]);
 
     useEffect(() => {
         const getIPLocation = async () => {
             try {
                 const response = await axiosAmore.get('api/ip');
-                // console.log(response);
-
                 setIpLocation(response.data.data);
             } catch (e) {
                 console.log(e);

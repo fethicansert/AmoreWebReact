@@ -14,11 +14,11 @@ const Logout = ({ closeLogout }) => {
                 </p>
 
                 <FlexBox gap='0 10px' margin={'1rem 0 0 0'}>
-                    <BasicButton onClick={closeLogout} borderRadius={10} width={'50%'} height={'45px'} backgroundColor={colors.darkButton} >
+                    <BasicButton borderRadius={10} width={'50%'} height={'45px'} backgroundColor={colors.darkButton} >
                         Çıkış Yap
                     </BasicButton>
 
-                    <BasicButton borderRadius={10} width={'50%'} height={'45px'} backgroundColor={colors.brand1}>
+                    <BasicButton onClick={closeLogout} borderRadius={10} width={'50%'} height={'45px'} backgroundColor={colors.brand1}>
                         Kapat
                     </BasicButton>
 

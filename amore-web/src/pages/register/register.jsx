@@ -31,6 +31,7 @@ import { createOtp, objectToFormData, login, isAdult, scrollPage } from '../../u
 import Lottie from "lottie-react";
 import amoreAnimation from "../../assets/lottie/amore-loading.json";
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../hooks/use_auth';
 
 const locationData = dummyLocationData;
 
@@ -93,6 +94,8 @@ const Register = () => {
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const navigate = useNavigate();
+
+    const { auth, setAuth } = useAuth();
 
     useEffect(() => {
         setError('');
@@ -230,43 +233,6 @@ const Register = () => {
 
                     </div>
 
-                    {
-                        previewImageIndex !== null && <div className='resgister-user-image-preview'>
-                            <img src={userImages[previewImageIndex]} onClick={() => setPreviewImageIndex(null)} />
-                            <FlexBox margin={'.4rem 0 0 0'} width={'100%'} gap='0 7px'>
-
-                                <BasicButton
-                                    onClick={() => handleDeleteImage(previewImageIndex)}
-                                    fontSize={'12px'}
-                                    color={colors.whiteText}
-                                    height={'40px'} width={'50%'}
-                                    backgroundColor={colors.brand1}
-                                    borderRadius={4}>
-                                    <CgCloseO className='register-preview-button-icon' size={20} />
-                                    Kaldır
-                                </BasicButton>
-
-                                <BasicButton
-                                    fontSize={'13px'}
-                                    color={colors.whiteText}
-                                    height={'40px'}
-                                    width={'50%'}
-                                    backgroundColor={colors.brand2}
-                                    borderRadius={4}>
-                                    <MdOutlineChangeCircle className='register-preview-button-icon' size={21} />
-                                    Değiştir
-                                    <input
-                                        className='input-file'
-                                        type='file'
-                                        accept="image/*"
-                                        onChange={(e) => handleImageUpdate(e, previewImageIndex)} />
-                                </BasicButton>
-                            </FlexBox>
-                        </div>
-                    }
-
-                    <div className={`overlay ${previewImageIndex !== null ? 'active' : null}`}>
-                    </div>
                 </>
             }
 
@@ -299,11 +265,17 @@ const Register = () => {
             const response = await axiosAuth.post('/otp/verify', body);
             const status = response.data.data.status;
 
+            console.log(status);
+
+
             if (status === true) {
                 const loginReq = await handleLogin();
                 console.log(loginReq);
 
-                if (loginReq.status == 200) navigate('/dashboard/user-home');
+                if (loginReq.status == 200) {
+                    navigate('/dashboard/user-home');
+                    setAuth(loginReq.data);
+                }
                 else navigateForward({ checkError: false });
             }
             else if (status === false)
@@ -453,9 +425,9 @@ const Register = () => {
                     setSelectedHobbies={setSelectedHobbies} />;
             case 6:
                 return <RegisterUserPhotos
+                    handleDeleteImage={handleDeleteImage}
                     userImages={userImages}
                     handleImageChange={handleImageChange}
-                    handleImageUpdate={handleImageUpdate}
                     setPreviewImageIndex={setPreviewImageIndex} />;
             case 7:
                 return <RegisterLocation
@@ -468,30 +440,10 @@ const Register = () => {
         }
     }
 
-    //Update already uploaded user image-photo section
-    function handleImageUpdate(e, index) {
-        if (e.target.files && e.target.files[0]) {
-            let reader = new FileReader();
-            let file = e.target.files[0];
-            reader.onloadend = function () {
-                const updatedImages = userImages.map(function (image, i) {
-                    if (index === i) {
-                        image = reader.result;
-                    }
-                    return image;
-                });
-                setUserImages(updatedImages);
-            };
-            reader.readAsDataURL(file);
-        }
-
-        setPreviewImageIndex(null);
-    }
-
     //Delete uploaded image
     function handleDeleteImage(index) {
-        const updateImages = userImages.filter(function (img, idx) {
-            if (idx === previewImageIndex) {
+        const updateImages = userImages.filter(function (img, id) {
+            if (id === index) {
                 return undefined;
             }
             return img;

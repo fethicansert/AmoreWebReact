@@ -5,6 +5,7 @@ import 'react-phone-input-2/lib/style.css'
 import { colors } from '../../../utils/theme';
 import { useIPLocation } from '../../../hooks/use_ip_location';
 import { ImpulseSpinner } from "react-spinners-kit";
+import { scrollPage } from '../../../utils/functions';
 
 
 const OtpRegister = ({ phone, setPhone }) => {
@@ -21,6 +22,7 @@ const OtpRegister = ({ phone, setPhone }) => {
             <div style={{ border: `1px solid ${colors.borderColor1}`, borderRadius: '12px', height: 'clamp(50px, 11.2vw, 58px)' }}>
 
                 <PhoneInput
+                    onBlur={() => scrollPage({ top: 0 })}
                     countryCodeEditable={false}
                     buttonClass='phone-button'
                     containerStyle={{ borderRadius: '12px', height: '100%' }}

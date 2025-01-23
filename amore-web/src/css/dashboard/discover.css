@@ -1,0 +1,55 @@
+.discover {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 clamp(.4rem, .8vw, .8rem);
+    height: 100%;
+    overflow: hidden;
+}
+
+.discover-users {
+    gap: clamp(.4rem, .8vw, .8rem);
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.discover-users-filter {
+    border-radius: 12px;
+    width: 22vw;
+    max-width: 270px;
+    min-width: 230px;
+    background: var(--brand1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-transform: capitalize;
+    max-height: 700px;
+}
+
+.user-box {
+    border-radius: 12px;
+    width: 250px;
+    height: 370px;
+    background: var(--brand2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-transform: capitalize;
+
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.discover-users ::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.discover-users {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+}

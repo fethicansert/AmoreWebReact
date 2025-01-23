@@ -312,10 +312,7 @@ input[type=number] {
     display: flex;
     align-items: center;
 
-    transition: transform 200ms ease;
-
     &:hover {
-        transform: scale(1.03);
         border: 1px solid var(--brand1);
     }
 }
@@ -326,7 +323,6 @@ input[type=number] {
     clip-path: circle(50% at 50% 50%);
     display: block;
     object-fit: cover;
-    cursor: pointer;
 }
 
 .input-file {
@@ -368,7 +364,6 @@ input[type=number] {
     width: clamp(95px, 10vw, 105px);
     height: clamp(92px, 9.9vw, 102px);
     border-radius: 12px;
-    overflow: hidden;
     position: relative;
 
     &:active {
@@ -376,12 +371,35 @@ input[type=number] {
     }
 }
 
+
+.register-user-photo-close-icon,
+.photo-close-icon {
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+    transition: transform 250ms ease;
+
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+
+.register-user-photo-close-icon {
+    top: -10%;
+    right: -8px;
+}
+
+.photo-close-icon {
+    left: 80%;
+    top: 0%;
+}
+
 .register-user-photo img {
+    border-radius: 12px;
     width: 100%;
     height: 100%;
     display: block;
     object-fit: cover;
-    cursor: pointer;
 }
 
 .register-location-dropdown {
@@ -507,10 +525,6 @@ input[type=number] {
     }
 }
 
-.verify-input-container input:hover {
-    outline: 1.8px solid var(--brand1);
-}
-
 .verify-input-container input:focus {
     outline: 1.8px solid var(--brand1);
 }
@@ -563,6 +577,10 @@ input[type=number] {
 
     .register-container {
         padding: 1.5rem 1.8rem;
+    }
+
+    .verify-input-container input:hover {
+        outline: 1.8px solid var(--brand1);
     }
 
 }

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
-import '../../css/layout/dashboard.css';
+import '../../css/dashboard/dashboard.css'
 import { v4 as uuidv4 } from 'uuid';
 import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, UserIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './comps/layout_link_icon';
@@ -108,6 +108,4 @@ const LayoutLinkBox = ({ title, isActive }) => {
     </div>
 }
 
-
-
-export default Dashboard
+export default Dashboard;
