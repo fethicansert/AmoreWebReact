@@ -21,6 +21,8 @@ export const colors = {
     //Black
     darkButton: "#18181C",
 
+    inputColor: "#F7F7F7",
+
 
     /* Basic Colors */
     onlineColor: "#1CE761",

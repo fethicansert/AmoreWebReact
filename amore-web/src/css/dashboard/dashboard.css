@@ -1,10 +1,10 @@
 .layout {
-    background: var(--backGround1);
+    background: var(--backGround2);
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100vh;
-    min-height: 800px;
+    min-height: 720px;
     padding: clamp(.5rem, .8vw, .8rem);
     /* max-width: 1500px;
     margin: 0 auto; */
@@ -28,6 +28,8 @@
 
 
     max-height: 800px;
+
+    z-index: 3;
 }
 
 .layout-overlay {
@@ -37,7 +39,9 @@
     top: 0;
     bottom: 0;
     /* backdrop-filter: blur(.5px); */
-    animation: fadeHeader 500ms ease forwards;
+    /* animation: fadeHeader 500ms ease forwards; */
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 2;
 }
 
 .layout-header:hover {
@@ -58,6 +62,7 @@
 
 
 .layout-header-active-part {
+
     scale: 0 1;
     top: -1px;
     left: 100%;
@@ -81,6 +86,8 @@
     display: flex;
     /* Check for z-index all places no I have no control   */
     z-index: 99;
+
+
 }
 
 .layout-header-title {
@@ -119,29 +126,23 @@
 }
 
 .layout-header-navigation a {
+    position: relative;
     margin: 1rem 0;
-    position: relative;
 }
 
-.logout-icon {
-    position: relative;
-}
-
-.logout-icon::after {
-    position: absolute;
-    content: '';
-    width: 150%;
-    height: 1px;
-    background-color: var(--borderColor1);
-    left: 50%;
-    top: -15px;
-    transform: translateX(-50%);
+.logout-icon:hover path {
+    stroke: var(--brand1)
 }
 
 .layout-header a {
     stroke: var(--darkText);
     position: relative;
 }
+
+.layout-header a:hover {
+    stroke: var(--brand1);
+}
+
 
 .layout-header-navigation a::before {
     position: absolute;
@@ -158,10 +159,6 @@
 
 .layout-header-navigation a.active::before {
     display: block;
-}
-
-.layout-header a:hover {
-    stroke: var(--brand1);
 }
 
 .layout-header a.active {
@@ -191,11 +188,34 @@
         width: 55px;
     }
 
+    .layout-header-navigation a::before {
+        left: -19px;
+    }
+
     .layout-header-navigation-postion {
         left: -19px;
     }
 
-    .layout-header-navigation a::before {
-        left: -19px;
+}
+
+
+@media (max-width: 500px) {
+
+    .layout-overlay {
+        display: none;
     }
+
+    .layout-header-navigation-postion {
+        display: none;
+    }
+
+    .layout-header-active-part {
+        display: none;
+    }
+
+    .layout-header:hover {
+        border-radius: 12px;
+        transition: none;
+    }
+
 }

@@ -1,0 +1,22 @@
+import { colors } from '../../../utils/theme'
+import React from 'react'
+
+const DiscoverFilterRadio = ({ isSelected, text, value, setValue }) => {
+    const style = {
+        color: isSelected ? colors.whiteText : colors.lowFadedText,
+        backgroundColor: isSelected ? colors.brand1 : colors.inputColor,
+        border: isSelected ? '1px solid transparent' : `1px solid ${colors.borderColor1}`,
+        padding: '.8rem .9rem',
+        fontSize: '.75rem',
+        borderRadius: '12px',
+        cursor: 'pointer'
+    }
+
+    return (
+        <div style={style} onClick={() => setValue(value)}>
+            {text}
+        </div>
+    )
+}
+
+export default DiscoverFilterRadio 

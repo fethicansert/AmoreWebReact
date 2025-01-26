@@ -127,3 +127,18 @@ export const scrollPage = ({ top, left, behavior = 'smooth' }) => {
 }
 
 
+export const calculateAge = (birthday) => {
+    const today = new Date(); // Bugünün tarihi
+    const birthDate = new Date(birthday); // Doğum tarihi
+
+    let age = today.getFullYear() - birthDate.getFullYear(); // Yıl farkını al
+
+    // Ay ve gün kontrolü yap
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--; // Ay veya gün henüz geçilmediyse yaşı bir azalt
+    }
+
+    return age;
+}
+

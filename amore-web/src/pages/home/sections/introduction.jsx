@@ -50,10 +50,12 @@ const Introduction = () => {
                     canSwipe={canSwipe}
                     indicators={canSwipe ? indicators : null}
                     responsive={responsiveSettings}
-                    autoplay={false} arrows={null}
+                    autoplay={false}
+                    arrows={null}
                     cssClass='carousel'
                     transitionDuration={350}
                     easing='ease-out'>
+
                     <div className='box'>
                         <img draggable='false' src={image1}></img>
                     </div>

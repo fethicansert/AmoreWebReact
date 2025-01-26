@@ -32,6 +32,7 @@ import Lottie from "lottie-react";
 import amoreAnimation from "../../assets/lottie/amore-loading.json";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
+import AmoreLoading from '../../copmonents/amore_loading';
 
 const locationData = dummyLocationData;
 
@@ -137,7 +138,7 @@ const Register = () => {
     }, []);
 
 
-    //UI
+    //UI <Lottie animationData={amoreAnimation} style={{ width: '50%', maxWidth: '300px' }} />
     return (
         <div className='register' onClick={(e) => {
             const targetClass = typeof e.target.className === 'string' ? e.target.className : e.target.className.baseVal
@@ -149,91 +150,88 @@ const Register = () => {
             setShowDatePicker(false);
         }}>
             {
-                isDataLoading ? <div style={{
-                    width: '100vw',
-                    height: '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexDirection: 'column'
-                }}>
-                    <Lottie animationData={amoreAnimation} style={{ width: '50%', maxWidth: '300px' }} />
-                </div> : <>
-                    <Header
-                        hasShadow={true}
-                        hasBorder={false}
-                        backgroundColor={colors.backGround3}
-                        title={'Amore'}
-                        titleColor={colors.brand1}
-                        menuIconColor={colors.brand1}
-                        textColor={colors.darkText}
-                        icon={amoreIcon}
-                        iconWidth={35}
-                        languageIconColor={colors.brand1}
-                    />
+                isDataLoading ? <AmoreLoading
+                    containerWidth={'100vw'}
+                    containerHeight={'100vh'}
+                    amoreWidth={'50%'}
+                    amoreMaxWidth={'300px'}
+                />
+                    : <>
+                        <Header
+                            hasShadow={true}
+                            hasBorder={false}
+                            backgroundColor={colors.backGround3}
+                            title={'Amore'}
+                            titleColor={colors.brand1}
+                            menuIconColor={colors.brand1}
+                            textColor={colors.darkText}
+                            icon={amoreIcon}
+                            iconWidth={35}
+                            languageIconColor={colors.brand1}
+                        />
 
-                    <div className='register-wrapper'>
-                        <div
-                            className='register-container'>
-                            {
-                                currentPageIndex > 1 && <FlexBox justifyContent={'space-between'} width={'100%'} gap={'0 15px'}>
+                        <div className='register-wrapper'>
+                            <div
+                                className='register-container'>
+                                {
+                                    currentPageIndex > 1 && <FlexBox justifyContent={'space-between'} width={'100%'} gap={'0 15px'}>
 
-                                    <div className='register-back-button' onClick={() => navigateBack()}>
-                                        <ArrowLeftIcon />
-                                    </div>
-
-                                    <FlexBox flex={'1'} gap='0 10px'>
-                                        <div className='register-position-wrapper'>
-                                            <div style={{ width: `${getPosition()}%` }} className='register-position'></div>
+                                        <div className='register-back-button' onClick={() => navigateBack()}>
+                                            <ArrowLeftIcon />
                                         </div>
-                                        <span className='position-count'>{currentPageIndex - 1} / 6</span>
+
+                                        <FlexBox flex={'1'} gap='0 10px'>
+                                            <div className='register-position-wrapper'>
+                                                <div style={{ width: `${getPosition()}%` }} className='register-position'></div>
+                                            </div>
+                                            <span className='position-count'>{currentPageIndex - 1} / 6</span>
+                                        </FlexBox>
+
                                     </FlexBox>
-
-                                </FlexBox>
-                            }
+                                }
 
 
-                            <h2 style={{ alignSelf: (currentPageIndex === 3 || currentPageIndex === 4) ? 'center' : 'flex-start' }}>{titles[currentPageIndex]}</h2>
+                                <h2 style={{ alignSelf: (currentPageIndex === 3 || currentPageIndex === 4) ? 'center' : 'flex-start' }}>{titles[currentPageIndex]}</h2>
 
-                            <PaddingContainer top='10px' bottom='10px'>
-                                {getCurrentSection()}
-                            </PaddingContainer>
+                                <PaddingContainer top='10px' bottom='10px'>
+                                    {getCurrentSection()}
+                                </PaddingContainer>
 
-                            {
-                                infos[currentPageIndex] && <p className='register-info-text'>
-                                    {infos[currentPageIndex]}
-                                </p>
-                            }
+                                {
+                                    infos[currentPageIndex] && <p className='register-info-text'>
+                                        {infos[currentPageIndex]}
+                                    </p>
+                                }
 
-                            {error && <span className='register-error-text'>{error}</span>}
+                                {error && <span className='register-error-text'>{error}</span>}
 
-                            <BasicButton
-                                type='submit'
-                                fontSize={'.85rem'}
-                                onClick={() =>
-                                    currentPageIndex === 0
-                                        ? getOtp() : currentPageIndex === 1
-                                            ? verifyOtp() : currentPageIndex !== 7
-                                                ? navigateForward({ checkError: true }) : register()}
-                                width={'100%'}
-                                height={'clamp(50px, 10vw, 54px)'}
-                                backgroundColor={colors.brand1}
-                                color={colors.whiteText}
-                                borderRadius={'12px'}>
-                                {isLoading
-                                    ? <BeatLoader size={8} color='white' />
-                                    : t(`${currentPageIndex === 0
-                                        ? 'register.sendButton'
-                                        : currentPageIndex === 1 ? 'register.verifyButton' :
-                                            currentPageIndex !== 7
-                                                ? 'register.continueButton'
-                                                : 'register.completeButton'}`)}
-                            </BasicButton>
+                                <BasicButton
+                                    type='submit'
+                                    fontSize={'.85rem'}
+                                    onClick={() =>
+                                        currentPageIndex === 0
+                                            ? getOtp() : currentPageIndex === 1
+                                                ? verifyOtp() : currentPageIndex !== 7
+                                                    ? navigateForward({ checkError: true }) : register()}
+                                    width={'100%'}
+                                    height={'clamp(50px, 10vw, 54px)'}
+                                    backgroundColor={colors.brand1}
+                                    color={colors.whiteText}
+                                    borderRadius={'12px'}>
+                                    {isLoading
+                                        ? <BeatLoader size={8} color='white' />
+                                        : t(`${currentPageIndex === 0
+                                            ? 'register.sendButton'
+                                            : currentPageIndex === 1 ? 'register.verifyButton' :
+                                                currentPageIndex !== 7
+                                                    ? 'register.continueButton'
+                                                    : 'register.completeButton'}`)}
+                                </BasicButton>
+                            </div>
+
                         </div>
 
-                    </div>
-
-                </>
+                    </>
             }
 
         </div >

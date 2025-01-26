@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ArrorHeadLeft, ArrowHeadRight, ArrowLeftIcon, PremiumHeartIcon } from '../assets/svg/svg_package'
+import { ArrorHeadLeft, ArrowHeadRight } from '../assets/svg/svg_package'
 import BasicButton from './basic_button'
 import { colors } from '../utils/theme'
 import FlexBox from './flex_box'
