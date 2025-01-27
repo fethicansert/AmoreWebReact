@@ -189,17 +189,16 @@
     }
 
     .layout-header-navigation a::before {
-        left: -19px;
+        left: -18.5px;
     }
 
     .layout-header-navigation-postion {
-        left: -19px;
+        left: -18.5px;
     }
 
 }
 
-
-@media (max-width: 500px) {
+@media (max-width: 575px) {
 
     .layout-overlay {
         display: none;
@@ -215,7 +214,6 @@
 
     .layout-header:hover {
         border-radius: 12px;
-        transition: none;
     }
 
 }

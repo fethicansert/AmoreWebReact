@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, UserIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './comps/layout_link_icon';
 import Logout from '../../copmonents/logout';
+import { colors } from '../../utils/theme';
 const Dashboard = () => {
     const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil']
     const [showOverlay, setShowOverlay] = useState(false);
@@ -48,6 +49,11 @@ const Dashboard = () => {
             icon: <UserIcon color='#4B164C' width={25} height={25} />
         }
     ]
+
+    useEffect(() => {
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.brand1);
+    }, []);
+
 
 
     return (

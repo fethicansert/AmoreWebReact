@@ -116,8 +116,6 @@ export const isAdult = (birthDate) => {
 //SCROLL Page
 export const scrollPage = ({ top, left, behavior = 'smooth' }) => {
 
-    console.log("Heloo");
-
     window.scrollTo({
         top,
         left,

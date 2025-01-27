@@ -1,0 +1,126 @@
+.market {
+    color: var(--whiteText);
+}
+
+.market-header {
+    width: 100%;
+    height: 180px;
+    background: var(--backGround4);
+    border-radius: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--borderColor1);
+    position: relative;
+    color: var(--whiteText);
+
+}
+
+.market-header::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(#412a7800, #412a78), url('../../assets/images/market_header_background.jpeg');
+    background-size: cover;
+    opacity: 1;
+    mix-blend-mode: luminosity;
+    opacity: .5;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.market-header-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 700;
+}
+
+
+.market-header-container p {
+    font-family: "Euclid Circular A", serif;
+    font-size: 1.1rem;
+}
+
+.market-header-container h2 {
+    font-size: 1.9rem;
+}
+
+.market-header-button {
+    width: 220px;
+    height: 50px;
+    background-color: var(--brand1);
+    border-radius: 10px;
+    font-size: .9rem;
+
+}
+
+.market-item {
+    width: 100%;
+    height: 180px;
+    padding: 2rem 1.5rem;
+    background: var(--backGround3);
+    border: 1px solid var(--borderColor1);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    color: var(--darkText);
+}
+
+.market-items-wrapper {
+    margin-top: 1rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.market-item-spray-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: absolute;
+    bottom: -125px;
+    left: -10px;
+}
+
+.market-item-spray {
+    flex: 1;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(42px)
+}
+
+
+.market-item-coin-row {
+    display: flex;
+    align-items: center;
+    gap: 0 14px;
+}
+
+.marktet-item-discount-container {
+    text-align: center;
+    font-size: .8rem;
+    color: var(--whiteText);
+    padding: .4rem 1rem;
+    border-radius: 12px;
+    background: var(--brand1);
+}
+
+.marktet-item-coin {
+    font-size: 1.2rem;
+    font-weight: 700;
+}

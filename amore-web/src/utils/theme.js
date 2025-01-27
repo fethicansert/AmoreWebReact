@@ -28,7 +28,16 @@ export const colors = {
     onlineColor: "#1CE761",
     blue: "#497BE6",
     negative: "#D10B0B",
-    negativeBlack: "#343434"
+    negativeBlack: "#343434",
+
+    //Low Colors
+    lowGray: "#D3D3D380",
+    lowYellow: "#FFEF3F80",
+    lowPurple: "#D93FFF80",
+    lowGreen: "#3FFF5580",
+    lowBlue: "#3FCCFF80"
+
+
 
 }
 
