@@ -103,9 +103,9 @@ export const DoubleHeartIcon = ({ width = '25', height = '25', color = "#4B164C"
 
 export const ChatBubbleIcon = ({ width = '25', height = '25', color = "#4B164C", className = 'layout-header-icon' }) => <svg className={className} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M22.0715 23.167C18.5571 26.7329 13.3532 27.5033 9.09463 25.5052C8.46595 25.2484 7.95053 25.0408 7.46053 25.0408C6.0957 25.049 4.39689 26.3917 3.51397 25.497C2.63105 24.6011 3.95543 22.8762 3.95543 21.4831C3.95543 20.9859 3.75897 20.4723 3.50588 19.8333C1.53549 15.5134 2.29591 10.232 5.81026 6.66723C10.2965 2.11399 17.5852 2.11399 22.0715 6.66605C26.5658 11.2263 26.5577 18.6149 22.0715 23.167Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M18.47 15.4007H18.4803" stroke="#4B164C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M13.8599 15.4007H13.8702" stroke="#4B164C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M9.24976 15.4007H9.26011" stroke="#4B164C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18.47 15.4007H18.4803" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M13.8599 15.4007H13.8702" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.24976 15.4007H9.26011" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 export const CoinIcon = ({ width = '25', height = '25', color = "#4B164C", className = 'layout-header-icon' }) => <svg className={className} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -136,10 +136,9 @@ export const ArrorHeadLeft = ({ width = '21', height = '21', color = "#FFFFFF" }
     <path d="M13.3722 16.304L7.62256 10.4707L13.3722 4.63733" stroke={color} strokeLinecap="round" />
 </svg>
 
-export const ArrowHeadRight = ({ width = '21', height = '21', color = "#FFFFFF" }) => <svg width={width} height={height} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7.62256 4.63733L13.3722 10.4707L7.62256 16.304" stroke={color} strokeLinecap="round" />
+export const ArrowHeadRight = ({ width = '21', height = '21', color = "#FFFFFF", strokeWidth = '1' }) => <svg width={width} height={height} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7.62256 4.63733L13.3722 10.4707L7.62256 16.304" strokeWidth={strokeWidth} stroke={color} strokeLinecap="round" />
 </svg>
-
 
 export const AmoreCoinIcon = ({ width = '23', height = '23', color = "#FFFFFF" }) => <svg width={width} height={height} viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M11.3217 23.9381C17.5487 23.9381 22.5966 18.8901 22.5966 12.6632C22.5966 6.43629 17.5487 1.38837 11.3217 1.38837C5.0948 1.38837 0.046875 6.43629 0.046875 12.6632C0.046875 18.8901 5.0948 23.9381 11.3217 23.9381Z" fill="#E45A5A" />
@@ -149,9 +148,22 @@ export const AmoreCoinIcon = ({ width = '23', height = '23', color = "#FFFFFF" }
     <path d="M8.71721 6.79943C7.67404 7.07879 6.86387 7.86852 6.53027 8.94298C6.31317 9.64139 6.40848 10.5708 6.76856 11.3068C6.89565 11.5647 11.1901 15.9539 11.3172 15.9539C11.4019 15.9539 14.4572 12.854 15.3468 11.8655C15.8552 11.3014 16.0352 10.9737 16.157 10.3828C16.2523 9.92075 16.2523 9.63064 16.157 9.17399C16.0458 8.62602 15.7969 8.15325 15.4104 7.73421C14.8014 7.07879 14.1872 6.77794 13.3505 6.72959C12.7522 6.69736 12.3074 6.79406 11.7408 7.08953L11.3278 7.30443L10.883 7.07342C10.6394 6.94985 10.3111 6.81555 10.1575 6.77794C9.78155 6.69198 9.08258 6.70273 8.71721 6.79943ZM11.6084 9.39426C11.4495 10.4687 11.4072 10.4204 12.3974 10.4204H13.1122L13.2182 10.5923C13.2764 10.689 13.3241 10.8072 13.3241 10.8609C13.3241 10.9093 13.1758 11.1241 13.001 11.3444C12.3974 12.075 10.9677 13.6975 10.9306 13.6975C10.8724 13.6975 10.8724 13.676 11.0206 12.752C11.1795 11.7688 11.1742 11.7957 11.0683 11.6882C11.0047 11.6184 10.8512 11.6023 10.3005 11.6023C9.63858 11.6023 9.6068 11.5969 9.48501 11.468C9.33145 11.3175 9.32086 11.194 9.44265 11.0113C9.54326 10.8609 10.8247 9.31905 11.3595 8.7066C11.7884 8.21772 11.7884 8.22309 11.6084 9.39426Z" fill="#FFA5A6" />
 </svg>
 
-
 export const SearchIcon = ({ width = '22', height = '22', color = "#EBE9E1", strokeWidth = '.7' }) => <svg width={width} height={height} viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.96995 5.9248C4.89776 7.0163 3.15995 7.0163 2.08782 5.9248C1.01565 4.8333 1.01565 3.06436 2.08782 1.97289C3.15995 0.881432 4.89776 0.881432 5.96995 1.97289C7.04204 3.06436 7.04204 4.8333 5.96995 5.9248ZM5.96995 5.9248L7.45749 7.4392" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
+
+export const HeartLineIcon = ({ width = '28', height = '28', color = "#FFFFFF" }) => <svg width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25.0832 11.495C25.0717 8.53653 23.5195 5.75426 20.4594 4.76845C18.3581 4.09036 16.0692 4.46745 14.2917 7.01951C12.5141 4.46745 10.2252 4.09036 8.12396 4.76845C5.0635 5.75437 3.51134 8.53717 3.5001 11.4961C3.4718 17.3803 9.4344 21.8832 14.2902 24.0354L14.2917 24.0347L14.2932 24.0354C19.1492 21.8831 25.1123 17.3799 25.0832 11.495Z" stroke={color} strokeWidth="2" strokeLinecap="square" />
+</svg>
+
+export const StarLineIcon = ({ width = '28', height = '28', color = "#FFFFFF" }) => <svg width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M15.2883 5.12669L17.4203 9.3859C17.6292 9.80403 18.0325 10.094 18.5002 10.1611L23.2696 10.8476C24.4479 11.0177 24.9168 12.4458 24.064 13.2641L20.6152 16.578C20.2763 16.9039 20.122 17.3724 20.2022 17.8324L21.0161 22.511C21.2165 23.6683 19.9847 24.5513 18.9315 24.0038L14.6687 21.7933C14.2509 21.5765 13.7504 21.5765 13.3313 21.7933L9.0685 24.0038C8.01527 24.5513 6.78346 23.6683 6.98512 22.511L7.79782 17.8324C7.878 17.3724 7.72372 16.9039 7.38479 16.578L3.93596 13.2641C3.08317 12.4458 3.55208 11.0177 4.73044 10.8476L9.49976 10.1611C9.96746 10.094 10.372 9.80403 10.5809 9.3859L12.7117 5.12669C13.2389 4.07357 14.7611 4.07357 15.2883 5.12669Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+export const CrossLineIcon = ({ width = '28', height = '28', color = "#000000" }) => <svg width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 7.25354L21 21.2535" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M21 7.25354L7 21.2535" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
 
 

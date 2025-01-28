@@ -1,5 +1,6 @@
 .market {
     color: var(--whiteText);
+    overflow-y: scroll;
 }
 
 .market-header {
@@ -7,12 +8,10 @@
     height: 180px;
     background: var(--backGround4);
     border-radius: 16px;
-    border-radius: 12px;
     overflow: hidden;
     border: 1px solid var(--borderColor1);
     position: relative;
     color: var(--whiteText);
-
 }
 
 .market-header::after {
@@ -45,6 +44,11 @@
     font-weight: 700;
 }
 
+.market-header-title-contaniner {
+    align-items: start;
+    gap: 10px 0;
+}
+
 
 .market-header-container p {
     font-family: "Euclid Circular A", serif;
@@ -65,6 +69,7 @@
 }
 
 .market-item {
+    max-width: 435px;
     width: 100%;
     height: 180px;
     padding: 2rem 1.5rem;
@@ -75,12 +80,23 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-
+    justify-content: space-between;
     color: var(--darkText);
 }
 
+.special-market-item {
+    max-width: 510px;
+    margin: 0 auto;
+}
+
+.market-items-container {
+    max-width: 1350px;
+    margin: 10px auto 0 auto;
+}
+
+
 .market-items-wrapper {
-    margin-top: 1rem;
+    margin-top: 10px;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -95,6 +111,7 @@
     position: absolute;
     bottom: -125px;
     left: -10px;
+    z-index: 1;
 }
 
 .market-item-spray {
@@ -109,6 +126,7 @@
     display: flex;
     align-items: center;
     gap: 0 14px;
+    z-index: 2;
 }
 
 .marktet-item-discount-container {
@@ -123,4 +141,69 @@
 .marktet-item-coin {
     font-size: 1.2rem;
     font-weight: 700;
+}
+
+.market-item-old-price {
+    color: var(--fadedText);
+    text-decoration: line-through;
+}
+
+.market-item-new-price {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.market-item-time-limit {
+    font-weight: 700;
+    font-size: 1.55rem;
+}
+
+.market-item-limited-text {
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--lowFadedText);
+}
+
+.market-footer-text {
+    color: var(--lowFadedText);
+    text-align: center;
+    margin: 1rem 0;
+    font-size: .8rem;
+    font-weight: 300;
+}
+
+@media (max-width: 600px) {
+
+    .market-item {
+        flex-direction: column;
+        height: 220px;
+    }
+
+    .special-market-item {
+        max-width: 435px;
+        height: 280px;
+    }
+
+    .market-header-container p {
+        font-size: .9rem;
+    }
+
+    .market-header-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px 0;
+    }
+
+    .market-header-title-contaniner {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .market-header-container h3 {
+        text-align: center;
+    }
+
+    .market-header {
+        height: 205px;
+    }
 }

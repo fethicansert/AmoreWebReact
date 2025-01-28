@@ -8,8 +8,10 @@ import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, H
 import LayoutLinkIcon from './comps/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
+import LayoutLinkBox from './comps/layout_link_box';
+const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
+
 const Dashboard = () => {
-    const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil']
     const [showOverlay, setShowOverlay] = useState(false);
     const [currentposition, setCurrentPosition] = useState(0);
     const [hoverPosition, setHoverPosition] = useState(0);
@@ -51,14 +53,12 @@ const Dashboard = () => {
     ]
 
     useEffect(() => {
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.brand1);
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
     }, []);
-
 
 
     return (
         <div className='layout'>
-
 
             {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
@@ -87,7 +87,6 @@ const Dashboard = () => {
                 </FlexBox>
 
 
-
                 <LogoutIcon className='logout-icon' onClick={() => setShowLogout(true)} />
 
                 <div className='layout-header-active-part' onMouseLeave={() => setHoverPosition(currentposition * 61)}>
@@ -109,10 +108,5 @@ const Dashboard = () => {
     )
 }
 
-const LayoutLinkBox = ({ title, isActive }) => {
-    return <div className='layout-link-box'>
-        <span>  {title}</span>
-    </div>
-}
 
 export default Dashboard;

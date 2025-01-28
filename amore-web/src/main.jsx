@@ -8,15 +8,13 @@ import LoginPopupProvider from './context/login_popup_provider.jsx'
 import AuthProvider from './context/auth_provider.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
-        <IPLocationProvider>
-          <LoginPopupProvider>
-            <App />
-          </LoginPopupProvider>
-        </IPLocationProvider>
-      </BrowserRouter>
-    </AuthProvider>
-  </StrictMode>,
+  <AuthProvider>
+    <BrowserRouter>
+      <IPLocationProvider>
+        <LoginPopupProvider>
+          <App />
+        </LoginPopupProvider>
+      </IPLocationProvider>
+    </BrowserRouter>
+  </AuthProvider>
 )

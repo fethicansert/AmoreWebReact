@@ -91,6 +91,21 @@
   --midShadow: 1px 1px 3px rgba(0, 0, 0, 0.45);
 }
 
+.market::-webkit-scrollbar,
+.swipe-container::-webkit-scrollbar,
+.user-home-notications::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.market,
+.swipe-containe,
+.user-home-notications {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
 
 
 header a,
