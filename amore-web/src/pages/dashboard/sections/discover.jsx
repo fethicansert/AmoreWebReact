@@ -35,6 +35,7 @@ const Discover = () => {
     const currentPage = useRef(1);
     const userBox = React.createRef();
 
+
     useEffect(() => {
         getUsers();
     }, []);
@@ -54,24 +55,24 @@ const Discover = () => {
 
 
     const handleScrollFetch = async (e) => {
-
         const totalScroll = e.target.scrollTop;
         const userBoxHeight = userBox.current.offsetHeight
-        const calculatedHeight = ((userBoxHeight * 50) / 1) * 0.7;
-
-
-
-        console.log(currentPage.current);
-        console.log(totalScroll);
-
-
+        const calculatedHeight = ((userBoxHeight * 50) / getBoxColumnCount(window.innerWidth)) * 0.7;
         if (totalScroll > (calculatedHeight * currentPage.current) && currentPage.current < currentPage.current + 1) {
-            console.log("Heloo");
-
             currentPage.current = currentPage.current + 1;
             await getUsers(2);
         }
     }
+
+    const getBoxColumnCount = (width) => {
+
+        if (width < 842) return 1;
+        else if (width >= 1663) return 5;
+        else if (width >= 1393) return 4;
+        else if (width >= 1103) return 3;
+        else if (width >= 842) return 2;
+
+    };
 
 
     return (

@@ -6,7 +6,7 @@ import FlexBox from './flex_box'
 import { v4 as uuidv4 } from 'uuid';
 import premiumHeart from '../assets/icons/premium_heart.png';
 
-const PremiumBox = ({ style }) => {
+const PremiumBox = ({ style, className }) => {
     const [currentContentIndex, setCurrentContentIndex] = useState(0);
 
     const contentTexts = [
@@ -20,7 +20,7 @@ const PremiumBox = ({ style }) => {
     ]
 
     return (
-        <div className='premium-box' style={style}>
+        <div className={`premium-box ${className || ''}`} style={style}>
             <h2>Hemen Premium Ol</h2>
             <div className='premium-content'>
                 <img src={premiumHeart} width={113} />

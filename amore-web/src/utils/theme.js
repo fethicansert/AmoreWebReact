@@ -23,7 +23,6 @@ export const colors = {
 
     inputColor: "#F7F7F7",
 
-
     /* Basic Colors */
     onlineColor: "#1CE761",
     blue: "#497BE6",
@@ -35,10 +34,16 @@ export const colors = {
     lowYellow: "#FFEF3F80",
     lowPurple: "#D93FFF80",
     lowGreen: "#3FFF5580",
-    lowBlue: "#3FCCFF80"
+    lowBlue: "#3FCCFF80",
 
-
-
+    //Spray Colors
+    sprayBlue: "#5E9BEB",
+    sparyBlue2: "#3FBFFF",
+    sprayYelow: "#FFEF3F",
+    sprayPink: "#E451DA",
+    sprayPurple: "#A418F5",
+    sprayGray: "#D3D3D3",
+    sprayTransparent: "#FFFFFF00"
 }
 
 export const shadows = {

@@ -43,7 +43,7 @@ const Dashboard = () => {
             icon: <CoinIcon />
         },
         {
-            path: 'premium',
+            path: 'premium-subscription',
             icon: <DiamondIcon />
         },
         {

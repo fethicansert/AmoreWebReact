@@ -68,6 +68,17 @@
   --borderColor1: #EBE9E1;
   --borderColor2: #252241;
 
+
+  /* Spray Colors */
+  --sprayBlue: #5E9BEB;
+  --sparyBlue2: #3FBFFF;
+  --sprayYelow: #FFEF3F;
+  --sprayPink: #E451DA;
+  --sprayPurple: #A418F5;
+  --sprayGray: #D3D3D3;
+  --sprayTransparent: #FFFFFF00;
+
+
   /* Text Colors */
   --darkText: #18181C;
   --fadedText: #B0B0B0;
@@ -118,6 +129,7 @@ body {
   font-family: 'Ambit', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
+  background: var(--backGround2);
 }
 
 /* Component Styles */
@@ -188,12 +200,12 @@ header a {
 
 
 .premium-box {
-  width: 25vw;
-  height: 35.28vw;
+  width: 27vw;
+  height: calc(27vw * 1.4112);
   min-width: 250px;
   min-height: 352px;
-  max-width: 261px;
-  max-height: 395px;
+  max-width: 291px;
+  max-height: calc(291px * 1.4112);
   background: var(--backGround4);
   border-radius: 12px;
   background-image: url('./assets/images/premium_box_mask.png');

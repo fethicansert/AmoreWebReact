@@ -4,7 +4,6 @@ import { calculateAge } from "../../../utils/functions.js";
 import BasicButton from "../../../copmonents/basic_button.jsx";
 import FlexBox from "../../../copmonents/flex_box.jsx";
 import { FilledLocationIcon } from "../../../assets/svg/svg_package.jsx";
-import logo from '../../../assets/icons/amore_icon.png'
 
 
 
