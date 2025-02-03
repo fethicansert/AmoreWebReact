@@ -2,7 +2,7 @@ import React from 'react'
 import { ChatBubbleIcon, CrossLineIcon, HeartLineIcon, StarLineIcon } from '../../../assets/svg/svg_package'
 import { colors } from '../../../utils/theme'
 
-const SwipeBottomBar = () => {
+const SwipeBottomBar = ({ onLike, onStar, onPass }) => {
     return (
         <div className='swipe-bottom-bar'>
 
@@ -16,7 +16,7 @@ const SwipeBottomBar = () => {
                     <StarLineIcon />
                 </div>
 
-                <div className='swipe-bottom-bar-button'>
+                <div className='swipe-bottom-bar-button' onClick={() => onLike(prev => prev + 1)}>
                     <HeartLineIcon />
                 </div>
             </div>

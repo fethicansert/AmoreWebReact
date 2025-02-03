@@ -17,13 +17,13 @@ const PremiumBox = ({ style, className }) => {
 
     const contentTitles = [
         'Seni Beğenenleri Gör', 'Title 2', 'Title3', 'Title4'
-    ]
+    ];
 
     return (
         <div className={`premium-box ${className || ''}`} style={style}>
             <h2>Hemen Premium Ol</h2>
             <div className='premium-content'>
-                <img src={premiumHeart} width={113} />
+                <img src={premiumHeart} width={105} />
                 <h3>{contentTitles[currentContentIndex]}</h3>
                 <p>
                     {contentTexts[currentContentIndex]}

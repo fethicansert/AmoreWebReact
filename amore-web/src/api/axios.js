@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { CONSTANTS } from '../data/constants';
-
+import { CONSTANTS } from '../utils/constants';
 
 
 const headers = {

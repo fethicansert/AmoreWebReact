@@ -140,6 +140,14 @@
     font-weight: 300;
 }
 
+.premium-subscriptin-footer-text {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-weight: 600;
+    font-size: .85rem;
+    color: var(--fadedText);
+}
+
 
 @media (min-width: 500px) {
     .premium-subscription-card:nth-child(1):hover .subscription-number {

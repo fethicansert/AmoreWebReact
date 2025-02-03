@@ -23,6 +23,7 @@ const Discover = () => {
     const [users, setUsers] = useState([]);
     const [searchedUsers, setSearchedUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isScrollLoading, setIsScrollLoading] = useState(false);
     const [age, setAge] = useState([25, 80]);
     const [name, setName] = useState('');
     const [selectedUserStatus, setSelectedUserStatus] = useState('online');
@@ -36,10 +37,10 @@ const Discover = () => {
     const userBox = React.createRef();
 
 
+
     useEffect(() => {
         getUsers();
     }, []);
-
 
     useEffect(() => {
         setSearchedUsers(users.filter(user => {
@@ -52,27 +53,6 @@ const Discover = () => {
         }));
 
     }, [name, users])
-
-
-    const handleScrollFetch = async (e) => {
-        const totalScroll = e.target.scrollTop;
-        const userBoxHeight = userBox.current.offsetHeight
-        const calculatedHeight = ((userBoxHeight * 50) / getBoxColumnCount(window.innerWidth)) * 0.7;
-        if (totalScroll > (calculatedHeight * currentPage.current) && currentPage.current < currentPage.current + 1) {
-            currentPage.current = currentPage.current + 1;
-            await getUsers(2);
-        }
-    }
-
-    const getBoxColumnCount = (width) => {
-
-        if (width < 842) return 1;
-        else if (width >= 1663) return 5;
-        else if (width >= 1393) return 4;
-        else if (width >= 1103) return 3;
-        else if (width >= 842) return 2;
-
-    };
 
 
     return (
@@ -163,40 +143,59 @@ const Discover = () => {
     )
 
     //FUNCTIONS
+    async function handleScrollFetch(e) {
+        if (isScrollLoading) return;
+        const totalScroll = e.target.scrollTop;
+        const userBoxHeight = userBox.current.offsetHeight
+        const boxColumnCount = getBoxColumnCount(window.innerWidth);
+        const calculatedHeight = ((userBoxHeight * users.length) / boxColumnCount) * 0.7;
+        if (totalScroll > calculatedHeight) await getScrollUser();
+    }
 
-    async function getUsers(page = 1) {
-        console.log(page);
+    function getBoxColumnCount(width) {
+        if (width < 842) return 1;
+        else if (width >= 1663) return 5;
+        else if (width >= 1393) return 4;
+        else if (width >= 1103) return 3;
+        else if (width >= 842) return 2;
+    };
 
-        if (page !== 2) {
-            setIsLoading(true);
-        }
+    async function fetchUsers(loading) {
 
-        if (isMobile) setShowFilter(false);
+        loading(true);
+
         try {
-            const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
-            const response = await axiosAuth.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${userStatus}=true&page=${page}`, {
-                headers
-            })
 
-            if (response.status === 200)
-                if (page === 2) {
-                    setUsers(prev => {
-                        const newUsers = [...prev, ...response.data.data];
-                        return newUsers;
-                    });
-                } else {
-                    setUsers(response.data.data);
-                }
-            setIsLoading(false);
+            const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
+            const response = await axiosAuth.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${userStatus}=true&page=${currentPage.current}`, {
+                headers
+            });
+
+            if (response.status === 200) {
+                currentPage.current += 1;
+                return response.data.data;
+            }
         }
-        catch (e) {
-            console.log(e);
-        } finally {
-            setIsLoading(false);
-        }
+        //Set Error There !!!
+        catch (e) { return 0; }
+
+        finally { loading(false); }
+    }
+
+    async function getScrollUser() {
+        const fetchedUsers = await fetchUsers(setIsScrollLoading);
+        if (users) setUsers(prev => {
+            const newUsers = [...prev, ...fetchedUsers];
+            return newUsers;
+        });
+    }
+
+    async function getUsers() {
+        const fetchedUsers = await fetchUsers(setIsLoading);
+        if (users) setUsers(fetchedUsers);
+        if (isMobile) setShowFilter(false);
     }
 }
-
 
 
 export default Discover
