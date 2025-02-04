@@ -16,31 +16,27 @@ const SwipeItem = ({ user, loading }) => {
     const userPhotos = user?.photos.slice(1,);
     const userAge = calculateAge(user?.birthday);
     const userState = user?.country?.state?.name || user?.country?.name;
+
     const userProperties = [
         {
-            type: 'gender',
-            propertie: 'Kadın',
+            value: 'Kadın',
             icon: <GenderIcon />
         },
         {
-            type: 'age',
-            propertie: userAge,
+            value: userAge.toString(),
             text: 'Yaşında',
             icon: <BirthdayIcon width='29' height='29' />
         },
         {
-            type: 'state',
-            propertie: userState,
+            value: userState,
             icon: <LocactionHomeIcon width='29' height='29' />
         },
         {
-            type: 'job',
-            propertie: 'Meslek Bilgisi Yok',
+            value: 'Meslek Bilgisi Yok',
             icon: <JobIcon width='29' height='29' />
         },
         {
-            type: 'school',
-            propertie: 'Okul Bilgisi Yok',
+            value: 'Okul Bilgisi Yok',
             icon: <SchollIcon width='29' height='29' />
         }
     ];
@@ -63,7 +59,7 @@ const SwipeItem = ({ user, loading }) => {
                                         <span style={{ width: '8px', height: '8px' }} className='online-circle'></span>
                                         <span className='swipe-item-user-status'>Çevrim içi</span>
                                     </FlexBox>
-                                    <span className='swipe-item-user-info'>{user?.name}, {calculateAge(user?.birthday)}</span>
+                                    <span className='swipe-item-user-info'>{user?.name}, {userAge}</span>
                                 </FlexBox>
                             </div>
                             <img src={userProfilPhoto} />
@@ -82,7 +78,11 @@ const SwipeItem = ({ user, loading }) => {
                         </div>
 
                         <div className='swipe-item-user-properties'>
-                            {userProperties.map(propertie => <UserPropertie key={uuidv4()} propertie={propertie?.propertie} icon={propertie?.icon} text={propertie?.text} />)}
+                            {userProperties.map(propertie => <UserPropertie
+                                key={uuidv4()}
+                                value={propertie?.value}
+                                icon={propertie?.icon}
+                                text={propertie?.text} />)}
                         </div>
 
                     </>}

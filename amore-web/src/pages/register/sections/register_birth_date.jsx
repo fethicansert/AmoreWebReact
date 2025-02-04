@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next';
-import useScroll from '../../../hooks/use_scroll';
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { colors } from '../../../utils/theme';
@@ -15,14 +14,11 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
     year: date.getFullYear()
   } : null;
 
-  const scroll = useScroll();
-
   const { t, i18n } = useTranslation();
 
   const handleShowDate = () => {
     setShowDatePicker(true);
   }
-
 
   return (
     <div className='register-birth-date' onClick={handleShowDate}>

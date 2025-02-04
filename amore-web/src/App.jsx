@@ -16,13 +16,14 @@ import Notifications from './pages/dashboard/sections/notifications';
 function App() {
   return (
     <Routes>
+
       <Route path="/" element={<Home />} />
 
       <Route path='/register' element={<Register />} />
 
       <Route path='/dashboard' element={<Dashboard />}>
 
-        <Route path='user-home' element={<UserHome />} />
+        <Route index path='user-home' element={<UserHome />} />
 
         <Route path='notification' element={<Notifications />} />
 

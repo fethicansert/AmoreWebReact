@@ -145,7 +145,7 @@
 }
 
 .user-home-notification-item-text {
-    font-size: .75rem;
+    font-size: .78rem;
     font-weight: 300;
     color: var(--lowFadedText);
 }
@@ -175,6 +175,7 @@
 }
 
 .swipe-container-image-wrapper img {
+    display: block;
     object-fit: cover;
     width: 100%;
     height: 100%;
@@ -291,6 +292,39 @@
     stroke: var(--brand1);
 }
 
+.like-popup-wrapper {
+    position: absolute;
+}
+
+.like-popup {
+    /* margin-top: 10rem; */
+    width: 20vw;
+    height: 20vw;
+    background: var(--brand2);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: like_popup 600ms ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transform-origin: center;
+}
+
+@keyframes like_popup {
+    0% {}
+
+
+    100% {
+        width: 40vw;
+        height: 40vw;
+        opacity: .7;
+    }
+}
+
 
 @media (min-width: 400px) {
 
@@ -327,4 +361,23 @@
     .user-home {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 500px) {
+
+    .user-propertie {
+        padding: .65rem .65rem;
+        gap: 0 5px;
+        font-size: .8rem;
+    }
+
+    .user-propertie svg {
+        width: 26px;
+        height: 26px;
+    }
+
+    .swipe-container-item-about-container {
+        padding: 1.5rem;
+    }
+
 }

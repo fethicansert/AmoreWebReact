@@ -8,6 +8,7 @@ export const IPLocationProvider = ({ children }) => {
     const [ipLocation, setIpLocation] = useState({});
     const [language, setLanguage] = useState(navigator.language.slice(0, 2));
 
+
     //IF ipLocattion has no ERROR use ipLocayion country code else Device language
     useEffect(() => {
         const currentLanguage = ipLocation?.country?.countryCode.toLowerCase() || language;

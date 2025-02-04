@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
-
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { colors } from '../../../utils/theme';
 import { useIPLocation } from '../../../hooks/use_ip_location';
-import { ImpulseSpinner } from "react-spinners-kit";
 import { scrollPage } from '../../../utils/functions';
 
 

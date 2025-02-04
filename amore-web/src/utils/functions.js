@@ -1,6 +1,6 @@
 import { axiosAuth } from "../api/axios"
 
-
+//Create OTP Request
 export const createOtp = async ({
     phone,
     onStart,
@@ -45,6 +45,7 @@ export const createOtp = async ({
     return request;
 }
 
+//User login request
 export const login = async ({ phone, otpId, otpCode, onStart,
     onFinally }) => {
     if (onStart) onStart();
@@ -81,6 +82,7 @@ export const login = async ({ phone, otpId, otpCode, onStart,
     return request;
 }
 
+//Transform object to fotmdata
 export function objectToFormData(obj, formData = new FormData(), parentKey = '') {
     if (obj && typeof obj === 'object' && !(obj instanceof Date) && !(obj instanceof File)) {
         // Eğer nesne bir dizi ise
@@ -104,7 +106,6 @@ export function objectToFormData(obj, formData = new FormData(), parentKey = '')
     return formData;
 };
 
-
 //CHEKCS if given date adult age
 export const isAdult = (birthDate) => {
     const today = new Date();
@@ -112,19 +113,16 @@ export const isAdult = (birthDate) => {
     return birthDate <= adultDate;
 }
 
-
-//SCROLL Page
+//Scroll Page
 export const scrollPage = ({ top, left, behavior = 'smooth' }) => {
-
     window.scrollTo({
         top,
         left,
         behavior
     });
-    ;
 }
 
-
+//Calculate age with given birthday date
 export const calculateAge = (birthday) => {
     const today = new Date(); // Bugünün tarihi
     const birthDate = new Date(birthday); // Doğum tarihi

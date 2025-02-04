@@ -8,6 +8,7 @@ import UserHomeNotifications from '../comps/user_home_notifications';
 import { v4 as uuidv4 } from 'uuid';
 import SwipeBottomBar from '../comps/swipe_bottom_bar';
 import SwipeItem from '../comps/swipe_item';
+import { useConversation } from '../../../hooks/use_conversation';
 
 const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
 
@@ -15,15 +16,20 @@ const UserHome = () => {
   const hidePremium = useMediaPredicate("(max-width: 1190px)");
   const [swipeList, setSwipeList] = useState([]);
   const [likes, setLikes] = useState([]);
-  const [messages, setMessages] = useState([]);
   const [isMessagesLoading, setIsMessagesLoading] = useState(false);
+  const [isLikesLoading, setIsLikesLoading] = useState(false);
   const [isSwipeListLoading, setIsSwipeListLoading] = useState(false);
   const distance = useRef(100);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { conversations, setConversations } = useConversation();
+  const [popAnimation, setPopupAnimation] = useState();
+
+  const swipeContainer = useRef();
 
   useEffect(() => {
     getSwipeList({ showLoading: true });
     getLikes();
+    if (conversations.length === 0) getMessages();
   }, []);
 
   useEffect(() => {
@@ -38,11 +44,17 @@ const UserHome = () => {
 
       {/* Swipe Section */}
 
-      <div className='swipe-container'>
+      <div className='swipe-container' ref={swipeContainer}>
 
         <SwipeItem user={swipeList[currentIndex + 2]} loading={isSwipeListLoading} />
 
-        {!isSwipeListLoading && <SwipeBottomBar onLike={setCurrentIndex} />}
+        {!isSwipeListLoading && <SwipeBottomBar onLike={setCurrentIndex} setPopupAnimation={setPopupAnimation} />}
+
+        {popAnimation &&
+          <div className='like-popup' style={{ backgroundColor: popAnimation.backgroundColor, marginTop: `${swipeContainer?.current?.scrollTop}px` }}>
+            {popAnimation.icon}
+          </div>
+        }
 
       </div>
 
@@ -50,11 +62,11 @@ const UserHome = () => {
       <div className='user-home-notications'>
 
         <UserHomeNotifications path={'/dashboard/chat'} title={'Hızlı Mesajlar'} isLoading={isMessagesLoading}>
-          {likes.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
+          {conversations.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
-        <UserHomeNotifications path={'/dashboard/matches'} title={'Beğeniler'} isLoading={isMessagesLoading}>
-          {likes.slice(4, 8).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
+        <UserHomeNotifications path={'/dashboard/matches'} title={'Beğeniler'} isLoading={isLikesLoading}>
+          {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         {hidePremium && <PremiumBox style={{ margin: '0 auto 1rem auto' }} />}
@@ -64,33 +76,37 @@ const UserHome = () => {
     </section>
   );
 
-
-  async function getLikes() {
-    setIsMessagesLoading(true)
+  async function getMessages() {
+    setIsMessagesLoading(true);
     try {
-      const response = await axiosAuth.get('http://165.227.142.52:3169/user/likes', { headers });
-      setLikes(response.data.data);
+      const response = await axiosAuth.get('/chat/conversations?page=1', { headers });
+      if (response?.data.response.code === 200)
+        setConversations(response.data.data)
     }
     catch (e) { console.log(e); }
     finally { setIsMessagesLoading(false); }
   }
 
-  async function getSwipeList({ showLoading }) {
-
-    if (showLoading) setIsSwipeListLoading(true);
-
-    const count = await getSwipeListCount();
-
-    if (count < 3) return getSwipeList({ showLoading: showLoading });
-
+  async function getLikes() {
+    setIsLikesLoading(true)
     try {
-      const response = await axiosAuth.get(`http://165.227.142.52:3169/user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, { headers });
+      const response = await axiosAuth.get('user/likes', { headers });
+      setLikes(response.data.data);
+    }
+    catch (e) { console.log(e); }
+    finally { setIsLikesLoading(false); }
+  }
+
+  async function getSwipeList({ showLoading }) {
+    if (showLoading) setIsSwipeListLoading(true);
+    const count = await getSwipeListCount();
+    if (count < 3) return getSwipeList({ showLoading: showLoading });
+    try {
+      const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, { headers });
       setSwipeList(prev => [...prev, ...response.data.data]);
     }
-
     catch (e) { console.log(e); }
     finally { setIsSwipeListLoading(false); };
-
   }
 
   async function getSwipeListCount() {
@@ -98,8 +114,7 @@ const UserHome = () => {
     let swapListCount;
 
     try {
-
-      const response = await axiosAuth.get(`http://165.227.142.52:3169/user/discover_count?minAge=18&maxAge=70&isOnline=true&distance=${distance.current}&gender=female`, {
+      const response = await axiosAuth.get(`user/discover_count?minAge=18&maxAge=70&isOnline=true&distance=${distance.current}&gender=female`, {
         headers
       });
 

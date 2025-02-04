@@ -10,7 +10,7 @@ const UserHomeNotifications = ({ title, path, children, isLoading }) => {
 
     return <div className='user-home-notications-container' >
 
-        <FlexBox justifyContent='space-between' style={{ marginBottom: '.5rem' }}>
+        <FlexBox justifyContent='space-between' style={{ marginBottom: '1rem' }}>
             <h4>{title}</h4>
             <Link to={path}>
                 Tümünü Gör
@@ -19,8 +19,8 @@ const UserHomeNotifications = ({ title, path, children, isLoading }) => {
         </FlexBox>
 
         {isLoading ? <>
-            {Array(4).fill().map(shimmer => <NotificationShimmer key={uuidv4()} />)}
-        </> : children.length !== 0 ? children : <span>No Notifications</span>}
+            {Array(4).fill().map((_, i) => <NotificationShimmer key={uuidv4()} />)}
+        </> : children.length !== 0 ? children : <span style={{ color: colors.lowFadedText, fontWeight: '600', fontSize: '.8rem' }}>Mesaj Kutunuz Boş</span>}
 
     </div>
 }

@@ -14,11 +14,8 @@ import RegisterName from './sections/register_name';
 import RegisterBirthDate from './sections/register_birth_date';
 import RegisterGender from './sections/register_gender';
 import RegisterHobbies from './sections/register_hobbies';
-import useScroll from '../../hooks/use_scroll';
 import RegisterUserPhotos from './sections/register_user_photos';
 
-import { MdOutlineChangeCircle } from "react-icons/md";
-import { CgCloseO } from "react-icons/cg";
 import RegisterLocation from './sections/register_location';
 import { dummyLocationData } from '../../data/dummy_data';
 import { axiosAmore, axiosAuth } from '../../api/axios';
@@ -28,8 +25,6 @@ import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
 import { createOtp, objectToFormData, login, isAdult, scrollPage } from '../../utils/functions';
-import Lottie from "lottie-react";
-import amoreAnimation from "../../assets/lottie/amore-loading.json";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
 import AmoreLoading from '../../copmonents/amore_loading';
@@ -66,8 +61,6 @@ const Register = () => {
     const [currentLocation, setCurrentLocation] = useState(ipLocation);
 
     const [error, setError] = useState('');
-
-    const scroll = useScroll();
 
     const titles = registerLocalization.map(localization => t(`register.${localization}.title`));
 
