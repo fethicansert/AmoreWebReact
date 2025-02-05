@@ -6,6 +6,7 @@
     height: 100vh;
     min-height: 720px;
     padding: clamp(.5rem, 1.1vw, 1.3rem);
+    color: var(--darkText);
 }
 
 .layout-header {
@@ -111,7 +112,6 @@
 
     font-size: .8rem;
     font-weight: 600;
-    color: var(--darkText);
 }
 
 .layout-link-box span {
@@ -127,6 +127,15 @@
     stroke: var(--brand1)
 }
 
+.notification-button svg {
+    stroke: var(--darkText);
+    position: relative;
+}
+
+.notification-button.active svg {
+    stroke: var(--brand1);
+}
+
 .layout-header a {
     stroke: var(--darkText);
     position: relative;
@@ -135,7 +144,6 @@
 .layout-header a:hover {
     stroke: var(--brand1);
 }
-
 
 .layout-header-navigation a::before {
     position: absolute;
@@ -175,6 +183,37 @@
 
     transition: transform 200ms ease;
 }
+
+.notifications {
+    position: absolute;
+    top: -1px;
+    width: 300px;
+    height: calc(100% + 2px);
+    background: red;
+    left: calc(100%);
+    z-index: 99;
+    border-radius: 0 12px 12px 0;
+    border: 1px solid var(--borderColor1);
+    background-color: var(--backGround3);
+
+    display: none;
+
+    padding: 1rem;
+}
+
+.notifications h3 {
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.notifications.active {
+    display: block;
+}
+
+.layout-header.notifications-active {
+    border-radius: 12px 0 0 12px;
+}
+
 
 @media (max-width: 650px) {
     .layout-header {

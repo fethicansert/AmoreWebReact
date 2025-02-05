@@ -1,6 +1,6 @@
 const LayoutLinkBox = ({ title, isActive }) => {
     return <div className='layout-link-box'>
-        <span> {title}</span>
+        <span>{title}</span>
     </div>
 }
 

@@ -12,6 +12,7 @@ import Premium from './pages/dashboard/sections/premium_subscription';
 import User from './pages/dashboard/sections/user';
 import Matches from './pages/dashboard/sections/matches';
 import Notifications from './pages/dashboard/sections/notifications';
+import Payment from './pages/dashboard/sections/payment';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
 
         <Route index path='user-home' element={<UserHome />} />
 
-        <Route path='notification' element={<Notifications />} />
+        <Route path='notifications' element={<Notifications />} />
 
         <Route path='discover' element={<Discover />} />
 
@@ -36,6 +37,8 @@ function App() {
         <Route path='market' element={<Market />} />
 
         <Route path='premium-subscription' element={<Premium />} />
+
+        <Route path='payment' element={<Payment />} />
 
         <Route path='user' element={<User />} />
 

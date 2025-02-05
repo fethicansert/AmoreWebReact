@@ -16,6 +16,8 @@ const Dashboard = () => {
     const [currentposition, setCurrentPosition] = useState(0);
     const [hoverPosition, setHoverPosition] = useState(0);
     const [showLogout, setShowLogout] = useState(false);
+    const [showNavigation, setShowNavigation] = useState();
+
 
     const routes = [
         {
@@ -23,7 +25,7 @@ const Dashboard = () => {
             icon: <HomeIcon />
         },
         {
-            path: 'notification',
+            path: null,
             icon: <NotificationIcon />
         },
         {
@@ -64,28 +66,40 @@ const Dashboard = () => {
 
             {showOverlay && <div className='layout-overlay'></div>}
 
-            <div className='layout-header' onMouseEnter={() => setShowOverlay(true)} onMouseLeave={() => {
+            <div className={`layout-header ${showNavigation ? 'notifications-active' : ''} `} onMouseEnter={() => setShowOverlay(true)} onMouseLeave={() => {
                 setShowOverlay(false);
                 setHoverPosition(currentposition * 61);
+                // setShowNavigation(false);
             }}>
 
                 <FlexBox flexDirection='column' gap='15px 0'>
+
                     <LayoutLinkIcon path={'/'} icon={<img src={amoreLogo} width={'35px'} />} />
 
                     <nav className='layout-header-navigation'>
 
                         <span style={{ transform: `translateY(${hoverPosition}px)` }} className='layout-header-navigation-postion'></span>
 
-                        {routes.map((route, index) => <LayoutLinkIcon
-                            key={uuidv4()}
-                            path={route.path}
-                            icon={route.icon}
-                            setCurrentPosition={() => setCurrentPosition(index)}
-                            setHoverPosition={() => setHoverPosition(index * 61)} />)}
+                        {routes.map((route, index) => route.path
+                            ? <LayoutLinkIcon
+                                key={uuidv4()}
+                                path={route.path}
+                                icon={route.icon}
+                                onClik={() => setCurrentPosition(index)}
+                                onHover={() => setHoverPosition(index * 61)} />
+                            : <div
+                                onMouseEnter={() => setHoverPosition(index * 61)}
+                                onClick={() => {
+                                    setCurrentPosition(index);
+                                    setShowNavigation(prev => !prev);
+                                }}
+                                className={`notification-button ${showNavigation ? 'active' : ''}`}
+                                style={{ height: '29px', margin: '16px 0', display: 'block' }}>
+                                {route.icon}
+                            </div>)}
 
                     </nav>
                 </FlexBox>
-
 
                 <LogoutIcon className='logout-icon' onClick={() => setShowLogout(true)} />
 
@@ -101,7 +115,15 @@ const Dashboard = () => {
 
                     </FlexBox>
                 </div>
+
+                <div className={`notifications ${showNavigation ? 'active' : ''}`}>
+                    <FlexBox justifyContent='flex-start' style={{ padding: '1rem 0', borderBottom: `1px solid ${colors.borderColor1}` }}>
+                        <h3>Bildirimler</h3>
+                    </FlexBox>
+                </div>
             </div>
+
+
 
             <Outlet />
         </div>

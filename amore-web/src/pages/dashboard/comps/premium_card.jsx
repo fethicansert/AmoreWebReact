@@ -4,9 +4,12 @@ import BasicButton from '../../../copmonents/basic_button';
 import FlexBox from '../../../copmonents/flex_box';
 import PremiumCardFeature from './premium_card_feature';
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
 
 
 function PremiumCard({ sprayOptions, subscriptionNumber, time, subscriptionPlan, price, planInfo, features }) {
+
+    const navigate = useNavigate();
 
     return <div className='premium-subscription-card'>
 
@@ -35,6 +38,7 @@ function PremiumCard({ sprayOptions, subscriptionNumber, time, subscriptionPlan,
             </div>
 
             <BasicButton
+                onClick={() => navigate('/dashboard/payment')}
                 width={'100%'}
                 height={'50px'}
                 backgroundColor={colors.brand1}
