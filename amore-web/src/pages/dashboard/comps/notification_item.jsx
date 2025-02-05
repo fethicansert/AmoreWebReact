@@ -4,7 +4,7 @@ import FlexBox from '../../../copmonents/flex_box';
 import { HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
-const UserHomeNotificationItem = ({ notification, type }) => {
+const NotificationItem = ({ notification, type }) => {
 
     const { auth } = useAuth();
     const user = getUser(notification, type);
@@ -22,6 +22,9 @@ const UserHomeNotificationItem = ({ notification, type }) => {
             </FlexBox>
 
             {type === 'like' && <HeartLineIcon color={colors.fadedText} fill={colors.fadedText} width='26' height='26' />}
+            {type === 'like-unknown' && <FlexBox alignItems='center' justifyContent='center' style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: colors.brand2 }}>
+                <HeartLineIcon color={colors.backGround3} fill={colors.brand2} width='19' height='19' />
+            </FlexBox>}
             {type === 'message' && <span className='user-home-notification-item-message'>14:03</span>}
         </div>
     )
@@ -30,22 +33,21 @@ const UserHomeNotificationItem = ({ notification, type }) => {
         return notication.participants[0].id !== auth.id ? notification?.participants?.[0] : notification?.participants?.[1];
     }
 
-
     function getMessageContent(notification, type) {
-        if (type === 'like') return user?.name + ' ' + 'seni beğendi';
+        if (type === 'like' || type === 'like-unknown') return user?.name + ' ' + 'seni beğendi';
         switch (notification?.lastMessage.type) {
             case 'text':
                 return notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
             case 'audio':
-                return user?.name + ' ' + 'bir ses kaydı gönderdi.'
+                return user?.name + ' ' + 'bir ses kaydı gönderdi 🎵'
             case 'image':
-                return user?.name + ' ' + 'bir fotoğraf gönderdi.'
+                return user?.name + ' ' + 'bir fotoğraf gönderdi 📷'
             case 'gift':
-                return user?.name + ' ' + 'bir gift gönderdi.'
+                return user?.name + ' ' + 'bir gift gönderdi 🎁'
             default:
                 return user?.name + ' ' + 'bir mesaj gönderdi.'
         }
     };
 }
 
-export default UserHomeNotificationItem 
+export default NotificationItem 

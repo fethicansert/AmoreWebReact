@@ -187,7 +187,7 @@
 .notifications {
     position: absolute;
     top: -1px;
-    width: 300px;
+    width: 370px;
     height: calc(100% + 2px);
     background: red;
     left: calc(100%);
@@ -197,7 +197,6 @@
     background-color: var(--backGround3);
 
     display: none;
-
     padding: 1rem;
 }
 

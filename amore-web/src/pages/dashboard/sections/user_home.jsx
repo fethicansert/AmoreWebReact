@@ -3,21 +3,20 @@ import PremiumBox from '../../../copmonents/premium_box';
 import { useMediaPredicate } from 'react-media-hook';
 import '../../../css/dashboard/user_home.css';
 import { axiosAuth } from '../../../api/axios';
-import UserHomeNotificationItem from '../comps/notification_item';
+import NotificationItem from '../comps/notification_item';
 import UserHomeNotifications from '../comps/user_home_notifications';
 import { v4 as uuidv4 } from 'uuid';
 import SwipeBottomBar from '../comps/swipe_bottom_bar';
 import SwipeItem from '../comps/swipe_item';
 import { useConversation } from '../../../hooks/use_conversation';
+import { useLikes } from '../../../hooks/use_likes';
 
 const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
 
 const UserHome = () => {
   const hidePremium = useMediaPredicate("(max-width: 1190px)");
   const [swipeList, setSwipeList] = useState([]);
-  const [likes, setLikes] = useState([]);
   const [isMessagesLoading, setIsMessagesLoading] = useState(false);
-  const [isLikesLoading, setIsLikesLoading] = useState(false);
   const [isSwipeListLoading, setIsSwipeListLoading] = useState(false);
   const distance = useRef(100);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,9 +25,10 @@ const UserHome = () => {
 
   const swipeContainer = useRef();
 
+  const { likes, isLikesLoading } = useLikes();
+
   useEffect(() => {
     getSwipeList({ showLoading: true });
-    getLikes();
     if (conversations.length === 0) getMessages();
   }, []);
 
@@ -62,11 +62,11 @@ const UserHome = () => {
       <div className='user-home-notications'>
 
         <UserHomeNotifications path={'/dashboard/chat'} title={'Hızlı Mesajlar'} isLoading={isMessagesLoading}>
-          {conversations.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
+          {conversations.slice(0, 4).map(message => message ? <NotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
         <UserHomeNotifications path={'/dashboard/matches'} title={'Beğeniler'} isLoading={isLikesLoading}>
-          {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
+          {likes.slice(0, 4).map(like => like ? <NotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         {hidePremium && <PremiumBox style={{ margin: '0 auto 1rem auto' }} />}
