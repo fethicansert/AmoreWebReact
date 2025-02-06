@@ -9,11 +9,9 @@ import LayoutLinkIcon from './comps/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
 import LayoutLinkBox from './comps/layout_link_box';
-import { useLikes } from '../../hooks/use_likes';
-import { axiosAuth } from '../../api/axios';
-import UserHomeNotificationItem from './comps/notification_item';
+import { useNotification } from '../../hooks/use_notification';
+import NotificationItem from './comps/notification_item';
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
-const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
 
 const Dashboard = () => {
     const [showOverlay, setShowOverlay] = useState(false);
@@ -22,7 +20,8 @@ const Dashboard = () => {
     const [showLogout, setShowLogout] = useState(false);
     const [showNavigation, setShowNavigation] = useState();
 
-    const { setLikes, setIsLikesLoading, likes } = useLikes();
+    const { likes } = useNotification();
+
 
     const routes = [
         {
@@ -59,10 +58,8 @@ const Dashboard = () => {
         }
     ];
 
-
     useEffect(() => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
-        getLikes();
     }, []);
 
     return (
@@ -127,24 +124,18 @@ const Dashboard = () => {
                         <h3>Bildirimler</h3>
                     </FlexBox>
 
-                    {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like-unknown'} notification={like} /> : null)}
+                    {likes.slice(0, 4).map(like => like ? <NotificationItem key={uuidv4()} type={'like-unknown'} notification={like} /> : null)}
                 </div>
             </div>
 
-
             <Outlet />
+
         </div>
     )
 
-    async function getLikes() {
-        setIsLikesLoading(true)
-        try {
-            const response = await axiosAuth.get('user/likes', { headers });
-            setLikes(response.data.data);
-        }
-        catch (e) { console.log(e); }
-        finally { setIsLikesLoading(false); }
-    }
+
+
+
 
 }
 

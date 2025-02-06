@@ -9,27 +9,25 @@ import { v4 as uuidv4 } from 'uuid';
 import SwipeBottomBar from '../comps/swipe_bottom_bar';
 import SwipeItem from '../comps/swipe_item';
 import { useConversation } from '../../../hooks/use_conversation';
-import { useLikes } from '../../../hooks/use_likes';
-
-const headers = { Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NmJiMjFjM2UzNTZiN2U1MTgyODI1MzMiLCJpZCI6IjY2YmIyMWMzZTM1NmI3ZTUxODI4MjUzMyIsIm5hbWUiOiJDYWJiYXIiLCJsYW5ndWFnZSI6ImVuIiwiaWF0IjoxNzM3NjIyOTgwLCJleHAiOjQ4NDgwMjI5ODB9.mwwNpHwqeCOUVRrp6R6CVWkxZeMvWKnpp8I2HFMbp20` }
+import { useNotification } from '../../../hooks/use_notification';
+import { useAuth } from '../../../hooks/use_auth';
 
 const UserHome = () => {
-  const hidePremium = useMediaPredicate("(max-width: 1190px)");
   const [swipeList, setSwipeList] = useState([]);
-  const [isMessagesLoading, setIsMessagesLoading] = useState(false);
   const [isSwipeListLoading, setIsSwipeListLoading] = useState(false);
-  const distance = useRef(100);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { conversations, setConversations } = useConversation();
   const [popAnimation, setPopupAnimation] = useState();
 
+  const distance = useRef(100);
   const swipeContainer = useRef();
 
-  const { likes, isLikesLoading } = useLikes();
+  const hidePremium = useMediaPredicate("(max-width: 1190px)");
+  const { likes, isLikesLoading } = useNotification();
+  const { conversations, isConversationsLoading } = useConversation();
+  const { auth } = useAuth();
 
   useEffect(() => {
     getSwipeList({ showLoading: true });
-    if (conversations.length === 0) getMessages();
   }, []);
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const UserHome = () => {
       {/* Notfications */}
       <div className='user-home-notications'>
 
-        <UserHomeNotifications path={'/dashboard/chat'} title={'Hızlı Mesajlar'} isLoading={isMessagesLoading}>
+        <UserHomeNotifications path={'/dashboard/chat'} title={'Hızlı Mesajlar'} isLoading={isConversationsLoading}>
           {conversations.slice(0, 4).map(message => message ? <NotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
@@ -76,36 +74,27 @@ const UserHome = () => {
     </section>
   );
 
-  async function getMessages() {
-    setIsMessagesLoading(true);
-    try {
-      const response = await axiosAuth.get('/chat/conversations?page=1', { headers });
-      if (response?.data.response.code === 200)
-        setConversations(response.data.data)
-    }
-    catch (e) { console.log(e); }
-    finally { setIsMessagesLoading(false); }
-  }
-
-  async function getLikes() {
-    setIsLikesLoading(true)
-    try {
-      const response = await axiosAuth.get('user/likes', { headers });
-      setLikes(response.data.data);
-    }
-    catch (e) { console.log(e); }
-    finally { setIsLikesLoading(false); }
-  }
 
   async function getSwipeList({ showLoading }) {
+
     if (showLoading) setIsSwipeListLoading(true);
+
     const count = await getSwipeListCount();
     if (count < 3) return getSwipeList({ showLoading: showLoading });
+
+    console.log(auth);
+
+
     try {
-      const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, { headers });
+
+      const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, { headers: { Authorization: auth.authorization } });
+
       setSwipeList(prev => [...prev, ...response.data.data]);
+
     }
+
     catch (e) { console.log(e); }
+
     finally { setIsSwipeListLoading(false); };
   }
 
@@ -115,7 +104,7 @@ const UserHome = () => {
 
     try {
       const response = await axiosAuth.get(`user/discover_count?minAge=18&maxAge=70&isOnline=true&distance=${distance.current}&gender=female`, {
-        headers
+        headers: { Authorization: auth.authorization }
       });
 
       if (response.status === 200) {

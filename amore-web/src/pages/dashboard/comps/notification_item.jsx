@@ -10,6 +10,7 @@ const NotificationItem = ({ notification, type }) => {
     const user = getUser(notification, type);
     const userImage = user.photos[0].url;
     const content = getMessageContent(notification, type);
+    const icon = getIcon(type);
 
     return (
         <div className='user-home-notification-item'>
@@ -21,13 +22,22 @@ const NotificationItem = ({ notification, type }) => {
                 {<span className='user-home-notification-item-text'>{content}</span>}
             </FlexBox>
 
-            {type === 'like' && <HeartLineIcon color={colors.fadedText} fill={colors.fadedText} width='26' height='26' />}
-            {type === 'like-unknown' && <FlexBox alignItems='center' justifyContent='center' style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: colors.brand2 }}>
-                <HeartLineIcon color={colors.backGround3} fill={colors.brand2} width='19' height='19' />
-            </FlexBox>}
-            {type === 'message' && <span className='user-home-notification-item-message'>14:03</span>}
+            {icon}
         </div>
     )
+
+    function getIcon(type) {
+        switch (type) {
+            case 'like':
+                return <HeartLineIcon color={colors.fadedText} fill={colors.fadedText} width='26' height='26' />;
+            case 'like-unknown':
+                return <FlexBox alignItems='center' justifyContent='center' style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: colors.brand2 }}>
+                    <HeartLineIcon color={colors.backGround3} fill={colors.brand2} width='18' height='18' />
+                </FlexBox>
+            case 'message':
+                return <span className='user-home-notification-item-message'>14:03</span>
+        }
+    }
 
     function getUser(notication) {
         return notication.participants[0].id !== auth.id ? notification?.participants?.[0] : notification?.participants?.[1];

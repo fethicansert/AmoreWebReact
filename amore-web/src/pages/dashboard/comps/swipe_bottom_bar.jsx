@@ -3,11 +3,13 @@ import { ChatBubbleIcon, CrossLineIcon, HeartLineIcon, StarLineIcon } from '../.
 import { colors } from '../../../utils/theme';
 import emotinalSound from '../../../sounds/emotinal_damage.mp3';
 import dogDoingSound from '../../../sounds/dogdoing.mp3'
+import kissSound from '../../../sounds/kisssound.wav';
 
 const SwipeBottomBar = ({ onLike, onStar, onPass, setPopupAnimation }) => {
 
     const emotinal = useRef(new Audio(emotinalSound));
     const dogdoing = useRef(new Audio(dogDoingSound));
+    const kiss = useRef(new Audio(kissSound));
     return (
         <div className='swipe-bottom-bar'>
 
@@ -41,6 +43,7 @@ const SwipeBottomBar = ({ onLike, onStar, onPass, setPopupAnimation }) => {
     function handleClick(type) {
 
         const popupAnimation = getPopupAnimation(type);
+        kiss.current.play();
 
         setPopupAnimation(popupAnimation);
 

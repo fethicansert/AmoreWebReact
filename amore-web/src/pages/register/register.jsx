@@ -256,16 +256,13 @@ const Register = () => {
             const response = await axiosAuth.post('/otp/verify', body);
             const status = response.data.data.status;
 
-            console.log(status);
-
-
             if (status === true) {
                 const loginReq = await handleLogin();
                 console.log(loginReq);
 
                 if (loginReq.status == 200) {
                     navigate('/dashboard/user-home');
-                    setAuth(loginReq.data);
+                    setAuth({ ...auth, ...loginReq.data });
                 }
                 else navigateForward({ checkError: false });
             }
@@ -273,7 +270,6 @@ const Register = () => {
                 setError("Code is Wrong !");
 
         } catch (e) {
-
             const responsMessage = e?.response?.data?.response?.message;
             if (responsMessage === 'OTP_ALREADY_VERIFIED')
                 setError('Code already used !');
