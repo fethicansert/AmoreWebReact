@@ -4,6 +4,8 @@ import '../../../css/dashboard/payment.css'
 import { MasterCardIcon } from '../../../assets/svg/svg_package';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
+import CreditCard from '../comps/credit_card';
+
 
 const Payment = () => {
     const [cardOwner, setCardOwner] = useState('');
@@ -22,7 +24,7 @@ const Payment = () => {
 
                 <FlexBox flexDirection='column' alignItems='flex-start' gap='10px 0' style={{ marginBottom: '2.4rem' }}>
                     <PaymentInputHeader title="Kart Numarası" subTitle="Kart üzerindeki 16 haneli kart numarasını girin" />
-                    <PaymentInput putDash={true} placeHolder="Kart Numarası" trailing={<MasterCardIcon />} value={cardNumber} setValue={setCardNumber} maxLength={16} />
+                    <PaymentInput type='number' putDash={true} placeHolder="Kart Numarası" trailing={<MasterCardIcon />} value={cardNumber} setValue={setCardNumber} maxLength={16} />
                 </FlexBox>
 
                 <FlexBox alignItems='center' justifyContent='space-between' style={{ marginBottom: '2.4rem' }}>
@@ -43,14 +45,21 @@ const Payment = () => {
                 </BasicButton>
             </form>
 
-            <div className='credit-card'>
-
+            <div className='credit-payment-infos'>
+                <CreditCard name={cardOwner} cardNumber={cardNumber} month={lastDateMonth} year={lastDateYear} />
             </div>
+
 
 
         </section>
     );
 };
+
+function CreditCardCircle({ size, top, left, borderColor }) {
+    return <div style={{ width: size, height: size, top, left, border: `1px solid ${borderColor}`, position: 'absolute', borderRadius: '50%' }}>
+
+    </div>
+}
 
 function PaymentInput({ value, setValue, placeHolder, textAlign, trailing, className, type = "text", maxLength, putDash }) {
 

@@ -1,7 +1,11 @@
 .payment {
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 550px;
+    grid-template-columns: 3fr 500px;
     color: var(--darkText);
+    max-width: 1450px;
+    max-height: 800px;
+    justify-self: center;
 }
 
 .payment form {
@@ -10,6 +14,7 @@
     background-color: var(--backGround3);
     border-radius: var(--spacing4);
     padding: clamp(1rem, 5vw, 5rem);
+    /* align-self: self-end; */
 }
 
 .payment-input-header-title,
@@ -28,7 +33,7 @@
 
 .payment-input-wrapper {
     width: 100%;
-    border-radius: var(--spacing4);
+    border-radius: var(--spacing3);
     background-color: var(--input1);
     border: 1px solid var(--borderColor1);
     display: flex;
@@ -39,7 +44,7 @@
 .payment-input {
     height: 60px;
     width: 100%;
-    border-radius: var(--spacing4);
+    border-radius: var(--spacing3);
     background: transparent;
     border: none;
     font-size: .95rem;
@@ -61,4 +66,67 @@
 
 .payment-last-date-input {
     width: 45%;
+}
+
+.credit-card {
+    width: 225px;
+    height: 350px;
+    background-size: cover;
+    background: url('../../assets/images/credit_card_grain.png'), var(--backGround3);
+    border: 1px solid var(--borderColor1);
+    border-radius: var(--spacing4);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background-blend-mode: hard-light;
+
+    overflow: hidden;
+    justify-self: center;
+    box-shadow: 14px 13px 80px 0px #0000001A;
+
+    font-size: .9rem;
+    font-weight: 600;
+    top: -180px;
+}
+
+.credit-card span {
+    text-transform: capitalize;
+}
+
+.credit-card-content {
+    width: 100%;
+    height: 100%;
+    padding: 1.4rem;
+}
+
+.credit-payment-infos {
+    position: relative;
+    justify-self: center;
+    width: 82%;
+    height: 525px;
+    background-color: var(--backGround4);
+    align-self: self-end;
+    border-radius: var(--spacing4);
+    border: 1px solid var(--borderColor1);
+}
+
+.credit-payment-infos::after,
+.credit-payment-infos::before {
+    display: block;
+    position: absolute;
+    content: '';
+    background-color: var(--backGround2);
+    /* border-left: 1px solid var(--borderColor1); */
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    bottom: 14%;
+}
+
+.credit-payment-infos::after {
+    right: -12.5px;
+}
+
+.credit-payment-infos::before {
+    left: -12.5px;
 }

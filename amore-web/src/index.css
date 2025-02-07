@@ -102,7 +102,8 @@
   --midShadow: 1px 1px 3px rgba(0, 0, 0, 0.45);
 
   /* Spacing */
-  --spacing4: 12px;
+  --spacing3: 12px;
+  --spacing4: 16px;
 }
 
 .notifications::-webkit-scrollbar,
