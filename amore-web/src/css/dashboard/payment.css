@@ -1,0 +1,64 @@
+.payment {
+    display: grid;
+    grid-template-columns: 1fr 550px;
+    color: var(--darkText);
+}
+
+.payment form {
+    width: 100%;
+    border: 1px solid var(--borderColor1);
+    background-color: var(--backGround3);
+    border-radius: var(--spacing4);
+    padding: clamp(1rem, 5vw, 5rem);
+}
+
+.payment-input-header-title,
+.payment-input-header-sub-title {
+    font-size: .9rem;
+}
+
+.payment-input-header-title {
+    font-weight: 600;
+}
+
+.payment-input-header-sub-title {
+    font-weight: 300;
+    color: var(--lowFadedText);
+}
+
+.payment-input-wrapper {
+    width: 100%;
+    border-radius: var(--spacing4);
+    background-color: var(--input1);
+    border: 1px solid var(--borderColor1);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.payment-input {
+    height: 60px;
+    width: 100%;
+    border-radius: var(--spacing4);
+    background: transparent;
+    border: none;
+    font-size: .95rem;
+}
+
+.payment-input::placeholder {
+    font-size: .8rem;
+    color: var(--fadedText);
+}
+
+.payment-input:focus {
+    border: none;
+    outline: none;
+}
+
+.payment-cvv-input {
+    width: 65%;
+}
+
+.payment-last-date-input {
+    width: 45%;
+}

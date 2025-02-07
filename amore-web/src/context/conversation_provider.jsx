@@ -28,7 +28,6 @@ const ConversationProvider = ({ children }) => {
 
             socket.on('connect', () => { console.log('Connected to socket server'); });
 
-
             getMessages();
         }
 

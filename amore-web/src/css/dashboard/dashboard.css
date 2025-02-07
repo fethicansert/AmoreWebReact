@@ -127,6 +127,10 @@
     stroke: var(--brand1)
 }
 
+.notification-button {
+    position: relative;
+}
+
 .notification-button svg {
     stroke: var(--darkText);
     position: relative;
@@ -134,6 +138,22 @@
 
 .notification-button.active svg {
     stroke: var(--brand1);
+}
+
+.unreaded-count {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    background-color: var(--brand1);
+    font-size: .53rem;
+    z-index: 1;
+    left: 12px;
+    top: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--whiteText);
 }
 
 .layout-header a {
@@ -198,6 +218,8 @@
 
     display: none;
     padding: 1rem;
+
+    overflow-y: scroll;
 }
 
 .notifications h3 {
@@ -212,15 +234,6 @@
 .layout-header.notifications-active {
     border-radius: 12px 0 0 12px;
 }
-
-.notifications .user-home-notification-item:hover svg {
-    fill: var(--backGround3);
-}
-
-.notifications .user-home-notification-item:hover svg path {
-    stroke: var(--backGround3);
-}
-
 
 
 @media (max-width: 650px) {

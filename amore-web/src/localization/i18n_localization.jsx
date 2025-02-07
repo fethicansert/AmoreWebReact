@@ -6,7 +6,20 @@ i18n.use(initReactI18next).init({
     fallbackLng: "tr",
     resources: {
         tr: {
+
             translation: {
+
+                notifications: {
+                    VISIT_FREE: {
+                        title: "Birisi profilini ziyaret etti 👀",
+                        description: "Profilin birisinin ilgisini çekti! Ziyaretçinle tanışmak için hemen profilini kontrol et."
+                    },
+                    LIKE_FREE: {
+                        title: "Birisi seni beğendi 😍",
+                        description: "Harika haber! Belki de ruh eşini buldun. Hemen tıkla ve beğeneni öğren!"
+                    }
+                },
+
                 home: {
                     hero: {
                         title: "Tadı Damağında Kalacak",
@@ -141,6 +154,18 @@ i18n.use(initReactI18next).init({
         },
         en: {
             translation: {
+
+
+                notifications: {
+                    VISIT_FREE: {
+                        title: "Someone visited your profile 👀",
+                        description: "Your profile caught someone's interest! Check your profile now to see who visited you."
+                    },
+                    LIKE_FREE: {
+                        title: "Someone liked you 😍",
+                        description: "Great news! Maybe you've found your soulmate. Click now to find out who liked you!"
+                    }
+                },
 
                 home: {
                     hero: {

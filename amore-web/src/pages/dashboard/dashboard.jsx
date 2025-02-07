@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
@@ -10,6 +10,7 @@ import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
 import LayoutLinkBox from './comps/layout_link_box';
 import { useNotification } from '../../hooks/use_notification';
+import UserHomeNotificationItem from './comps/user_home_notification_item';
 import NotificationItem from './comps/notification_item';
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
 
@@ -20,7 +21,14 @@ const Dashboard = () => {
     const [showLogout, setShowLogout] = useState(false);
     const [showNavigation, setShowNavigation] = useState();
 
-    const { likes } = useNotification();
+    const { unReadedCount, notifications } = useNotification();
+
+    console.log(
+        notifications
+    );
+
+
+    console.log(unReadedCount);
 
 
     const routes = [
@@ -62,6 +70,7 @@ const Dashboard = () => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
     }, []);
 
+
     return (
         <div className='layout'>
 
@@ -98,6 +107,7 @@ const Dashboard = () => {
                                 }}
                                 className={`notification-button ${showNavigation ? 'active' : ''}`}
                                 style={{ height: '29px', margin: '16px 0', display: 'block' }}>
+                                <div className='unreaded-count'>{unReadedCount}</div>
                                 {route.icon}
                             </div>)}
 
@@ -124,7 +134,8 @@ const Dashboard = () => {
                         <h3>Bildirimler</h3>
                     </FlexBox>
 
-                    {likes.slice(0, 4).map(like => like ? <NotificationItem key={uuidv4()} type={'like-unknown'} notification={like} /> : null)}
+                    {notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)}
+
                 </div>
             </div>
 
@@ -132,11 +143,6 @@ const Dashboard = () => {
 
         </div>
     )
-
-
-
-
-
 }
 
 

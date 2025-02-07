@@ -100,8 +100,12 @@
   --lowShadow: 1px 1px 3px rgba(0, 0, 0, 0.25);
   --lowMidShadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
   --midShadow: 1px 1px 3px rgba(0, 0, 0, 0.45);
+
+  /* Spacing */
+  --spacing4: 12px;
 }
 
+.notifications::-webkit-scrollbar,
 .premium-subscription::-webkit-scrollbar,
 .market::-webkit-scrollbar,
 .swipe-container::-webkit-scrollbar,
@@ -110,6 +114,7 @@
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.notifications,
 .webkit-scrollbar,
 .market,
 .swipe-containe,

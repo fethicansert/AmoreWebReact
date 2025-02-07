@@ -3,13 +3,12 @@ import PremiumBox from '../../../copmonents/premium_box';
 import { useMediaPredicate } from 'react-media-hook';
 import '../../../css/dashboard/user_home.css';
 import { axiosAuth } from '../../../api/axios';
-import NotificationItem from '../comps/notification_item';
+import UserHomeNotificationItem from '../comps/user_home_notification_item';
 import UserHomeNotifications from '../comps/user_home_notifications';
 import { v4 as uuidv4 } from 'uuid';
 import SwipeBottomBar from '../comps/swipe_bottom_bar';
 import SwipeItem from '../comps/swipe_item';
 import { useConversation } from '../../../hooks/use_conversation';
-import { useNotification } from '../../../hooks/use_notification';
 import { useAuth } from '../../../hooks/use_auth';
 
 const UserHome = () => {
@@ -22,12 +21,14 @@ const UserHome = () => {
   const swipeContainer = useRef();
 
   const hidePremium = useMediaPredicate("(max-width: 1190px)");
-  const { likes, isLikesLoading } = useNotification();
+  const [likes, setLikes] = useState([]);
+  const [isLikesLoading, setIsLikesLoading] = useState(false);
   const { conversations, isConversationsLoading } = useConversation();
   const { auth } = useAuth();
 
   useEffect(() => {
     getSwipeList({ showLoading: true });
+    getLikes();
   }, []);
 
   useEffect(() => {
@@ -60,11 +61,11 @@ const UserHome = () => {
       <div className='user-home-notications'>
 
         <UserHomeNotifications path={'/dashboard/chat'} title={'Hızlı Mesajlar'} isLoading={isConversationsLoading}>
-          {conversations.slice(0, 4).map(message => message ? <NotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
+          {conversations.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
         <UserHomeNotifications path={'/dashboard/matches'} title={'Beğeniler'} isLoading={isLikesLoading}>
-          {likes.slice(0, 4).map(like => like ? <NotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
+          {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         {hidePremium && <PremiumBox style={{ margin: '0 auto 1rem auto' }} />}
@@ -73,6 +74,16 @@ const UserHome = () => {
 
     </section>
   );
+
+  async function getLikes() {
+    setIsLikesLoading(true)
+    try {
+      const response = await axiosAuth.get('user/likes', { headers: { Authorization: auth.authorization } });
+      setLikes(response.data.data);
+    }
+    catch (e) { console.log(e); }
+    finally { setIsLikesLoading(false); }
+  }
 
 
   async function getSwipeList({ showLoading }) {
@@ -83,7 +94,6 @@ const UserHome = () => {
     if (count < 3) return getSwipeList({ showLoading: showLoading });
 
     console.log(auth);
-
 
     try {
 

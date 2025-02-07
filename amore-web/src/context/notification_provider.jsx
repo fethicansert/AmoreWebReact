@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useEffect, useRef, useState } from 'react'
 import { axiosAuth } from '../api/axios';
 import { useAuth } from '../hooks/use_auth';
 
@@ -7,45 +7,72 @@ export const NotificationContext = createContext();
 
 const NotificationProvider = ({ children }) => {
 
-    const [likes, setLikes] = useState([]);
-    const [isLikesLoading, setIsLikesLoading] = useState(false);
-    const [visits, setVisits] = useState([]);
-    const [isVisitsLoading, setIsVisitsLoading] = useState();
+
+    const [unReadedCount, setUnReadedCount] = useState(0);
+    const [isUnReadedLoading, setIsUnReadedLoading] = useState(false);
+    const [notifications, setNotifications] = useState([]);
+    const [isNotificationsLoading, setIsNotificationsLoadings] = useState([]);
 
     const { auth } = useAuth();
 
+    const notficationPage = useRef(2);
+
+
     useEffect(() => {
         if (auth) {
-            getLikes();
-            getVisits();
+            getUnReadedCount();
+            getNotificationList()
         };
-    }, []);
+    }, [auth]);
 
     return (
-        <NotificationContext.Provider value={{ likes, isLikesLoading, visits, isVisitsLoading, }}>
+        <NotificationContext.Provider value={{ unReadedCount, isUnReadedLoading, notifications, isNotificationsLoading }}>
             {children}
         </NotificationContext.Provider>
     )
 
-    async function getLikes() {
-        setIsLikesLoading(true)
+    async function getUnReadedCount() {
+
+        setIsUnReadedLoading(true);
+
         try {
-            const response = await axiosAuth.get('user/likes', { headers: { Authorization: auth.authorization } });
-            setLikes(response.data.data);
+
+            const response = await axiosAuth.get('notification/count', {
+                headers: { Authorization: auth.authorization }
+            });
+
+            if (response.data.response.code === 200)
+                setUnReadedCount(response.data.data.status);
         }
+
         catch (e) { console.log(e); }
-        finally { setIsLikesLoading(false); }
+
+        finally { setIsUnReadedLoading(false); }
     }
 
-    async function getVisits() {
-        setIsVisitsLoading(true);
+
+    async function getNotificationList() {
+
+        setIsUnReadedLoading(true);
+
         try {
-            const response = await axiosAuth.get('user/visits', { headers: { Authorization: auth.authorization } });
-            setVisits(response.data.data);
+
+            const response = await axiosAuth.get(`notification/get?page=${notficationPage.current}`, {
+                headers: { Authorization: auth.authorization }
+            });
+
+            if (response.data.response.code === 200)
+                setNotifications(response.data.data);
         }
+
         catch (e) { console.log(e); }
-        finally { setIsVisitsLoading(false); }
+
+        finally { setIsUnReadedLoading(false); }
     }
+
+
+
+
 }
 
 
