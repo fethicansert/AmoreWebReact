@@ -10,7 +10,6 @@ import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
 import LayoutLinkBox from './comps/layout_link_box';
 import { useNotification } from '../../hooks/use_notification';
-import UserHomeNotificationItem from './comps/user_home_notification_item';
 import NotificationItem from './comps/notification_item';
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
 
@@ -22,13 +21,6 @@ const Dashboard = () => {
     const [showNavigation, setShowNavigation] = useState();
 
     const { unReadedCount, notifications } = useNotification();
-
-    console.log(
-        notifications
-    );
-
-
-    console.log(unReadedCount);
 
 
     const routes = [
@@ -100,6 +92,7 @@ const Dashboard = () => {
                                 onClik={() => setCurrentPosition(index)}
                                 onHover={() => setHoverPosition(index * 61)} />
                             : <div
+                                key={uuidv4()}
                                 onMouseEnter={() => setHoverPosition(index * 61)}
                                 onClick={() => {
                                     setCurrentPosition(index);
@@ -107,7 +100,7 @@ const Dashboard = () => {
                                 }}
                                 className={`notification-button ${showNavigation ? 'active' : ''}`}
                                 style={{ height: '29px', margin: '16px 0', display: 'block' }}>
-                                <div className='unreaded-count'>{unReadedCount}</div>
+                                <div className='unreaded-count'>{unReadedCount < 99 ? unReadedCount : 99}</div>
                                 {route.icon}
                             </div>)}
 

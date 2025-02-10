@@ -78,7 +78,9 @@ const UserHome = () => {
   async function getLikes() {
     setIsLikesLoading(true)
     try {
-      const response = await axiosAuth.get('user/likes', { headers: { Authorization: auth.authorization } });
+      const response = await axiosAuth.get('user/likes', {
+        headers: { Authorization: auth.token }
+      });
       setLikes(response.data.data);
     }
     catch (e) { console.log(e); }
@@ -97,7 +99,9 @@ const UserHome = () => {
 
     try {
 
-      const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, { headers: { Authorization: auth.authorization } });
+      const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, {
+        headers: { Authorization: auth.token }
+      });
 
       setSwipeList(prev => [...prev, ...response.data.data]);
 
@@ -114,7 +118,7 @@ const UserHome = () => {
 
     try {
       const response = await axiosAuth.get(`user/discover_count?minAge=18&maxAge=70&isOnline=true&distance=${distance.current}&gender=female`, {
-        headers: { Authorization: auth.authorization }
+        headers: { Authorization: auth.token }
       });
 
       if (response.status === 200) {

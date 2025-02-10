@@ -33,19 +33,18 @@ const UserHomeNotificationItem = ({ notification, type }) => {
     }
 
     function getMessageContent(notification, type) {
-        if (type === 'like' || type === 'like-unknown') return user?.name + ' ' + 'seni beğendi';
-        else if ('visit') return 'biri profilini ziyaret etti';
+        if (type === 'like') return user?.name + ' ' + 'seni beğendi';
         switch (notification?.lastMessage.type) {
             case 'text':
                 return notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
             case 'audio':
-                return user?.name + ' ' + 'bir ses kaydı gönderdi 🎵'
+                return user?.name + ' ' + 'bir ses kaydı gönderdi 🎵';
             case 'image':
-                return user?.name + ' ' + 'bir fotoğraf gönderdi 📷'
+                return user?.name + ' ' + 'bir fotoğraf gönderdi 📷';
             case 'gift':
-                return user?.name + ' ' + 'bir gift gönderdi 🎁'
+                return user?.name + ' ' + 'bir gift gönderdi 🎁';
             default:
-                return user?.name + ' ' + 'bir mesaj gönderdi.'
+                return user?.name + ' ' + 'bir mesaj gönderdi.';
         }
     };
 }

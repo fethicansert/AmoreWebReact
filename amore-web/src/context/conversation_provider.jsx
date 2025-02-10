@@ -14,25 +14,25 @@ const ConversationProvider = ({ children }) => {
     useEffect(() => {
 
         if (auth) {
-            const socket = io('http://165.227.142.52:3170', {
-                transports: ['websocket'],
-                autoConnect: true,
-                forceNew: true,
-                extraHeaders: {
-                    'Authrorization': auth?.authorization
-                },
-                query: {
-                    'Authrorization': auth?.authorization
-                }
-            });
+            // const socket = io('http://165.227.142.52:3170', {
+            //     transports: ['websocket'],
+            //     autoConnect: true,
+            //     forceNew: true,
+            //     extraHeaders: {
+            //         'Authrorization': auth?.token
+            //     },
+            //     query: {
+            //         'Authrorization': auth?.token
+            //     }
+            // });
 
-            socket.on('connect', () => { console.log('Connected to socket server'); });
+            // socket.on('connect', () => { console.log('Connected to socket server'); });
 
             getMessages();
         }
 
-        return () => socket.disconnect();
-    }, []);
+        // return () => socket.disconnect();
+    }, [auth]);
 
     return (
         <ConversationContext.Provider value={{ conversations, isConversationsLoading }}>
@@ -44,7 +44,12 @@ const ConversationProvider = ({ children }) => {
     async function getMessages() {
         setIsConversationsLoading(true);
         try {
-            const response = await axiosAuth.get('/chat/conversations?page=1', { headers: { Authorization: auth.authorization } });
+            const response = await axiosAuth.get('/chat/conversations?page=1', {
+                headers: { Authorization: auth.token }
+            });
+
+            console.log(response.data);
+
             if (response?.data.response.code === 200)
                 setConversations(response.data.data)
         }

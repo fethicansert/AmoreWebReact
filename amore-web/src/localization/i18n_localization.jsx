@@ -9,16 +9,74 @@ i18n.use(initReactI18next).init({
 
             translation: {
 
-                notifications: {
+
+                NOTIFICATION: {
+                    MESSAGE: {
+                        TITLE: "{{user}}",
+                        DESCRIPTION: "{{message}}"
+                    },
+                    VISIT: {
+                        TITLE: "{{user}} visited your profile 👀",
+                        DESCRIPTION: "Your profile caught someone's attention! Check your profile now to meet your visitor."
+                    },
                     VISIT_FREE: {
-                        title: "Birisi profilini ziyaret etti 👀",
-                        description: "Profilin birisinin ilgisini çekti! Ziyaretçinle tanışmak için hemen profilini kontrol et."
+                        TITLE: "Someone visited your profile 👀",
+                        DESCRIPTION: "Your profile caught someone's attention! Check your profile now to meet your visitor."
+                    },
+                    LIKE: {
+                        TITLE: "{{user}} liked you 😍",
+                        DESCRIPTION: "Great news! Maybe you've found your soulmate. Click now to see who liked you!"
                     },
                     LIKE_FREE: {
-                        title: "Birisi seni beğendi 😍",
-                        description: "Harika haber! Belki de ruh eşini buldun. Hemen tıkla ve beğeneni öğren!"
+                        TITLE: "Someone liked you 😍",
+                        DESCRIPTION: "Great news! Maybe you've found your soulmate. Click now to see who liked you!"
+                    },
+                    SUPERLIKE: {
+                        TITLE: "Someone special super liked you! Click now to discover this special person.",
+                        DESCRIPTION: "{{user}} super liked you 🌟"
+                    },
+                    GIFT: {
+                        TITLE: "Gift",
+                        DESCRIPTION: "{{user}} sent you a gift."
+                    },
+                    CONSUMABLE: {
+                        TITLE: "Token Loaded",
+                        DESCRIPTION: "Tokens have been successfully loaded."
+                    },
+                    SUPPORT_ANSWER: {
+                        TITLE: "Support System",
+                        DESCRIPTION: "Your support request has been answered. ✅"
+                    },
+                    SUPPORT_REQUEST: {
+                        TITLE: "Support Request",
+                        DESCRIPTION: "Your support request has been answered. ✅"
+                    },
+                    GIFT_CREDIT: {
+                        TITLE: "Gift Tokens",
+                        DESCRIPTION: "{{user}} has gifted you {{jetonQuantity}} tokens."
+                    },
+                    MATCH: {
+                        TITLE: "You matched with {{user}} 💖",
+                        DESCRIPTION: "Great news! You matched with {{user}}. Click now to start chatting with this special person!"
+                    },
+                    CALL_ADMIN_REQUEST_STARTED: {
+                        TITLE: "New Call Request",
+                        DESCRIPTION: "A new call request has been received from {{user}}."
+                    },
+                    CALL_ADMIN_REQUEST_MISSED: {
+                        TITLE: "Missed Call Request",
+                        DESCRIPTION: "The call request from {{user}} was missed."
+                    },
+                    AUDIO_CALL_MISSED: {
+                        TITLE: "Missed Voice Call",
+                        DESCRIPTION: "You missed a voice call request from {{user}}."
+                    },
+                    VIDEO_CALL_MISSED: {
+                        TITLE: "Missed Video Call",
+                        DESCRIPTION: "You missed a video call request from {{user}}."
                     }
                 },
+
 
                 home: {
                     hero: {
@@ -156,14 +214,43 @@ i18n.use(initReactI18next).init({
             translation: {
 
 
-                notifications: {
+
+                NOTIFICATION: {
+                    MESSAGE: {
+                        TITLE: "{{user}}",
+                        DESCRIPTION: "{{message}}"
+                    },
                     VISIT_FREE: {
-                        title: "Someone visited your profile 👀",
-                        description: "Your profile caught someone's interest! Check your profile now to see who visited you."
+                        TITLE: "Someone visited your profile 👀",
+                        DESCRIPTION: "Your profile caught someone's attention! Check your profile now to meet your visitor."
                     },
                     LIKE_FREE: {
-                        title: "Someone liked you 😍",
-                        description: "Great news! Maybe you've found your soulmate. Click now to find out who liked you!"
+                        TITLE: "Someone liked you 😍",
+                        DESCRIPTION: "Great news! Maybe you've found your soulmate. Click now to see who liked you!"
+                    },
+                    GIFT: {
+                        TITLE: "Gift",
+                        DESCRIPTION: "{{user}} sent you a gift."
+                    },
+                    SUPERLIKE: {
+                        TITLE: "",
+                        DESCRIPTION: "Someone special super liked you! Click now to discover this special person."
+                    },
+                    CONSUMABLE: {
+                        TITLE: "Token Loaded",
+                        DESCRIPTION: "Tokens have been successfully loaded."
+                    },
+                    SUPPORT_ANSWER: {
+                        TITLE: "Support System",
+                        DESCRIPTION: "Your support request has been answered. ✅"
+                    },
+                    GIFT_CREDIT: {
+                        TITLE: "Gift Tokens",
+                        DESCRIPTION: "{{user}} has gifted you {{jetonQuantity}} tokens."
+                    },
+                    MATCH: {
+                        TITLE: "You matched with {{user}}",
+                        DESCRIPTION: "Great news! You matched with {{user}}. Click now to start chatting with this special person!"
                     }
                 },
 

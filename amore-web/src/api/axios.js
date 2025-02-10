@@ -18,8 +18,6 @@ export const axiosAuth = axios.create({
 
 
 
-axiosAmore.defaults.headers = `appId ${CONSTANTS.appId}`;
-
 
 
 

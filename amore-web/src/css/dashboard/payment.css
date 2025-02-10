@@ -47,7 +47,7 @@
     border-radius: var(--spacing3);
     background: transparent;
     border: none;
-    font-size: .95rem;
+    font-size: 1rem;
 }
 
 .payment-input::placeholder {
@@ -100,6 +100,8 @@
 }
 
 .credit-payment-infos {
+    display: flex;
+    flex-direction: column;
     position: relative;
     justify-self: center;
     width: 82%;
@@ -108,6 +110,7 @@
     align-self: self-end;
     border-radius: var(--spacing4);
     border: 1px solid var(--borderColor1);
+    padding: 1.7rem;
 }
 
 .credit-payment-infos::after,
@@ -116,7 +119,7 @@
     position: absolute;
     content: '';
     background-color: var(--backGround2);
-    /* border-left: 1px solid var(--borderColor1); */
+    /* border: 1px solid var(--borderColor1); */
     width: 25px;
     height: 25px;
     border-radius: 50%;
@@ -129,4 +132,74 @@
 
 .credit-payment-infos::before {
     left: -12.5px;
+}
+
+.credit-payment-infos-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    margin-top: 180px;
+    color: var(--whiteText);
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.credit-payment-infos-content-title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.credit-payment-infos-dot-lines {
+    position: absolute;
+    width: 82%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    bottom: calc(14% + 12.5px);
+    border-bottom: 1px dotted var(--lowWhiteText);
+}
+
+.payment-cvv-number-wrapper {
+    flex-direction: row;
+}
+
+/* ANIMATIONS */
+@media (max-width: 1150px) {
+    .payment {
+        grid-template-columns: 3fr 430px;
+        margin-top: 180px;
+        gap: 10px 0;
+    }
+
+    .credit-payment-infos {
+        width: 100%;
+    }
+
+    .payment form {
+        order: 2;
+    }
+}
+
+
+@media (max-width: 650px) {
+    .payment {
+        grid-template-columns: 1fr;
+        max-width: 550px;
+    }
+}
+
+@media (max-width: 500px) {
+
+    .payment-cvv-number-wrapper,
+    .payment-last-date-wrapper {
+        flex-direction: column;
+        align-items: start;
+        gap: 10px 0;
+    }
+
+    .credit-payment-infos::after,
+    .credit-payment-infos::before {
+        display: none;
+    }
 }

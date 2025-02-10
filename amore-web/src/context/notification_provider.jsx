@@ -15,7 +15,7 @@ const NotificationProvider = ({ children }) => {
 
     const { auth } = useAuth();
 
-    const notficationPage = useRef(2);
+    const notficationPage = useRef(10);
 
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const NotificationProvider = ({ children }) => {
         try {
 
             const response = await axiosAuth.get('notification/count', {
-                headers: { Authorization: auth.authorization }
+                headers: { Authorization: auth.token }
             });
 
             if (response.data.response.code === 200)
@@ -58,7 +58,7 @@ const NotificationProvider = ({ children }) => {
         try {
 
             const response = await axiosAuth.get(`notification/get?page=${notficationPage.current}`, {
-                headers: { Authorization: auth.authorization }
+                headers: { Authorization: auth.token }
             });
 
             if (response.data.response.code === 200)

@@ -13,38 +13,45 @@ import User from './pages/dashboard/sections/user';
 import Matches from './pages/dashboard/sections/matches';
 import Notifications from './pages/dashboard/sections/notifications';
 import Payment from './pages/dashboard/sections/payment';
+import LimitedOfer from './copmonents/limited_ofer';
 
 function App() {
   return (
-    <Routes>
+    <>
+      <Routes>
 
-      <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
 
-      <Route path='/register' element={<Register />} />
+        <Route path='/register' element={<Register />} />
 
-      <Route path='/dashboard' element={<Dashboard />}>
+        <Route path='/dashboard' element={<Dashboard />}>
 
-        <Route index path='user-home' element={<UserHome />} />
+          <Route index path='user-home' element={<UserHome />} />
 
-        <Route path='notifications' element={<Notifications />} />
+          <Route path='notifications' element={<Notifications />} />
 
-        <Route path='discover' element={<Discover />} />
+          <Route path='discover' element={<Discover />} />
 
-        <Route path='matches' element={<Matches />} />
+          <Route path='matches' element={<Matches />} />
 
-        <Route path='chat' element={<Chat />} />
+          <Route path='chat' element={<Chat />} />
 
-        <Route path='market' element={<Market />} />
+          <Route path='market' element={<Market />} />
 
-        <Route path='premium-subscription' element={<Premium />} />
+          <Route path='premium-subscription' element={<Premium />} />
 
-        <Route path='payment' element={<Payment />} />
+          <Route path='payment' element={<Payment />} />
 
-        <Route path='user' element={<User />} />
+          <Route path='user' element={<User />} />
 
-      </Route>
+        </Route>
 
-    </Routes>
+      </Routes>
+
+      <LimitedOfer />
+    </>
+
+
   );
 }
 

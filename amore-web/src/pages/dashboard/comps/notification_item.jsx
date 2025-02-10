@@ -9,30 +9,28 @@ import FlexBox from '../../../copmonents/flex_box';
 
 const NotificationItem = ({ notification }) => {
 
-    // console.log(notification.extraData.senderImage);
-
-
     const { i18n, t } = useTranslation();
     const { auth } = useAuth();
     const type = notification.type;
+    const userName = getUserName();
     const userImage = getImage();
     const title = getTitle();
     const content = getDescription();
     const icon = getIcon();
 
-
-    console.log(userImage);
-
-
     return <NotificationLayout title={title} image={userImage} content={content} icon={icon} />
 
+    function getUserName() {
+        return notification?.titleArgs[0];
+    }
 
     function getTitle() {
+
         if (auth?.isSystem) { return notification.title; }
         if (auth?.isPremium) {
             //SAFA GELINCE BAKILACAK
         }
-        return t(`notifications.${type}.title`);
+        return t(`NOTIFICATION.${type}.TITLE`, { user: userName });
     }
 
     function getDescription(notification) {
@@ -40,7 +38,7 @@ const NotificationItem = ({ notification }) => {
         if (auth?.isPremium) {
             //SAFA GELINCE BAKILACAK
         }
-        return t(`notifications.${type}.description`);
+        return t(`NOTIFICATION.${type}.DESCRIPTION`, { user: userName });
     }
 
     function getIcon() {
@@ -60,7 +58,7 @@ const NotificationItem = ({ notification }) => {
     }
 
     function getImage() {
-        return notification?.extraData?.senderImage;
+        return notification?.extraData?.senderImage || amoreIcon;
     }
 }
 

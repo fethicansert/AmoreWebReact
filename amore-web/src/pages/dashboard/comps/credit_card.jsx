@@ -1,6 +1,7 @@
 import React from 'react'
 import FlexBox from '../../../copmonents/flex_box';
 import { CreditCardChipIcon, MasterCardIcon, WirelessIcon } from '../../../assets/svg/svg_package';
+import { v4 as uuidv4 } from 'uuid';
 
 const CreditCard = ({ name, cardNumber, month, year }) => {
 
@@ -8,12 +9,14 @@ const CreditCard = ({ name, cardNumber, month, year }) => {
         <div className='credit-card'>
 
             {creditCardCirleOptions.map(option => <CreditCardCircle
+                key={uuidv4()}
                 left={option.left}
                 top={option.top}
                 size={option.size}
                 borderColor={option.borderColor} />)}
 
             <div className='credit-card-content'>
+
                 <FlexBox width={'100%'} height={'100%'} justifyContent='space-between' flexDirection='column' alignItems='flex-start'>
                     <FlexBox justifyContent='space-between' width={'100%'} alignItems='center'>
                         <CreditCardChipIcon />
@@ -22,15 +25,15 @@ const CreditCard = ({ name, cardNumber, month, year }) => {
 
                     <FlexBox width={'100%'} flexDirection='column' gap='30px 0'>
 
-                        <FlexBox width={'100%'} flexDirection='column' alignItems='flex-start' gap='5px 0'>
+                        <FlexBox width={'100%'} flexDirection='column' alignItems='flex-start' gap='5px 0' className='credit-card-flex-username'>
                             <span>{name || 'Adı Soyadı'}</span>
                             <span>{cardNumber ? '****' + ' ' + cardNumber.slice(-4) : '**** 3456'}</span>
                         </FlexBox>
 
-                        <FlexBox width={'100%'} justifyContent='space-between' alignItems='center' >
-                            <span>{month || '00'}/{year || '00'}</span>
+                        <FlexBox width={'100%'} justifyContent='space-between' alignItems='center' className='credit-card-flex-last-date'>
+                            <span>{month || 'MM'}/{year || 'YY'}</span>
 
-                            <FlexBox flexDirection='column' gap='1px 0'>
+                            <FlexBox flexDirection='column' gap='1px 0'  >
                                 <MasterCardIcon />
                                 <span style={{ fontWeight: 600, fontSize: '.42rem' }}>mastercard</span>
                             </FlexBox>
@@ -38,6 +41,8 @@ const CreditCard = ({ name, cardNumber, month, year }) => {
 
                     </FlexBox>
                 </FlexBox>
+
+
             </div>
         </div>
     );

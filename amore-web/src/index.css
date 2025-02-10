@@ -327,6 +327,27 @@ header a {
   font-weight: 300;
 }
 
+.limited-ofer {
+  position: fixed;
+  width: 383px;
+  height: 650px;
+  background-color: var(--backGround4);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: var(--spacing3);
+  padding: 1rem;
+  color: var(--whiteText);
+  text-align: center;
+}
+
+.limited-ofer-close-icon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 1rem;
+}
+
 /* ANIMATIONS */
 @media (min-width: 500px) {
 

@@ -112,6 +112,7 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
             setCooldown(null);
         }
     }
+
 }
 
 export default VerifyOtp

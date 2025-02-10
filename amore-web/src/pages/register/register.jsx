@@ -262,6 +262,8 @@ const Register = () => {
 
                 if (loginReq.status == 200) {
                     navigate('/dashboard/user-home');
+                    console.log(loginReq.data);
+
                     setAuth({ ...auth, ...loginReq.data });
                 }
                 else navigateForward({ checkError: false });
