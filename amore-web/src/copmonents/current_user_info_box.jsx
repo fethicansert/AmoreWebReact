@@ -2,7 +2,6 @@ import React from 'react'
 import { AmoreCoinIcon } from '../assets/svg/svg_package'
 import FlexBox from './flex_box'
 import { colors } from '../utils/theme'
-import userAvatar from '../assets/images/user_avatar.png';
 
 const CurrentUserInfoBox = ({ credits, image, name }) => {
     return (
@@ -14,7 +13,7 @@ const CurrentUserInfoBox = ({ credits, image, name }) => {
                     <span style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '600' }}>{credits}</span>
                 </FlexBox>
 
-                <img src={userAvatar} style={{ borderRadius: '12px' }} width={35} />
+                <img src={image} style={{ borderRadius: '12px' }} width={35} />
                 <FlexBox gap='0 2px' >
                     <span className='current-user-info-box-user-name' style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '300' }} >{name}</span>
                 </FlexBox>

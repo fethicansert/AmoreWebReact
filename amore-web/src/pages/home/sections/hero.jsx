@@ -15,7 +15,7 @@ import BasicButton from '../../../copmonents/basic_button';
 
 import '../../../css/home/hero_section.css';
 import { useTranslation } from 'react-i18next';
-const Hero = ({ showLogin, setShowLogin }) => {
+const Hero = () => {
 
     const alignHeaders = useMediaPredicate("(min-width: 380px)");
     const smallButtonText = useMediaPredicate("(min-width: 1000px)");

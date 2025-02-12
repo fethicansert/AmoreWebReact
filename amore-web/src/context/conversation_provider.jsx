@@ -11,35 +11,13 @@ const ConversationProvider = ({ children }) => {
     const [isConversationsLoading, setIsConversationsLoading] = useState(false);
     const { auth } = useAuth();
 
-    useEffect(() => {
-
-        if (auth) {
-            // const socket = io('http://165.227.142.52:3170', {
-            //     transports: ['websocket'],
-            //     autoConnect: true,
-            //     forceNew: true,
-            //     extraHeaders: {
-            //         'Authrorization': auth?.token
-            //     },
-            //     query: {
-            //         'Authrorization': auth?.token
-            //     }
-            // });
-
-            // socket.on('connect', () => { console.log('Connected to socket server'); });
-
-            getMessages();
-        }
-
-        // return () => socket.disconnect();
-    }, [auth]);
+    useEffect(() => { if (auth) getMessages(); }, [auth]);
 
     return (
         <ConversationContext.Provider value={{ conversations, isConversationsLoading }}>
             {children}
         </ConversationContext.Provider>
     )
-
 
     async function getMessages() {
         setIsConversationsLoading(true);

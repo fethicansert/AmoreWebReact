@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { GrLanguage } from "react-icons/gr";
 import { useIPLocation } from '../hooks/use_ip_location'
 import { useBanner } from '../hooks/use_banner'
+import { useAuth } from '../hooks/use_auth'
 
 const Header = ({
     backgroundColor,
@@ -22,22 +23,26 @@ const Header = ({
     hasBorder,
     languageIconColor }) => {
 
+    //STATES
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
     const [showNav, setShowNav] = useState(false);
+
+    //HOOKS
+    const { auth } = useAuth();
     const { t, i18n } = useTranslation();
     const { language, setLanguage } = useIPLocation();
-
+    const { setShowLogin } = useBanner()
     const navigate = useNavigate();
 
-    const { setShowLogin } = useBanner()
-
+    //EFFECTS
     useEffect(() => {
         if (hideButtons) {
             setShowNav(false);
         }
-    }, [hideButtons])
+    }, [hideButtons]);
 
+    //UI
     return (
         <header style={{
             backgroundColor: backgroundColor,
@@ -63,13 +68,13 @@ const Header = ({
 
                     <BasicButton
                         fontSize={'.85rem'}
-                        onClick={() => setShowLogin(true)}
+                        onClick={handleClick}
                         width={'145px'}
                         height={'48px'}
                         borderRadius={'81px'}
                         backgroundColor={colors.brand1}
                         color={colors.whiteText}>
-                        {t('header.loginButton')}
+                        {t(`header.${Object.keys(auth).length > 0 ? 'continueButton' : 'loginButton'}`)}
                     </BasicButton>
 
                     <FlexBox
@@ -101,13 +106,11 @@ const Header = ({
                     style={{ backgroundColor: backgroundColor, transform: `translateX(${showNav && !hideButtons ? '0' : '200'}%)` }}>
 
                     <BasicButton
-                        onClick={() => {
-                            setShowLogin(true);
-                            setShowNav(false);
-                        }}
+                        onClick={() => handleClick({ isMobile: true })}
                         fontSize={'.8rem'}
                         style={{ color: colors.whiteText, backgroundColor: colors.brand1, width: '100%', padding: '.6rem', borderRadius: '4px' }} >
-                        {t('header.loginButton')}</BasicButton>
+                        {t(`header.${Object.keys(auth).length > 0 ? 'continueButton' : 'loginButton'}`)}
+                    </BasicButton>
 
                     <Link style={{ color: textColor, marginTop: '5px', textAlign: 'center', width: '100%' }} to={'/about'}>Amore Hakkında</Link>
 
@@ -118,6 +121,17 @@ const Header = ({
 
         </header>
     )
+
+    //FUNCTIONS
+    function handleClick({ isMobile = false }) {
+        if (Object.keys(auth).length === 0) {
+            isMobile && setShowNav(false);
+            setShowLogin(true);
+        }
+        else navigate('dashboard/user-home');
+    };
+
+
 }
 
 export default Header

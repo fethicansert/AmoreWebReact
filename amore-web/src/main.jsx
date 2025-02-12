@@ -9,19 +9,22 @@ import AuthProvider from './context/auth_provider.jsx'
 import ConversationProvider from './context/conversation_provider.jsx'
 import NotificationProvider from './context/notification_provider.jsx'
 import BannerProvider from './context/banner_provider.jsx'
+import SocketProvider from './context/socket_provider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
     <BrowserRouter>
-      <ConversationProvider>
-        <NotificationProvider>
-          <IPLocationProvider>
-            <BannerProvider>
-              <App />
-            </BannerProvider>
-          </IPLocationProvider>
-        </NotificationProvider>
-      </ConversationProvider>
+      <SocketProvider>
+        <ConversationProvider>
+          <NotificationProvider>
+            <IPLocationProvider>
+              <BannerProvider>
+                <App />
+              </BannerProvider>
+            </IPLocationProvider>
+          </NotificationProvider>
+        </ConversationProvider>
+      </SocketProvider>
     </BrowserRouter>
   </AuthProvider>
 )

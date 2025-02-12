@@ -26,8 +26,6 @@ const Home = () => {
             <InfoImages />
             <Introduction />
             <Footer />
-
-
         </div>
     )
 }

@@ -15,11 +15,12 @@ import DiscoverFilterRadio from '../comps/discover_filter_radio.jsx';
 import BasicButton from '../../../copmonents/basic_button.jsx';
 import { SearchIcon } from '../../../assets/svg/svg_package.jsx';
 import { useMediaPredicate } from 'react-media-hook';
+import userAvatar from '../../../assets/images/user_avatar.png';
 const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
 const Discover = () => {
 
-    const { auth } = useAuth();
+    //STATES
     const [users, setUsers] = useState([]);
     const [searchedUsers, setSearchedUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -27,33 +28,27 @@ const Discover = () => {
     const [age, setAge] = useState([25, 80]);
     const [name, setName] = useState('');
     const [selectedUserStatus, setSelectedUserStatus] = useState('online');
-
     const [isInputFocused, setIsInputFocused] = useState(false);
     const [isInputHovered, setIsInputHovered] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
+
+    //MEDIA
     const isMobile = useMediaPredicate("(max-width:575px)");
 
+    //REFS
     const currentPage = useRef(1);
     const userBox = React.createRef();
 
+    //CONTEXT
+    const { auth } = useAuth();
 
-    useEffect(() => {
-        getUsers();
-    }, []);
+    //EFFECTS
+    useEffect(() => { getUsers(); }, []);
 
-    useEffect(() => {
-        setSearchedUsers(users.filter(user => {
+    useEffect(() => setSearchedUsers(users.filter(user => user.name.toLowerCase().includes(name?.toLowerCase()))),
+        [name, users]);
 
-            //Eger kullanicin ismi varsa 
-            if (user?.name !== undefined) {
-                return user.name.toLowerCase().includes(name?.toLowerCase());
-            }
-            return user;
-        }));
-
-    }, [name, users])
-
-
+    //UI
     return (
         <section className='discover'>
 
@@ -66,7 +61,9 @@ const Discover = () => {
             <div className='discover-users-filter'>
 
                 <div className='discover-users-filter-header'>
-                    <CurrentUserInfoBox credits={auth.credits} name={auth.name} />
+
+                    <CurrentUserInfoBox credits={auth?.credits} name={auth?.name} image={auth?.photos?.[0].url || userAvatar} />
+
                     <BasicButton
                         onClick={() => setShowFilter(prev => !prev)}
                         className='discover-users-filter-header-btn'
@@ -76,8 +73,8 @@ const Discover = () => {
                         borderRadius={'7px'}>
                         Filtrele
                     </BasicButton>
-                </div>
 
+                </div>
 
                 <div
                     className='discover-users-filter-selection'
@@ -123,7 +120,6 @@ const Discover = () => {
                             </div>
                         </div>
                     </div>
-
 
                     <BasicButton
                         style={{ zIndex: '1' }}
@@ -196,7 +192,6 @@ const Discover = () => {
         if (isMobile) setShowFilter(false);
     }
 }
-
 
 export default Discover
 

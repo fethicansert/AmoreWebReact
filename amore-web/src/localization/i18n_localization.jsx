@@ -117,6 +117,7 @@ i18n.use(initReactI18next).init({
                 header: {
                     registerButton: 'Kayıt Ol',
                     loginButton: ' Hemen Başla !',
+                    continueButton: "Devam Et !",
                     amoreLink1: 'Amore Hakkında',
                     amoreLink2: "Amore Nedir ?",
                 },
@@ -212,8 +213,6 @@ i18n.use(initReactI18next).init({
         en: {
             translation: {
 
-
-
                 NOTIFICATION: {
                     MESSAGE: {
                         TITLE: "{{user}}",
@@ -291,6 +290,7 @@ i18n.use(initReactI18next).init({
                 header: {
                     registerButton: 'Sign Up',
                     loginButton: 'Start Now !',
+                    continueButton: "Continue !",
                     amoreLink1: 'About Amore',
                     amoreLink2: 'What is Amore?'
                 },

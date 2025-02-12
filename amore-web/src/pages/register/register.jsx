@@ -17,7 +17,6 @@ import RegisterHobbies from './sections/register_hobbies';
 import RegisterUserPhotos from './sections/register_user_photos';
 
 import RegisterLocation from './sections/register_location';
-import { dummyLocationData } from '../../data/dummy_data';
 import { axiosAmore, axiosAuth } from '../../api/axios';
 import { useTranslation } from 'react-i18next';
 import { useIPLocation } from '../../hooks/use_ip_location';
@@ -29,7 +28,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
 import AmoreLoading from '../../copmonents/amore_loading';
 
-const locationData = dummyLocationData;
 
 const startPosition = 16.7;
 const NUMBER_REGEX = /^$|^(?:-(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))|(?:0|(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))))(?:.\d+|)$/;

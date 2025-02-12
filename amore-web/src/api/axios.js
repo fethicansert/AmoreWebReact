@@ -1,9 +1,8 @@
 import axios from 'axios';
 import { CONSTANTS } from '../utils/constants';
 
-
 const headers = {
-    appId: '6a3dbc21-7e77-4c8b-b9ea-885d2dc0407',
+    appId: CONSTANTS.APP_ID,
 }
 
 export const axiosAmore = axios.create({

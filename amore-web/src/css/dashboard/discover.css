@@ -27,7 +27,6 @@
 }
 
 .discover-users-filter-selection {
-    border-radius: 12px;
     width: 100%;
     background: var(--backGround3);
     border-top: 1px solid var(--borderColor1);
@@ -136,7 +135,6 @@
     &::placeholder {
         font-size: .8rem;
         color: var(--fadedText);
-
     }
 }
 
