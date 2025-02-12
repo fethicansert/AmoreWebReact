@@ -8,6 +8,7 @@ import LoginPopupProvider from './context/login_popup_provider.jsx'
 import AuthProvider from './context/auth_provider.jsx'
 import ConversationProvider from './context/conversation_provider.jsx'
 import NotificationProvider from './context/notification_provider.jsx'
+import BannerProvider from './context/banner_provider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <AuthProvider>
@@ -15,9 +16,9 @@ createRoot(document.getElementById('root')).render(
       <ConversationProvider>
         <NotificationProvider>
           <IPLocationProvider>
-            <LoginPopupProvider>
+            <BannerProvider>
               <App />
-            </LoginPopupProvider>
+            </BannerProvider>
           </IPLocationProvider>
         </NotificationProvider>
       </ConversationProvider>

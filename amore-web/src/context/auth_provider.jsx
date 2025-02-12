@@ -8,7 +8,6 @@ const AuthProvider = ({ children }) => {
 
     console.log(auth);
 
-
     useEffect(() => {
         localStorage.setItem('auth', JSON.stringify(auth));
     }, [auth])

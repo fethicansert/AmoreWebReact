@@ -36,6 +36,7 @@ const Discover = () => {
     const currentPage = useRef(1);
     const userBox = React.createRef();
 
+
     useEffect(() => {
         getUsers();
     }, []);
@@ -61,10 +62,11 @@ const Discover = () => {
                     {searchedUsers.map(user => <DiscoverUser ref={userBox} key={uuidv4()} user={user} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
+
             <div className='discover-users-filter'>
 
                 <div className='discover-users-filter-header'>
-                    <CurrentUserInfoBox credit={240} name={'Alihan Can'} />
+                    <CurrentUserInfoBox credits={auth.credits} name={auth.name} />
                     <BasicButton
                         onClick={() => setShowFilter(prev => !prev)}
                         className='discover-users-filter-header-btn'

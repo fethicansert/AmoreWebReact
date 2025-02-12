@@ -104,8 +104,13 @@
   /* Spacing */
   --spacing3: 12px;
   --spacing4: 16px;
+
+  /* Overlay Blacks */
+  --overlayLow: rgba(0, 0, 0, 0.15);
+  --overlayMid: rgba(0, 0, 0, 0.45)
 }
 
+.notifications-wrapper::-webkit-scrollbar,
 .notifications::-webkit-scrollbar,
 .premium-subscription::-webkit-scrollbar,
 .market::-webkit-scrollbar,
@@ -115,6 +120,7 @@
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.notifications-wrapper,
 .notifications,
 .webkit-scrollbar,
 .market,
@@ -206,7 +212,6 @@ header a {
   box-shadow: var(--lowShadow)
 }
 
-
 .premium-box {
   width: 27vw;
   height: calc(27vw * 1.4112);
@@ -291,6 +296,8 @@ header a {
   background-color: var(--whiteText);
 }
 
+
+.limited-offer-wrapper,
 .logout {
   position: fixed;
   left: 0;
@@ -303,6 +310,7 @@ header a {
   align-items: center;
   justify-content: center;
   text-align: center;
+  background-color: var(--overlayMid);
 }
 
 .logout-container {
@@ -321,32 +329,161 @@ header a {
 }
 
 .logout-container p {
-  margin-top: .5rem;
+  margin-top: .3rem;
   color: var(--lowFadedText);
   font-size: .8rem;
   font-weight: 300;
 }
 
-.limited-ofer {
-  position: fixed;
-  width: 383px;
-  height: 650px;
+.limited-offer {
+  position: absolute;
+  background-size: cover;
+  background-blend-mode: hard-light;
   background-color: var(--backGround4);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: var(--spacing3);
-  padding: 1rem;
+  border-radius: var(--spacing4);
+  padding: calc(1rem + 33px) 1.15rem 1.15rem;
   color: var(--whiteText);
   text-align: center;
 }
 
-.limited-ofer-close-icon {
+.limited-offer-close-icon {
   position: absolute;
   right: 0;
   top: 0;
   margin: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    scale: 1.05;
+  }
 }
+
+.limited-offer-title {
+  font-size: 1.9rem;
+}
+
+.limited-offer p {
+  font-size: .88rem;
+  font-weight: 600;
+  margin-top: .75rem;
+  max-width: 250px;
+  margin: .5rem auto;
+}
+
+.bonuses-wrapper {
+  margin: 1.2rem 0;
+  width: 100%;
+  padding: 1rem .65rem;
+  background-color: var(--lowWhiteText);
+  border-radius: var(--spacing3);
+}
+
+.bonus-items-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin-top: 1rem;
+}
+
+.bonus-item-image-elipse {
+  justify-self: center;
+  width: 56px;
+  height: 56px;
+  background-image: url(assets/images/elipse_pink_blue.png);
+  background-size: cover;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: .7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bonus-item-image-elipse img {
+  width: 33px
+}
+
+.bonus-item span {
+  margin: 0 auto;
+  display: block;
+  font-size: .7rem;
+  max-width: 62px;
+}
+
+.jeton-packet {
+  position: relative;
+  outline: 1px solid var(--midwhite);
+  width: 111px;
+  height: 217px;
+  border-radius: var(--spacing3);
+  box-shadow: 4px 4px 15px 0px #FFFFFF4D inset;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: .7rem;
+
+  transition: scale .52s ease;
+  cursor: pointer;
+}
+
+.jeton-packet:nth-child(2) {
+  animation: jetonPacketAnimation 1.5s ease infinite;
+}
+
+.jeton-packet:nth-child(1):hover,
+.jeton-packet:nth-child(3):hover {
+  scale: 1.04;
+}
+
+.jeton-packet-discount {
+  width: 61px;
+  height: 25px;
+  box-shadow: 0px 0px 8.33px 0px #FFFFFF inset;
+  position: absolute;
+  border-radius: 16px;
+  top: -12.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .6rem;
+}
+
+.jeton-packet-old-jeton {
+  font-size: .9rem;
+  text-decoration: line-through;
+  font-weight: 600;
+}
+
+.jeton-packet-new-jeton {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.jeton-packet-jeton-text {
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+.jeton-packet-price {
+  font-weight: 600;
+  font-size: .83rem;
+}
+
+.jeton-packet-time-text {
+  font-size: .68rem;
+}
+
+.limited-offer-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  backdrop-filter: blur(2px);
+  z-index: 999;
+}
+
 
 /* ANIMATIONS */
 @media (min-width: 500px) {
@@ -359,6 +496,22 @@ header a {
     }
 
   }
+}
+
+@keyframes jetonPacketAnimation {
+  0% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.04;
+  }
+
+  0% {
+    scale: 1;
+  }
+
+
 }
 
 @keyframes fadeHeader {

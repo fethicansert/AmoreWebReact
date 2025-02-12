@@ -8,7 +8,7 @@ import { TbMenu2 } from "react-icons/tb";
 import { useTranslation } from 'react-i18next'
 import { GrLanguage } from "react-icons/gr";
 import { useIPLocation } from '../hooks/use_ip_location'
-import { useLoginPopup } from '../hooks/use_login_popup'
+import { useBanner } from '../hooks/use_banner'
 
 const Header = ({
     backgroundColor,
@@ -30,7 +30,7 @@ const Header = ({
 
     const navigate = useNavigate();
 
-    const { setShowLoginPopup } = useLoginPopup()
+    const { setShowLogin } = useBanner()
 
     useEffect(() => {
         if (hideButtons) {
@@ -63,7 +63,7 @@ const Header = ({
 
                     <BasicButton
                         fontSize={'.85rem'}
-                        onClick={() => setShowLoginPopup(true)}
+                        onClick={() => setShowLogin(true)}
                         width={'145px'}
                         height={'48px'}
                         borderRadius={'81px'}
@@ -71,7 +71,6 @@ const Header = ({
                         color={colors.whiteText}>
                         {t('header.loginButton')}
                     </BasicButton>
-
 
                     <FlexBox
                         style={{ cursor: 'pointer' }}
@@ -103,7 +102,7 @@ const Header = ({
 
                     <BasicButton
                         onClick={() => {
-                            setShowLoginPopup(true);
+                            setShowLogin(true);
                             setShowNav(false);
                         }}
                         fontSize={'.8rem'}

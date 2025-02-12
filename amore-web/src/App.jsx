@@ -13,9 +13,17 @@ import User from './pages/dashboard/sections/user';
 import Matches from './pages/dashboard/sections/matches';
 import Notifications from './pages/dashboard/sections/notifications';
 import Payment from './pages/dashboard/sections/payment';
-import LimitedOfer from './copmonents/limited_ofer';
+import LimitedOffer from './copmonents/limited_offer';
+import { useBanner } from './hooks/use_banner';
+import LoginPopup from '../src/copmonents/login_popup'
 
 function App() {
+
+  const { showLimitedOffer, setShowLimitedOffer, showLogin, setShowLogin } = useBanner();
+
+
+
+
   return (
     <>
       <Routes>
@@ -48,7 +56,10 @@ function App() {
 
       </Routes>
 
-      <LimitedOfer />
+      {showLimitedOffer && <LimitedOffer setShowLimitedOffer={setShowLimitedOffer} />}
+
+      {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+
     </>
 
 

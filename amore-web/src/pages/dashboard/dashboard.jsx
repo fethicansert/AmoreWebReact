@@ -4,7 +4,7 @@ import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
 import '../../css/dashboard/dashboard.css'
 import { v4 as uuidv4 } from 'uuid';
-import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, UserIcon } from '../../assets/svg/svg_package';
+import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './comps/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
@@ -19,9 +19,7 @@ const Dashboard = () => {
     const [hoverPosition, setHoverPosition] = useState(0);
     const [showLogout, setShowLogout] = useState(false);
     const [showNavigation, setShowNavigation] = useState();
-
     const { unReadedCount, notifications } = useNotification();
-
 
     const routes = [
         {
@@ -123,11 +121,18 @@ const Dashboard = () => {
                 </div>
 
                 <div className={`notifications ${showNavigation ? 'active' : ''}`}>
-                    <FlexBox justifyContent='flex-start' style={{ padding: '1rem 0', borderBottom: `1px solid ${colors.borderColor1}` }}>
+
+                    <FlexBox justifyContent='space-between' className='notifications-header' style={{ padding: '.5rem 1rem 1rem', borderBottom: `1px solid ${colors.borderColor1}` }}>
                         <h3>Bildirimler</h3>
+                        <FlexBox gap='0 14px'>
+                            <NotificationConfirmIcon width='25' height='25' />
+                            <NotificationTrashIcon width='24' height='24' />
+                        </FlexBox>
                     </FlexBox>
 
-                    {notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)}
+                    <div className='notifications-wrapper'>
+                        {notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)}
+                    </div>
 
                 </div>
             </div>

@@ -7,18 +7,17 @@ import BasicButton from './basic_button';
 import FlexBox from './flex_box';
 import BlurButton from './blur_button';
 import { AppleLogo, CloseIcon, GoogleLogo } from '../assets/svg/svg_package';
-import { useLoginPopup } from '../hooks/use_login_popup';
 import { useNavigate } from 'react-router-dom';
-const LoginPopup = ({ text }) => {
-    const { setShowLoginPopup } = useLoginPopup();
+const LoginPopup = ({ setShowLogin }) => {
 
     const navigate = useNavigate();
+
     return (
         <div className='login-popup'>
 
             <div className='login-popup-container'>
 
-                <CloseIcon color={colors.negativeBlack} strokeColor={colors.backGround3} onClick={() => setShowLoginPopup(false)} />
+                <CloseIcon color={colors.negativeBlack} strokeColor={colors.backGround3} onClick={() => setShowLogin(false)} />
 
                 <img src={loginBackGroundImage}></img>
                 <div className='login-grain-texture'></div>
@@ -51,7 +50,7 @@ const LoginPopup = ({ text }) => {
                             fontSize={'.9rem'}
                             onClick={() => {
                                 navigate('/register');
-                                setShowLoginPopup(false);
+                                setShowLogin(false);
                             }}
                             backgroundColor={colors.brand1}
                             color={colors.whiteText}

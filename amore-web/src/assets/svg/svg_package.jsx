@@ -1,6 +1,3 @@
-
-
-
 //Arror Left Icon
 export const ArrowLeftIcon = () =>
     <svg width="16" height="14" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -112,14 +109,12 @@ export const CoinIcon = ({ width = '25', height = '25', color = "#4B164C", class
     <path fillRule="evenodd" clipRule="evenodd" d="M23.3113 12.6308C23.3113 14.2007 20.8801 15.4743 17.8817 15.4743C14.8833 15.4743 12.4531 14.2007 12.4531 12.6308C12.4531 11.0609 14.8833 9.78735 17.8817 9.78735C20.8801 9.78735 23.3113 11.0609 23.3113 12.6308Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
-
 export const DiamondIcon = ({ width = '25', height = '25', color = "#4B164C", className = 'diamond-icon' }) => <svg className={className} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M14.0769 24.3431L10.481 12.8772" stroke={color} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M18.1346 5.4989L13.6592 12.8773" stroke={color} strokeWidth="2" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
     <path fillRule="evenodd" clipRule="evenodd" d="M12.5779 23.7285L4.17635 14.3634C3.47481 13.5801 3.39425 12.4098 3.98278 11.5357L7.3752 6.49219C7.79477 5.86785 8.49184 5.49438 9.237 5.49438H18.6512C19.3964 5.49438 20.0945 5.86898 20.5141 6.49332L23.8976 11.5357C24.485 12.4109 24.4045 13.5801 23.7017 14.3622L15.2991 23.7285C14.5696 24.5423 13.3074 24.5423 12.5779 23.7285Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M3.6377 12.8726H24.2894" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
-
 
 export const LogoutIcon = ({ width = '25', height = '25', color = "#4B164C", className = 'layout-header-icon', onClick }) => <svg onClick={onClick} className={className} width={width} height={height} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M4.3252 24.2517C4.3252 21.7913 6.26674 18.7287 11.8599 18.7287C17.4531 18.7287 19.3947 21.7694 19.3947 24.2308" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -164,12 +159,10 @@ export const TickIcon = ({ width = '28', height = '28', color = "#18181C" }) => 
     <path d="M10.5146 14.0777L13.1708 16.7713L18.4808 11.384" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
-
 export const GenderIcon = ({ width = '30', height = '30', color = '#18181C' }) => <svg width={width} height={height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M10.3633 25.4794V19.658M7.98055 23.2652H12.7189M6.0225 17.8877C3.6621 15.5273 3.6621 11.7001 6.0225 9.33971C8.38292 6.97929 12.2101 6.97929 14.5705 9.33971C16.9309 11.7001 16.9309 15.5273 14.5705 17.8877C12.2101 20.2493 8.38292 20.2493 6.0225 17.8877Z" stroke={color} strokeWidth="1.80316" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M22.2841 5.23239H25.8902M25.8902 5.23239V8.83851M25.8902 5.23239L21.8044 9.32041M11.4646 13.6138C11.4646 10.2755 14.1713 7.5689 17.5095 7.5689C20.8477 7.5689 23.5532 10.2755 23.5532 13.6138C23.5532 16.9521 20.8477 19.6575 17.5095 19.6575C14.1713 19.6575 11.4646 16.9521 11.4646 13.6138Z" stroke={color} strokeWidth="1.80316" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
-
 
 export const BirthdayIcon = ({ width = '30', height = '30', color = '#18181C' }) => <svg width={width} height={height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M16.6819 23.8726H12.7837L14.7325 21.861L16.6819 23.8726Z" stroke={color} strokeWidth="1.80316" strokeLinecap="round" strokeLinejoin="round" />
@@ -233,5 +226,17 @@ export const CreditCardChipIcon = ({ width = '28', height = '36' }) => <svg widt
     <path d="M11.0887 5.43138L11.0887 12.6519C11.0887 12.8701 10.9121 13.0571 10.6835 13.0571C10.4653 13.0571 10.2783 12.8805 10.2783 12.6519L10.2783 5.43138C10.2783 5.21321 10.4549 5.0262 10.6835 5.0262C10.9121 5.03659 11.0887 5.21321 11.0887 5.43138Z" fill="#7D662D" />
     <path d="M18.3094 5.43138L18.3094 12.6519C18.3094 12.8701 18.1328 13.0571 17.9042 13.0571C17.686 13.0571 17.499 12.8805 17.499 12.6519L17.499 5.43138C17.499 5.21321 17.6756 5.0262 17.9042 5.0262C18.1224 5.03659 18.3094 5.21321 18.3094 5.43138Z" fill="#7D662D" />
 </svg>
+
+export const NotificationTrashIcon = ({ width = '28', height = '29', color = '#18181C', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21.7305 11.9633C21.7305 21.3188 23.0579 25.5477 14.1301 25.5477C5.20112 25.5477 6.55584 21.3188 6.55584 11.9633" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M23.4283 8.37659H4.85645" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18.0803 8.37662C18.0803 8.37662 18.6882 3.98328 14.141 3.98328C9.59502 3.98328 10.2028 8.37662 10.2028 8.37662" stroke={color} strokeWidth="1.5" stroL-linecap="round" strokeLinejoin="round" />
+</svg>
+
+export const NotificationConfirmIcon = ({ width = '28', height = '29', color = '#18181C', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M24.561 14.8168C24.561 9.01737 19.9278 4.31677 14.2116 4.31677C8.49545 4.31677 3.8623 9.01737 3.8623 14.8168C3.8623 20.615 8.49545 25.3168 14.2116 25.3168C19.9278 25.3168 24.561 20.615 24.561 14.8168Z" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M10.2266 14.8171L12.8827 17.5107L18.1927 12.1234" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
 
 

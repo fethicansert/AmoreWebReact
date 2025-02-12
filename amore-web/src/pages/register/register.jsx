@@ -264,7 +264,8 @@ const Register = () => {
                     navigate('/dashboard/user-home');
                     console.log(loginReq.data);
 
-                    setAuth({ ...auth, ...loginReq.data });
+                    setAuth({ ...loginReq.data });
+                    setAuth(prev => ({ ...prev, premiumSubscription: false }))
                 }
                 else navigateForward({ checkError: false });
             }

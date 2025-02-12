@@ -6,10 +6,11 @@ import amoreIcon from '../../../assets/icons/amore_icon.png';
 import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import FlexBox from '../../../copmonents/flex_box';
+import { useBanner } from '../../../hooks/use_banner';
 
 const NotificationItem = ({ notification }) => {
 
-    const { i18n, t } = useTranslation();
+    const { _, t } = useTranslation();
     const { auth } = useAuth();
     const type = notification.type;
     const userName = getUserName();
@@ -18,28 +19,46 @@ const NotificationItem = ({ notification }) => {
     const content = getDescription();
     const icon = getIcon();
 
-    return <NotificationLayout title={title} image={userImage} content={content} icon={icon} />
+    const { setShowLimitedOffer } = useBanner();
+
+    return <NotificationLayout
+        blurImage={checkBlur()}
+        onClick={handleClick}
+        title={title}
+        image={userImage}
+        content={content}
+        icon={icon}
+    />
+
+    function checkBlur() {
+        if ((type === 'VISIT_FREE' || type === 'LIKE_FREE') && !auth.premiumSubscription)
+            return true;
+        else return false;
+    }
+
+    function handleClick() {
+        setShowLimitedOffer(true);
+    }
 
     function getUserName() {
         return notification?.titleArgs[0];
     }
 
     function getTitle() {
-
         if (auth?.isSystem) { return notification.title; }
-        if (auth?.isPremium) {
-            //SAFA GELINCE BAKILACAK
+        if (auth?.premiumSubscription && (type === 'VISIT_FREE' || type === 'LIKE_FREE')) {
+            return t(`NOTIFICATION.${type.slice(0, -5)}.TITLE`, { user: userName });
         }
         return t(`NOTIFICATION.${type}.TITLE`, { user: userName });
-    }
+    };
 
     function getDescription(notification) {
         if (auth?.isSystem) { return notification.description; }
-        if (auth?.isPremium) {
-            //SAFA GELINCE BAKILACAK
+        if (auth?.premiumSubscription && (type === 'VISIT_FREE' || type === 'LIKE_FREE')) {
+            return t(`NOTIFICATION.${type.slice(0, -5)}.DESCRIPTION`, { user: userName });
         }
-        return t(`NOTIFICATION.${type}.DESCRIPTION`, { user: userName });
-    }
+        return t(`NOTIFICATION.${type}.DESCRIPTION`, { user: userName, jetonQuantity: 100 });
+    };
 
     function getIcon() {
         switch (type) {
@@ -60,6 +79,8 @@ const NotificationItem = ({ notification }) => {
     function getImage() {
         return notification?.extraData?.senderImage || amoreIcon;
     }
+
+
 }
 
 export default NotificationItem

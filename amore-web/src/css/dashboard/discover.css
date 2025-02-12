@@ -133,7 +133,6 @@
     padding-left: 8px;
     gap: 0 5px;
 
-
     &::placeholder {
         font-size: .8rem;
         color: var(--fadedText);
@@ -182,9 +181,6 @@
 
 /* ANIMATIONS */
 @media (max-width: 575px) {
-
-
-
 
     .discover-users-filter-header-btn {
         display: block;

@@ -1,13 +1,12 @@
 import '../../copmonents/padding_container';
-
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Hero from './sections/hero';
 import Info from './sections/info';
 import InfoImages from './sections/info_images';
 import Introduction from './sections/introduction';
 import Footer from './sections/footer';
-import LoginPopup from '../../copmonents/login_popup';
-import { useLoginPopup } from '../../hooks/use_login_popup';
+
+import { useBanner } from '../../hooks/use_banner';
 
 const Home = () => {
 
@@ -15,7 +14,10 @@ const Home = () => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FEEDF4');
     }, [])
 
-    const { showLoginPopup } = useLoginPopup()
+    const { showLogin, setShowLogin } = useBanner();
+
+    console.log(showLogin);
+
 
     return (
         <div className='home'>
@@ -25,7 +27,7 @@ const Home = () => {
             <Introduction />
             <Footer />
 
-            {showLoginPopup && <LoginPopup />}
+
         </div>
     )
 }
