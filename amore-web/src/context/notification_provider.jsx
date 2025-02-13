@@ -7,7 +7,6 @@ export const NotificationContext = createContext();
 
 const NotificationProvider = ({ children }) => {
 
-
     const [unReadedCount, setUnReadedCount] = useState(0);
     const [isUnReadedLoading, setIsUnReadedLoading] = useState(false);
     const [notifications, setNotifications] = useState([]);
@@ -15,11 +14,10 @@ const NotificationProvider = ({ children }) => {
 
     const { auth } = useAuth();
 
-    const notficationPage = useRef(10);
-
+    const notficationPage = useRef(1);
 
     useEffect(() => {
-        if (auth) {
+        if (Object.keys(auth).length > 0) {
             getUnReadedCount();
             getNotificationList()
         };
@@ -29,7 +27,7 @@ const NotificationProvider = ({ children }) => {
         <NotificationContext.Provider value={{ unReadedCount, isUnReadedLoading, notifications, isNotificationsLoading }}>
             {children}
         </NotificationContext.Provider>
-    )
+    );
 
     async function getUnReadedCount() {
 
@@ -40,6 +38,7 @@ const NotificationProvider = ({ children }) => {
             const response = await axiosAuth.get('notification/count', {
                 headers: { Authorization: auth.token }
             });
+
 
             if (response.data.response.code === 200)
                 setUnReadedCount(response.data.data.status);

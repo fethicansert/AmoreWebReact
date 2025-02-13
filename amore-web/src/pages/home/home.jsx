@@ -1,23 +1,15 @@
 import '../../copmonents/padding_container';
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import Hero from './sections/hero';
 import Info from './sections/info';
 import InfoImages from './sections/info_images';
 import Introduction from './sections/introduction';
 import Footer from './sections/footer';
-
-import { useBanner } from '../../hooks/use_banner';
+import { changeRootThemeColor } from '../../utils/functions';
 
 const Home = () => {
 
-    useEffect(() => {
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FEEDF4');
-    }, [])
-
-    const { showLogin, setShowLogin } = useBanner();
-
-    console.log(showLogin);
-
+    useEffect(() => { changeRootThemeColor('#FEEDF4') }, []);
 
     return (
         <div className='home'>
@@ -27,7 +19,7 @@ const Home = () => {
             <Introduction />
             <Footer />
         </div>
-    )
+    );
 }
 
-export default Home
+export default Home;

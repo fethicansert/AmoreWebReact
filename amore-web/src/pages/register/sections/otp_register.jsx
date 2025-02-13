@@ -7,6 +7,7 @@ import { scrollPage } from '../../../utils/functions';
 
 const OtpRegister = ({ phone, setPhone }) => {
 
+
     const { ipLocation } = useIPLocation();
 
     //IF ipLocatiob has no error use ipLocation Country Code OR 
@@ -43,6 +44,7 @@ const OtpRegister = ({ phone, setPhone }) => {
                     value={phone}
                     onChange={phone => setPhone(phone)}
                 />
+
             </div>
         </div>
     )

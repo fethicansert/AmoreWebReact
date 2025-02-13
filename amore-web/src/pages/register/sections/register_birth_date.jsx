@@ -26,20 +26,20 @@ const RegisterBirthDate = ({ selectedDate, setSelectedDate, showDatePicker, setS
 
       <div className='date-box'>
         <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
-          {selectedDate !== undefined ? dateObj.day : t('register.birthDate.dayPlaceholder')}
+          {selectedDate !== undefined ? dateObj.day : t('REGISTER.BIRTH_DATE.DAY_PLACEHOLDER')}
         </span>
       </div>
 
       <div className='date-box'>
         <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
-          {selectedDate !== undefined ? dateObj.month : t('register.birthDate.monthPlaceholder')}
+          {selectedDate !== undefined ? dateObj.month : t('REGISTER.BIRTH_DATE.MONTH_PLACEHOLDER')}
         </span>
       </div>
 
 
       <div className='date-box'>
         <span className='date-box-placeholder' style={{ color: `${selectedDate !== undefined ? colors.darkText : colors.fadedText}`, fontWeight: '600' }}>
-          {selectedDate !== undefined ? dateObj.year : t('register.birthDate.yearPlaceholder')}
+          {selectedDate !== undefined ? dateObj.year : t('REGISTER.BIRTH_DATE.YEAR_PLACEHOLDER')}
         </span>
       </div>
 

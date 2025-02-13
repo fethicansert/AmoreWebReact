@@ -1,21 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react'
 import FlexBox from '../../copmonents/flex_box';
 import Header from '../../copmonents/header';
-
 import amoreIcon from '../../assets/icons/amore_icon.png';
-import '../../css/register/register.css'
 import { colors } from '../../utils/theme';
 import BasicButton from '../../copmonents/basic_button';
-
 import { ArrowLeftIcon } from '../../assets/svg/svg_package';
 import PaddingContainer from '../../copmonents/padding_container';
 import RegisterName from './sections/register_name';
-
 import RegisterBirthDate from './sections/register_birth_date';
 import RegisterGender from './sections/register_gender';
 import RegisterHobbies from './sections/register_hobbies';
 import RegisterUserPhotos from './sections/register_user_photos';
-
 import RegisterLocation from './sections/register_location';
 import { axiosAmore, axiosAuth } from '../../api/axios';
 import { useTranslation } from 'react-i18next';
@@ -23,57 +18,39 @@ import { useIPLocation } from '../../hooks/use_ip_location';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
-import { createOtp, objectToFormData, login, isAdult, scrollPage } from '../../utils/functions';
+import { createOtp, objectToFormData, login, isAdult, scrollPage, changeRootThemeColor } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
 import AmoreLoading from '../../copmonents/amore_loading';
-
+import '../../css/register/register.css';
 
 const startPosition = 16.7;
-const NUMBER_REGEX = /^$|^(?:-(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))|(?:0|(?:[1-9](?:\d{0,2}(?:,\d{3})+|\d*))))(?:.\d+|)$/;
-const registerLocalization = ['phone', 'verify', 'username', 'birthDate', 'gender', 'interests', 'photo', 'location'];
+const registerLocalization = ['PHONE', 'VERIFY', 'USERNAME', 'BIRTH_DATE', 'GENDER', 'INTERESTS', 'PHOTO', 'LOCATION'];
 
 const Register = () => {
 
-    //STATE AND HOOKS
-    const { t, i18n } = useTranslation();
-
-    const [phone, setPhone] = useState('905555555552');
-
+    //CONTEXT
     const { ipLocation, language } = useIPLocation();
+    const { t, i18n } = useTranslation();
+    const { setAuth } = useAuth();
+    const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-
-    const [gender, setGender] = useState('male');
-
-    const [selectedHobbies, setSelectedHobbies] = useState([]);
-
-    const [userImages, setUserImages] = useState([]);
-
-    const [userLocation, setUserLocation] = useState({});
-
-    const [interest, setInterest] = useState([]);
-
-    const [locations, setLocations] = useState([]);
-
-    const [currentLocation, setCurrentLocation] = useState(ipLocation);
-
-    const [error, setError] = useState('');
-
-    const titles = registerLocalization.map(localization => t(`register.${localization}.title`));
-
-    const infos = registerLocalization.map(localization => t(`register.${localization}.info`))
-
-    const [previewImageIndex, setPreviewImageIndex] = useState(null);
-
+    //STATES
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
-
+    const [phone, setPhone] = useState('905555555552');
+    const [username, setUsername] = useState('');
+    const [gender, setGender] = useState('male');
+    const [selectedHobbies, setSelectedHobbies] = useState([]);
+    const [interest, setInterest] = useState([]);
+    const [userImages, setUserImages] = useState([]);
+    const [userLocation, setUserLocation] = useState({});
+    const [locations, setLocations] = useState([]);
+    const [currentLocation, setCurrentLocation] = useState(ipLocation);
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
     const [isDataLoading, setIsDataLoading] = useState(false);
-
     const [selectedDate, setSelectedDate] = useState();
-
+    const [showDatePicker, setShowDatePicker] = useState(false);
     const [smsCode, setSmsCode] = useState({
         digit1: '',
         digit2: '',
@@ -81,29 +58,21 @@ const Register = () => {
         digit4: ''
     });
 
+    //CONSTANTS
+    const titles = registerLocalization.map(localization => t(`REGISTER.${localization}.TITLE`));
+    const infos = registerLocalization.map(localization => t(`REGISTER.${localization}.INFO`));
+
+    //RESFS
     const otpId = useRef('');
 
-    const [showDatePicker, setShowDatePicker] = useState(false);
+    //EFFECTS
+    useEffect(() => { setError(''); }, [language]);
 
-    const navigate = useNavigate();
+    useEffect(() => { setCurrentLocation(ipLocation); }, [ipLocation]);
 
-    const { auth, setAuth } = useAuth();
+    useEffect(() => { scrollPage({ top: 0 }) }, [currentPageIndex]);
 
-    useEffect(() => {
-        setError('');
-    }, [language]);
-
-    useEffect(() => {
-        setCurrentLocation(ipLocation);
-    }, [ipLocation]);
-
-    useEffect(() => {
-        scrollPage({ top: 0 })
-    }, [currentPageIndex]);
-
-    useEffect(() => {
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
-    }, []);
+    useEffect(() => changeRootThemeColor(colors.backGround2), []);
 
     useEffect(() => {
 
@@ -119,15 +88,13 @@ const Register = () => {
                     setLocations(countriesResponse.data.data);
                 };
             } catch (e) { console.log(e); }
-            finally {
-                setTimeout(() => {
-                    setIsDataLoading(false);
-                }, 1000)
-            }
+            finally { setIsDataLoading(false); }
         }
-        fetchData();
-    }, []);
 
+        fetchData();
+
+
+    }, []);
 
     //UI <Lottie animationData={amoreAnimation} style={{ width: '50%', maxWidth: '300px' }} />
     return (
@@ -212,11 +179,11 @@ const Register = () => {
                                     {isLoading
                                         ? <BeatLoader size={8} color='white' />
                                         : t(`${currentPageIndex === 0
-                                            ? 'register.sendButton'
-                                            : currentPageIndex === 1 ? 'register.verifyButton' :
+                                            ? 'REGISTER.SEND_BUTTON'
+                                            : currentPageIndex === 1 ? 'REGISTER.VERIFY_BUTTON' :
                                                 currentPageIndex !== 7
-                                                    ? 'register.continueButton'
-                                                    : 'register.completeButton'}`)}
+                                                    ? 'REGISTER.CONTINUE_BUTTON'
+                                                    : 'REGISTER.COMPLETE_BUTTON'}`)}
                                 </BasicButton>
                             </div>
 
@@ -245,6 +212,7 @@ const Register = () => {
         if (validateInputs()) return;
 
         setIsLoading(true);
+
         const body = {
             id: otpId.current,
             smsCode: `${smsCode.digit1 + smsCode.digit2 + smsCode.digit3 + smsCode.digit4}`
@@ -415,8 +383,7 @@ const Register = () => {
                 return <RegisterUserPhotos
                     handleDeleteImage={handleDeleteImage}
                     userImages={userImages}
-                    handleImageChange={handleImageChange}
-                    setPreviewImageIndex={setPreviewImageIndex} />;
+                    handleImageChange={handleImageChange} />;
             case 7:
                 return <RegisterLocation
                     currentLocation={currentLocation}
@@ -424,7 +391,7 @@ const Register = () => {
                     locations={locations}
                     userLocation={userLocation}
                     setUserLocation={setUserLocation}
-                    locationData={locationData} />;
+                />;
         }
     }
 
@@ -493,7 +460,7 @@ const Register = () => {
 
     function validateOtp() {
         if (!smsCode.digit1 || !smsCode.digit2 || !smsCode.digit3 || !smsCode.digit4) {
-            setError(t('register.verify.errorText'));
+            setError(t('REGISTER.VERIFY.ERROR_TEXT'));
             return true;
         }
         return false;
@@ -501,7 +468,7 @@ const Register = () => {
 
     function validatePhone() {
         if (!phone) {
-            setError(t('register.phone.errorText'));
+            setError(t('REGISTER.PHONE.ERROR_TEXT'));
             return true;
         }
         return false;
@@ -510,11 +477,11 @@ const Register = () => {
     //Validates Username
     function validateUsername() {
         if (!username) {
-            setError(t('register.username.errorText'));
+            setError(t('REGISTER.USERNAME.ERROR_TEXT'));
             return true;
         }
         if (username.length < 3) {
-            setError(t('register.username.subErrorText'));
+            setError(t('REGISTER.USERNAME.SUB_ERROR_TEXT'));
             return true;
         }
         return false;
@@ -523,7 +490,7 @@ const Register = () => {
     //Validates Birth Date
     function validateBirthDate() {
         if (!selectedDate) {
-            setError(t('register.birthDate.errorText'));
+            setError(t('REGISTER.BIRTH_DATE.ERROR_TEXT'));
             return true;
         }
 
@@ -538,7 +505,7 @@ const Register = () => {
     //Validates Hobbies
     function validateHobbies() {
         if (selectedHobbies.length < 3) {
-            setError(t('register.interests.errorText'));
+            setError(t('REGISTER.INTERESTS.ERROR_TEXT'));
             return true;
         }
         return false;
@@ -547,7 +514,7 @@ const Register = () => {
     //Valides User Images
     function validateUserImages() {
         if (userImages.every(function (img) { return img === null; })) {
-            setError(t('register.photo.errorText'));
+            setError(t('REGISTER.PHOTO.ERROR_TEXT'));
             return true;
         }
         return false;
@@ -556,7 +523,7 @@ const Register = () => {
     //Validates Location
     function validatUserLocation() {
         if (!userLocation?.stateId || !userLocation?.countryId) {
-            setError(t('register.location.errorText'));
+            setError(t('REGISTER.LOCATION.ERROR_TEXT'));
             return true;
         }
         return false;

@@ -18,7 +18,7 @@ const HobbieCheckBox = ({ interest, isActive = false, addHobbie }) => {
             border: !isActive ? `1px solid ${colors.borderColor1}` : '1px solid transparent',
             color: isActive ? colors.whiteText : colors.darkText
         }}>
-        <span>{interest.emoji}</span><span>{t(`register.interests.interestItems.${interest.name}`)}</span>
+        <span>{interest.emoji}</span><span>{t(`REGISTER.INTERESTS.INTEREST_ITEMS.${interest.name}`)}</span>
     </div>
 }
 

@@ -135,3 +135,6 @@ export const calculateAge = (birthday) => {
     return age;
 }
 
+//changes theme color of root element
+export const changeRootThemeColor = (color) =>
+    document.querySelector('meta[name="theme-color"]').setAttribute('content', color);

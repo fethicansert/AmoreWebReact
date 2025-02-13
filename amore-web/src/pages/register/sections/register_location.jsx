@@ -74,10 +74,10 @@ const RegisterLocation = ({ userLocation, setUserLocation, locations, currentLoc
                 }} >
 
                 {!userLocation.city && <FlexBox gap='0 10px'>
-                    <LocationIcon width='23' height='23' />
+                    <LocationIcon width='24' height='24' color={colors.darkText} />
                     <span
                         style={{ color: `${!userLocation.state ? colors.fadedText : colors.darkText}` }}>
-                        {userLocation.state || currentLocation?.city?.name || t('register.location.statePlaceholder')}
+                        {userLocation.state || currentLocation?.city?.name || t('REGISTER.LOCATION.STATE_PLACEHOLDER')}
                     </span>
                 </FlexBox>}
 

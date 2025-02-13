@@ -10,6 +10,7 @@ import { GrLanguage } from "react-icons/gr";
 import { useIPLocation } from '../hooks/use_ip_location'
 import { useBanner } from '../hooks/use_banner'
 import { useAuth } from '../hooks/use_auth'
+import { ROUTES } from '../utils/constants'
 
 const Header = ({
     backgroundColor,
@@ -58,8 +59,8 @@ const Header = ({
 
             {
                 hideNavigation && <FlexBox gap={'25px'}>
-                    <Link style={{ color: textColor }} to={'/about'}>{t('header.amoreLink1')}</Link>
-                    <Link style={{ color: textColor }} to={'/about'}>{t('header.amoreLink2')}</Link>
+                    <Link style={{ color: textColor }} to={'/about'}>{t('HEADER.AMORE_LINK_1')}</Link>
+                    <Link style={{ color: textColor }} to={'/about'}>{t('HEADER.AMORE_LINK_2')}</Link>
                 </FlexBox>
             }
 
@@ -74,7 +75,7 @@ const Header = ({
                         borderRadius={'81px'}
                         backgroundColor={colors.brand1}
                         color={colors.whiteText}>
-                        {t(`header.${Object.keys(auth).length > 0 ? 'continueButton' : 'loginButton'}`)}
+                        {t(`HEADER.${Object.keys(auth).length > 0 ? 'CONTINUE_BUTTON' : 'LOGIN_BUTTON'}`)}
                     </BasicButton>
 
                     <FlexBox
@@ -109,7 +110,7 @@ const Header = ({
                         onClick={() => handleClick({ isMobile: true })}
                         fontSize={'.8rem'}
                         style={{ color: colors.whiteText, backgroundColor: colors.brand1, width: '100%', padding: '.6rem', borderRadius: '4px' }} >
-                        {t(`header.${Object.keys(auth).length > 0 ? 'continueButton' : 'loginButton'}`)}
+                        {t(`HEADER.${Object.keys(auth).length > 0 ? 'CONTINUE_BUTTON' : 'LOGIN_BUTTON'}`)}
                     </BasicButton>
 
                     <Link style={{ color: textColor, marginTop: '5px', textAlign: 'center', width: '100%' }} to={'/about'}>Amore Hakkında</Link>
@@ -128,7 +129,7 @@ const Header = ({
             isMobile && setShowNav(false);
             setShowLogin(true);
         }
-        else navigate('dashboard/user-home');
+        else navigate(`${ROUTES.DASHBOARD}/${ROUTES.USER_HOME}`);
     };
 
 

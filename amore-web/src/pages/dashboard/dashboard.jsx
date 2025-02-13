@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
-import '../../css/dashboard/dashboard.css'
 import { v4 as uuidv4 } from 'uuid';
 import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './comps/layout_link_icon';
@@ -11,7 +10,20 @@ import { colors } from '../../utils/theme';
 import LayoutLinkBox from './comps/layout_link_box';
 import { useNotification } from '../../hooks/use_notification';
 import NotificationItem from './comps/notification_item';
+import { ROUTES } from '../../utils/constants';
+import '../../css/dashboard/dashboard.css'
+
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
+
+const routes = [
+    { path: ROUTES.USER_HOME, icon: <HomeIcon /> },
+    { path: null, icon: <NotificationIcon /> },
+    { path: ROUTES.DISCOVER, icon: <DiscoverIcon /> },
+    { path: ROUTES.MATCHES, icon: <DoubleHeartIcon /> },
+    { path: ROUTES.CHAT, icon: <ChatBubbleIcon /> },
+    { path: ROUTES.MARKET, icon: <CoinIcon /> },
+    { path: ROUTES.PREMIM_SUBSCRIPTION, icon: <DiamondIcon /> },
+    { path: ROUTES.USER, icon: <UserIcon color='#4B164C' width={25} height={25} /> }];
 
 const Dashboard = () => {
     const [showOverlay, setShowOverlay] = useState(false);
@@ -21,45 +33,9 @@ const Dashboard = () => {
     const [showNavigation, setShowNavigation] = useState();
     const { unReadedCount, notifications } = useNotification();
 
-    const routes = [
-        {
-            path: 'user-home',
-            icon: <HomeIcon />
-        },
-        {
-            path: null,
-            icon: <NotificationIcon />
-        },
-        {
-            path: 'discover',
-            icon: <DiscoverIcon />
-        },
-        {
-            path: 'matches',
-            icon: <DoubleHeartIcon />
-        },
-        {
-            path: 'chat',
-            icon: <ChatBubbleIcon />
-        },
-        {
-            path: 'market',
-            icon: <CoinIcon />
-        },
-        {
-            path: 'premium-subscription',
-            icon: <DiamondIcon />
-        },
-        {
-            path: 'user',
-            icon: <UserIcon color='#4B164C' width={25} height={25} />
-        }
-    ];
-
     useEffect(() => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
     }, []);
-
 
     return (
         <div className='layout'>

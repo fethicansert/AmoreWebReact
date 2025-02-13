@@ -2,7 +2,8 @@ import React from 'react'
 import NotificationLayout from '../../../copmonents/notification_layout'
 import { useAuth } from '../../../hooks/use_auth';
 import { useTranslation } from 'react-i18next';
-import amoreIcon from '../../../assets/icons/amore_icon.png';
+import amoreCoin from '../../../assets/icons/amore_coin.png';
+import amoreIcon from '../../../assets/icons/amore_notification.png';
 import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import FlexBox from '../../../copmonents/flex_box';
@@ -31,7 +32,7 @@ const NotificationItem = ({ notification }) => {
     />
 
     function checkBlur() {
-        if ((type === 'VISIT_FREE' || type === 'LIKE_FREE') && !auth.premiumSubscription)
+        if ((type === 'VISIT_FREE' || type === 'LIKE_FREE' || type === 'VISIT' || type === 'LIKE') && !auth.premiumSubscription)
             return true;
         else return false;
     }
@@ -77,8 +78,13 @@ const NotificationItem = ({ notification }) => {
     }
 
     function getImage() {
-        return notification?.extraData?.senderImage || amoreIcon;
-    }
+        switch (type) {
+            case 'CONSUMABLE':
+                return amoreCoin;
+            default:
+                return notification?.extraData?.senderImage || amoreIcon;
+        }
+    };
 
 
 }

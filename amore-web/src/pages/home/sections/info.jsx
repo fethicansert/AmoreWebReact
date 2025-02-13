@@ -1,5 +1,4 @@
 import React from 'react'
-import '../../../css/home/info_section.css'
 import PaddingContainer from '../../../copmonents/padding_container';
 import AvatarContainer from '../comps/avatar_container';
 import user1 from '../../../assets/images/avatar1.png'
@@ -16,22 +15,24 @@ import { useMediaPredicate } from "react-media-hook";
 import phoneImage from '../../../assets/images/image3.png'
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation, Trans } from 'react-i18next';
+import '../../../css/home/info_section.css';
 
+const girls = [
+    { image: user1, name: "Ahsen" },
+    { image: user2, name: "Burçin" },
+    { image: user3, name: "Damla" },
+    { image: user4, name: "Ayça" },
+    { image: user5, name: "Aleyna" },
+    { image: user6, name: "Ateş" },
+    { image: user7, name: "Alev" }
+];
 
 const Info = () => {
 
-    const girls = [
-        { image: user1, name: "Ahsen" },
-        { image: user2, name: "Burçin" },
-        { image: user3, name: "Damla" },
-        { image: user4, name: "Ayça" },
-        { image: user5, name: "Aleyna" },
-        { image: user6, name: "Ateş" },
-        { image: user7, name: "Alev" }
-    ];
-
+    //MEDIOA
     const flexRow = useMediaPredicate("(min-width: 820px)");
 
+    //LOCALIZATION
     const { t, i18n } = useTranslation();
 
     return (
@@ -39,7 +40,7 @@ const Info = () => {
             <PaddingContainer top={`${flexRow ? '50' : '40'}px`} bottom='20px'>
                 <h2 className='info-title'>
                     <Trans
-                        i18nKey={'home.info.title'}
+                        i18nKey={'HOME.INFO.TITLE'}
                         components={
                             { pink: <span /> }
                         }
@@ -66,13 +67,13 @@ const Info = () => {
                         <h2
                             style={{ textAlign: flexRow ? 'start' : 'center' }} className='info-text'>
                             <Trans
-                                i18nKey={'home.info.subTitle'}
+                                i18nKey={'HOME.INFO.SUB_TITLE'}
                                 components={
                                     { pink: <span /> }
                                 }
                             />
                         </h2>
-                        <p style={{ textAlign: flexRow ? 'start' : 'center' }}>{t('home.info.text')}</p>
+                        <p style={{ textAlign: flexRow ? 'start' : 'center' }}>{t('HOME.INFO.TEXT')}</p>
 
                         <BasicButton
                             backgroundColor={colors.brand1}
@@ -80,7 +81,7 @@ const Info = () => {
                             width={`${flexRow ? '150px' : '100%'}`}
                             height={`${flexRow ? '47.5' : '52'}px`}
                             borderRadius={'25px'}>
-                            {t('home.info.infoButton')}
+                            {t('HOME.INFO.INFO_BUTTON')}
                         </BasicButton>
 
                     </FlexBox>

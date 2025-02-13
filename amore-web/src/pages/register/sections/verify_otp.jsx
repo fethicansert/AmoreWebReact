@@ -63,7 +63,7 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
                 <span
                     className='register-verify-send-again-button'
                     onClick={handleSendAgain}>
-                    {t('register.verify.sendAgainButton')}
+                    {t('REGISTER.VERIFY.SEND_AGAIN_BUTTON')}
                     <BsArrowRepeat color={colors.brand1} />
                 </span>
 

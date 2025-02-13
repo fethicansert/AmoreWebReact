@@ -8,9 +8,8 @@ const HeroBox = ({ children, width, height, backgroundColor, showPhotos, rotate,
             {
                 showPhotos && <img src={gropUsers} />
             }
-
         </div>
-    )
+    );
 }
 
 export default HeroBox

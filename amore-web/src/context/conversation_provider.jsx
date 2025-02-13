@@ -11,7 +11,9 @@ const ConversationProvider = ({ children }) => {
     const [isConversationsLoading, setIsConversationsLoading] = useState(false);
     const { auth } = useAuth();
 
-    useEffect(() => { if (auth) getMessages(); }, [auth]);
+    useEffect(() => {
+        if (Object.keys(auth).length > 0) getMessages();
+    }, [auth]);
 
     return (
         <ConversationContext.Provider value={{ conversations, isConversationsLoading }}>
@@ -25,8 +27,6 @@ const ConversationProvider = ({ children }) => {
             const response = await axiosAuth.get('/chat/conversations?page=1', {
                 headers: { Authorization: auth.token }
             });
-
-            console.log(response.data);
 
             if (response?.data.response.code === 200)
                 setConversations(response.data.data)

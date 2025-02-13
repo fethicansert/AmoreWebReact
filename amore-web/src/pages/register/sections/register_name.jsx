@@ -32,7 +32,7 @@ const RegisterName = ({ username, setUsername }) => {
                     onChange={(e) => handleUsernameValidation(e)}
                     className='register-name-input'
                     type='text'
-                    placeholder={t('register.username.inputPlaceholder')} />
+                    placeholder={t('REGISTER.USERNAME.INPUT_PLACEHOLDER')} />
             </div>
         </div>
     )

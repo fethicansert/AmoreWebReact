@@ -1,22 +1,21 @@
 import React from 'react'
 import { useMediaPredicate } from "react-media-hook";
-
-import '../../../css/home/footer.css';
-
 import FlexBox from '../../../copmonents/flex_box';
-
 import phones from '../../../assets/images/phones.png';
-import FotterButton from '../comps/footer_button';
 import appleLogo from '../../../assets/icons/app_store_logo.png';
 import googleLogo from '../../../assets/icons/google_logo_white.png';
 import amoreLogo from '../../../assets/icons/amore_icon.png';
 import { useTranslation } from 'react-i18next';
 import FooterButton from '../comps/footer_button';
+import '../../../css/home/footer.css';
 
 const Footer = () => {
+
+    //MEDIA
     const hideImage = useMediaPredicate("(max-width: 1045px)");
     const columnButtons = useMediaPredicate("(max-width: 755px)");
 
+    //LOCALIZATION
     const { t, i18n } = useTranslation();
 
     return (
@@ -53,13 +52,13 @@ const Footer = () => {
                     }}>
 
                     {<p style={{ gridColumn: columnButtons ? '1/3' : 'unset', justifySelf: columnButtons ? 'center' : 'unset' }} className='footer-text'>
-                        {t('home.footer.text')}
+                        {t('HOME.FOOTER.TEXT')}
                         {!columnButtons ? <br /> : ' '}
-                        <span> {t('home.footer.subText')}</span></p>}
+                        <span> {t('HOME.FOOTER.SUB_TEXT')}</span></p>}
 
 
-                    <FooterButton style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={t('home.footer.appleButton')} textBig={'AppStore'} />
-                    <FooterButton icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={t('home.footer.googleButton')} textBig={'Play Store'} />
+                    <FooterButton style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={t('HOME.FOOTER.APPLE_BUTTON')} textBig={'AppStore'} />
+                    <FooterButton icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={t('HOME.FOOTER.GOOGLE_BUTTON')} textBig={'Play Store'} />
                 </div>
 
             </div>

@@ -14,6 +14,7 @@ const PremiumSubscription = () => {
             <h2>Premium Dünyasına <br /> <span>Hoş Geldin</span></h2>
 
             <div className='premium-subscription-cards-wrapper'>
+
                 <PremiumCard features={cardFeatures1} price={'30$'} time={'1 Hafta'} planInfo={"1 Haftalık premium üyelik"} subscriptionPlan={'Basit Plan'} subscriptionNumber={1} sprayOptions={[
                     { backgroundColor: colors.sprayTransparent, left: '-28px', top: '89px' },
                     { backgroundColor: colors.sprayTransparent, left: '66px', top: '75.93px' },

@@ -15,7 +15,6 @@ import DiscoverFilterRadio from '../comps/discover_filter_radio.jsx';
 import BasicButton from '../../../copmonents/basic_button.jsx';
 import { SearchIcon } from '../../../assets/svg/svg_package.jsx';
 import { useMediaPredicate } from 'react-media-hook';
-import userAvatar from '../../../assets/images/user_avatar.png';
 const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
 const Discover = () => {
@@ -43,7 +42,9 @@ const Discover = () => {
     const { auth } = useAuth();
 
     //EFFECTS
-    useEffect(() => { getUsers(); }, []);
+    useEffect(() => {
+        getUsers();
+    }, []);
 
     useEffect(() => setSearchedUsers(users.filter(user => user.name.toLowerCase().includes(name?.toLowerCase()))),
         [name, users]);
@@ -62,7 +63,7 @@ const Discover = () => {
 
                 <div className='discover-users-filter-header'>
 
-                    <CurrentUserInfoBox credits={auth?.credits} name={auth?.name} image={auth?.photos?.[0].url || userAvatar} />
+                    <CurrentUserInfoBox credits={auth?.credits} name={auth?.name} image={auth?.photos?.[0].url} />
 
                     <BasicButton
                         onClick={() => setShowFilter(prev => !prev)}

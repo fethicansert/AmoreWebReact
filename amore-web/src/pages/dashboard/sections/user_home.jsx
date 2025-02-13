@@ -95,8 +95,6 @@ const UserHome = () => {
     const count = await getSwipeListCount();
     if (count < 3) return getSwipeList({ showLoading: showLoading });
 
-    console.log(auth);
-
     try {
 
       const response = await axiosAuth.get(`user/discover?minAge=18&maxAge=70&isOnline=true&distance=${distance.current - 100}&gender=female`, {

@@ -1,23 +1,24 @@
 import React, { useRef, useState } from 'react';
 import FlexBox from '../../../copmonents/flex_box';
-import '../../../css/dashboard/payment.css'
 import { MasterCardIcon } from '../../../assets/svg/svg_package';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
 import CreditCard from '../comps/credit_card';
-import ahmetOffaBass from '../../../sounds/ahmet-off-a-bass.mp3'
+import ahmetOffaBass from '../../../sounds/ahmet-off-a-bass.mp3';
+import '../../../css/dashboard/payment.css';
 
 
 const Payment = () => {
+
+    //STATES
     const [cardOwner, setCardOwner] = useState('');
     const [cardNumber, setCardNumber] = useState('');
     const [cvvNumber, setCvvNumber] = useState('');
     const [lastDateMonth, setLastDateMonth] = useState('');
     const [lastDateYear, setLastDateYear] = useState('');
 
+    //REFS
     const ahmetOffaBassRef = useRef(new Audio(ahmetOffaBass));
-    ;
-
 
     return (
         <section className='payment'>
@@ -91,18 +92,11 @@ const Payment = () => {
                 </div>
             </div>
 
-
-
         </section>
     );
 };
 
-function CreditCardCircle({ size, top, left, borderColor }) {
-    return <div style={{ width: size, height: size, top, left, border: `1px solid ${borderColor}`, position: 'absolute', borderRadius: '50%' }}>
-
-    </div>
-}
-
+//FUNCTIONS
 function PaymentInput({ value, setValue, placeHolder, textAlign, trailing, className, type = "text", maxLength, putDash }) {
 
     return (

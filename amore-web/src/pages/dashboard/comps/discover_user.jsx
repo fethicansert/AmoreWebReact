@@ -6,6 +6,8 @@ import FlexBox from "../../../copmonents/flex_box.jsx";
 import { FilledLocationIcon } from "../../../assets/svg/svg_package.jsx";
 
 
+const x = 'linear-gradient(rgba(22,30,42,0) 0%, #DD88CF 100%)';
+const y = 'linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)'
 
 const DiscoverUser = forwardRef((props, ref) => {
     const user = props.user;
@@ -18,7 +20,7 @@ const DiscoverUser = forwardRef((props, ref) => {
     >
         <div className='discover-user-image-container' ref={ref}>
             <img style={{ visibility: isImageLoaded ? 'visible' : 'hode' }} onLoad={() => setIsImageLoaded(true)} src={user?.photos[0].url}></img>
-            <div className='discover-user-image-container-overlay' style={{ background: 'linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)' }}></div>
+            <div className='discover-user-image-container-overlay' style={{ background: y }}></div>
 
         </div>
 

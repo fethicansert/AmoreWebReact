@@ -32,7 +32,7 @@ const RegisterUserPhotos = ({ handleImageChange, userImages, handleDeleteImage }
 
             </div>
 
-            <h3>{t('register.photo.subTitle')}</h3>
+            <h3>{t('REGISTER.PHOTO.SUB_TITLE')}</h3>
 
             <div className='register-photo-group'>
                 {[...Array(6)].map((img, index) =>

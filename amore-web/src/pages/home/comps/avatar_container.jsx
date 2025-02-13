@@ -6,10 +6,9 @@ const AvatarContainer = ({ image, name }) => {
             <div className='avatar-image'>
                 <img src={image}></img>
             </div>
-
             <span>{name}</span>
         </div>
-    )
+    );
 }
 
-export default AvatarContainer
+export default AvatarContainer;
