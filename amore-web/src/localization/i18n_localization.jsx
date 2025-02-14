@@ -202,12 +202,14 @@ i18n.use(initReactI18next).init({
 
                 //STATUS
                 STATUS: {
+                    TITLE: "Kullanıc Durumu",
                     ONLINE: "Çevrim içi",
                     OFFLINE: "Çevrim dışı"
                 },
 
                 //GENDERS
                 GENDER: {
+                    TITLE: "Cinsiyet",
                     FEMALE: "Kadın",
                     MALE: "Erkek"
                 },
@@ -217,7 +219,7 @@ i18n.use(initReactI18next).init({
                     TITLES: {
                         QUICK_MESSAGES: "Hızlı Mesajlar",
                         LIKES: "Beğeniler",
-                        SEE_ALL: "Tümünü Gör"
+                        SEE_ALL: "Tümünü Gör",
                     },
 
                     SWIPE: {

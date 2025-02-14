@@ -9,12 +9,12 @@ import AmoreLoading from '../../../copmonents/amore_loading.jsx';
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
 import { colors } from '../../../utils/theme.js';
 import FlexBox from '../../../copmonents/flex_box.jsx';
-import DiscoverFilterSlider from '../comps/discover_filter_slider.jsx';
-import DiscoverFilterRadio from '../comps/discover_filter_radio.jsx';
 import BasicButton from '../../../copmonents/basic_button.jsx';
 import { SearchIcon } from '../../../assets/svg/svg_package.jsx';
 import { useMediaPredicate } from 'react-media-hook';
 import UserCard from '../../../copmonents/user_card.jsx';
+import FilterSlider from '../../../copmonents/filter_slider.jsx';
+import CustomRadio from '../../../copmonents/custom_radio.jsx';
 const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
 const Discover = () => {
@@ -108,12 +108,13 @@ const Discover = () => {
 
                         </FlexBox>
 
-                        <DiscoverFilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
+                        <FilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
 
                         <div className='discover-user-filter-radio-group'>
                             <span style={{ color: colors.darkText, fontSize: '.8rem' }}>Kullanıcı Durumu</span>
                             <div className='discover-user-filter-radio-wrapper'>
-                                {userStatus.map(status => <DiscoverFilterRadio key={uuidv4()}
+                                {userStatus.map(status => <CustomRadio
+                                    key={uuidv4()}
                                     text={status.name}
                                     value={status.value}
                                     setValue={setSelectedUserStatus}

@@ -1,15 +1,17 @@
 import React from 'react'
 import Slider from '@mui/material/Slider';
-import { colors } from '../../../utils/theme';
-import FlexBox from '../../../copmonents/flex_box';
-const DiscoverFilterSlider = ({ title, valueTitle, value, setValue, ariaLabel, min = 0, max = 100 }) => {
+import { colors } from '../utils/theme';
+import FlexBox from './flex_box';
+
+const FilterSlider = ({ title, valueTitle, value, setValue, ariaLabel, min = 0, max = 100, step = 1 }) => {
   return (
     <>
       <FlexBox width={'100%'} justifyContent='space-between' margin={'1rem 0 .5rem 0'}>
         <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{title}</span>
-        <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{valueTitle} km</span>
+        {valueTitle && <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{valueTitle}</span>}
       </FlexBox>
       <Slider
+        step={step}
         min={min}
         max={max}
         sx={{
@@ -38,4 +40,4 @@ const DiscoverFilterSlider = ({ title, valueTitle, value, setValue, ariaLabel, m
   )
 }
 
-export default DiscoverFilterSlider;
+export default FilterSlider;

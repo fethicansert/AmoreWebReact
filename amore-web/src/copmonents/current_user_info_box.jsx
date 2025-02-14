@@ -4,9 +4,9 @@ import FlexBox from './flex_box'
 import { colors } from '../utils/theme';
 import userAvatar from '../assets/images/user_avatar.png';
 
-const CurrentUserInfoBox = ({ credits, image, name }) => {
+const CurrentUserInfoBox = ({ credits, image, name, style }) => {
     return (
-        <div className='current-user-info-box'>
+        <div className='current-user-info-box' style={{ ...style }}>
             <FlexBox gap='0 18px' width={'100%'} justifyContent='center'>
 
                 <FlexBox gap='0 8px' >

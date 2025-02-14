@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react'
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box';
 import { useAuth } from '../../../hooks/use_auth';
 import FlexBox from '../../../copmonents/flex_box';
-import DiscoverFilterRadio from '../comps/discover_filter_radio';
 import { axiosAuth } from '../../../api/axios';
 import UserCard from '../../../copmonents/user_card';
 import AmoreLoading from '../../../copmonents/amore_loading';
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../../utils/theme';
 import '../../../css/dashboard/matches.css';
+import CustomRadio from '../../../copmonents/custom_radio';
 
 const Matches = () => {
 
@@ -30,7 +30,7 @@ const Matches = () => {
     const titles = ["Eşleşmeler", "Beğeniler", "Ziyaretler"];
 
     //SIDE_EFFECTS
-    useEffect(() => { fetchData(currentIndex); }, [currentIndex])
+    useEffect(() => { fetchData(currentIndex); }, [currentIndex]);
 
     return (
         <section className='matches'>
@@ -38,7 +38,7 @@ const Matches = () => {
             <div className='matches-header'>
 
                 <FlexBox height={'100%'} width={'100%'} gap='0 15px' alignItems='center' >
-                    {titles.map((title, index) => <DiscoverFilterRadio
+                    {titles.map((title, index) => <CustomRadio
                         key={uuidv4()}
                         unSelectedTextColor={colors.darkText}
                         padding='1rem 1.2rem'

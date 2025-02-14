@@ -110,6 +110,7 @@
   --overlayMid: rgba(0, 0, 0, 0.45)
 }
 
+.user-home-sidebar-container::-webkit-scrollbar,
 .notifications-wrapper::-webkit-scrollbar,
 .notifications::-webkit-scrollbar,
 .premium-subscription::-webkit-scrollbar,
@@ -120,6 +121,7 @@
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.user-home-sidebar-container,
 .notifications-wrapper,
 .notifications,
 .webkit-scrollbar,
@@ -519,6 +521,18 @@ header a {
 .page-not-found span {
   font-weight: 700;
   font-size: 6rem;
+}
+
+.radio-group-title {
+  font-weight: 400;
+  font-size: .75rem;
+  color: var(--darkText);
+}
+
+.user-home-radio-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 /* ANIMATIONS */

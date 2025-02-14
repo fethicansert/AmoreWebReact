@@ -10,7 +10,13 @@ import SwipeItem from '../comps/swipe_item';
 import { useConversation } from '../../../hooks/use_conversation';
 import { useAuth } from '../../../hooks/use_auth';
 import { useTranslation } from 'react-i18next';
+import FilterSlider from '../../../copmonents/filter_slider.jsx'
 import '../../../css/dashboard/user_home.css';
+import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
+import { colors } from '../../../utils/theme.js';
+import CustomRadio from '../../../copmonents/custom_radio.jsx';
+import { RadioGroup } from '@mui/material';
+import RadioWrapper from '../../../copmonents/radio_wrapper.jsx';
 
 
 const UserHome = () => {
@@ -22,6 +28,13 @@ const UserHome = () => {
   const [popAnimation, setPopupAnimation] = useState();
   const [likes, setLikes] = useState([]);
   const [isLikesLoading, setIsLikesLoading] = useState(false);
+  const [age, setAge] = useState([25, 80]);
+
+  //FILTER STATES
+  const [filterdGender, setFilterGender] = useState('female');
+  const [filterUserStatus, setFilterUserStatus] = useState('online');
+
+  const [sliderDistance, setSliderDistance] = useState(300)
 
   //CONTEXT
   const { conversations, isConversationsLoading } = useConversation();
@@ -49,7 +62,36 @@ const UserHome = () => {
     <section className='user-home' >
 
       {/* Premium Box */}
-      {!hidePremium && <PremiumBox />}
+      {!hidePremium && <div className='user-home-sidebar-container' >
+
+        <div className='user-home-filters'>
+
+          <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }} />
+
+          <div className='user-home-filters-options-wrapper'>
+
+            <FilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
+
+            <FilterSlider step={100} min={100} max={1000} value={sliderDistance} setValue={setSliderDistance} title={"Mesafe"} valueTitle={`${Math.floor(sliderDistance * (auth.distanceType === 'km' ? 1 : 0.621371))} ${auth.distanceType}`} />
+
+            <RadioWrapper title={t('GENDER.TITLE')}>
+              <CustomRadio text={t('GENDER.MALE')} value={'male'} setValue={setFilterGender} isSelected={filterdGender === 'male'} />
+              <CustomRadio text={t('GENDER.FEMALE')} value={'female'} setValue={setFilterGender} isSelected={filterdGender === 'female'} />
+            </RadioWrapper>
+
+            <RadioWrapper title={t('STATUS.TITLE')}>
+              <CustomRadio text={t('STATUS.ONLINE')} value={'online'} setValue={setFilterUserStatus} isSelected={filterUserStatus === 'online'} />
+              <CustomRadio text={t('STATUS.OFFLINE')} value={'offline'} setValue={setFilterUserStatus} isSelected={filterUserStatus === 'offline'} />
+            </RadioWrapper>
+
+          </div>
+
+        </div>
+
+        <PremiumBox />
+
+      </div>
+      }
 
       {/* Swipe Section */}
 
