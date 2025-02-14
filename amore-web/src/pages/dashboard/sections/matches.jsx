@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box';
-import '../../../css/dashboard/matches.css';
 import { useAuth } from '../../../hooks/use_auth';
 import FlexBox from '../../../copmonents/flex_box';
 import DiscoverFilterRadio from '../comps/discover_filter_radio';
@@ -9,13 +8,18 @@ import DiscoverUser from '../comps/discover_user';
 import AmoreLoading from '../../../copmonents/amore_loading';
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../../utils/theme';
+import '../../../css/dashboard/matches.css';
 
 const Matches = () => {
 
     //STATES
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentPage, setCurrentPage] = useState(0);
     const [users, setUsers] = useState([]);
     const [isUsersLoading, setIsUsersLoading] = useState(false);
+
+    //REFS
+    const userBox = React.createRef();
 
     //CONTEXT
     const { auth } = useAuth();
@@ -28,10 +32,10 @@ const Matches = () => {
 
     return (
         <section className='matches'>
+
             <div className='matches-header'>
 
                 <FlexBox height={'100%'} width={'100%'} gap='0 15px' alignItems='center' >
-
                     {titles.map((title, index) => <DiscoverFilterRadio
                         key={uuidv4()}
                         unSelectedTextColor={colors.darkText}
@@ -41,7 +45,6 @@ const Matches = () => {
                         isSelected={index === currentIndex}
                         text={title}
                         value={index} />)}
-
                 </FlexBox>
 
                 <CurrentUserInfoBox
@@ -49,11 +52,12 @@ const Matches = () => {
                     name={auth.name}
                     image={auth.photos?.[0].url}
                 />
+
             </div>
 
             {
                 !isUsersLoading ? <div className='discover-users' >
-                    {users.map(user => <DiscoverUser key={uuidv4()} user={user} />)}
+                    {users.map(user => <DiscoverUser ref={userBox} key={uuidv4()} user={user} isOnlyPremium={auth.premiumSubscription} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'90%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
 
@@ -90,6 +94,27 @@ const Matches = () => {
             return user.participants[1];
         });
     }
+
+    //ALTTAKI FUNCTIONLAR KULLANILACAK ILERDE !!!
+    async function handleScrollFetch(e) {
+        if (isUsersLoading) return;
+        const totalScroll = e.target.scrollTop;
+        const userBoxHeight = userBox.current.offsetHeight
+        const boxColumnCount = getBoxColumnCount(window.innerWidth);
+        const calculatedHeight = ((userBoxHeight * users.length) / boxColumnCount) * 0.7;
+        if (totalScroll > calculatedHeight) {
+            //FETCH YAPILACAK AMA 50 TANE USER GELMIYORSA NAPACAN ?
+            // await fetchData(currentIndex);
+        }
+    }
+
+    function getBoxColumnCount(width) {
+        if (width < 842) return 1;
+        else if (width >= 1663) return 5;
+        else if (width >= 1393) return 4;
+        else if (width >= 1103) return 3;
+        else if (width >= 842) return 2;
+    };
 
 }
 

@@ -62,11 +62,14 @@
     justify-content: center;
     color: var(--whiteText);
     text-transform: capitalize;
-
     overflow: hidden;
-
     position: relative;
     border-radius: 16px;
+    cursor: pointer;
+}
+
+.discover-user-box:hover {
+    box-shadow: 1.5px 1.5px 3px var(--brand2);
 }
 
 .discover-user-info {
@@ -85,6 +88,7 @@
     font-weight: 600;
     font-size: 1rem;
     text-align: center;
+
 }
 
 .discover-user-image-container {
@@ -97,7 +101,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    /* filter: blur(30px); */
 }
 
 .discover-user-image-container-overlay {

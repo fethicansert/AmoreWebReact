@@ -484,6 +484,23 @@ header a {
   z-index: 999;
 }
 
+.only-premium-content {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px 0;
+}
+
+.only-premium-content p {
+  text-align: center;
+  max-width: 200px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 25px;
+}
+
 
 /* ANIMATIONS */
 @media (min-width: 500px) {
