@@ -5,7 +5,6 @@ import '../../../css/dashboard/discover.css';
 import { v4 as uuidv4 } from 'uuid';
 import 'react-slideshow-image/dist/styles.css';
 
-import DiscoverUser from '../comps/discover_user.jsx';
 import AmoreLoading from '../../../copmonents/amore_loading.jsx';
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
 import { colors } from '../../../utils/theme.js';
@@ -15,6 +14,7 @@ import DiscoverFilterRadio from '../comps/discover_filter_radio.jsx';
 import BasicButton from '../../../copmonents/basic_button.jsx';
 import { SearchIcon } from '../../../assets/svg/svg_package.jsx';
 import { useMediaPredicate } from 'react-media-hook';
+import UserCard from '../../../copmonents/user_card.jsx';
 const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
 const Discover = () => {
@@ -55,7 +55,7 @@ const Discover = () => {
 
             {
                 !isLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
-                    {searchedUsers.map(user => <DiscoverUser ref={userBox} key={uuidv4()} user={user} />)}
+                    {searchedUsers.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
 

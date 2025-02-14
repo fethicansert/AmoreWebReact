@@ -1,5 +1,4 @@
 import React from 'react'
-import { ShimmerDiv } from 'shimmer-effects-react'
 import FlexBox from '../../../copmonents/flex_box'
 import AmoreLoading from '../../../copmonents/amore_loading'
 import { colors } from '../../../utils/theme'
@@ -9,6 +8,7 @@ import UserPropertie from './user_propertie'
 import SwipeImageWrapper from './swipe_image_wrapper'
 import SwipeInfoShimmer from './swipe_info_shimmer'
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next'
 
 
 const SwipeItem = ({ user, loading }) => {
@@ -16,15 +16,18 @@ const SwipeItem = ({ user, loading }) => {
     const userPhotos = user?.photos.slice(1,);
     const userAge = calculateAge(user?.birthday);
     const userState = user?.country?.state?.name || user?.country?.name;
+    const gender = user?.gender || 'female';
+    console.log(user);
+
+    const { t, i18n } = useTranslation();
 
     const userProperties = [
         {
-            value: 'Kadın',
+            value: t(`GENDER.${gender.toUpperCase()}`),
             icon: <GenderIcon />
         },
         {
-            value: userAge.toString(),
-            text: 'Yaşında',
+            value: t('DASHBOARD.SWIPE.USERINFO.AGE', { age: userAge }),
             icon: <BirthdayIcon width='29' height='29' />
         },
         {
@@ -32,11 +35,11 @@ const SwipeItem = ({ user, loading }) => {
             icon: <LocactionHomeIcon width='29' height='29' />
         },
         {
-            value: 'Meslek Bilgisi Yok',
+            value: t('DASHBOARD.SWIPE.USERINFO.NO_JOB_TITLE'),
             icon: <JobIcon width='29' height='29' />
         },
         {
-            value: 'Okul Bilgisi Yok',
+            value: t('DASHBOARD.SWIPE.USERINFO.NO_SCOOL_TITLE'),
             icon: <SchollIcon width='29' height='29' />
         }
     ];
@@ -57,7 +60,7 @@ const SwipeItem = ({ user, loading }) => {
                                 <FlexBox alignItems='start' gap='5px' flexDirection='column'>
                                     <FlexBox gap='0 5px' >
                                         <span style={{ width: '8px', height: '8px' }} className='online-circle'></span>
-                                        <span className='swipe-item-user-status'>Çevrim içi</span>
+                                        <span className='swipe-item-user-status'>{t('STATUS.ONLINE')}</span>
                                     </FlexBox>
                                     <span className='swipe-item-user-info'>{user?.name}, {userAge}</span>
                                 </FlexBox>
@@ -73,7 +76,7 @@ const SwipeItem = ({ user, loading }) => {
                     ? <SwipeInfoShimmer /> : <>
 
                         <div className='swipe-item-user-bio'>
-                            <h4>Ben Kimim?</h4>
+                            <h4>{t('DASHBOARD.SWIPE.USERINFO.TITLE')}</h4>
                             <p>Ben 19 yaşında İzmir'de yaşayan bir genç kızım. Yeni insanlarla tanışmak, görüşmek ve ilişkiler kurmak istiyorum. Bu yüzden buradayım.</p>
                         </div>
 
@@ -82,7 +85,7 @@ const SwipeItem = ({ user, loading }) => {
                                 key={uuidv4()}
                                 value={propertie?.value}
                                 icon={propertie?.icon}
-                                text={propertie?.text} />)}
+                            />)}
                         </div>
 
                     </>}

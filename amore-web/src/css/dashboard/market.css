@@ -1,6 +1,7 @@
 .market {
     color: var(--whiteText);
-    overflow-y: scroll;
+    overflow: scroll;
+    border-radius: var(--spacing4) var(--spacing4) var(--spacing3) var(--spacing3);
 }
 
 .market-header {

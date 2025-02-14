@@ -154,8 +154,6 @@ i18n.use(initReactI18next).init({
                     },
                     GENDER: {
                         TITLE: "Cinsiyetiniz Nedir ?",
-                        MALE: "Erkek",
-                        FEMALE: "Kadın",
                         INFO: "Bu bilgileri daha sonra dilediğiniz zaman güncelleyebilirsiniz."
                     },
                     INTERESTS: {
@@ -200,6 +198,37 @@ i18n.use(initReactI18next).init({
                     SEND_BUTTON: "Gönder",
                     SEND_AGAIN_BUTTON: "Tekrar Gönder",
                     VERIFY_BUTTON: "Doğrula"
+                },
+
+                //STATUS
+                STATUS: {
+                    ONLINE: "Çevrim içi",
+                    OFFLINE: "Çevrim dışı"
+                },
+
+                //GENDERS
+                GENDER: {
+                    FEMALE: "Kadın",
+                    MALE: "Erkek"
+                },
+
+                //DASHBOARD
+                DASHBOARD: {
+                    TITLES: {
+                        QUICK_MESSAGES: "Hızlı Mesajlar",
+                        LIKES: "Beğeniler",
+                        SEE_ALL: "Tümünü Gör"
+                    },
+
+                    SWIPE: {
+                        SEND_MESSAGE_BUTTON: "Mesaj Gönder",
+                        USERINFO: {
+                            TITLE: "Ben Kimim?",
+                            NO_JOB_TITLE: "Meslek Bilgisi Yok",
+                            NO_SCOOL_TITLE: "Okul Bilgisi Yok",
+                            AGE: "{{age}} Yaşında"
+                        }
+                    }
                 }
             }
         },
@@ -368,7 +397,38 @@ i18n.use(initReactI18next).init({
                     SEND_BUTTON: "Send",
                     VERIFY_BUTTON: "Verify",
                     SEND_AGAIN_BUTTON: "Send Again"
+                },
+                // STATUS
+                STATUS: {
+                    ONLINE: "Online",
+                    OFFLINE: "Offline"
+                },
+
+                // GENDERS
+                GENDER: {
+                    FEMALE: "Female",
+                    MALE: "Male"
+                },
+
+                // DASHBOARD
+                DASHBOARD: {
+                    TITLES: {
+                        QUICK_MESSAGES: "Quick Messages",
+                        LIKES: "Likes",
+                        SEE_ALL: "See All"
+                    },
+
+                    SWIPE: {
+                        SEND_MESSAGE_BUTTON: "Send Message",
+                        USERINFO: {
+                            TITLE: "Who Am I?",
+                            NO_JOB_TITLE: "No Job Information",
+                            NO_SCOOL_TITLE: "No School Information",
+                            AGE: "{{age}} Years Old"
+                        }
+                    }
                 }
+
             }
         },
 

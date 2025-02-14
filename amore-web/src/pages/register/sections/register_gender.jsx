@@ -18,7 +18,7 @@ const RegisterGender = ({ gender, setGender }) => {
                 onClick={setGender}
                 value={'male'}
                 icon={<FemaleGenderIcon color={gender === 'male' ? colors.whiteText : colors.darkText} />}
-                gender={t('REGISTER.GENDER.MALE')} />
+                gender={t('GENDER.MALE')} />
             <GenderRadio
                 border={gender !== 'female'}
                 color={gender === 'female' ? colors.whiteText : colors.darkText}
@@ -26,7 +26,7 @@ const RegisterGender = ({ gender, setGender }) => {
                 onClick={setGender}
                 value={'female'}
                 icon={<MaleGenderIcon color={gender === 'female' ? colors.whiteText : colors.darkText} />}
-                gender={t('REGISTER.GENDER.FEMALE')} />
+                gender={t('GENDER.FEMALE')} />
         </>
 
     );

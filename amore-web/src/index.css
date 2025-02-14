@@ -501,6 +501,25 @@ header a {
   line-height: 25px;
 }
 
+.page-not-found {
+  width: 100%;
+  height: 100vh;
+  color: var(--brand1);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.page-not-found h1 {
+  font-size: 4rem;
+}
+
+.page-not-found span {
+  font-weight: 700;
+  font-size: 6rem;
+}
 
 /* ANIMATIONS */
 @media (min-width: 500px) {

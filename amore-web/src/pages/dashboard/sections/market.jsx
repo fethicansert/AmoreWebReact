@@ -26,6 +26,7 @@ const Market = () => {
             </div>
 
             <div className='market-items-container'>
+
                 <MarkeItem
                     className={'special-market-item'}
                     isUserSpecial={true}

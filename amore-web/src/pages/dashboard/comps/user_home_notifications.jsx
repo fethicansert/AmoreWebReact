@@ -5,15 +5,19 @@ import { Link } from 'react-router-dom';
 import { colors } from '../../../utils/theme';
 import NotificationShimmer from './notification_shimmer';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next'
+
 
 const UserHomeNotifications = ({ title, path, children, isLoading }) => {
+
+    const { t, i18n } = useTranslation();
 
     return <div className='user-home-notications-container' >
 
         <FlexBox justifyContent='space-between' style={{ marginBottom: '1rem' }}>
             <h4>{title}</h4>
             <Link to={path}>
-                Tümünü Gör
+                {t('DASHBOARD.TITLES.SEE_ALL')}
                 <ArrowHeadRight color={colors.brand1} width='13' height='13' strokeWidth='2' />
             </Link>
         </FlexBox>

@@ -1,16 +1,16 @@
-import { useState, useRef, forwardRef } from "react";
-import { colors } from '../../../utils/theme.js';
-import { calculateAge } from "../../../utils/functions.js";
-import BasicButton from "../../../copmonents/basic_button.jsx";
-import FlexBox from "../../../copmonents/flex_box.jsx";
-import { FilledLocationIcon, PremiumStartIcon } from "../../../assets/svg/svg_package.jsx";
-import { useBanner } from "../../../hooks/use_banner.jsx";
+import { forwardRef } from "react";
+import { calculateAge } from "../utils/functions.js"
+import { useBanner } from "../hooks/use_banner.jsx"
+import { colors } from "../utils/theme.js";
+import { FilledLocationIcon, PremiumStartIcon } from "../assets/svg/svg_package.jsx";
+import FlexBox from "./flex_box.jsx";
+import BasicButton from "./basic_button.jsx";
 
 
 // box-shadow: 4px 4px 15px 0px #FFFFFF4D inset;
 
 
-const DiscoverUser = forwardRef((props, ref) => {
+const UserCard = forwardRef((props, ref) => {
     const isOnlyPremium = props?.isOnlyPremium || false;
     const user = props.user;
     const age = calculateAge(user?.birthday);
@@ -57,5 +57,5 @@ const DiscoverUser = forwardRef((props, ref) => {
     </div>
 })
 
-export default DiscoverUser;
+export default UserCard;
 

@@ -4,7 +4,7 @@ import { useAuth } from '../../../hooks/use_auth';
 import FlexBox from '../../../copmonents/flex_box';
 import DiscoverFilterRadio from '../comps/discover_filter_radio';
 import { axiosAuth } from '../../../api/axios';
-import DiscoverUser from '../comps/discover_user';
+import UserCard from '../../../copmonents/user_card';
 import AmoreLoading from '../../../copmonents/amore_loading';
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../../utils/theme';
@@ -14,9 +14,11 @@ const Matches = () => {
 
     //STATES
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [currentPage, setCurrentPage] = useState(0);
     const [users, setUsers] = useState([]);
     const [isUsersLoading, setIsUsersLoading] = useState(false);
+
+    //Kullanilacak sonra
+    // const [currentPage, setCurrentPage] = useState(0);
 
     //REFS
     const userBox = React.createRef();
@@ -57,7 +59,7 @@ const Matches = () => {
 
             {
                 !isUsersLoading ? <div className='discover-users' >
-                    {users.map(user => <DiscoverUser ref={userBox} key={uuidv4()} user={user} isOnlyPremium={auth.premiumSubscription} />)}
+                    {users.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} isOnlyPremium={!auth.premiumSubscription} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'90%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
 
@@ -108,6 +110,7 @@ const Matches = () => {
         }
     }
 
+    //Bu Sayilarin Değişmesi gerekecek bu bolumde fılter sıde bar yok !!!
     function getBoxColumnCount(width) {
         if (width < 842) return 1;
         else if (width >= 1663) return 5;

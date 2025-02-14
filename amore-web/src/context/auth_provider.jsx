@@ -6,9 +6,10 @@ export const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useLocalStorage('auth', {});
+    const isAuthenticated = auth?.token;
 
     return (
-        <AuthContext.Provider value={{ auth, setAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth, isAuthenticated }}>
             {children}
         </AuthContext.Provider>
     )

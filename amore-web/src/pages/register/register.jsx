@@ -93,7 +93,6 @@ const Register = () => {
 
         fetchData();
 
-
     }, []);
 
     //UI <Lottie animationData={amoreAnimation} style={{ width: '50%', maxWidth: '300px' }} />
@@ -270,10 +269,10 @@ const Register = () => {
         } else if (request.errorMessage) {
 
             if (request.errorMessage === 'PHONE_NUMBER_INVALID')
-                setError(t('register.phone.invalidPhoneError'));
+                setError(t('REGISTER.PHONE.INVALID_PHONE_ERROR'));
 
             else if (request.errorMessage === 'OTP_WAIT_FOR_NEW_CODE')
-                setError(t(`register.phone.waitNewCodeError`, { otpCooldown: request?.cooldown }));
+                setError(t(`REGISTER.PHONE.WAIT_NEW_CODE_ERROR`, { otpCooldown: request?.cooldown }));
 
             else if (request.errorMessage === 'ERR_NETWORK')
                 setError("Please Check Your Network !");
