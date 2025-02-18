@@ -535,6 +535,12 @@ header a {
   flex-wrap: wrap;
 }
 
+.current-user-info-box {
+  display: flex;
+  width: 100%;
+}
+
+
 /* ANIMATIONS */
 @media (min-width: 500px) {
 

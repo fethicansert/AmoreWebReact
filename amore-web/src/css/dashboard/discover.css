@@ -37,11 +37,6 @@
     z-index: 1;
 }
 
-.current-user-info-box {
-    display: flex;
-    width: 100%;
-}
-
 .discover-users-filter-header {
     display: flex;
     flex-direction: column;
@@ -56,7 +51,6 @@
 .discover-users-filter-header-btn {
     display: none;
 }
-
 
 .discover-user-box {
     width: 245px;
@@ -193,10 +187,11 @@
 
     .discover-users-filter-header-btn {
         display: block;
+
     }
 
     .discover-users-filter-header {
-        padding: 0rem 1rem .7rem;
+        padding-bottom: .7rem;
         gap: 10px 0;
     }
 
@@ -219,8 +214,8 @@
         border-radius: 12px;
         width: 100%;
         height: fit-content;
-        max-width: none;
-        min-width: none;
+        max-width: unset;
+        min-width: unset;
         position: relative;
     }
 

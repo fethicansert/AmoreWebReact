@@ -69,7 +69,7 @@ const Discover = () => {
                         onClick={() => setShowFilter(prev => !prev)}
                         className='discover-users-filter-header-btn'
                         height={'45px'}
-                        width={'100%'}
+                        width={'90%'}
                         backgroundColor={colors.brand1}
                         borderRadius={'10px'}>
                         Filtrele

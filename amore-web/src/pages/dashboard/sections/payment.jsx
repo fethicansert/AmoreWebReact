@@ -25,12 +25,12 @@ const Payment = () => {
             <form>
                 <FlexBox flexDirection='column' alignItems='flex-start' gap='10px 0' style={{ marginBottom: '2.1rem', marginTop: '2rem' }}>
                     <PaymentInputHeader title="Kart Üzerindeki İsim" subTitle="Kart üzerindeki ismi yazın" />
-                    <PaymentInput placeHolder="Kart Sahibi" value={cardOwner} setValue={setCardOwner} maxLength={50} />
+                    <PaymentInput type='text' placeHolder="Kart Sahibi" value={cardOwner} setValue={setCardOwner} maxLength={50} />
                 </FlexBox>
 
                 <FlexBox flexDirection='column' alignItems='flex-start' gap='10px 0' style={{ marginBottom: '2.4rem' }}>
                     <PaymentInputHeader title="Kart Numarası" subTitle="Kart üzerindeki 16 haneli kart numarasını girin" />
-                    <PaymentInput type='number' putDash={true} placeHolder="Kart Numarası" trailing={<MasterCardIcon />} value={cardNumber} setValue={setCardNumber} maxLength={16} />
+                    <PaymentInput type='text' isCreditNumber={true} placeHolder="Kart Numarası" trailing={<MasterCardIcon />} value={cardNumber} setValue={setCardNumber} maxLength={20} />
                 </FlexBox>
 
                 <FlexBox className='payment-cvv-number-wrapper' flexDirection='' alignItems='' justifyContent='space-between' style={{ marginBottom: '2.4rem' }}>
@@ -53,7 +53,7 @@ const Payment = () => {
 
             <div className='credit-payment-infos'>
 
-                <CreditCard name={cardOwner} cardNumber={cardNumber} month={lastDateMonth} year={lastDateYear} />
+                <CreditCard name={cardOwner} cardNumber={cardNumber.replaceAll('-', '')} month={lastDateMonth} year={lastDateYear} />
 
                 <div className='credit-payment-infos-dot-lines'></div>
 
@@ -97,7 +97,7 @@ const Payment = () => {
 };
 
 //FUNCTIONS
-function PaymentInput({ value, setValue, placeHolder, textAlign, trailing, className, type = "text", maxLength, putDash }) {
+function PaymentInput({ value, setValue, placeHolder, textAlign, trailing, className, type = "text", maxLength, isCreditNumber }) {
 
     return (
         <div className={`payment-input-wrapper ${className || ''}`}>
@@ -114,8 +114,17 @@ function PaymentInput({ value, setValue, placeHolder, textAlign, trailing, class
     );
 
     function handleChange(e) {
-        const valueLength = e.target.value.length;
-        if (valueLength <= maxLength) setValue(e.target.value);
+        let value = e.target.value;
+
+        if (isCreditNumber) {
+            // Sadece rakamları tut ve - işaretlerini kaldır
+            value = value.replace(/[^0-9]/g, '');
+            // isCreditNumber true ise, her 4 rakamdan sonra - ekle
+            value = value.match(/.{1,4}/g)?.join('-') || '';
+        }
+
+        //Check value length
+        if (value.length <= maxLength) setValue(value);
     }
 }
 
