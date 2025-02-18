@@ -10,10 +10,10 @@ const NotificationLayout = ({ image, title, content, icon, className, onClick, b
             <div className='notification-layout-image-avatar'>
                 <img src={image}></img>
             </div>
-            <FlexBox gap='8px 0' flexDirection='column' alignItems='flex-start'>
+            <div className='notification-layout-content'>
                 {<span className='notification-layout-title'>{title}</span>}
                 {<span className='notification-layout-text'>{content}</span>}
-            </FlexBox>
+            </div>
             {icon && icon}
         </div>
     )

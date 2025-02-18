@@ -37,12 +37,13 @@ const Matches = () => {
 
             <div className='matches-header'>
 
-                <FlexBox height={'100%'} width={'100%'} gap='0 15px' alignItems='center' >
+                <FlexBox className='matches-header-flex' height={'100%'} width={'100%'} alignItems='center' >
                     {titles.map((title, index) => <CustomRadio
+                        className={'matches-custom-radio'}
                         key={uuidv4()}
                         unSelectedTextColor={colors.darkText}
-                        padding='1rem 1.2rem'
-                        fontSize='.82rem'
+                        padding=''
+                        fontSize=''
                         setValue={setCurrentIndex}
                         isSelected={index === currentIndex}
                         text={title}

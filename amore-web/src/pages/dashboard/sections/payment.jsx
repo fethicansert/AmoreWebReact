@@ -18,7 +18,7 @@ const Payment = () => {
     const [lastDateYear, setLastDateYear] = useState('');
 
     //REFS
-    const ahmetOffaBassRef = useRef(new Audio(ahmetOffaBass));
+    // const ahmetOffaBassRef = useRef(new Audio(ahmetOffaBass));
 
     return (
         <section className='payment'>
@@ -46,7 +46,7 @@ const Payment = () => {
                     </FlexBox>
                 </FlexBox>
 
-                <BasicButton onClick={() => ahmetOffaBassRef.current.play()} color={colors.whiteText} backgroundColor={colors.brand1} height="60px" width="100%" borderRadius="12px">
+                <BasicButton color={colors.whiteText} backgroundColor={colors.brand1} height="60px" width="100%" borderRadius="12px">
                     Ödeme Yap
                 </BasicButton>
             </form>

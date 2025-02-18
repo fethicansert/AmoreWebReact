@@ -18,8 +18,8 @@ export const ROUTES = {
 };
 
 export const LINKS = {
-    GOOGLE_PLAY: 'https://play.google.com/store/apps/details?id=com.amordating.app&hl=tr&pli=1',
-    APPLE_STORE: 'https://apps.apple.com/tr/app/amore-new-friends-flirting/id6569249182'
+    GOOGLE_PLAY: 'https://play.google.com/store/apps/details?id=com.albsoftware.app&hl=tr',
+    APPLE_STORE: 'https://apps.apple.com/tr/app/amore-bulu%C5%9Fma-sohbet-fl%C3%B6rt/id6569249182?l=tr'
 };
 
 export const REGEXES = {

@@ -12,8 +12,8 @@ import BannerProvider from './context/banner_provider.jsx'
 import SocketProvider from './context/socket_provider.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <AuthProvider>
-    <BrowserRouter>
+  <BrowserRouter>
+    <AuthProvider>
       <SocketProvider>
         <ConversationProvider>
           <NotificationProvider>
@@ -25,6 +25,6 @@ createRoot(document.getElementById('root')).render(
           </NotificationProvider>
         </ConversationProvider>
       </SocketProvider>
-    </BrowserRouter>
-  </AuthProvider>
+    </AuthProvider>
+  </BrowserRouter>
 )

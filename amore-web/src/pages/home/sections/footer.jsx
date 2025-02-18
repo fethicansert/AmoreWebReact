@@ -7,6 +7,7 @@ import googleLogo from '../../../assets/icons/google_logo_white.png';
 import amoreLogo from '../../../assets/icons/amore_icon.png';
 import { useTranslation } from 'react-i18next';
 import FooterButton from '../comps/footer_button';
+import { LINKS } from '../../../utils/constants.js';
 import '../../../css/home/footer.css';
 
 const Footer = () => {
@@ -17,6 +18,10 @@ const Footer = () => {
 
     //LOCALIZATION
     const { t, i18n } = useTranslation();
+
+    const navigeToLink = (link) => {
+        window.open(link, "_blank");
+    };
 
     return (
         <footer className='footer-section'
@@ -57,8 +62,8 @@ const Footer = () => {
                         <span> {t('HOME.FOOTER.SUB_TEXT')}</span></p>}
 
 
-                    <FooterButton style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={t('HOME.FOOTER.APPLE_BUTTON')} textBig={'AppStore'} />
-                    <FooterButton icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={t('HOME.FOOTER.GOOGLE_BUTTON')} textBig={'Play Store'} />
+                    <FooterButton onClick={() => navigeToLink(LINKS.APPLE_STORE)} style={{ justifySelf: 'end' }} icon={appleLogo} iconWidth={'clamp(30px, 3vw, 39.5px)'} textSmall={t('HOME.FOOTER.APPLE_BUTTON')} textBig={'AppStore'} />
+                    <FooterButton onClick={() => navigeToLink(LINKS.GOOGLE_PLAY)} icon={googleLogo} iconWidth={'clamp(39px, 3.5vw, 49px)'} textSmall={t('HOME.FOOTER.GOOGLE_BUTTON')} textBig={'Play Store'} />
                 </div>
 
             </div>

@@ -8,6 +8,7 @@ import FlexBox from './flex_box';
 import BlurButton from './blur_button';
 import { AppleLogo, CloseIcon, GoogleLogo } from '../assets/svg/svg_package';
 import { useNavigate } from 'react-router-dom';
+import { LINKS } from '../utils/constants';
 const LoginPopup = ({ setShowLogin }) => {
 
     const navigate = useNavigate();
@@ -32,6 +33,7 @@ const LoginPopup = ({ setShowLogin }) => {
                         <p style={{ fontSize: '0.938rem', marginBottom: '.5rem' }}>Aşk peşindeysen, kayıt ol</p>
                         <FlexBox gap='0 8px' margin={'0 0 .5rem 0'}>
                             <BlurButton
+                                onClick={() => window.open(LINKS.APPLE_STORE, "_blank")}
                                 icon={<AppleLogo width='24' height='24' />}
                                 height='48px'
                                 borderRadius='12px'
@@ -39,6 +41,7 @@ const LoginPopup = ({ setShowLogin }) => {
                                 text={'Apple'}>
                             </BlurButton>
                             <BlurButton
+                                onClick={() => window.open(LINKS.GOOGLE_PLAY, "_blank")}
                                 icon={<GoogleLogo width='22' height='22' />}
                                 height='48px'
                                 borderRadius='12px'

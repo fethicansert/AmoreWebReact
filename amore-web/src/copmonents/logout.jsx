@@ -3,12 +3,12 @@ import FlexBox from './flex_box'
 import BasicButton from './basic_button'
 import { colors } from '../utils/theme'
 import { useAuth } from '../hooks/use_auth'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 const Logout = ({ closeLogout }) => {
 
     const { setAuth } = useAuth();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <div className='logout'>
@@ -20,6 +20,7 @@ const Logout = ({ closeLogout }) => {
                 </p>
 
                 <FlexBox gap='0 10px' margin={'1rem 0 0 0'}>
+
                     <BasicButton
                         onClick={handleLogout}
                         borderRadius={10}
@@ -45,10 +46,7 @@ const Logout = ({ closeLogout }) => {
         </div>
     );
 
-    function handleLogout() {
-        setAuth({});
-        navigate('/');
-    }
+    function handleLogout() { setAuth({}) }
 }
 
 export default Logout

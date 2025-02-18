@@ -14,7 +14,7 @@ const NotificationProvider = ({ children }) => {
 
     const { auth } = useAuth();
 
-    const notficationPage = useRef(1);
+    const notficationPage = useRef(2);
 
     useEffect(() => {
         if (Object.keys(auth).length > 0) {

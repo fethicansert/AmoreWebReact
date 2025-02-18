@@ -33,8 +33,7 @@ const UserHome = () => {
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState('female');
   const [filterUserStatus, setFilterUserStatus] = useState('online');
-
-  const [sliderDistance, setSliderDistance] = useState(300)
+  const [filterDistance, setFilterDistance] = useState(300)
 
   //CONTEXT
   const { conversations, isConversationsLoading } = useConversation();
@@ -66,13 +65,17 @@ const UserHome = () => {
 
         <div className='user-home-filters'>
 
-          <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }} />
+          <CurrentUserInfoBox
+            credits={auth.credits}
+            name={auth.name}
+            style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }}
+          />
 
           <div className='user-home-filters-options-wrapper'>
 
             <FilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
 
-            <FilterSlider step={100} min={100} max={1000} value={sliderDistance} setValue={setSliderDistance} title={"Mesafe"} valueTitle={`${Math.floor(sliderDistance * (auth.distanceType === 'km' ? 1 : 0.621371))} ${auth.distanceType}`} />
+            <FilterSlider step={100} min={100} max={1000} value={filterDistance} setValue={setFilterDistance} title={"Mesafe"} valueTitle={`${Math.floor(filterDistance * (auth.distanceType === 'km' ? 1 : 0.621371))} ${auth.distanceType}`} />
 
             <RadioWrapper title={t('GENDER.TITLE')}>
               <CustomRadio text={t('GENDER.MALE')} value={'male'} setValue={setFilterGender} isSelected={filterdGender === 'male'} />

@@ -15,6 +15,7 @@ import { useMediaPredicate } from "react-media-hook";
 import phoneImage from '../../../assets/images/image3.png'
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation, Trans } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import '../../../css/home/info_section.css';
 
 const girls = [
@@ -31,6 +32,9 @@ const Info = () => {
 
     //MEDIOA
     const flexRow = useMediaPredicate("(min-width: 820px)");
+
+    //
+    const navigate = useNavigate();
 
     //LOCALIZATION
     const { t, i18n } = useTranslation();
@@ -76,6 +80,7 @@ const Info = () => {
                         <p style={{ textAlign: flexRow ? 'start' : 'center' }}>{t('HOME.INFO.TEXT')}</p>
 
                         <BasicButton
+                            onClick={() => navigate('/register')}
                             backgroundColor={colors.brand1}
                             color={colors.whiteText}
                             width={`${flexRow ? '150px' : '100%'}`}

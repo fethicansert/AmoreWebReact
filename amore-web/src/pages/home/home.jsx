@@ -9,7 +9,7 @@ import { changeRootThemeColor } from '../../utils/functions';
 
 const Home = () => {
 
-    useEffect(() => { changeRootThemeColor('#FEEDF4') }, []);
+    useEffect(() => { changeRootThemeColor('#F9E8EF') }, []);
 
     return (
         <div className='home'>

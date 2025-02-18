@@ -41,7 +41,7 @@ const Discover = () => {
     //CONTEXT
     const { auth } = useAuth();
 
-    //EFFECTS
+    //SIDE_EFFECTS
     useEffect(() => {
         getUsers();
     }, []);

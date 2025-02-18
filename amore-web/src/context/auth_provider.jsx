@@ -6,7 +6,7 @@ export const AuthContext = createContext({});
 const AuthProvider = ({ children }) => {
 
     const [auth, setAuth] = useLocalStorage('auth', {});
-    const isAuthenticated = auth?.token;
+    const isAuthenticated = auth?.token ? true : false;
 
     return (
         <AuthContext.Provider value={{ auth, setAuth, isAuthenticated }}>

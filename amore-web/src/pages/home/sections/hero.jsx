@@ -53,7 +53,7 @@ const Hero = () => {
                     <FlexBox gap={'10px'} width={'100%'} justifyContent={startPosition} margin={'2rem 0 2.5rem 0'}>
 
                         <BasicButton
-                            onClick={() => navigeToLink(LINKS.GOOGLE_PLAY)}
+                            onClick={() => navigeToLink(LINKS.APPLE_STORE)}
                             fontSize={smallButtonText ? '0.77rem' : '0.7rem'}
                             width={'clamp(130px, 15vw, 182px)'}
                             height={'clamp(44px, 5vw, 55px)'}
@@ -67,7 +67,7 @@ const Hero = () => {
                         </BasicButton>
 
                         <BasicButton
-                            onClick={() => navigeToLink(LINKS.APPLE_STORE)}
+                            onClick={() => navigeToLink(LINKS.GOOGLE_PLAY)}
                             fontSize={smallButtonText ? '0.77rem' : '0.7rem'}
                             width={'clamp(130px, 15vw, 182px)'}
                             height={'clamp(44px, 5vw, 55px)'}
