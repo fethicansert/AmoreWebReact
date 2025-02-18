@@ -1,4 +1,4 @@
-import { axiosAuth } from "../api/axios"
+import { axiosAmore, axiosAuth } from "../api/axios"
 
 //Create OTP Request
 export const createOtp = async ({

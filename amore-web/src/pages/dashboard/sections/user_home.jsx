@@ -105,7 +105,7 @@ const UserHome = () => {
         {!isSwipeListLoading && <SwipeBottomBar onLike={setCurrentIndex} setPopupAnimation={setPopupAnimation} />}
 
         {popAnimation &&
-          <div className='like-popup' style={{ backgroundColor: popAnimation.backgroundColor, marginTop: `${swipeContainer?.current?.scrollTop}px` }}>
+          <div className='like-popup' style={{ marginTop: `${swipeContainer?.current?.scrollTop}px` }}>
             {popAnimation.icon}
           </div>
         }

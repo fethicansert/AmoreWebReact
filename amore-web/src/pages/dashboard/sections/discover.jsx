@@ -68,10 +68,10 @@ const Discover = () => {
                     <BasicButton
                         onClick={() => setShowFilter(prev => !prev)}
                         className='discover-users-filter-header-btn'
-                        height={'40px'}
+                        height={'45px'}
                         width={'100%'}
                         backgroundColor={colors.brand1}
-                        borderRadius={'7px'}>
+                        borderRadius={'10px'}>
                         Filtrele
                     </BasicButton>
 

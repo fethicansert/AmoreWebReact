@@ -4,6 +4,10 @@ import { colors } from '../../../utils/theme';
 import emotinalSound from '../../../sounds/emotinal_damage.mp3';
 import dogDoingSound from '../../../sounds/dogdoing.mp3'
 import kissSound from '../../../sounds/kisssound.wav';
+import amoreLike from '../../../assets/lottie/amore_like.json';
+import amoreSuperLike from '../../../assets/lottie/amore_superlike.json';
+import amoreDissLike from '../../../assets/lottie/amore_dislike.json';
+import Lottie from "lottie-react";
 
 const SwipeBottomBar = ({ onLike, onStar, onPass, setPopupAnimation }) => {
 
@@ -50,27 +54,22 @@ const SwipeBottomBar = ({ onLike, onStar, onPass, setPopupAnimation }) => {
         setTimeout(() => {
             onLike(prev => prev + 1);
             setPopupAnimation(false);
-        }, 500)
+        }, 1000)
     }
 
     function getPopupAnimation(type) {
-        const width = '70%';
-        const height = '70%';
         switch (type) {
             case 'like':
                 return {
-                    icon: <HeartLineIcon width={width} height={height} />,
-                    backgroundColor: colors.brand2
+                    icon: <Lottie animationData={amoreLike} />
                 }
             case 'super-like':
                 return {
-                    icon: <StarLineIcon width={width} height={height} />,
-                    backgroundColor: colors.backGround4
+                    icon: <Lottie animationData={amoreSuperLike} />
                 }
             case 'pass':
                 return {
-                    icon: <CrossLineIcon width={width} height={height} />,
-                    backgroundColor: colors.backGround2
+                    icon: <Lottie animationData={amoreDissLike} />
                 }
         }
     }

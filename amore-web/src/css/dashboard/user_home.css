@@ -309,20 +309,15 @@
 }
 
 .like-popup {
-    /* margin-top: 10rem; */
-    width: 20vw;
-    height: 20vw;
-    background: var(--brand2);
-    border-radius: 50%;
+    width: 45vw;
+    height: 45vw;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    animation: like_popup 600ms ease infinite;
     display: flex;
     align-items: center;
     justify-content: center;
-
     transform-origin: center;
 }
 
@@ -347,21 +342,7 @@
 }
 
 
-
-@keyframes like_popup {
-    0% {}
-
-
-    100% {
-        width: 40vw;
-        height: 40vw;
-        opacity: .7;
-    }
-}
-
-
 @media (min-width: 400px) {
-
     .swipe-container-image-wrapper {
         max-height: 559px;
     }
@@ -413,5 +394,11 @@
     .swipe-container-item-about-container {
         padding: 1.5rem;
     }
+
+    .like-popup {
+        width: 85vw;
+        height: 85vw;
+    }
+
 
 }

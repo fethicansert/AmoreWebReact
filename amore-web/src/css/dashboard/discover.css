@@ -57,6 +57,7 @@
     display: none;
 }
 
+
 .discover-user-box {
     width: 245px;
     height: calc(245px * 1.65);
@@ -240,6 +241,5 @@
         width: 100%;
         height: calc(300px * 1.65);
     }
-
 
 }
