@@ -55,7 +55,7 @@
 
     .matches-header .current-user-info-box {
         border-bottom: 1px solid var(--borderColor1);
-        padding: 1rem 0;
+        padding: .8rem 0;
     }
 
 }
@@ -64,7 +64,6 @@
 
     .matches-header .current-user-info-box {
         border-bottom: 1px solid var(--borderColor1);
-        padding: .8rem 0;
     }
 
     .matches-header-flex {
