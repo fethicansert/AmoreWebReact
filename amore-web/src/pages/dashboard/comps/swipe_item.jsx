@@ -17,7 +17,6 @@ const SwipeItem = ({ user, loading }) => {
     const userAge = calculateAge(user?.birthday);
     const userState = user?.country?.state?.name || user?.country?.name;
     const gender = user?.gender || 'female';
-    console.log(user);
 
     const { t, i18n } = useTranslation();
 
@@ -72,7 +71,7 @@ const SwipeItem = ({ user, loading }) => {
             </div>
 
             <div className='swipe-container-item-about-container'>
-                {loading
+                {(loading)
                     ? <SwipeInfoShimmer /> : <>
 
                         <div className='swipe-item-user-bio'>

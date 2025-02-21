@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { axiosAuth } from '../../../api/axios';
+import { axiosAmore } from '../../../api/axios';
 import { useAuth } from '../../../hooks/use_auth';
 import '../../../css/dashboard/discover.css';
 import { v4 as uuidv4 } from 'uuid';
 import 'react-slideshow-image/dist/styles.css';
-
 import AmoreLoading from '../../../copmonents/amore_loading.jsx';
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
 import { colors } from '../../../utils/theme.js';
@@ -42,12 +41,13 @@ const Discover = () => {
     const { auth } = useAuth();
 
     //SIDE_EFFECTS
-    useEffect(() => {
-        getUsers();
-    }, []);
+    useEffect(() => { getUsers(); },
+        []);
 
     useEffect(() => setSearchedUsers(users.filter(user => user.name.toLowerCase().includes(name?.toLowerCase()))),
         [name, users]);
+
+
 
     //UI
     return (
@@ -79,12 +79,12 @@ const Discover = () => {
 
                 <div
                     className='discover-users-filter-selection'
-                    style={{ display: !isMobile ? 'flex' : isMobile && !showFilter ? 'none' : 'flex' }}>
-
-                    <div>
+                    style={{ display: !isMobile ? 'flex' : isMobile && !showFilter ? 'none' : 'flex' }}><div>
 
                         <FlexBox flexDirection='column' alignItems='start'>
+
                             <span style={{ color: colors.darkText, fontSize: '.8rem' }}>İsim</span>
+
                             <div
                                 onMouseEnter={() => setIsInputHovered(true)}
                                 onMouseLeave={() => setIsInputHovered(false)}
@@ -93,7 +93,9 @@ const Discover = () => {
                                     border: (isInputFocused || isInputHovered) ? `1px solid ${colors.brand1}` : `1px solid ${colors.borderColor1}`,
                                     background: (isInputFocused || isInputHovered) ? colors.backGround3 : colors.inputColor
                                 }}>
+
                                 <SearchIcon color={colors.fadedText} />
+
                                 <input
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
@@ -111,7 +113,9 @@ const Discover = () => {
                         <FilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
 
                         <div className='discover-user-filter-radio-group'>
+
                             <span style={{ color: colors.darkText, fontSize: '.8rem' }}>Kullanıcı Durumu</span>
+
                             <div className='discover-user-filter-radio-wrapper'>
                                 {userStatus.map(status => <CustomRadio
                                     key={uuidv4()}
@@ -120,7 +124,9 @@ const Discover = () => {
                                     setValue={setSelectedUserStatus}
                                     isSelected={status.value === selectedUserStatus} />)}
                             </div>
+
                         </div>
+
                     </div>
 
                     <BasicButton
@@ -165,7 +171,7 @@ const Discover = () => {
         try {
 
             const headers = { Authorization: auth.token }
-            const response = await axiosAuth.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${userStatus}=true&page=${currentPage.current}`, {
+            const response = await axiosAmore.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${userStatus}=true&page=${currentPage.current}`, {
                 headers
             });
 

@@ -1,4 +1,4 @@
-import { axiosAmore, axiosAuth } from "../api/axios"
+import { axiosAmore } from "../api/axios"
 
 //Create OTP Request
 export const createOtp = async ({
@@ -20,7 +20,7 @@ export const createOtp = async ({
     }
 
     try {
-        request.response = await axiosAuth.post('/otp/create', body,);
+        request.response = await axiosAmore.post('/otp/create', body,);
         if (request.response?.status === 200) {
             request.status = request.response?.status
             request.otpId = request.response?.data?.data?.oneTimePasswordId;
@@ -62,7 +62,7 @@ export const login = async ({ phone, otpId, otpCode, onStart,
         errorMessage: '',
     };
     try {
-        const response = await axiosAuth.post('user/login', body);
+        const response = await axiosAmore.post('user/login', body);
         if (response.status === 200) {
             request.response = response;
             request.status = response.status;

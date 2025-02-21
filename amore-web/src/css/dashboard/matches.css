@@ -30,6 +30,11 @@
     font-size: .82rem;
 }
 
+.matches-header .current-user-info-box {
+    border-bottom: none;
+    padding: 0;
+}
+
 @media (max-width: 650px) {
     .matches {
         gap: 5px 0;

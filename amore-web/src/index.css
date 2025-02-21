@@ -538,6 +538,8 @@ header a {
 .current-user-info-box {
   display: flex;
   width: 100%;
+  border-bottom: 1px solid var(--borderColor1);
+  padding: 1rem;
 }
 
 

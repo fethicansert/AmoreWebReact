@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useRef, useState } from 'react'
-import { axiosAuth } from '../api/axios';
+import { axiosAmore } from '../api/axios';
 import { useAuth } from '../hooks/use_auth';
 
 
@@ -35,7 +35,7 @@ const NotificationProvider = ({ children }) => {
 
         try {
 
-            const response = await axiosAuth.get('notification/count', {
+            const response = await axiosAmore.get('notification/count', {
                 headers: { Authorization: auth.token }
             });
 
@@ -56,9 +56,10 @@ const NotificationProvider = ({ children }) => {
 
         try {
 
-            const response = await axiosAuth.get(`notification/get?page=${notficationPage.current}`, {
+            const response = await axiosAmore.get(`notification/get?page=${notficationPage.current}`, {
                 headers: { Authorization: auth.token }
             });
+
 
             if (response.data.response.code === 200)
                 setNotifications(response.data.data);

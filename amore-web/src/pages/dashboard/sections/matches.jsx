@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import CurrentUserInfoBox from '../../../copmonents/current_user_info_box';
 import { useAuth } from '../../../hooks/use_auth';
 import FlexBox from '../../../copmonents/flex_box';
-import { axiosAuth } from '../../../api/axios';
+import { axiosAmore } from '../../../api/axios';
 import UserCard from '../../../copmonents/user_card';
 import AmoreLoading from '../../../copmonents/amore_loading';
 import { v4 as uuidv4 } from 'uuid';
@@ -72,7 +72,7 @@ const Matches = () => {
         setIsUsersLoading(true);
         const link = getLink(index);
         try {
-            const response = await axiosAuth.get(link, {
+            const response = await axiosAmore.get(link, {
                 headers: { Authorization: auth.token }
             });
             console.log(response.data.data);

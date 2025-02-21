@@ -34,7 +34,7 @@ const UserHomeNotificationItem = ({ notification, type }) => {
 
     function getMessageContent(notification, type) {
         if (type === 'like') return user?.name + ' ' + 'seni beğendi';
-        switch (notification?.lastMessage.type) {
+        switch (notification?.lastMessage?.type) {
             case 'text':
                 return notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
             case 'audio':

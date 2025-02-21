@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 import { useAuth } from '../hooks/use_auth';
-import { axiosAuth } from '../api/axios';
+import { axiosAmore } from '../api/axios';
 
 export const ConversationContext = createContext();
 
@@ -24,7 +24,7 @@ const ConversationProvider = ({ children }) => {
     async function getMessages() {
         setIsConversationsLoading(true);
         try {
-            const response = await axiosAuth.get('/chat/conversations?page=1', {
+            const response = await axiosAmore.get('/chat/conversations?page=1', {
                 headers: { Authorization: auth.token }
             });
 

@@ -12,7 +12,7 @@ import RegisterGender from './sections/register_gender';
 import RegisterHobbies from './sections/register_hobbies';
 import RegisterUserPhotos from './sections/register_user_photos';
 import RegisterLocation from './sections/register_location';
-import { axiosAmore, axiosAuth } from '../../api/axios';
+import { axiosAmore } from '../../api/axios';
 import { useTranslation } from 'react-i18next';
 import { useIPLocation } from '../../hooks/use_ip_location';
 import OtpRegister from './sections/otp_register';
@@ -218,7 +218,7 @@ const Register = () => {
         };
 
         try {
-            const response = await axiosAuth.post('/otp/verify', body);
+            const response = await axiosAmore.post('/otp/verify', body);
             const status = response.data.data.status;
 
             if (status === true) {
@@ -238,6 +238,8 @@ const Register = () => {
                 setError("Code is Wrong !");
 
         } catch (e) {
+            console.log(e);
+
             const responsMessage = e?.response?.data?.response?.message;
             if (responsMessage === 'OTP_ALREADY_VERIFIED')
                 setError('Code already used !');

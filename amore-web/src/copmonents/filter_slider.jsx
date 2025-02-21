@@ -3,7 +3,7 @@ import Slider from '@mui/material/Slider';
 import { colors } from '../utils/theme';
 import FlexBox from './flex_box';
 
-const FilterSlider = ({ title, valueTitle, value, setValue, ariaLabel, min = 0, max = 100, step = 1 }) => {
+const FilterSlider = ({ onChangeCommitted, title, valueTitle, value, setValue, ariaLabel, min = 0, max = 100, step = 1 }) => {
   return (
     <>
       <FlexBox width={'100%'} justifyContent='space-between' margin={'1rem 0 .5rem 0'}>
@@ -11,6 +11,7 @@ const FilterSlider = ({ title, valueTitle, value, setValue, ariaLabel, min = 0, 
         {valueTitle && <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{valueTitle}</span>}
       </FlexBox>
       <Slider
+        onChangeCommitted={onChangeCommitted}
         step={step}
         min={min}
         max={max}

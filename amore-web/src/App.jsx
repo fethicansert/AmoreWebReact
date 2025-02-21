@@ -1,4 +1,3 @@
-
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/home/home';
 import Register from './pages/register/register';
