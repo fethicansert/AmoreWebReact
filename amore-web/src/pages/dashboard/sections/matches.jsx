@@ -44,7 +44,7 @@ const Matches = () => {
                         unSelectedTextColor={colors.darkText}
                         padding=''
                         fontSize=''
-                        setValue={setCurrentIndex}
+                        onClick={() => setCurrentIndex(index)}
                         isSelected={index === currentIndex}
                         text={title}
                         value={index} />)}

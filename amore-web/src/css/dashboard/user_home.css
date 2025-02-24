@@ -4,7 +4,7 @@
     gap: 0 clamp(.4rem, 1vw, 1rem);
     justify-items: center;
     width: 100%;
-    max-width: 1330px;
+    max-width: 1400px;
     overflow: hidden;
     margin: 0 auto;
 }
@@ -352,21 +352,24 @@
     opacity: 1;
 }
 
-.user-home-not-found-swipe-list-empty-container {
+.user-home-swipe-error-container {
     padding: 1.5rem;
     border: 1px solid var(--borderColor1);
     background-color: var(--backGround3);
     border-radius: var(--spacing3);
+    text-align: center;
 }
 
-.user-home-not-found-swipe-list-empty-container p:nth-child(1) {
+.user-home-swipe-error-container p:nth-child(1) {
+    font-size: 1.1rem;
     color: var(--brand1);
     font-weight: 600;
 }
 
-.user-home-not-found-swipe-list-empty-container p:nth-child(2) {
+.user-home-swipe-error-container p:nth-child(2) {
     margin-top: .7rem;
-    font-size: .9rem;
+    font-size: 1rem;
+    color: var(--lowFadedText);
 }
 
 @media (min-width: 400px) {

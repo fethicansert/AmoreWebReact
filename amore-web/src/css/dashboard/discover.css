@@ -1,9 +1,12 @@
 .discover {
     display: grid;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr;
     gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100%;
+    width: 100%;
     overflow: hidden;
+    max-width: 1570px;
+    margin: 0 auto;
 }
 
 .discover-users {

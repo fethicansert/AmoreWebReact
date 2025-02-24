@@ -30,6 +30,7 @@ const Discover = () => {
     const [isInputHovered, setIsInputHovered] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
+
     //MEDIA
     const isMobile = useMediaPredicate("(max-width:575px)");
 
@@ -53,11 +54,7 @@ const Discover = () => {
     return (
         <section className='discover'>
 
-            {
-                !isLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
-                    {searchedUsers.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} />)}
-                </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
-            }
+
 
             <div className='discover-users-filter'>
 
@@ -121,7 +118,7 @@ const Discover = () => {
                                     key={uuidv4()}
                                     text={status.name}
                                     value={status.value}
-                                    setValue={setSelectedUserStatus}
+                                    onClick={() => setSelectedUserStatus(status.value)}
                                     isSelected={status.value === selectedUserStatus} />)}
                             </div>
 
@@ -143,6 +140,12 @@ const Discover = () => {
                 </div>
 
             </div>
+
+            {
+                !isLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
+                    {searchedUsers.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} />)}
+                </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
+            }
         </section>
     )
 

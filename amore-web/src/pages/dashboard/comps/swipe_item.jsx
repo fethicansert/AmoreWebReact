@@ -71,7 +71,7 @@ const SwipeItem = ({ user, loading }) => {
             </div>
 
             <div className='swipe-container-item-about-container'>
-                {(loading)
+                {loading
                     ? <SwipeInfoShimmer /> : <>
 
                         <div className='swipe-item-user-bio'>
@@ -93,7 +93,8 @@ const SwipeItem = ({ user, loading }) => {
 
             </div>
 
-            {userPhotos?.length > 0 && userPhotos.map(userPhoto =>
+            {/* Rest of the user photos */}
+            {(userPhotos?.length > 0 && !loading) && userPhotos.map(userPhoto =>
                 <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhoto.url} />
             )}
 

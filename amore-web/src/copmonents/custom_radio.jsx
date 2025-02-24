@@ -1,7 +1,7 @@
 import { colors } from '../utils/theme';
 import React from 'react'
 
-const CustomRadio = ({ className, isSelected, text, value, setValue, fontSize = '.75rem', padding = '.8rem .9rem', unSelectedTextColor = '#747477' }) => {
+const CustomRadio = ({ className, isSelected, text, onClick, fontSize = '.75rem', padding = '.8rem .9rem', unSelectedTextColor = '#747477' }) => {
     const style = {
         color: isSelected ? colors.whiteText : unSelectedTextColor,
         backgroundColor: isSelected ? colors.brand1 : colors.inputColor,
@@ -13,7 +13,10 @@ const CustomRadio = ({ className, isSelected, text, value, setValue, fontSize = 
     };
 
     return (
-        <div className={className ? className : ''} style={style} onClick={() => setValue(value)}>
+        <div
+            className={className ? className : ''}
+            style={style}
+            onClick={onClick}>
             {text}
         </div>
     )
