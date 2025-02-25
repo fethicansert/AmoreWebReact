@@ -14,6 +14,7 @@ import { useMediaPredicate } from 'react-media-hook';
 import UserCard from '../../../copmonents/user_card.jsx';
 import FilterSlider from '../../../copmonents/filter_slider.jsx';
 import CustomRadio from '../../../copmonents/custom_radio.jsx';
+import PremiumBox from '../../../copmonents/premium_box.jsx';
 const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
 const Discover = () => {
@@ -49,34 +50,31 @@ const Discover = () => {
         [name, users]);
 
 
-
     //UI
     return (
         <section className='discover'>
 
+            <div className='discover-users-side-bar'>
 
+                <div className='discover-users-filter'>
 
-            <div className='discover-users-filter'>
+                    <div className='discover-users-filter-header'>
 
-                <div className='discover-users-filter-header'>
+                        <CurrentUserInfoBox credits={auth?.credits} name={auth?.name} image={auth?.photos?.[0].url} />
 
-                    <CurrentUserInfoBox credits={auth?.credits} name={auth?.name} image={auth?.photos?.[0].url} />
+                        <BasicButton
+                            onClick={() => setShowFilter(prev => !prev)}
+                            className='discover-users-filter-header-btn'
+                            height={'45px'}
+                            width={'90%'}
+                            backgroundColor={colors.brand1}
+                            borderRadius={'10px'}>
+                            Filtrele
+                        </BasicButton>
 
-                    <BasicButton
-                        onClick={() => setShowFilter(prev => !prev)}
-                        className='discover-users-filter-header-btn'
-                        height={'45px'}
-                        width={'90%'}
-                        backgroundColor={colors.brand1}
-                        borderRadius={'10px'}>
-                        Filtrele
-                    </BasicButton>
+                    </div>
 
-                </div>
-
-                <div
-                    className='discover-users-filter-selection'
-                    style={{ display: !isMobile ? 'flex' : isMobile && !showFilter ? 'none' : 'flex' }}><div>
+                    <div className='discover-users-filter-selection' style={{ display: !isMobile ? 'flex' : isMobile && !showFilter ? 'none' : 'flex' }}><div>
 
                         <FlexBox flexDirection='column' alignItems='start'>
 
@@ -126,19 +124,23 @@ const Discover = () => {
 
                     </div>
 
-                    <BasicButton
-                        style={{ zIndex: '1' }}
-                        onClick={() => getUsers()}
-                        width={'100%'}
-                        height={'50px'}
-                        backgroundColor={colors.brand1}
-                        color={colors.whiteText}
-                        borderRadius={'12px'} >
-                        Filtreyi Uygula
-                    </BasicButton>
+                        <BasicButton
+                            fontSize={'.8rem'}
+                            style={{ zIndex: '1', marginTop: '1rem' }}
+                            onClick={() => getUsers()}
+                            width={'100%'}
+                            height={'50px'}
+                            backgroundColor={colors.brand1}
+                            color={colors.whiteText}
+                            borderRadius={'12px'} >
+                            Filtreyi Uygula
+                        </BasicButton>
+
+                    </div>
 
                 </div>
 
+                {!isMobile && <PremiumBox />}
             </div>
 
             {

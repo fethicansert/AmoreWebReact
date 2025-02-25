@@ -36,7 +36,7 @@ const UserHome = () => {
   const [likes, setLikes] = useState([]);
   const [isLikesLoading, setIsLikesLoading] = useState(false);
   const [age, setAge] = useState([25, 80]);
-  const [showFilter, setShowFilter] = useState(false);
+  const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
 
   //FILTER STATES
@@ -139,11 +139,11 @@ const UserHome = () => {
           <FlexBox width={'100%'} justifyContent='center' style={{ padding: '0 1rem' }} gap='0 10px'>
 
             <BasicButton fontSize={showFilter ? '.75rem' : '.8rem'} onClick={() => setShowFilter(prev => !prev)} backgroundColor={colors.brand1} width={'100%'} height={'45px'} borderRadius={'10px'} margin='0 auto' >
-              {showFilter ? 'Filtre Sakla' : 'Filtrele'}
+              {showFilter ? 'Sakla' : 'Filtrele'}
             </BasicButton>
 
             {showFilter && <BasicButton fontSize={'.75rem'} onClick={handleRest} backgroundColor={colors.brand2} width={'100%'} height={'45px'} borderRadius={'10px'} margin='0 auto' >
-              Filtre Sıfırla
+              Sıfırla
             </BasicButton>}
 
           </FlexBox>
@@ -201,11 +201,14 @@ const UserHome = () => {
 
   //FUNCTIONS
   function handleRest() {
-    setFilterGender('female');
-    setFilterDistance(200);
-    setAge([25, 80]);
-    distanceRef.current = 200;
-    getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: 'female', age: [25, 80] });
+    if (filterdGender !== 'female' || filterDistance !== 200 || age[0] !== 25 || age[1] !== 80) {
+      setFilterGender('female');
+      setFilterDistance(200);
+      setAge([25, 80]);
+      distanceRef.current = 200;
+      getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: 'female', age: [25, 80] });
+    }
+
   }
 
   function handleGender(gender) {
@@ -230,7 +233,7 @@ const UserHome = () => {
       if (currentIndex + 1 === swipeList.length) return setSwipeList([]);
       setCurrentIndex(prev => prev + 1);
       setPopupAnimation(null);
-      swipeContainer.current.scroll({ top: 0, behavior: 'smooth' });
+      swipeContainer.current.scroll({ top: 0, behavior: 'auto' });
     }, 1000);
 
     try {

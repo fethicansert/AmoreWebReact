@@ -5,18 +5,20 @@ import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
 import NotificationLayout from '../../../copmonents/notification_layout';
+import { useIPLocation } from '../../../hooks/use_ip_location';
+import { formatTimeAgo } from '../../../utils/functions';
 const UserHomeNotificationItem = ({ notification, type }) => {
 
-    console.log(notification);
-
-
     const { auth } = useAuth();
+    const { language } = useIPLocation();
     const user = getUser(notification, type);
     const userImage = user.photos[0].url;
     const content = getMessageContent(notification, type);
     const icon = getIcon(type);
+    const time = getTime(type);
+    const hideTime = getHideTime(type)
 
-    return <NotificationLayout image={userImage} title={user?.name || 'username'} content={content} icon={icon} />
+    return <NotificationLayout image={userImage} title={user?.name || 'username'} content={content} icon={icon} time={time} hideTime={hideTime} />
 
     function getIcon(type) {
         switch (type) {
@@ -27,8 +29,18 @@ const UserHomeNotificationItem = ({ notification, type }) => {
                     <EyeIcon color={colors.backGround3} fill={colors.brand2} width='18' height='18' />
                 </FlexBox>
             case 'message':
-                return <span className='notification-time'>{timeAgo(notification.createdDate)}</span>
+                return null;
+            default:
+                return null
         }
+    }
+
+    function getTime() {
+        return formatTimeAgo(notification.createdDate)
+    }
+
+    function getHideTime(type) {
+        return type === 'like' ? true : false;
     }
 
     function getUser(notication) {
@@ -50,26 +62,6 @@ const UserHomeNotificationItem = ({ notification, type }) => {
                 return user?.name + ' ' + 'bir mesaj gönderdi.';
         }
     };
-
-    function timeAgo(dateString) {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffMs = now - date; // Milisaniye farkı
-        const diffSec = Math.floor(diffMs / 1000); // Saniye farkı
-        const diffMin = Math.floor(diffSec / 60); // Dakika farkı
-        const diffHrs = Math.floor(diffMin / 60); // Saat farkı
-        const diffDays = Math.floor(diffHrs / 24); // Gün farkı
-        const diffWeeks = Math.floor(diffDays / 7); // Hafta farkı
-        const diffMonths = Math.floor(diffDays / 30); // Ay farkı (ortalama)
-        const diffYears = Math.floor(diffDays / 365); // Yıl farkı (ortalama)
-
-        if (diffMin < 60) return `${diffMin} dakika önce`;
-        if (diffHrs < 24) return `${diffHrs} saat önce`;
-        if (diffDays < 7) return `${diffDays} gün önce`;
-        if (diffWeeks < 4) return `${diffWeeks} hafta önce`;
-        if (diffMonths < 12) return `${diffMonths} ay önce`;
-        return `${diffYears} yıl önce`;
-    }
 
 
 }

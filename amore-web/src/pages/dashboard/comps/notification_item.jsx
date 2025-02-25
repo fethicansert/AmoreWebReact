@@ -6,8 +6,8 @@ import amoreCoin from '../../../assets/icons/amore_coin.png';
 import amoreIcon from '../../../assets/icons/amore_notification.png';
 import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
-import FlexBox from '../../../copmonents/flex_box';
 import { useBanner } from '../../../hooks/use_banner';
+import { formatTimeAgo } from '../../../utils/functions';
 
 const NotificationItem = ({ notification }) => {
 
@@ -19,6 +19,7 @@ const NotificationItem = ({ notification }) => {
     const title = getTitle();
     const content = getDescription();
     const icon = getIcon();
+    const time = getTime();
 
     const { setShowLimitedOffer } = useBanner();
 
@@ -29,7 +30,12 @@ const NotificationItem = ({ notification }) => {
         image={userImage}
         content={content}
         icon={icon}
+        time={time}
     />
+
+    function getTime() {
+        return formatTimeAgo(notification.createdDate)
+    }
 
     function checkBlur() {
         if ((type === 'VISIT_FREE' || type === 'LIKE_FREE' || type === 'VISIT' || type === 'LIKE') && !auth.premiumSubscription)

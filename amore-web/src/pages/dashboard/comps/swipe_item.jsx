@@ -3,12 +3,15 @@ import FlexBox from '../../../copmonents/flex_box'
 import AmoreLoading from '../../../copmonents/amore_loading'
 import { colors } from '../../../utils/theme'
 import { calculateAge } from '../../../utils/functions'
-import { BirthdayIcon, GenderIcon, JobIcon, LocactionHomeIcon, SchollIcon } from '../../../assets/svg/svg_package'
+import { BirthdayIcon, FacebookIcon, GenderIcon, InstragramIcon, JobIcon, LocactionHomeIcon, SchollIcon, WhatsAppIcon } from '../../../assets/svg/svg_package'
 import UserPropertie from './user_propertie'
 import SwipeImageWrapper from './swipe_image_wrapper'
 import SwipeInfoShimmer from './swipe_info_shimmer'
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next'
+import { useBanner } from '../../../hooks/use_banner'
+
+
 
 
 const SwipeItem = ({ user, loading }) => {
@@ -17,8 +20,12 @@ const SwipeItem = ({ user, loading }) => {
     const userAge = calculateAge(user?.birthday);
     const userState = user?.country?.state?.name || user?.country?.name;
     const gender = user?.gender || 'female';
+    const bio = user?.bio;
 
+    //CONTEXT
     const { t, i18n } = useTranslation();
+
+    const { setShowLimitedOffer } = useBanner();
 
     const userProperties = [
         {
@@ -42,6 +49,8 @@ const SwipeItem = ({ user, loading }) => {
             icon: <SchollIcon width='29' height='29' />
         }
     ];
+
+
 
     return (
         <div className='swipe-item'>
@@ -76,7 +85,7 @@ const SwipeItem = ({ user, loading }) => {
 
                         <div className='swipe-item-user-bio'>
                             <h4>{t('DASHBOARD.SWIPE.USERINFO.TITLE')}</h4>
-                            <p>Ben 19 yaşında İzmir'de yaşayan bir genç kızım. Yeni insanlarla tanışmak, görüşmek ve ilişkiler kurmak istiyorum. Bu yüzden buradayım.</p>
+                            <p>{bio || 'Bu kullanıcının biyografisi yok.'}</p>
                         </div>
 
                         <div className='swipe-item-user-properties'>
@@ -85,6 +94,27 @@ const SwipeItem = ({ user, loading }) => {
                                 value={propertie?.value}
                                 icon={propertie?.icon}
                             />)}
+                        </div>
+
+
+                        <h4 style={{ marginTop: '1.5rem' }}>Sosyal Platformlar</h4>
+
+
+                        <div className='swipe-item-user-properties'>
+                            <div className='user-social-button whatsapp-button' onClick={handleSocialButtonClick}>
+                                <WhatsAppIcon width='28' height='28' />
+                                WhatsApp
+                            </div>
+
+                            <div className='user-social-button instagram-button' onClick={handleSocialButtonClick}>
+                                <InstragramIcon width='28' height='28' />
+                                Instagram
+                            </div>
+
+                            <div className='user-social-button facebook-button' onClick={handleSocialButtonClick}>
+                                <FacebookIcon width='28' height='28' />
+                                Facebook
+                            </div>
                         </div>
 
                     </>}
@@ -100,7 +130,12 @@ const SwipeItem = ({ user, loading }) => {
 
         </div>
 
-    )
+    );
+
+    //FUNCTIONS
+    function handleSocialButtonClick() {
+        setShowLimitedOffer(true);
+    }
 }
 
 export default SwipeItem

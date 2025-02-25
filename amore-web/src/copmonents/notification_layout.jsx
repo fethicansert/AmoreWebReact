@@ -1,7 +1,6 @@
 import React from 'react'
-import FlexBox from './flex_box'
 
-const NotificationLayout = ({ image, title, content, icon, className, onClick, blurImage }) => {
+const NotificationLayout = ({ image, title, content, icon, time, className, onClick, blurImage, hideTime = false }) => {
 
 
 
@@ -14,7 +13,12 @@ const NotificationLayout = ({ image, title, content, icon, className, onClick, b
                 {<span className='notification-layout-title'>{title}</span>}
                 {<span className='notification-layout-text'>{content}</span>}
             </div>
-            {icon && icon}
+
+            <div className='notification-icon-time-flex' style={{ gap: !hideTime ? '10px 0' : '0' }}>
+                {icon && icon}
+                {(time && !hideTime) && <span className='notification-time'> {time}</span>}
+            </div>
+
         </div>
     )
 }
