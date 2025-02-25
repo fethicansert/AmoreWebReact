@@ -12,7 +12,8 @@ import { useNotification } from '../../hooks/use_notification';
 import NotificationItem from './comps/notification_item';
 import { ROUTES } from '../../utils/constants';
 import ghostLottie from '../../assets/lottie/ghost.json';
-import '../../css/dashboard/dashboard.css'
+import '../../css/dashboard/dashboard.css';
+import { ClipLoader } from 'react-spinners'
 import Lottie from 'lottie-react';
 
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
@@ -33,7 +34,7 @@ const Dashboard = () => {
     const [hoverPosition, setHoverPosition] = useState(0);
     const [showLogout, setShowLogout] = useState(false);
     const [showNavigation, setShowNavigation] = useState();
-    const { unReadedCount, notifications } = useNotification();
+    const { unReadedCount, notifications, isUnReadedLoading } = useNotification();
 
     useEffect(() => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
@@ -78,11 +79,15 @@ const Dashboard = () => {
                                 }}
                                 className={`notification-button ${showNavigation ? 'active' : ''}`}
                                 style={{ height: '29px', margin: '16px 0', display: 'block' }}>
-                                <div className='unreaded-count'>{unReadedCount < 99 ? unReadedCount : 99}</div>
+                                {isUnReadedLoading ? <div className='unreaded-notification-spinner'>
+                                    <ClipLoader color={colors.brand1} size={15} />
+                                </div> : <div className='unreaded-notification-count'> {unReadedCount < 99 ? unReadedCount : 99} </div>}
+
                                 {route.icon}
                             </div>)}
 
                     </nav>
+
                 </FlexBox>
 
                 <LogoutIcon className='logout-icon' onClick={() => setShowLogout(true)} />

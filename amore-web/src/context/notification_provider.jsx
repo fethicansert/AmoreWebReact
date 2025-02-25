@@ -52,7 +52,7 @@ const NotificationProvider = ({ children }) => {
 
     async function getNotificationList() {
 
-        setIsUnReadedLoading(true);
+        setIsNotificationsLoadings(true);
 
         try {
 
@@ -67,7 +67,7 @@ const NotificationProvider = ({ children }) => {
 
         catch (e) { console.log(e); }
 
-        finally { setIsUnReadedLoading(false); }
+        finally { setIsNotificationsLoadings(false); }
     }
 
 

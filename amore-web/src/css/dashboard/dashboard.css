@@ -139,16 +139,20 @@
     stroke: var(--brand1);
 }
 
-.unreaded-count {
+.unreaded-notification-spinner,
+.unreaded-notification-count {
     position: absolute;
+    z-index: 1;
+    left: 12px;
+    top: -8px;
+}
+
+.unreaded-notification-count {
     width: 16px;
     height: 16px;
     border-radius: 4px;
     background-color: var(--brand1);
     font-size: .53rem;
-    z-index: 1;
-    left: 12px;
-    top: -8px;
     display: flex;
     align-items: center;
     justify-content: center;
