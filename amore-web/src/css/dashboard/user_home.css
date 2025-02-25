@@ -295,12 +295,12 @@
     /* background-color: var(--backGround3); */
     border-radius: var(--spacing3);
     text-align: center;
+    font-weight: 600;
 }
 
 .user-home-swipe-error-container p:nth-child(1) {
     font-size: 1.2rem;
     color: var(--brand1);
-    font-weight: 600;
 }
 
 .user-home-swipe-error-container p:nth-child(2) {

@@ -11,7 +11,9 @@ import LayoutLinkBox from './comps/layout_link_box';
 import { useNotification } from '../../hooks/use_notification';
 import NotificationItem from './comps/notification_item';
 import { ROUTES } from '../../utils/constants';
+import ghostLottie from '../../assets/lottie/ghost.json';
 import '../../css/dashboard/dashboard.css'
+import Lottie from 'lottie-react';
 
 const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
 
@@ -36,6 +38,8 @@ const Dashboard = () => {
     useEffect(() => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
     }, []);
+
+
 
     return (
         <div className='layout'>
@@ -107,7 +111,18 @@ const Dashboard = () => {
                     </FlexBox>
 
                     <div className='notifications-wrapper'>
-                        {notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)}
+
+                        {
+                            notifications.length > 0
+                                ? notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)
+                                : <div className='notifications-empty-notifications'>
+                                    <Lottie animationData={ghostLottie} />
+                                    <div>
+                                        <p>Burda çok yalnızım !</p>
+                                        <p>Etkilişime geçip bana yardımcı ol.</p>
+                                    </div>
+                                </div>
+                        }
                     </div>
 
                 </div>

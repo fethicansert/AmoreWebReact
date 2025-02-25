@@ -19,7 +19,7 @@ const NotificationProvider = ({ children }) => {
     useEffect(() => {
         if (Object.keys(auth).length > 0) {
             getUnReadedCount();
-            getNotificationList()
+            getNotificationList();
         };
     }, [auth]);
 

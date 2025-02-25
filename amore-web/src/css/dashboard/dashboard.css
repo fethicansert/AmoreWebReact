@@ -260,6 +260,22 @@
     stroke: var(--negative);
 }
 
+.notifications-empty-notifications {
+    text-align: center;
+    font-weight: 600;
+}
+
+.notifications-empty-notifications p:nth-child(1) {
+    font-size: 1.4rem;
+    color: var(--brand1);
+}
+
+.notifications-empty-notifications p:nth-child(2) {
+    margin-top: .5rem;
+    font-size: 1.1rem;
+    color: var(--lowFadedText);
+}
+
 @media (max-width: 650px) {
     .layout-header {
         width: 55px;
