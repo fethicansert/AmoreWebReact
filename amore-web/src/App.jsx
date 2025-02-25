@@ -17,6 +17,8 @@ import { useBanner } from './hooks/use_banner';
 import LoginPopup from '../src/copmonents/login_popup'
 import ProtectedRoute from './routes/protected_route';
 import PageNotFound from './routes/page_not_found';
+import AppDataProvider from './context/app_data_provider';
+
 
 function App() {
 
@@ -28,29 +30,33 @@ function App() {
 
         <Route path="/" element={<Home />} />
 
-        <Route path='/register' element={<Register />} />
+        <Route element={<AppDataProvider />}>
 
-        <Route element={<ProtectedRoute />}>
+          <Route path='/register' element={<Register />} />
 
-          <Route path='/dashboard' element={<Dashboard />}>
+          <Route element={<ProtectedRoute />}>
 
-            <Route index path='user-home' element={<UserHome />} />
+            <Route path='/dashboard' element={<Dashboard />}>
 
-            <Route path='notifications' element={<Notifications />} />
+              <Route index path='user-home' element={<UserHome />} />
 
-            <Route path='discover' element={<Discover />} />
+              <Route path='notifications' element={<Notifications />} />
 
-            <Route path='matches' element={<Matches />} />
+              <Route path='discover' element={<Discover />} />
 
-            <Route path='chat' element={<Chat />} />
+              <Route path='matches' element={<Matches />} />
 
-            <Route path='market' element={<Market />} />
+              <Route path='chat' element={<Chat />} />
 
-            <Route path='premium-subscription' element={<Premium />} />
+              <Route path='market' element={<Market />} />
 
-            <Route path='payment' element={<Payment />} />
+              <Route path='premium-subscription' element={<Premium />} />
 
-            <Route path='user' element={<User />} />
+              <Route path='payment' element={<Payment />} />
+
+              <Route path='user' element={<User />} />
+
+            </Route>
 
           </Route>
 

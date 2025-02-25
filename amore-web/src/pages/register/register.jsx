@@ -21,6 +21,7 @@ import { BeatLoader } from 'react-spinners'
 import { createOtp, objectToFormData, login, isAdult, scrollPage, changeRootThemeColor } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
+import { useAppData } from '../../hooks/use_add_data';
 import AmoreLoading from '../../copmonents/amore_loading';
 import '../../css/register/register.css';
 
@@ -41,10 +42,8 @@ const Register = () => {
     const [username, setUsername] = useState('');
     const [gender, setGender] = useState('male');
     const [selectedHobbies, setSelectedHobbies] = useState([]);
-    const [interest, setInterest] = useState([]);
     const [userImages, setUserImages] = useState([]);
     const [userLocation, setUserLocation] = useState({});
-    const [locations, setLocations] = useState([]);
     const [currentLocation, setCurrentLocation] = useState(ipLocation);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +56,8 @@ const Register = () => {
         digit3: '',
         digit4: ''
     });
+
+    const { interests, locations } = useAppData();
 
     //CONSTANTS
     const titles = registerLocalization.map(localization => t(`REGISTER.${localization}.TITLE`));
@@ -73,27 +74,6 @@ const Register = () => {
     useEffect(() => { scrollPage({ top: 0 }) }, [currentPageIndex]);
 
     useEffect(() => changeRootThemeColor(colors.backGround2), []);
-
-    useEffect(() => {
-
-        const fetchData = async () => {
-            setIsDataLoading(true);
-            try {
-                const [interestsResponse, countriesResponse] = await Promise.all([
-                    axiosAmore.get('api/interest'),
-                    axiosAmore.get('api/countries')
-                ]);
-                if (interestsResponse.status === 200 && countriesResponse.status === 200) {
-                    setInterest(interestsResponse.data.data);
-                    setLocations(countriesResponse.data.data);
-                };
-            } catch (e) { console.log(e); }
-            finally { setIsDataLoading(false); }
-        }
-
-        fetchData();
-
-    }, []);
 
     //UI <Lottie animationData={amoreAnimation} style={{ width: '50%', maxWidth: '300px' }} />
     return (
@@ -377,7 +357,7 @@ const Register = () => {
                     setGender={setGender} />;
             case 5:
                 return <RegisterHobbies
-                    interests={interest}
+                    interests={interests}
                     selectedHobbies={selectedHobbies}
                     setSelectedHobbies={setSelectedHobbies} />;
             case 6:

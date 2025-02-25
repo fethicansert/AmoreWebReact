@@ -14,12 +14,12 @@ const NotificationProvider = ({ children }) => {
 
     const { auth } = useAuth();
 
-    const notficationPage = useRef(2);
+    const notficationPage = useRef(1);
 
     useEffect(() => {
         if (Object.keys(auth).length > 0) {
-            getUnReadedCount();
             getNotificationList();
+            getUnReadedCount();
         };
     }, [auth]);
 

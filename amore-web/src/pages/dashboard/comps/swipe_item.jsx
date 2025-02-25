@@ -10,9 +10,7 @@ import SwipeInfoShimmer from './swipe_info_shimmer'
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next'
 import { useBanner } from '../../../hooks/use_banner'
-
-
-
+import { useAppData } from '../../../hooks/use_add_data'
 
 const SwipeItem = ({ user, loading }) => {
     const userProfilPhoto = user?.photos[0]?.url;
@@ -24,8 +22,11 @@ const SwipeItem = ({ user, loading }) => {
 
     //CONTEXT
     const { t, i18n } = useTranslation();
-
     const { setShowLimitedOffer } = useBanner();
+    const { getUserInterests } = useAppData();
+
+    const interests = getUserInterests(user?.interests.map(interest => interest.id))
+
 
     const userProperties = [
         {
@@ -49,8 +50,6 @@ const SwipeItem = ({ user, loading }) => {
             icon: <SchollIcon width='29' height='29' />
         }
     ];
-
-
 
     return (
         <div className='swipe-item'>
@@ -96,9 +95,7 @@ const SwipeItem = ({ user, loading }) => {
                             />)}
                         </div>
 
-
-                        <h4 style={{ marginTop: '1.5rem' }}>Sosyal Platformlar</h4>
-
+                        <h4 style={{ marginTop: '1.5rem' }}>Sosyal Platformlarım</h4>
 
                         <div className='swipe-item-user-properties'>
                             <div className='user-social-button whatsapp-button' onClick={handleSocialButtonClick}>
@@ -119,12 +116,31 @@ const SwipeItem = ({ user, loading }) => {
 
                     </>}
 
-                <div className='info-'></div>
+            </div>
+
+            {userPhotos?.length > 0 && <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhotos[0].url} />}
+
+            <div className='swipe-container-item-about-container'>
+                {loading
+                    ? <SwipeInfoShimmer /> : <>
+
+                        <h4>İlgi alanlarım</h4>
+
+                        <div className='swipe-item-user-properties'>
+                            {
+                                interests.length > 1 ? interests.map(propertie => <UserPropertie
+                                    key={uuidv4()}
+                                    value={t(`REGISTER.INTERESTS.INTEREST_ITEMS.${propertie.name}`)}
+                                    icon={propertie?.emoji}
+                                />) : <span>: No interest</span>}
+                        </div>
+
+                    </>}
 
             </div>
 
             {/* Rest of the user photos */}
-            {(userPhotos?.length > 0 && !loading) && userPhotos.map(userPhoto =>
+            {(userPhotos?.length > 1 && !loading) && userPhotos.slice(1,).map(userPhoto =>
                 <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhoto.url} />
             )}
 
