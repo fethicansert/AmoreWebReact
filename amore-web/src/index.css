@@ -110,6 +110,8 @@
   --overlayMid: rgba(0, 0, 0, 0.45)
 }
 
+/* Registerde bir scroll cikiyor neden ? */
+.register::-webkit-scrollbar,
 .discover-users-side-bar::-webkit-scrollbar,
 .user-home-sidebar-container::-webkit-scrollbar,
 .notifications-wrapper::-webkit-scrollbar,
@@ -122,6 +124,7 @@
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.register,
 .discover-users-side-bar,
 .user-home-sidebar-container,
 .notifications-wrapper,

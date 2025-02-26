@@ -118,7 +118,7 @@ const SwipeItem = ({ user, loading }) => {
 
             </div>
 
-            {userPhotos?.length > 0 && <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhotos[0].url} />}
+            {(userPhotos?.length > 0 && !loading) && <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhotos[0].url} />}
 
             <div className='swipe-container-item-about-container'>
                 {loading

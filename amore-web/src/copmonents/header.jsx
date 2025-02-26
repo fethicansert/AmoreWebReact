@@ -7,10 +7,10 @@ import { useMediaPredicate } from "react-media-hook";
 import { TbMenu2 } from "react-icons/tb";
 import { useTranslation } from 'react-i18next'
 import { GrLanguage } from "react-icons/gr";
-import { useIPLocation } from '../hooks/use_ip_location'
 import { useBanner } from '../hooks/use_banner'
 import { useAuth } from '../hooks/use_auth'
 import { ROUTES } from '../utils/constants'
+import { useAppData } from '../hooks/use_add_data'
 
 const Header = ({
     backgroundColor,
@@ -32,15 +32,13 @@ const Header = ({
     //HOOKS
     const { auth } = useAuth();
     const { t, i18n } = useTranslation();
-    const { language, setLanguage } = useIPLocation();
+    const { language, setLanguage } = useAppData();
     const { setShowLogin } = useBanner()
     const navigate = useNavigate();
 
     //EFFECTS
     useEffect(() => {
-        if (hideButtons) {
-            setShowNav(false);
-        }
+        if (hideButtons) { setShowNav(false); }
     }, [hideButtons]);
 
     //UI
@@ -52,9 +50,9 @@ const Header = ({
             border: hasBorder ? 'solid 1.5px var(--borderColor1)' : null
         }}>
 
-            <FlexBox gap={'10px'}>
-                <img src={icon} width={iconWidth}></img>
-                <h1 onClick={() => navigate('/')} style={{ color: titleColor, cursor: 'pointer' }}>{title}</h1>
+            <FlexBox gap={'10px'} onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
+                <img src={icon} width={iconWidth} ></img>
+                <h1 style={{ color: titleColor, cursor: 'pointer' }}>{title}</h1>
             </FlexBox>
 
             {

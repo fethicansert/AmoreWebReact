@@ -5,12 +5,10 @@ import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
 import NotificationLayout from '../../../copmonents/notification_layout';
-import { useIPLocation } from '../../../hooks/use_ip_location';
 import { formatTimeAgo } from '../../../utils/functions';
 const UserHomeNotificationItem = ({ notification, type }) => {
 
     const { auth } = useAuth();
-    const { language } = useIPLocation();
     const user = getUser(notification, type);
     const userImage = user.photos[0].url;
     const content = getMessageContent(notification, type);

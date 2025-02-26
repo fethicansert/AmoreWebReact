@@ -1,14 +1,14 @@
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { colors } from '../../../utils/theme';
-import { useIPLocation } from '../../../hooks/use_ip_location';
 import { scrollPage } from '../../../utils/functions';
+import { useAppData } from '../../../hooks/use_add_data';
 
 
 const OtpRegister = ({ phone, setPhone }) => {
 
 
-    const { ipLocation } = useIPLocation();
+    const { ipLocation } = useAppData();
 
     //IF ipLocatiob has no error use ipLocation Country Code OR 
     //Use Device Language to select Country Flag and Code

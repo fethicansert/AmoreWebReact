@@ -14,7 +14,6 @@ import RegisterUserPhotos from './sections/register_user_photos';
 import RegisterLocation from './sections/register_location';
 import { axiosAmore } from '../../api/axios';
 import { useTranslation } from 'react-i18next';
-import { useIPLocation } from '../../hooks/use_ip_location';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
@@ -31,7 +30,8 @@ const registerLocalization = ['PHONE', 'VERIFY', 'USERNAME', 'BIRTH_DATE', 'GEND
 const Register = () => {
 
     //CONTEXT
-    const { ipLocation, language } = useIPLocation();
+    const { ipLocation, language } = useAppData();
+
     const { t, i18n } = useTranslation();
     const { setAuth } = useAuth();
     const navigate = useNavigate();
@@ -47,6 +47,7 @@ const Register = () => {
     const [currentLocation, setCurrentLocation] = useState(ipLocation);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    //Burayi anlamadim isDataLoading
     const [isDataLoading, setIsDataLoading] = useState(false);
     const [selectedDate, setSelectedDate] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
