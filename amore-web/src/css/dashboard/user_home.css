@@ -161,7 +161,7 @@
 
 .swipe-container-item-about-container {
     width: 100%;
-    padding: 2rem;
+    padding: 1.5rem;
     margin: 1rem 0;
     background: white;
     border-radius: 12px;
@@ -180,7 +180,7 @@
     font-weight: 600;
 }
 
-.swipe-item-user-bio p {
+.swipe-item-info-text {
     margin-top: 1rem;
     color: var(--lowFadedText);
     font-size: .9rem;
@@ -264,7 +264,6 @@
 
 .user-home-filters {
     width: 100%;
-    /* height: 400px; */
     background: var(--backGround3);
     border-radius: var(--spacing3);
     border: 1px solid var(--borderColor1);
@@ -273,7 +272,6 @@
 }
 
 .user-home-filters-options-wrapper {
-    /* background: red; */
     width: 100%;
     height: 0px;
     opacity: 0;

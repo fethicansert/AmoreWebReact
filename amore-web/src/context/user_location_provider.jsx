@@ -1,15 +1,16 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { axiosAmore } from '../api/axios';
 import i18n from '../localization/i18n_localization';
+import { useLocalStorage } from './../hooks/use_localstorage';
 
 export const IPLocationContext = createContext();
 
 export const IPLocationProvider = ({ children }) => {
     const [ipLocation, setIpLocation] = useState({});
-    const [language, setLanguage] = useState(navigator.language.slice(0, 2));
+    const [language, setLanguage] = useLocalStorage('language', navigator.language.slice(0, 2) || 'en');
 
     //language
-    useEffect(() => { i18n.changeLanguage('tr'); }, [language]);
+    useEffect(() => { i18n.changeLanguage(language); }, [language]);
 
     useEffect(() => {
         const getIPLocation = async () => {

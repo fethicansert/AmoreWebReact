@@ -21,7 +21,7 @@ const NotificationItem = ({ notification }) => {
     const icon = getIcon();
     const time = getTime();
 
-    const { setShowLimitedOffer } = useBanner();
+    const { setLimitedOfferOptions } = useBanner();
 
     return <NotificationLayout
         blurImage={checkBlur()}
@@ -44,7 +44,7 @@ const NotificationItem = ({ notification }) => {
     }
 
     function handleClick() {
-        setShowLimitedOffer(true);
+        setLimitedOfferOptions({ show: true, type: 'premium-subscription' })
     }
 
     function getUserName() {

@@ -12,12 +12,12 @@ const NotificationProvider = ({ children }) => {
     const [notifications, setNotifications] = useState([]);
     const [isNotificationsLoading, setIsNotificationsLoadings] = useState([]);
 
-    const { auth } = useAuth();
+    const { auth, isAuthenticated } = useAuth();
 
     const notficationPage = useRef(1);
 
     useEffect(() => {
-        if (Object.keys(auth).length > 0) {
+        if (isAuthenticated) {
             getNotificationList();
             getUnReadedCount();
         };
@@ -34,11 +34,9 @@ const NotificationProvider = ({ children }) => {
         setIsUnReadedLoading(true);
 
         try {
-
             const response = await axiosAmore.get('notification/count', {
                 headers: { Authorization: auth.token }
             });
-
 
             if (response.data.response.code === 200)
                 setUnReadedCount(response.data.data.status);

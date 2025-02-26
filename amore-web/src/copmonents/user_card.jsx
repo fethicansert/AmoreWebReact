@@ -7,17 +7,14 @@ import FlexBox from "./flex_box.jsx";
 import BasicButton from "./basic_button.jsx";
 
 
-// box-shadow: 4px 4px 15px 0px #FFFFFF4D inset;
-
-
 const UserCard = forwardRef((props, ref) => {
     const isOnlyPremium = props?.isOnlyPremium || false;
     const user = props.user;
     const age = calculateAge(user?.birthday);
-    const { setShowLimitedOffer } = useBanner();
+    const { setLimitedOfferOptions } = useBanner();
 
 
-    return <div className='discover-user-box' onClick={() => isOnlyPremium ? setShowLimitedOffer(true) : null}>
+    return <div className='discover-user-box' onClick={() => isOnlyPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : null}>
         <div className='discover-user-image-container' ref={ref}>
             <img style={{ filter: `blur(${isOnlyPremium ? '35px' : '0'})` }} src={user?.photos[0].url}></img>
             <div

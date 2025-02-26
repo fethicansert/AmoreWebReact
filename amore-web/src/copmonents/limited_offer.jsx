@@ -11,10 +11,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use_auth';
 
 
-const LimitedOffer = ({ setShowLimitedOffer }) => {
+const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
 
     const navigate = useNavigate();
     const { setAuth } = useAuth();
+
 
 
     return (
@@ -22,7 +23,7 @@ const LimitedOffer = ({ setShowLimitedOffer }) => {
 
             <div className='limited-offer'>
 
-                <CloseIcon color={colors.negativeBlack} strokeColor={colors.backGround3} onClick={() => setShowLimitedOffer(false)} className='limited-offer-close-icon' />
+                <CloseIcon color={colors.negativeBlack} strokeColor={colors.backGround3} onClick={() => setLimitedOfferOptions(prev => ({ ...prev, show: false }))} className='limited-offer-close-icon' />
 
                 <h3 className='limited-offer-title'>Sınırlı Teklif</h3>
 
@@ -58,7 +59,7 @@ const LimitedOffer = ({ setShowLimitedOffer }) => {
                 </FlexBox>
 
                 <BasicButton onClick={handleClick} width={'100%'} height={'55px'} borderRadius={'12px'} backgroundColor={colors.brand1} color={colors.whiteText}>
-                    Tüm Jetonları Gör
+                    {limititedOfferOptions.type === 'coin' ? 'Tüm Jetonları Gör' : 'Tün Aboneklikleri Gör'}
                 </BasicButton>
 
             </div>
@@ -67,8 +68,8 @@ const LimitedOffer = ({ setShowLimitedOffer }) => {
     );
 
     function handleClick() {
-        // navigate('dashboard/market');
-        setShowLimitedOffer(false);
+        navigate(`dashboard/${limititedOfferOptions.type === 'coin' ? 'market' : 'premium-subscription'}`);
+        setLimitedOfferOptions(prev => ({ ...prev, show: false }));
         setAuth(prev => ({ ...prev, premiumSubscription: !prev.premiumSubscription }));
     }
 

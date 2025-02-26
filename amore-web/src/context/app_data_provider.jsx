@@ -8,29 +8,14 @@ export const AppDataContext = createContext({});
 
 const AppDataProvider = ({ children }) => {
 
+    const [ipLocation, setIpLocation] = useState({});
+    // const [language, setLanguage] = useLocalStorage('language', navigator.language.slice(0, 2) || 'en');
     const [interests, setInterests] = useState([]);
     const [locations, setLocations] = useState([]);
     const [isdDataLoading, setIsDataLoading] = useState([]);
 
-    console.log(interests);
-
-
     useEffect(() => {
-        const fetchData = async () => {
-            setIsDataLoading(true);
-            try {
-                const [interestsResponse, countriesResponse] = await Promise.all([
-                    axiosAmore.get('api/interest'),
-                    axiosAmore.get('api/countries')
-                ]);
-                if (interestsResponse.status === 200 && countriesResponse.status === 200) {
-                    setInterests(interestsResponse.data.data);
-                    setLocations(countriesResponse.data.data);
-                };
-            } catch (e) { console.log(e); }
-            finally { setIsDataLoading(false); }
-        }
-        fetchData();
+        fetchAppData();
     }, []);
 
     return (
@@ -40,13 +25,26 @@ const AppDataProvider = ({ children }) => {
     );
 
     function getUserInterests(interestIds) {
-        console.log(interestIds);
-
         return interests.filter(interest => {
-            console.log(interest._id);
-
             return interestIds?.includes(interest._id);
         });
+    }
+
+    async function fetchAppData() {
+        setIsDataLoading(true);
+        try {
+            const [interestsResponse, countriesResponse, ipResponse] = await Promise.all([
+                axiosAmore.get('api/interest'),
+                axiosAmore.get('api/countries'),
+                axiosAmore.get('api/ip')
+            ]);
+            if (interestsResponse.status === 200 && countriesResponse.status === 200) {
+                setInterests(interestsResponse.data.data);
+                setLocations(countriesResponse.data.data);
+                setIpLocation(ipResponse.data.data);
+            };
+        } catch (e) { console.log(e); }
+        finally { setIsDataLoading(false); }
     }
 
 

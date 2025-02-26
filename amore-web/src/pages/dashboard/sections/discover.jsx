@@ -15,7 +15,7 @@ import UserCard from '../../../copmonents/user_card.jsx';
 import FilterSlider from '../../../copmonents/filter_slider.jsx';
 import CustomRadio from '../../../copmonents/custom_radio.jsx';
 import PremiumBox from '../../../copmonents/premium_box.jsx';
-const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
+
 
 const Discover = () => {
 
@@ -31,6 +31,8 @@ const Discover = () => {
     const [isInputHovered, setIsInputHovered] = useState(false);
     const [showFilter, setShowFilter] = useState(false);
 
+    //COMPONENT CONSTANTS
+    const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
 
     //MEDIA
     const isMobile = useMediaPredicate("(max-width:575px)");
@@ -176,7 +178,7 @@ const Discover = () => {
         try {
 
             const headers = { Authorization: auth.token }
-            const response = await axiosAmore.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${userStatus}=true&page=${currentPage.current}`, {
+            const response = await axiosAmore.get(`user/all_v3?minAge=${age[0]}&maxAge=${age[1]}&${selectedUserStatus}=true&page=${currentPage.current}`, {
                 headers
             });
 

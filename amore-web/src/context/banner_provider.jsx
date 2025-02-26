@@ -4,11 +4,12 @@ export const BannerContext = createContext({});
 
 const BannerProvider = ({ children }) => {
 
-    const [showLimitedOffer, setShowLimitedOffer] = useState(false);
+    const [limitedOfferOptions, setLimitedOfferOptions] = useState({ show: false, type: 'coin' });
+
     const [showLogin, setShowLogin] = useState(false);
 
     return (
-        <BannerContext.Provider value={{ showLimitedOffer, setShowLimitedOffer, showLogin, setShowLogin }}>
+        <BannerContext.Provider value={{ limitedOfferOptions, setLimitedOfferOptions, showLogin, setShowLogin }}>
             {children}
         </BannerContext.Provider>
     );

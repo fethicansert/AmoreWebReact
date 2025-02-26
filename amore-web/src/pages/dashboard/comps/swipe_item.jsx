@@ -22,7 +22,7 @@ const SwipeItem = ({ user, loading }) => {
 
     //CONTEXT
     const { t, i18n } = useTranslation();
-    const { setShowLimitedOffer } = useBanner();
+    const { setLimitedOfferOptions } = useBanner();
     const { getUserInterests } = useAppData();
 
     const interests = getUserInterests(user?.interests.map(interest => interest.id))
@@ -84,7 +84,7 @@ const SwipeItem = ({ user, loading }) => {
 
                         <div className='swipe-item-user-bio'>
                             <h4>{t('DASHBOARD.SWIPE.USERINFO.TITLE')}</h4>
-                            <p>{bio || 'Bu kullanıcının biyografisi yok.'}</p>
+                            <p className='swipe-item-info-text'>{bio || 'Bu kullanıcının biyografisi yok.'}</p>
                         </div>
 
                         <div className='swipe-item-user-properties'>
@@ -126,14 +126,15 @@ const SwipeItem = ({ user, loading }) => {
 
                         <h4>İlgi alanlarım</h4>
 
-                        <div className='swipe-item-user-properties'>
+                        {interests?.length > 0 ? <div className='swipe-item-user-properties'>
                             {
-                                interests.length > 1 ? interests.map(propertie => <UserPropertie
+                                interests.map(propertie => <UserPropertie
                                     key={uuidv4()}
                                     value={t(`REGISTER.INTERESTS.INTEREST_ITEMS.${propertie.name}`)}
                                     icon={propertie?.emoji}
-                                />) : <span>: No interest</span>}
-                        </div>
+                                />)
+                            }
+                        </div> : <p className='swipe-item-info-text'>{'Bu kullanıcının ilgi alanları henüz eklenemdi.'}</p>}
 
                     </>}
 
@@ -150,7 +151,7 @@ const SwipeItem = ({ user, loading }) => {
 
     //FUNCTIONS
     function handleSocialButtonClick() {
-        setShowLimitedOffer(true);
+        setLimitedOfferOptions({ show: true, type: 'premium-subscription' });
     }
 }
 

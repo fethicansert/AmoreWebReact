@@ -22,7 +22,7 @@ import AppDataProvider from './context/app_data_provider';
 
 function App() {
 
-  const { showLimitedOffer, setShowLimitedOffer, showLogin, setShowLogin } = useBanner();
+  const { limitedOfferOptions, setLimitedOfferOptions, showLogin, setShowLogin } = useBanner();
 
   return (
     <>
@@ -66,7 +66,7 @@ function App() {
 
       </Routes>
 
-      {showLimitedOffer && <LimitedOffer setShowLimitedOffer={setShowLimitedOffer} />}
+      {limitedOfferOptions.show && <LimitedOffer setLimitedOfferOptions={setLimitedOfferOptions} limititedOfferOptions={limitedOfferOptions} />}
 
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
 

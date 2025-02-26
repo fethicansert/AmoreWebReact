@@ -613,9 +613,7 @@ header a {
   color: var(--fadedText);
 }
 
-
 /* WhatsApp Button */
-
 .user-social-button {
   height: 50px;
   padding: .4rem .8rem;
@@ -628,33 +626,46 @@ header a {
   gap: 0 7px;
   box-shadow: var(--extraLowShadow);
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 400;
 }
 
-.user-social-button svg {
-  transition: transform 350ms ease;
-}
-
-.user-social-button:hover svg {
-  transform: translateY(-4.5px);
-  transition: transform 350ms ease;
-}
 
 .whatsapp-button {
   background: #25D366;
 
+  &:hover {
+    outline: 1.5px solid #23b85a;
+  }
 }
 
 .instagram-button {
   background: #833ab4;
   background: linear-gradient(to right,
       #833ab4, #fd1d1d, #fcb045);
+
+  &:hover {
+    outline: 1.5px solid #a54be0;
+  }
 }
 
 .facebook-button {
-  background: #1877F2;
+  background: #4267B2;
+
+
+  &:hover {
+    outline: 1.5px solid #477de8;
+  }
 }
 
+.amore-coin-icon {
+  cursor: pointer;
+  transition: transform 150ms ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+}
 
 /* ANIMATIONS */
 @media (min-width: 500px) {
