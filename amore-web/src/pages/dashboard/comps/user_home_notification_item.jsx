@@ -6,15 +6,19 @@ import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
 import NotificationLayout from '../../../copmonents/notification_layout';
 import { formatTimeAgo } from '../../../utils/functions';
+import { useTranslation } from 'react-i18next';
 const UserHomeNotificationItem = ({ notification, type }) => {
 
     const { auth } = useAuth();
+    const { t, _ } = useTranslation();
     const user = getUser(notification, type);
     const userImage = user.photos[0].url;
     const content = getMessageContent(notification, type);
     const icon = getIcon(type);
     const time = getTime(type);
     const hideTime = getHideTime(type)
+
+
 
     return <NotificationLayout image={userImage} title={user?.name || 'username'} content={content} icon={icon} time={time} hideTime={hideTime} />
 
@@ -46,18 +50,12 @@ const UserHomeNotificationItem = ({ notification, type }) => {
     }
 
     function getMessageContent(notification, type) {
-        if (type === 'like') return user?.name + ' ' + 'seni beğendi';
-        switch (notification?.lastMessage?.type) {
-            case 'text':
-                return notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
-            case 'audio':
-                return user?.name + ' ' + 'bir ses kaydı gönderdi 🎵';
-            case 'image':
-                return user?.name + ' ' + 'bir fotoğraf gönderdi 📷';
-            case 'gift':
-                return user?.name + ' ' + 'bir gift gönderdi 🎁';
-            default:
-                return user?.name + ' ' + 'bir mesaj gönderdi.';
+
+        if (type === 'like') return t(`NOTIFICATION.QUICK_NOTIFICATIONS.${type?.toUpperCase()}`, { user: user?.name });
+
+        else {
+            const message = notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
+            return t(`NOTIFICATION.QUICK_NOTIFICATIONS.${notification?.lastMessage?.type.toUpperCase()}`, { user: user?.name, message });
         }
     };
 

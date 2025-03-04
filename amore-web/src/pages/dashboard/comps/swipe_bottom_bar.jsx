@@ -1,12 +1,13 @@
 import React, { useRef } from 'react'
 import { ChatBubbleIcon, CrossLineIcon, HeartLineIcon, StarLineIcon } from '../../../assets/svg/svg_package'
 import { colors } from '../../../utils/theme';
+import { useTranslation } from 'react-i18next';
 
 
 
 const SwipeBottomBar = ({ onSwipe }) => {
 
-
+    const { t, _ } = useTranslation();
 
     return (
         <div className='swipe-bottom-bar'>
@@ -32,7 +33,7 @@ const SwipeBottomBar = ({ onSwipe }) => {
                     height='22'
                     color={colors.whiteText}
                     className='swipe-bottom-bar-send-message-icon' />
-                Mesaj Gönder
+                {t('BUTTONS.SEND_MESSAGE_BUTTON')}
             </div>
 
         </div>

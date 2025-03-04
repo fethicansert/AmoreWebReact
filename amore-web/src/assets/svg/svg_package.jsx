@@ -37,8 +37,8 @@ export const ArrowDownIcon = ({ width = '17', height = '17', className = 'arrow-
 
 //Location Icon
 export const LocationIcon = ({ width = '17', height = '17', className = 'location-icon', color = '#18181C' }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" clipRule="evenodd" d="M14.2925 11.4617C14.2925 10.0804 13.1893 8.96118 11.8289 8.96118C10.4674 8.96118 9.36426 10.0804 9.36426 11.4617C9.36426 12.8419 10.4674 13.9612 11.8289 13.9612C13.1893 13.9612 14.2925 12.8419 14.2925 11.4617Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path fillRule="evenodd" clipRule="evenodd" d="M11.8275 21.9612C10.6462 21.9612 4.43555 16.8596 4.43555 11.5245C4.43555 7.34782 7.74448 3.96118 11.8275 3.96118C15.9104 3.96118 19.2203 7.34782 19.2203 11.5245C19.2203 16.8596 13.0087 21.9612 11.8275 21.9612Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M14.2925 11.4617C14.2925 10.0804 13.1893 8.96118 11.8289 8.96118C10.4674 8.96118 9.36426 10.0804 9.36426 11.4617C9.36426 12.8419 10.4674 13.9612 11.8289 13.9612C13.1893 13.9612 14.2925 12.8419 14.2925 11.4617Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M11.8275 21.9612C10.6462 21.9612 4.43555 16.8596 4.43555 11.5245C4.43555 7.34782 7.74448 3.96118 11.8275 3.96118C15.9104 3.96118 19.2203 7.34782 19.2203 11.5245C19.2203 16.8596 13.0087 21.9612 11.8275 21.9612Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 
@@ -256,7 +256,6 @@ export const PremiumStartIcon = ({ width = '50', height = '50', color = '#FFFFFF
     </defs>
 </svg>
 
-
 export const WhatsAppIcon = ({ width = '50', height = '50', color = '#FFFFFF' }) =>
     <svg fill={color} height={width} width={height} version="1.1" id="Layer_1"
         viewBox="0 0 308 308" xmlSpace="preserve">
@@ -293,4 +292,28 @@ export const FacebookIcon = ({ width = '50', height = '50', color = '#FFFFFF' })
     <path fillRule="evenodd" clipRule="evenodd" d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H15V13.9999H17.0762C17.5066 13.9999 17.8887 13.7245 18.0249 13.3161L18.4679 11.9871C18.6298 11.5014 18.2683 10.9999 17.7564 10.9999H15V8.99992C15 8.49992 15.5 7.99992 16 7.99992H18C18.5523 7.99992 19 7.5522 19 6.99992V6.31393C19 5.99091 18.7937 5.7013 18.4813 5.61887C17.1705 5.27295 16 5.27295 16 5.27295C13.5 5.27295 12 6.99992 12 8.49992V10.9999H10C9.44772 10.9999 9 11.4476 9 11.9999V12.9999C9 13.5522 9.44771 13.9999 10 13.9999H12V21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" fill={color} />
 </svg>
 
+
+export const CrossCloseIcon = ({ width = '25', height = '25', color = '#FFFFFF', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6.28882L18 18.2888" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18 6.28882L6 18.2888" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+
+export const LocationSettingIcon = ({ width = '25', height = '25', color = '#000000' }) => <svg width={width} height={height} viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M34.9993 15.0254V12.3971C34.9993 8.81373 32.0943 5.9104 28.511 5.9104H26.416" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M5 15.0254V12.3971C5 8.81373 7.905 5.9104 11.4883 5.9104H13.6367" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M5 26.7957V29.4242C5 33.0075 7.905 35.9107 11.4883 35.9107H13.5833" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M35.0004 26.7957V29.4242C35.0004 33.0075 32.0954 35.9107 28.5121 35.9107H26.3638" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M19.9697 28.8253C18.9113 28.8253 13.3496 24.3237 13.3496 19.6137C13.3496 15.957 16.3129 12.9937 19.9697 12.9937C23.6263 12.9937 26.5897 15.957 26.5897 19.6137C26.5897 24.3237 21.028 28.8253 19.9697 28.8253Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M19.973 19.1882V19.2681M20.2972 19.2053C20.2972 19.3855 20.1512 19.5315 19.971 19.5315C19.791 19.5315 19.645 19.3855 19.645 19.2053C19.645 19.0251 19.791 18.8792 19.971 18.8792C20.1512 18.8792 20.2972 19.0251 20.2972 19.2053Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+
+export const NotificationPermissionIcon = ({ width = '25', height = '25', color = '#000000' }) => <svg width={width} height={height} viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M9.83842 17.3314C9.83842 11.7191 14.3886 7.16895 19.9992 7.16895C25.6115 7.16895 30.1617 11.7191 30.1617 17.3314L30.1633 19.3714C30.1633 20.5777 30.4292 21.7697 30.9433 22.8626L31.6648 24.3951C32.7675 26.7382 31.0568 29.4316 28.4687 29.4316H11.5313C8.94169 29.4316 7.23254 26.7382 8.33521 24.3951L9.05682 22.8626C9.57086 21.7697 9.83679 20.5777 9.83679 19.3714L9.83842 17.3314Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M20 5.02539V7.16912" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.39258 10.8275C8.14984 9.17836 9.35631 7.63299 10.9195 6.41357" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M32.6054 10.8275C31.8483 9.17836 30.6418 7.63299 29.0786 6.41357" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M15.2017 30.229C15.2017 32.877 17.3487 35.0255 19.9983 35.0255C22.6463 35.0255 24.7933 32.877 24.7933 30.229" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
 

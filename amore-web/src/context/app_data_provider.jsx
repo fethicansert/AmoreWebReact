@@ -18,10 +18,10 @@ const AppDataProvider = ({ children }) => {
 
     //SIDE-EFFECTS
 
-    //Fetcth AppData
+    //Fetcth Amore App data
     useEffect(() => { fetchAppData(); }, []);
 
-    //Language
+    //If Language dependecy change set Localization language
     useEffect(() => { i18n.changeLanguage(language); }, [language]);
 
     return (
@@ -32,12 +32,21 @@ const AppDataProvider = ({ children }) => {
 
     async function fetchAppData() {
         setIsDataLoading(true);
+
+        // const apiUrls = ['interest', 'countries', 'ips'];
+        // const setters = [setInterests, setLocations, setIpLocation];
+
+        // apiUrls.forEach((url, index) => {
+        //     axiosAmore.get(`api/${url}`)
+        //         .then(response => setters[index](prev => ({...prev,data:response.data.data})))
+        //         .catch(e => setters[index](prev => ({...prev,error:e})))
+        //         .finally(setters[index](prev => ({...prev,isLoading:false})))
+        // });
+        const requests = ['interest', 'countries', 'ip', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
+
         try {
-            const [interestsResponse, countriesResponse, ipResponse] = await Promise.all([
-                axiosAmore.get('api/interest'),
-                axiosAmore.get('api/countries'),
-                axiosAmore.get('api/ip')
-            ]);
+            const [interestsResponse, countriesResponse, ipResponse] = await Promise.all(requests);
+
             if (interestsResponse.status === 200 && countriesResponse.status === 200) {
                 setInterests(interestsResponse.data.data);
                 setLocations(countriesResponse.data.data);
@@ -47,13 +56,12 @@ const AppDataProvider = ({ children }) => {
         finally { setIsDataLoading(false); }
     }
 
+    //Return user interests
     function getUserInterests(interestIds) {
         return interests.filter(interest => {
             return interestIds?.includes(interest._id);
         });
     }
-
-
 }
 
 export default AppDataProvider

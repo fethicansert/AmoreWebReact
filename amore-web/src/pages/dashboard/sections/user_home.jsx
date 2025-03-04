@@ -15,7 +15,7 @@ import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
 import { colors } from '../../../utils/theme.js';
 import CustomRadio from '../../../copmonents/custom_radio.jsx';
 import RadioWrapper from '../../../copmonents/radio_wrapper.jsx';
-import locationLottie from '../../../assets/lottie/amore_location.json';
+import locationVaveLottie from '../../../assets/lottie/location_vawe.json';
 import somethingWentWrongLottie from '../../../assets/lottie/something_went_wrong.json';
 import Lottie from 'lottie-react';
 import BasicButton from '../../../copmonents/basic_button.jsx';
@@ -26,6 +26,11 @@ import likeSound from '../../../sounds/like_sound.mp3'
 import FlexBox from '../../../copmonents/flex_box.jsx';
 import '../../../css/dashboard/user_home.css';
 import SwipeErrorContainer from '../comps/swipe_error_container.jsx';
+import { CrossCloseIcon, LocationIcon } from '../../../assets/svg/svg_package.jsx';
+import { handlePermission } from '../../../utils/functions.js';
+import { useBanner } from '../../../hooks/use_banner.jsx';
+import PermissionBanner from '../../../copmonents/permission_banner.jsx';
+
 const UserHome = () => {
 
   //STATS
@@ -39,6 +44,7 @@ const UserHome = () => {
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
 
+
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState('female');
   const [filterUserStatus, setFilterUserStatus] = useState('online');
@@ -46,8 +52,10 @@ const UserHome = () => {
 
   //CONTEXT
   const { conversations, isConversationsLoading } = useConversation();
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const { t, i18n } = useTranslation();
+  const { showLocationBanner, setShowLocationBanner, setShowLocationSetting } = useBanner();
+
 
   //REFS
   const distanceRef = useRef(200);
@@ -66,11 +74,18 @@ const UserHome = () => {
   //Fetch likes
   useEffect(() => {
     getLikes();
+    handlePermission({
+      permissionType: "geolocation",
+      onPrompt: () => setShowLocationBanner(true),
+      onDenied: () => setShowLocationBanner(true)
+    });
   }, []);
 
   //fetch swipelist data
   useEffect(() => {
     getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: filterdGender, age: age });
+
+    return () => setShowLocationBanner(false);
   }, []);
 
   //Try fetch swipe list if user half of the list or swipelist not empty or is not fetchind data at the moment
@@ -87,6 +102,7 @@ const UserHome = () => {
       {/* Premium Box */}
       {!hidePremium && <div className='user-home-sidebar-container' >
 
+
         <div className='user-home-filters' >
 
           <CurrentUserInfoBox
@@ -102,7 +118,7 @@ const UserHome = () => {
               max={99}
               value={age}
               setValue={setAge}
-              title={"Yaş"}
+              title={t('FILTER.AGE')}
               valueTitle={`${age[0]}-${age[1]}`}
               onChangeCommitted={() => handleFilter({ isAutoDistance: true })}
             />
@@ -113,12 +129,12 @@ const UserHome = () => {
               max={1500}
               value={filterDistance}
               setValue={setFilterDistance}
-              title={"Mesafe"}
+              title={t('FILTER.DISTANCE')}
               valueTitle={`${filterDistance} ${auth.distanceType}`}
               onChangeCommitted={() => handleFilter({ isAutoDistance: false })}
             />
 
-            <RadioWrapper title={t('GENDER.TITLE')} style={{ margin: '.5rem 0' }} >
+            <RadioWrapper title={t('FILTER.GENDER')} style={{ margin: '.5rem 0' }} >
 
               <CustomRadio text={t('GENDER.MALE')} value={'male'} setValue={setFilterGender} isSelected={filterdGender === 'male'} onClick={(() => handleGender('male'))} />
 
@@ -126,7 +142,7 @@ const UserHome = () => {
 
             </RadioWrapper>
 
-            <RadioWrapper title={t('STATUS.TITLE')} style={{ margin: '1rem 0' }}>
+            <RadioWrapper title={t('FILTER.USER_STATUS')} style={{ margin: '1rem 0' }}>
 
               <CustomRadio text={t('STATUS.ONLINE')} value={'online'} onClick={() => setFilterUserStatus('online')} isSelected={filterUserStatus === 'online'} />
 
@@ -139,11 +155,11 @@ const UserHome = () => {
           <FlexBox width={'100%'} justifyContent='center' style={{ padding: '0 1rem' }} gap='0 10px'>
 
             <BasicButton fontSize={showFilter ? '.75rem' : '.8rem'} onClick={() => setShowFilter(prev => !prev)} backgroundColor={colors.brand1} width={'100%'} height={'45px'} borderRadius={'10px'} margin='0 auto' >
-              {showFilter ? 'Sakla' : 'Filtrele'}
+              {showFilter ? t('FILTER.HIDE_BUTTON') : t('FILTER.FILTER_BUTTON')}
             </BasicButton>
 
             {showFilter && <BasicButton fontSize={'.75rem'} onClick={handleRest} backgroundColor={colors.brand2} width={'100%'} height={'45px'} borderRadius={'10px'} margin='0 auto' >
-              Sıfırla
+              {t('FILTER.RESET_BUTTON')}
             </BasicButton>}
 
           </FlexBox>
@@ -157,18 +173,27 @@ const UserHome = () => {
 
       {/* Swipe Section */}
 
-      <div className='swipe-container' ref={swipeContainer}>
+      <div className='swipe-container' ref={swipeContainer} style={{ borderRadius: showLocationBanner ? '0' : '0 0 12px 12px' }}>
 
         {
           swipeError
 
-            ? <SwipeErrorContainer errorText={'Beklenmedik bir hata oluştu !'} subErrorText={'Lütfen birazdan tekrar dene.'} animation={somethingWentWrongLottie} width={'62%'} />
+            ? <SwipeErrorContainer errorText={t('ERRORS.UNEXPECTED_ERROR.TITLE')} subErrorText={t('ERRORS.UNEXPECTED_ERROR.SUB_TITLE')} animation={somethingWentWrongLottie} width={'62%'} />
 
             : !isSwipeListLoading && swipeList.length === 0
 
-              ? <SwipeErrorContainer errorText={'Aranan Niteliklerde Kullanıcı Bulunamiyor !'} subErrorText={'Filtre seçeneklerini değiştirmeyi denemelisin.'} animation={locationLottie} width={'70%'} />
+              ? <SwipeErrorContainer errorText={t('DASHBOARD.TITLES.FILTER_CHANGE_TITLE')} subErrorText={t('DASHBOARD.TITLES.FILTER_CHANGE_SUB_TITLE')} animation={locationVaveLottie} width={'70%'} />
 
               : <>
+                <PermissionBanner
+                  style={{ position: 'absolute', width: '100%', top: 0 }}
+                  onCrossCloseClick={() => setShowLocationBanner(false)}
+                  onClik={handleLocationBanner}
+                  showPermissionBanner={showLocationBanner}
+                  text={'Daha iyi bir deneyim için konum iznini aktif edin'}
+                  icon={<LocationIcon color={colors.whiteText} width='20px' height='20px' />}
+                />
+
                 <SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading} />
 
                 {!isSwipeListLoading && <SwipeBottomBar onSwipe={handleSwipe} />}
@@ -184,11 +209,11 @@ const UserHome = () => {
       {/* Notfications */}
       <div className='user-home-notications'>
 
-        <UserHomeNotifications path={'/dashboard/chat'} title={t('DASHBOARD.TITLES.QUICK_MESSAGES')} isLoading={isConversationsLoading}>
+        <UserHomeNotifications path={'/dashboard/chat'} title={t('DASHBOARD.TITLES.QUICK_MESSAGES')} isLoading={isConversationsLoading} type='message'>
           {conversations.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
-        <UserHomeNotifications path={'/dashboard/matches'} title={t('DASHBOARD.TITLES.LIKES')} isLoading={isLikesLoading}>
+        <UserHomeNotifications path={'/dashboard/matches'} title={t('DASHBOARD.TITLES.LIKES')} isLoading={isLikesLoading} type='like'>
           {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
@@ -200,6 +225,22 @@ const UserHome = () => {
   );
 
   //FUNCTIONS
+
+  function handleLocationBanner(e) {
+
+    //SVG VE PATH ise iconlara tikaldim
+    //Fonksiyonun calismasina gerek yok
+    if (e.target.tagName === 'svg' || e.target.tagName === 'path') return;
+
+    handlePermission({
+      permissionType: "geolocation",
+      onDenied: () => setShowLocationSetting(true),
+      onPositionReveal: (positon) => { setShowLocationBanner(false); },
+      onPositionDenied: (error) => setShowLocationSetting(true),
+    });
+
+  }
+
   function handleRest() {
     if (filterdGender !== 'female' || filterDistance !== 200 || age[0] !== 25 || age[1] !== 80) {
       setFilterGender('female');

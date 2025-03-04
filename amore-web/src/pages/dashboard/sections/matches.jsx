@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../../utils/theme';
 import '../../../css/dashboard/matches.css';
 import CustomRadio from '../../../copmonents/custom_radio';
+import { useTranslation } from 'react-i18next';
 
 const Matches = () => {
 
@@ -25,9 +26,10 @@ const Matches = () => {
 
     //CONTEXT
     const { auth } = useAuth();
+    const { t, _ } = useTranslation();
 
     //CONSTANTS
-    const titles = ["Eşleşmeler", "Beğeniler", "Ziyaretler"];
+    const titles = ["MATCHES", "LIKES", "VISITS"];
 
     //SIDE_EFFECTS
     useEffect(() => { fetchData(currentIndex); }, [currentIndex]);
@@ -46,7 +48,7 @@ const Matches = () => {
                         fontSize=''
                         onClick={() => setCurrentIndex(index)}
                         isSelected={index === currentIndex}
-                        text={title}
+                        text={t(`ROUTE_NAMES.${title}`)}
                         value={index} />)}
                 </FlexBox>
 

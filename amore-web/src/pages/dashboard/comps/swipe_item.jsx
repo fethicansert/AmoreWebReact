@@ -54,6 +54,7 @@ const SwipeItem = ({ user, loading }) => {
     return (
         <div className='swipe-item'>
 
+
             <div className='swipe-container-image-wrapper'>
 
                 {
@@ -83,8 +84,8 @@ const SwipeItem = ({ user, loading }) => {
                     ? <SwipeInfoShimmer /> : <>
 
                         <div className='swipe-item-user-bio'>
-                            <h4>{t('DASHBOARD.SWIPE.USERINFO.TITLE')}</h4>
-                            <p className='swipe-item-info-text'>{bio || 'Bu kullanıcının biyografisi yok.'}</p>
+                            <h4>{t('DASHBOARD.SWIPE.USERINFO.BIO_TITLE')}</h4>
+                            <p className='swipe-item-info-text'>{bio || t('DASHBOARD.SWIPE.USERINFO.NO_BIO_TEXT')}</p>
                         </div>
 
                         <div className='swipe-item-user-properties'>
@@ -95,7 +96,8 @@ const SwipeItem = ({ user, loading }) => {
                             />)}
                         </div>
 
-                        <h4 style={{ marginTop: '1.5rem' }}>Sosyal Platformlarım</h4>
+
+                        <h4 style={{ marginTop: '1.5rem' }}>{t('DASHBOARD.SWIPE.USERINFO.SOCIAL_PLATFORM_TITLE')}</h4>
 
                         <div className='swipe-item-user-properties'>
                             <div className='user-social-button whatsapp-button' onClick={handleSocialButtonClick}>
@@ -124,7 +126,7 @@ const SwipeItem = ({ user, loading }) => {
                 {loading
                     ? <SwipeInfoShimmer /> : <>
 
-                        <h4>İlgi alanlarım</h4>
+                        <h4>{t('DASHBOARD.SWIPE.USERINFO.INTEREST_TITLE')}</h4>
 
                         {interests?.length > 0 ? <div className='swipe-item-user-properties'>
                             {
@@ -134,7 +136,7 @@ const SwipeItem = ({ user, loading }) => {
                                     icon={propertie?.emoji}
                                 />)
                             }
-                        </div> : <p className='swipe-item-info-text'>{'Bu kullanıcının ilgi alanları henüz eklenemdi.'}</p>}
+                        </div> : <p className='swipe-item-info-text'>{t('DASHBOARD.SWIPE.USERINFO.NO_INTEREST_TEXT')}</p>}
 
                     </>}
 

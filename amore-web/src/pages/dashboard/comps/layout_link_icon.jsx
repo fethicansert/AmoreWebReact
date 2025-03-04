@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaPredicate } from 'react-media-hook';
 import { NavLink } from 'react-router-dom'
-const LayoutLinkIcon = ({ path, icon, className = null, onHover, onClik }) => {
+const LayoutLinkIcon = ({ path, icon, className = null, onHover, onClik, state }) => {
 
     const isMobile = useMediaPredicate("(max-width:575px)");
 

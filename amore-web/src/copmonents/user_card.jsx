@@ -5,13 +5,18 @@ import { colors } from "../utils/theme.js";
 import { FilledLocationIcon, PremiumStartIcon } from "../assets/svg/svg_package.jsx";
 import FlexBox from "./flex_box.jsx";
 import BasicButton from "./basic_button.jsx";
-
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../hooks/use_auth.jsx"
 
 const UserCard = forwardRef((props, ref) => {
     const isOnlyPremium = props?.isOnlyPremium || false;
     const user = props.user;
     const age = calculateAge(user?.birthday);
+
+    //CONTEXT
     const { setLimitedOfferOptions } = useBanner();
+    const { t, _ } = useTranslation();
+    const { auth } = useAuth();
 
 
     return <div className='discover-user-box' onClick={() => isOnlyPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : null}>
@@ -35,17 +40,17 @@ const UserCard = forwardRef((props, ref) => {
                     <FlexBox gap='0 6px' width={'100%'} margin={'.3rem 0 1rem 0'}>
                         <p className='discover-user-info-light'>{user?.country?.state?.name || 'America'}</p>
                         <FilledLocationIcon color='#FFFFFF' width='19' height='19' />
-                        <span>120 km</span>
+                        <span>120 {auth.distanceType}</span>
                     </FlexBox>
 
                     <BasicButton className='discover-user-button' width={'100%'} height={'45px'} color={colors.brand2} backgroundColor={colors.backGround3} borderRadius={'12px'}>
-                        Mesaj Gonder
+                        {t('BUTTONS.SEND_MESSAGE_BUTTON')}
                     </BasicButton>
 
                 </div>
                 : <div className="only-premium-content">
                     <PremiumStartIcon width="60" height="60" color={colors.backGround3} backgroundColor={colors.brand1} />
-                    <p>Sadece Premium Üyeler</p>
+                    <p>{t('USER_CARD.ONLY_PREMIUM_USERS')}</p>
                 </div>
         }
 

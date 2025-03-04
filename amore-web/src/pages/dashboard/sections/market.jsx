@@ -4,8 +4,13 @@ import FlexBox from '../../../copmonents/flex_box';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
 import MarkeItem from '../comps/market_item';
+import { useTranslation } from 'react-i18next';
+import { useBanner } from '../../../hooks/use_banner';
 
 const Market = () => {
+
+    const { t, _ } = useTranslation();
+    const { setLimitedOfferOptions } = useBanner();
 
     return (
         <section className='market'>
@@ -14,16 +19,17 @@ const Market = () => {
 
                 <div className='market-header-container'>
                     <FlexBox flexDirection='column' gap='unset' alignItems='unset' className='market-header-title-contaniner'>
-                        <h2>Premium Üyelik</h2>
-                        <p>Premium üye olarak avantajların tadını çıkar.</p>
+                        <h2>{t('DASHBOARD.MARKET.PREMIUM_SUBSCRIPTION_HEADER.TITLE')}</h2>
+                        <p>{t('DASHBOARD.MARKET.PREMIUM_SUBSCRIPTION_HEADER.SUB_TITLE')}</p>
                     </FlexBox>
 
-                    <BasicButton className='market-header-button'>
-                        Hemen Başla
+                    <BasicButton onClick={() => setLimitedOfferOptions({ show: true, type: 'premium-subscription' })} className='market-header-button'>
+                        {t('DASHBOARD.MARKET.PREMIUM_SUBSCRIPTION_HEADER.BUTTON_TEXT')}
                     </BasicButton>
                 </div>
 
             </div>
+
 
             <div className='market-items-container'>
 
@@ -31,7 +37,6 @@ const Market = () => {
                     className={'special-market-item'}
                     isUserSpecial={true}
                     discount={212}
-
                     isLimitedTime={true}
                     coin={2000}
                     oldPrice={'189,99'}
@@ -49,7 +54,7 @@ const Market = () => {
                 </div>
             </div>
 
-            <p className='market-footer-text'>Daha büyük paketlerde daha fazla indirim! Satın aldığınız jeton miktarı arttıkça, daha fazla indirim kazanırsınız.</p>
+            <p className='market-footer-text'>{t('DASHBOARD.MARKET.FOOTER_TEXT')}</p>
 
         </section>
     )

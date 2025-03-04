@@ -10,7 +10,6 @@ import Market from './pages/dashboard/sections/market';
 import Premium from './pages/dashboard/sections/premium_subscription';
 import User from './pages/dashboard/sections/user';
 import Matches from './pages/dashboard/sections/matches';
-import Notifications from './pages/dashboard/sections/notifications';
 import Payment from './pages/dashboard/sections/payment';
 import LimitedOffer from './copmonents/limited_offer';
 import { useBanner } from './hooks/use_banner';
@@ -36,8 +35,6 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />}>
 
             <Route index path='user-home' element={<UserHome />} />
-
-            <Route path='notifications' element={<Notifications />} />
 
             <Route path='discover' element={<Discover />} />
 

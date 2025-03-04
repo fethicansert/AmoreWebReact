@@ -15,6 +15,8 @@ import UserCard from '../../../copmonents/user_card.jsx';
 import FilterSlider from '../../../copmonents/filter_slider.jsx';
 import CustomRadio from '../../../copmonents/custom_radio.jsx';
 import PremiumBox from '../../../copmonents/premium_box.jsx';
+import { useTranslation } from 'react-i18next';
+
 
 
 const Discover = () => {
@@ -32,7 +34,7 @@ const Discover = () => {
     const [showFilter, setShowFilter] = useState(false);
 
     //COMPONENT CONSTANTS
-    const userStatus = [{ name: 'Çevrim içi', value: 'online' }, { name: 'Çevrim Dışı', value: 'offline' },];
+    const userStatus = [{ name: 'ONLINE', value: 'online' }, { name: 'OFFLINE', value: 'offline' },];
 
     //MEDIA
     const isMobile = useMediaPredicate("(max-width:575px)");
@@ -43,13 +45,16 @@ const Discover = () => {
 
     //CONTEXT
     const { auth } = useAuth();
+    const { t, _ } = useTranslation();
 
     //SIDE_EFFECTS
-    useEffect(() => { getUsers(); },
-        []);
+    useEffect(() => {
+        getUsers();
+    }, []);
 
-    useEffect(() => setSearchedUsers(users.filter(user => user.name.toLowerCase().includes(name?.toLowerCase()))),
-        [name, users]);
+    useEffect(() => {
+        setSearchedUsers(users.filter(user => user.name.toLowerCase().includes(name?.toLowerCase())))
+    }, [name, users]);
 
 
     //UI
@@ -80,7 +85,7 @@ const Discover = () => {
 
                         <FlexBox flexDirection='column' alignItems='start'>
 
-                            <span style={{ color: colors.darkText, fontSize: '.8rem' }}>İsim</span>
+                            <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{t("FILTER.NAME")}</span>
 
                             <div
                                 onMouseEnter={() => setIsInputHovered(true)}
@@ -101,22 +106,22 @@ const Discover = () => {
                                     style={{ background: isInputHovered || isInputFocused ? colors.whiteText : colors.inputColor }}
                                     className='discover-user-filter-input'
                                     type='text'
-                                    placeholder='Kullanıcı aramaya başla !'>
+                                    placeholder={t('FILTER.NAME_PLACEHOLDER')}>
                                 </input>
                             </div>
 
                         </FlexBox>
 
-                        <FilterSlider min={18} max={99} value={age} setValue={setAge} title={"Yaş"} valueTitle={`${age[0]}-${age[1]}`} />
+                        <FilterSlider min={18} max={99} value={age} setValue={setAge} title={t("FILTER.AGE")} valueTitle={`${age[0]}-${age[1]}`} />
 
                         <div className='discover-user-filter-radio-group'>
 
-                            <span style={{ color: colors.darkText, fontSize: '.8rem' }}>Kullanıcı Durumu</span>
+                            <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{t('FILTER.USER_STATUS')}</span>
 
                             <div className='discover-user-filter-radio-wrapper'>
                                 {userStatus.map(status => <CustomRadio
                                     key={uuidv4()}
-                                    text={status.name}
+                                    text={t(`STATUS.${status.name}`)}
                                     value={status.value}
                                     onClick={() => setSelectedUserStatus(status.value)}
                                     isSelected={status.value === selectedUserStatus} />)}
@@ -135,7 +140,7 @@ const Discover = () => {
                             backgroundColor={colors.brand1}
                             color={colors.whiteText}
                             borderRadius={'12px'} >
-                            Filtreyi Uygula
+                            {t('FILTER.APPLY_FILTER_BUTTON')}
                         </BasicButton>
 
                     </div>
@@ -188,7 +193,9 @@ const Discover = () => {
             }
         }
         //Set Error There !!!
-        catch (e) { return 0; }
+        catch (e) {
+            return [];
+        }
 
         finally { loading(false); }
     }

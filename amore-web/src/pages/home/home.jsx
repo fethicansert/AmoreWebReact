@@ -5,12 +5,11 @@ import Info from './sections/info';
 import InfoImages from './sections/info_images';
 import Introduction from './sections/introduction';
 import Footer from './sections/footer';
-import { changeRootThemeColor } from '../../utils/functions';
+import { changeRootThemeColor, handlePushPermission } from '../../utils/functions';
 
 const Home = () => {
 
     useEffect(() => { changeRootThemeColor('#F9E8EF') }, []);
-
     return (
         <div className='home'>
             <Hero />

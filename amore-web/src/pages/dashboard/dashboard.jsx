@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
 import { v4 as uuidv4 } from 'uuid';
-import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon } from '../../assets/svg/svg_package';
+import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon, LocationSettingIcon, NotificationPermissionIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './comps/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
@@ -15,8 +15,13 @@ import ghostLottie from '../../assets/lottie/ghost.json';
 import '../../css/dashboard/dashboard.css';
 import { ClipLoader } from 'react-spinners'
 import Lottie from 'lottie-react';
+import { useTranslation } from 'react-i18next';
+import { useBanner } from '../../hooks/use_banner';
+import { handlePermission, handlePushPermission } from '../../utils/functions';
+import PermissionPopup from '../../copmonents/permission_popup';
+import PermissionBanner from '../../copmonents/permission_banner';
 
-const linkTitles = ['Ana Sayfa', 'Bildirimler', 'Kesfet', 'Eşlemeler', 'Mesajlar', 'Jeton Al', 'Premium Ol', 'Profil'];
+const linkTitles = ['MAIN_PAGE', 'NOTIFICATIONS', 'DISCOVER', 'MATCHES', 'MESSAGES', 'MARKET', 'PREMIUM_SUBSCRIPTION', 'PROFILE'];
 
 const routes = [
     { path: ROUTES.USER_HOME, icon: <HomeIcon /> },
@@ -33,13 +38,28 @@ const Dashboard = () => {
     const [currentposition, setCurrentPosition] = useState(0);
     const [hoverPosition, setHoverPosition] = useState(0);
     const [showLogout, setShowLogout] = useState(false);
-    const [showNavigation, setShowNavigation] = useState();
+    const [showNotification, setShowNotification] = useState();
     const { unReadedCount, notifications, isUnReadedLoading } = useNotification();
+
+    const { t, _ } = useTranslation();
+
+    //REFS
+    const isNotifionsOpennedRef = useRef(false);
+
+    //CONTEXT
+    const {
+        setShowLocationBanner,
+        setShowLocationSetting,
+        showLocationSetting,
+        showNotificationBanner,
+        setShowNotificationBanner,
+        showNotificationPermission,
+        setShowNotificationPermission } = useBanner();
 
     useEffect(() => {
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
+        handleLocationPermissionOnFistOpen();
     }, []);
-
 
 
     return (
@@ -47,12 +67,28 @@ const Dashboard = () => {
 
             {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
+            {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
+
+            {showLocationSetting && <PermissionPopup
+                onClick={() => setShowLocationSetting(false)}
+                title={"Konumu Aç"}
+                text={"En iyi eşleşmeleri sana gösterebilmemiz için ayarlara giderek konum erişimini açmalı ve ardından sayfayı yenilemelisin."}
+                icon={<LocationSettingIcon width='40px' height='40px' />}
+            />}
+
+            {showNotificationPermission && <PermissionPopup
+                onClick={() => setShowNotificationPermission(false)}
+                title={"Bildirimleri Aç"}
+                text={"Yeni eşleşmeler ve mesajları kaçırmamak için ayarlardan bildirimleri açmalı ve ardından sayfayı yenilemelisin."}
+                icon={<NotificationPermissionIcon className='' color={colors.darkText} width='40px' height='40px' />}
+            />}
+
             {showOverlay && <div className='layout-overlay'></div>}
 
-            <div className={`layout-header ${showNavigation ? 'notifications-active' : ''} `} onMouseEnter={() => setShowOverlay(true)} onMouseLeave={() => {
+            <div className={`layout-header ${showNotification ? 'notifications-active' : ''} `} onMouseEnter={() => setShowOverlay(true)} onMouseLeave={() => {
                 setShowOverlay(false);
                 setHoverPosition(currentposition * 61);
-                setShowNavigation(false);
+                setShowNotification(false);
             }}>
 
                 <FlexBox flexDirection='column' gap='15px 0'>
@@ -65,6 +101,7 @@ const Dashboard = () => {
 
                         {routes.map((route, index) => route.path
                             ? <LayoutLinkIcon
+                                state={route?.state}
                                 key={uuidv4()}
                                 path={route.path}
                                 icon={route.icon}
@@ -73,16 +110,16 @@ const Dashboard = () => {
                             : <div
                                 key={uuidv4()}
                                 onMouseEnter={() => setHoverPosition(index * 61)}
-                                onClick={() => {
-                                    setCurrentPosition(index);
-                                    setShowNavigation(prev => !prev);
-                                }}
-                                className={`notification-button ${showNavigation ? 'active' : ''}`}
+                                onClick={() => handleHeanderNotificationButtonClick(index)}
+                                className={`notification-button ${showNotification ? 'active' : ''}`}
                                 style={{ height: '29px', margin: '16px 0', display: 'block' }}>
-                                {isUnReadedLoading ? <div className='unreaded-notification-spinner'>
-                                    <ClipLoader color={colors.brand1} size={15} />
-                                </div> : <div className='unreaded-notification-count'> {unReadedCount < 99 ? unReadedCount : 99} </div>}
-
+                                {
+                                    isUnReadedLoading
+                                        ? <div className='unreaded-notification-spinner'>
+                                            <ClipLoader color={colors.brand1} size={15} />
+                                        </div>
+                                        : <div className='unreaded-notification-count'> {unReadedCount < 99 ? unReadedCount : 99} </div>
+                                }
                                 {route.icon}
                             </div>)}
 
@@ -98,24 +135,40 @@ const Dashboard = () => {
 
                         <FlexBox>
                             <nav className='layout-header-active-part-navigation'>
-                                {linkTitles.map(title => <LayoutLinkBox key={uuidv4()} title={title} />)}
+                                {linkTitles.map(title => <LayoutLinkBox key={uuidv4()} title={t(`ROUTE_NAMES.${title}`)} />)}
                             </nav>
                         </FlexBox>
 
                     </FlexBox>
                 </div>
 
-                <div className={`notifications ${showNavigation ? 'active' : ''}`}>
+                <div className={`notifications ${showNotification ? 'active' : ''}`}>
 
-                    <FlexBox justifyContent='space-between' className='notifications-header' style={{ padding: '.5rem 1rem 1rem', borderBottom: `1px solid ${colors.borderColor1}` }}>
-                        <h3>Bildirimler</h3>
-                        <FlexBox gap='0 14px'>
-                            <NotificationConfirmIcon width='25' height='25' />
-                            <NotificationTrashIcon width='24' height='24' />
+                    <div className='notification-header-container'>
+
+                        <FlexBox justifyContent='space-between' className='notifications-header' style={{ padding: '1.2rem 1.2rem', borderBottom: `1px solid ${colors.borderColor1}` }}>
+                            <h3>Bildirimler</h3>
+                            <FlexBox gap='0 14px'>
+                                <NotificationConfirmIcon width='25' height='25' />
+                                <NotificationTrashIcon width='24' height='24' />
+                            </FlexBox>
+
+
                         </FlexBox>
-                    </FlexBox>
 
-                    <div className='notifications-wrapper'>
+                        <PermissionBanner
+                            onClik={(e) => handlePermissionBannerClick(e)}
+                            onCrossCloseClick={() => setShowNotificationBanner(false)}
+                            icon={<NotificationIcon width='23' height='23' className='' color={colors.whiteText} />}
+                            text={"Daha iyi bir deneyim için bildirimlerinizi açın"}
+                            style={{ position: 'absolute', width: '100%', top: '100%' }}
+                            showPermissionBanner={showNotificationBanner}
+                        />
+
+
+                    </div>
+
+                    <div className='notifications-wrapper' style={{ transform: `translateY(${showNotificationBanner ? 45 : 0}px)` }}>
 
                         {
                             notifications.length > 0
@@ -123,8 +176,8 @@ const Dashboard = () => {
                                 : <div className='notifications-empty-notifications'>
                                     <Lottie animationData={ghostLottie} />
                                     <div>
-                                        <p>Burda çok yalnızım !</p>
-                                        <p>Etkilişime geçip bana yardımcı ol.</p>
+                                        <p>{t('DASHBOARD.TITLES.EMPTY_NOTIFICATIONS_TITLE')}</p>
+                                        <p>{t('DASHBOARD.TITLES.EMPTY_NOTIFICATIONS_SUB_TITLE')}</p>
                                     </div>
                                 </div>
                         }
@@ -137,6 +190,63 @@ const Dashboard = () => {
 
         </div>
     )
+
+    function handleHeanderNotificationButtonClick(index) {
+        setCurrentPosition(index);
+        setShowNotification(prev => !prev);
+
+        if (!showNotification) {
+            handlePushPermission({
+                timeOut: 1200,
+                showPrompt: !isNotifionsOpennedRef.current,
+                onGranted: () => setShowNotificationBanner(false),
+                onDenied: () => setShowNotificationBanner(true),
+                onPrompt: () => setShowNotificationBanner(true),
+                onPromptGranted: () => setShowNotificationBanner(false)
+            });
+        }
+
+        isNotifionsOpennedRef.current = true;
+    };
+
+    function handlePermissionBannerClick(e) {
+        if (e.target.tagName === 'svg' || e.target.tagName === 'path') return;
+
+        handlePushPermission({
+            onDenied: () => setShowNotificationPermission(true),
+            onPromptDenied: () => { },
+            onPromptGranted: () => {
+                console.log("Helloo");
+
+                const notifcation = new Notification("Amore Web", {
+                    body: "This is more text"
+                });
+
+                notifcation.addEventListener('error', () => console.log(error));
+            }
+        })
+    }
+
+    function handleLocationPermissionOnFistOpen() {
+        handlePermission({
+            permissionType: "geolocation",
+            listenChange: true,
+            onChange: (e) => {
+                if (e.currentTarget.state === 'denied')
+                    setShowLocationBanner(true)
+                else {
+                    setShowLocationBanner(false);
+                    setShowLocationSetting(false);
+                }
+            },
+            onGranted: () => {
+                setShowLocationBanner(false)
+            },
+            onDenied: () => setShowLocationBanner(true),
+            onPositionReveal: (positon) => { setShowLocationBanner(false) },
+            onPositionDenied: (error) => setShowLocationBanner(true)
+        });
+    }
 }
 
 

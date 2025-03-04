@@ -139,6 +139,87 @@
   /* Firefox */
 }
 
+.location-lottie {
+  height: 90%;
+  align-self: center;
+  margin-top: .1rem;
+}
+
+.permission-banner {
+  left: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  height: 45px;
+  background: var(--brand1);
+  margin-block: 0 .25rem;
+  border-radius: 0 0 12px 12px;
+  gap: 0 10px;
+  padding: 0 1rem;
+  cursor: pointer;
+  z-index: 2;
+  transform: translateY(-120px);
+
+  align-items: center;
+
+  transition: transform 860ms ease;
+
+  box-shadow: var(--extraLowShadow);
+}
+
+.permission-banner.active {
+  transform: translateY(0px);
+  transition: transform 860ms ease;
+}
+
+.permission-banner svg {
+  transition: transform 250ms ease;
+}
+
+.permission-banner svg:hover {
+  transform: scale(1.2);
+}
+
+.permission-banner p {
+  color: var(--whiteText);
+  font-size: .8rem;
+}
+
+.header-language-dropbox {
+  position: absolute;
+  background-color: red;
+
+  z-index: 9999;
+  transition: transform 450ms ease;
+  box-shadow: var(--lowShadow);
+  right: 1%;
+  top: 110%;
+  padding: .35rem;
+  border-radius: 10px;
+}
+
+.header-language-dropbox ul {
+  list-style: none;
+  gap: 1px 0;
+}
+
+.header-language-dropbox ul li {
+  padding: .2rem .3rem;
+  background-color: white;
+  margin-bottom: 5.5px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 0 6px;
+  cursor: pointer;
+}
+
+.header-language-dropbox ul li span {
+  font-size: .85rem;
+}
+
+.header-language-dropbox ul li:last-child {
+  margin-bottom: 0;
+}
 
 header a,
 .basic-button {
@@ -221,6 +302,7 @@ header a {
 
 .premium-box {
   width: 100%;
+  max-width: 314px;
   height: 378px;
   background: var(--backGround4);
   border-radius: 12px;
@@ -301,7 +383,8 @@ header a {
 
 
 .limited-offer-wrapper,
-.logout {
+.logout,
+.permission-wrapper {
   position: fixed;
   left: 0;
   right: 0;
@@ -314,6 +397,35 @@ header a {
   justify-content: center;
   text-align: center;
   background-color: var(--overlayMid);
+}
+
+.permission-popup-container {
+  width: 75%;
+  background-color: var(--backGround3);
+  padding: 1rem;
+  border: 1px solid var(--borderColor1);
+  border-radius: 12px;
+  max-width: 290px;
+}
+
+.permission-popup-container h3 {
+  color: var(--darkText);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.permission-popup-container p {
+  margin-top: .4rem;
+  color: var(--lowFadedText);
+  font-size: .8rem;
+  font-weight: 300;
+}
+
+.permission_pink_arrow {
+  position: absolute;
+  width: 400px;
+  rotate: 180deg;
+  top: -70px;
 }
 
 .logout-container {
@@ -332,7 +444,7 @@ header a {
 }
 
 .logout-container p {
-  margin-top: .3rem;
+  margin-top: .4rem;
   color: var(--lowFadedText);
   font-size: .8rem;
   font-weight: 300;

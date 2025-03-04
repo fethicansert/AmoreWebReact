@@ -169,3 +169,69 @@ export const formatTimeAgo = (dateString, language) => {
     // Eğer 1 haftadan eskiyse → "12.01.2024"
     return date.toLocaleDateString(language, { day: '2-digit', month: '2-digit', year: 'numeric' });
 }
+
+
+export function handlePermission({ onGranted, onDenied, onPositionReveal, onPositionDenied, listenChange = false, onChange, onPrompt, permissionType }) {
+    navigator.permissions.query({ name: permissionType }).then((result) => {
+
+        if (result.state === "granted")
+            onGranted?.()
+
+        else if (result.state === "prompt") {
+            onPrompt?.();
+
+            if ((onPositionReveal || onPositionDenied))
+                navigator.geolocation.getCurrentPosition(
+                    (position) => onPositionReveal?.(position),
+                    (error) => onPositionDenied(error),
+                );
+
+        } else if (result.state === "denied")
+            onDenied?.();
+
+        if (listenChange)
+            result.addEventListener("change", (e) => { onChange?.(e) });
+    });
+};
+
+
+export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onPromptDenied, onPrompt, showPrompt = true, timeOut = 0, listenChange = false, onChange }) {
+    navigator.permissions.query({ name: 'push', userVisibleOnly: true }).then((result) => {
+
+        if (result.state === "granted") {
+            onGranted?.();
+            sendNotificatin()
+        }
+
+        else if (result.state === "prompt") {
+            onPrompt?.();
+
+            if (showPrompt)
+                setTimeout(() => Notification.requestPermission().then(function (permission) {
+                    if (permission === 'granted') {
+                        onPromptGranted?.();
+                        sendNotificatin();
+                    } else {
+                        onPromptDenied?.();
+                    }
+                }), timeOut)
+
+        } else if (result.state === "denied") {
+            onDenied?.();
+        }
+
+        if (listenChange)
+            result.addEventListener("change", (e) => { onChange?.(e) });
+
+        function sendNotificatin() {
+            return new Notification("Bildirimler Açıldı! 🎉", {
+                tag: "Amore App",
+                body: "Artık hiçbir eşleşme veya mesajı kaçırmayacaksın!",
+            });
+        }
+
+
+    });
+};
+
+

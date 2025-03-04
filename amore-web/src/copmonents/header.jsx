@@ -11,6 +11,7 @@ import { useBanner } from '../hooks/use_banner'
 import { useAuth } from '../hooks/use_auth'
 import { ROUTES } from '../utils/constants'
 import { useAppData } from '../hooks/use_add_data'
+import Flag from 'react-flagkit';
 
 const Header = ({
     backgroundColor,
@@ -28,12 +29,13 @@ const Header = ({
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
     const [showNav, setShowNav] = useState(false);
+    const [showLanguageBox, setShowLanguageBox] = useState(false);
 
     //HOOKS
     const { auth } = useAuth();
     const { t, i18n } = useTranslation();
     const { language, setLanguage } = useAppData();
-    const { setShowLogin } = useBanner()
+    const { setShowLogin } = useBanner();
     const navigate = useNavigate();
 
     //EFFECTS
@@ -81,7 +83,7 @@ const Header = ({
                         gap='0 3.5px'
                         alignItems='center'
                         justifyContent='center'
-                        onClick={() => setLanguage(prev => prev === 'tr' ? 'en' : 'tr')}>
+                        onClick={() => setShowLanguageBox(prev => !prev)}>
                         <GrLanguage color={languageIconColor} size={22} />
                         <span style={{ color: languageIconColor, fontSize: 14 }}>{language}</span>
                     </FlexBox>
@@ -118,8 +120,32 @@ const Header = ({
                 </div>
             }
 
+            {
+                <div className='header-language-dropbox' style={{ backgroundColor: backgroundColor, transform: `translateX(${showLanguageBox ? '0%' : '100vw'})` }}>
+                    <ul>
+                        <li onClick={() => handleChangeLanguage('tr')}>
+                            <Flag country='TR' />
+                            <span>Türkçe</span>
+                        </li>
+                        <li onClick={() => handleChangeLanguage('en')}>
+                            <Flag country='GB' />
+                            <span>English</span>
+                        </li>
+                        <li onClick={() => handleChangeLanguage('fr')}>
+                            <Flag country='FR' />
+                            <span>Français</span>
+                        </li>
+                    </ul>
+                </div>
+            }
+
         </header>
     )
+
+    function handleChangeLanguage(language) {
+        setLanguage(language);
+        setShowLanguageBox(false);
+    }
 
     //FUNCTIONS
     function handleClick({ isMobile = false }) {

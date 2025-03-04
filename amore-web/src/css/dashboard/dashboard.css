@@ -217,11 +217,9 @@
     border-radius: 0 12px 12px 0;
     border: 1px solid var(--borderColor1);
     background-color: var(--backGround3);
-
-
     display: none;
-    padding: 1rem .7rem .5rem 1rem;
     overflow: hidden;
+    padding: 0 .6rem;
 }
 
 .notification-item-icon-wrapper {
@@ -233,10 +231,18 @@
     border-radius: 50%;
 }
 
+.notification-header-container {
+    position: relative;
+    background-color: var(--backGround3);
+}
+
 .notifications-wrapper {
     overflow: scroll;
     height: calc(100% - 49px);
     padding-inline: .5rem;
+    position: relative;
+    transition: transform 800ms ease;
+    padding-inline: .4rem;
 }
 
 .notifications h3 {
@@ -254,6 +260,12 @@
 
 .notifications .notification-layout:hover {
     border-bottom: 1px solid #DD88CF80;
+}
+
+.notifications-header {
+    position: relative;
+    z-index: 3;
+    background-color: var(--backGround3);
 }
 
 .notifications-header svg:nth-child(1):hover path {

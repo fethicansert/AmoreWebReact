@@ -29,7 +29,7 @@ const ConversationProvider = ({ children }) => {
             });
 
             if (response?.data.response.code === 200)
-                setConversations(response.data.data)
+                setConversations(response.data.data);
         }
         catch (e) { console.log(e); }
         finally { setIsConversationsLoading(false); }

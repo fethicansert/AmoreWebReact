@@ -3,20 +3,20 @@ import FlexBox from './flex_box'
 import BasicButton from './basic_button'
 import { colors } from '../utils/theme'
 import { useAuth } from '../hooks/use_auth'
-// import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 const Logout = ({ closeLogout }) => {
 
     const { setAuth } = useAuth();
-    // const navigate = useNavigate();
+    const { t, _ } = useTranslation();
 
     return (
         <div className='logout'>
             <div className='logout-container'>
-                <h3>Çıkış Yap</h3>
+                <h3>{t('LOGOUT.TITLE')}</h3>
 
                 <p>
-                    Çıkış yapmak istersen hesabın tarayıcıda kapatılacak, çıkış yapmak istediğinden emin misin?
+                    {t('LOGOUT.TEXT')}
                 </p>
 
                 <FlexBox gap='0 10px' margin={'1rem 0 0 0'}>
@@ -27,7 +27,7 @@ const Logout = ({ closeLogout }) => {
                         width={'50%'}
                         height={'45px'}
                         backgroundColor={colors.darkButton} >
-                        Çıkış Yap
+                        {t('LOGOUT.LOGOUT_BUTTON')}
                     </BasicButton>
 
                     <BasicButton
@@ -36,7 +36,7 @@ const Logout = ({ closeLogout }) => {
                         width={'50%'}
                         height={'45px'}
                         backgroundColor={colors.brand1}>
-                        Kapat
+                        {t('LOGOUT.CLOSE_BUTTON')}
                     </BasicButton>
 
                 </FlexBox>

@@ -6,11 +6,13 @@ import PremiumCardFeature from './premium_card_feature';
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 
 function PremiumCard({ sprayOptions, subscriptionNumber, time, subscriptionPlan, price, planInfo, features }) {
 
     const navigate = useNavigate();
+    const { t, _ } = useTranslation();
 
     return <div className='premium-subscription-card'>
 
@@ -30,7 +32,7 @@ function PremiumCard({ sprayOptions, subscriptionNumber, time, subscriptionPlan,
         <div className='premium-subscription-card-content-wrapper'>
 
             <div className='premium-subscription-card-price-container'>
-                <span className='premium-subscription-card-price'>{price}<span>/Hafta</span></span>
+                <span className='premium-subscription-card-price'>{price}<span>/{t('DATE.WEEK')}</span></span>
                 <p className='premium-subscription-plan-info'>{planInfo}</p>
             </div>
 
@@ -45,7 +47,7 @@ function PremiumCard({ sprayOptions, subscriptionNumber, time, subscriptionPlan,
                 backgroundColor={colors.brand1}
                 color={colors.whiteText}
                 borderRadius={'12px'}
-            >Planı Seç
+            >{t('DASHBOARD.PREMIUM_SUBSCRIPTION.CHOOSE_PLAN_BUTTON')}
             </BasicButton>
 
         </div>

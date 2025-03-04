@@ -9,9 +9,11 @@ import BlurButton from './blur_button';
 import { AppleLogo, CloseIcon, GoogleLogo } from '../assets/svg/svg_package';
 import { useNavigate } from 'react-router-dom';
 import { LINKS } from '../utils/constants';
+import { useTranslation } from 'react-i18next';
 const LoginPopup = ({ setShowLogin }) => {
 
     const navigate = useNavigate();
+    const { t, _ } = useTranslation();
 
     return (
         <div className='login-popup'>
@@ -25,12 +27,12 @@ const LoginPopup = ({ setShowLogin }) => {
 
                 <div className='login'>
                     <div>
-                        <h2 style={{ fontSize: '1.75rem', marginBottom: '.5rem' }}>Hemen Başla !</h2>
-                        <p style={{ fontSize: '0.938rem' }}>Mesajını göndermek için kayıt ol</p>
+                        <h2 style={{ fontSize: '1.75rem', marginBottom: '.5rem' }}>{t('LOGIN_POPUP.TITLE')}</h2>
+                        <p style={{ fontSize: '0.938rem' }}>{t('LOGIN_POPUP.SUB_TITLE')}</p>
                     </div>
 
                     <div style={{ width: '100%' }}>
-                        <p style={{ fontSize: '0.938rem', marginBottom: '.5rem' }}>Aşk peşindeysen, kayıt ol</p>
+                        <p style={{ fontSize: '0.938rem', marginBottom: '.5rem' }}>{t('LOGIN_POPUP.TEXT')}</p>
                         <FlexBox gap='0 8px' margin={'0 0 .5rem 0'}>
                             <BlurButton
                                 onClick={() => window.open(LINKS.APPLE_STORE, "_blank")}
@@ -60,7 +62,7 @@ const LoginPopup = ({ setShowLogin }) => {
                             width={'100%'}
                             height={'48px'}
                             borderRadius={'12px'}>
-                            Telefonla Devam Et
+                            {t('LOGIN_POPUP.BUTTON_TEXT')}
                         </BasicButton>
                     </div>
 

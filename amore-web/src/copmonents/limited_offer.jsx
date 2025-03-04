@@ -9,13 +9,14 @@ import FlexBox from './flex_box';
 import BasicButton from './basic_button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use_auth';
+import { useTranslation } from 'react-i18next';
 
 
 const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
 
     const navigate = useNavigate();
     const { setAuth } = useAuth();
-
+    const { t, _ } = useTranslation();
 
 
     return (
@@ -25,28 +26,28 @@ const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
 
                 <CloseIcon color={colors.negativeBlack} strokeColor={colors.backGround3} onClick={() => setLimitedOfferOptions(prev => ({ ...prev, show: false }))} className='limited-offer-close-icon' />
 
-                <h3 className='limited-offer-title'>Sınırlı Teklif</h3>
+                <h3 className='limited-offer-title'>{t('LIMITED_OFFER.TITLE')}</h3>
 
-                <p>Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!</p>
+                <p>{t('LIMITED_OFFER.SUB_TITLE')}</p>
 
                 <div className='bonuses-wrapper'>
-                    <p style={{ margin: '.1rem auto 1.1rem auto' }}>Alacağınız Bonuslar</p>
+                    <p style={{ margin: '.1rem auto 1.1rem auto' }}>{t('LIMITED_OFFER.BONUSES.TITLE')}</p>
 
                     <div className='bonus-items-grid'>
 
-                        <BonusItem text={"Premim Hesap"} icon={premiumIcon} />
+                        <BonusItem text={t('LIMITED_OFFER.BONUSES.PREMIUM_ACCOUNT')} icon={premiumIcon} />
 
-                        <BonusItem text={"Daha fazla Eşleşme"} icon={moreMatchIcon} />
+                        <BonusItem text={t('LIMITED_OFFER.BONUSES.MORE_MATCHES')} icon={moreMatchIcon} />
 
-                        <BonusItem text={"Öne Çıkarma"} icon={highlightIcon} />
+                        <BonusItem text={t('LIMITED_OFFER.BONUSES.FEATURED')} icon={highlightIcon} />
 
-                        <BonusItem text={"Daha fazla Beğeni"} icon={moreLikeIcon} />
+                        <BonusItem text={t('LIMITED_OFFER.BONUSES.MORE_LIKE')} icon={moreLikeIcon} />
 
                     </div>
 
                 </div>
 
-                <p style={{ margin: '1.1rem auto' }}>Kilidi açmak için bir jeton paketi seçin</p>
+                <p style={{ margin: '1.1rem auto' }}>{t('LIMITED_OFFER.JETONS.TITLE')}</p>
 
                 <FlexBox width={'100%'} justifyContent='space-between' margin={'2rem 0 1.2rem 0'} gap='0 15px'>
 
@@ -59,7 +60,7 @@ const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
                 </FlexBox>
 
                 <BasicButton onClick={handleClick} width={'100%'} height={'55px'} borderRadius={'12px'} backgroundColor={colors.brand1} color={colors.whiteText}>
-                    {limititedOfferOptions.type === 'coin' ? 'Tüm Jetonları Gör' : 'Tün Aboneklikleri Gör'}
+                    {limititedOfferOptions.type === 'coin' ? t('LIMITED_OFFER.NAVIGATE_MARKET') : t('LIMITED_OFFER.NAVIGATE_SUBSCRIPTIONS')}
                 </BasicButton>
 
             </div>
@@ -91,12 +92,12 @@ const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
             <FlexBox flexDirection='column' width={'100%'} height={'100%'} justifyContent='center'>
                 <span className='jeton-packet-old-jeton'>{oldJeton}</span>
                 <span className='jeton-packet-new-jeton'>{newJeton}</span>
-                <span className='jeton-packet-jeton-text'>Jeton</span>
+                <span className='jeton-packet-jeton-text'>{t('LIMITED_OFFER.JETONS.JETON')}</span>
             </FlexBox>
 
             <FlexBox flexDirection='column' style={{ borderTop: `1px solid ${colors.lowWhiteText}`, paddingTop: '.8rem' }} gap='1px 0'>
                 <span className='jeton-packet-price'>{price}</span>
-                <span className='jeton-packet-time-text'>Başına haftalık</span>
+                <span className='jeton-packet-time-text'>{t('LIMITED_OFFER.JETONS.TIME')}</span>
             </FlexBox>
         </div>
     }

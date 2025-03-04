@@ -2,9 +2,10 @@ import React from 'react'
 import FlexBox from '../../../copmonents/flex_box';
 import { CreditCardChipIcon, MasterCardIcon, WirelessIcon } from '../../../assets/svg/svg_package';
 import { v4 as uuidv4 } from 'uuid';
+import { useTranslation } from 'react-i18next';
 
 const CreditCard = ({ name, cardNumber, month, year }) => {
-
+    const { t, _ } = useTranslation();
     return (
         <div className='credit-card'>
 
@@ -26,7 +27,7 @@ const CreditCard = ({ name, cardNumber, month, year }) => {
                     <FlexBox width={'100%'} flexDirection='column' gap='30px 0'>
 
                         <FlexBox width={'100%'} flexDirection='column' alignItems='flex-start' gap='5px 0' className='credit-card-flex-username'>
-                            <span>{name || 'Adı Soyadı'}</span>
+                            <span>{name || t('DASHBOARD.PAYMENT.CHECKOUT.NAME_SURNAME_PLACEHOLDER')}</span>
                             <span>{cardNumber ? '****' + ' ' + cardNumber.slice(-4) : '**** 3456'}</span>
                         </FlexBox>
 
