@@ -26,8 +26,8 @@ import likeSound from '../../../sounds/like_sound.mp3'
 import FlexBox from '../../../copmonents/flex_box.jsx';
 import '../../../css/dashboard/user_home.css';
 import SwipeErrorContainer from '../comps/swipe_error_container.jsx';
-import { CrossCloseIcon, LocationIcon } from '../../../assets/svg/svg_package.jsx';
-import { handlePermission } from '../../../utils/functions.js';
+import { LocationIcon } from '../../../assets/svg/svg_package.jsx';
+import { handleLocationPermission } from '../../../utils/functions.js';
 import { useBanner } from '../../../hooks/use_banner.jsx';
 import PermissionBanner from '../../../copmonents/permission_banner.jsx';
 
@@ -71,10 +71,12 @@ const UserHome = () => {
 
   //SIDE-EFFECTS
 
-  //Fetch likes
   useEffect(() => {
+    //Fetch likes
     getLikes();
-    handlePermission({
+
+    //
+    handleLocationPermission({
       permissionType: "geolocation",
       onPrompt: () => setShowLocationBanner(true),
       onDenied: () => setShowLocationBanner(true)
@@ -232,7 +234,7 @@ const UserHome = () => {
     //Fonksiyonun calismasina gerek yok
     if (e.target.tagName === 'svg' || e.target.tagName === 'path') return;
 
-    handlePermission({
+    handleLocationPermission({
       permissionType: "geolocation",
       onDenied: () => setShowLocationSetting(true),
       onPositionReveal: (positon) => { setShowLocationBanner(false); },
@@ -325,7 +327,6 @@ const UserHome = () => {
       setIsLikesLoading(false);
     }
   }
-
 
   //Fetch Swipe and Set Swipe List
   async function getSwipeList({ showLoading, isAutoDistance, isResetList, gender, distance, age }) {

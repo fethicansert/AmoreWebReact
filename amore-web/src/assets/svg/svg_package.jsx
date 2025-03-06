@@ -280,24 +280,20 @@ export const WhatsAppIcon = ({ width = '50', height = '50', color = '#FFFFFF' })
         </g>
     </svg>
 
-
 export const InstragramIcon = ({ width = '50', height = '50', color = '#FFFFFF' }) => <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M12 18C15.3137 18 18 15.3137 18 12C18 8.68629 15.3137 6 12 6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z" fill={color} />
     <path d="M18 5C17.4477 5 17 5.44772 17 6C17 6.55228 17.4477 7 18 7C18.5523 7 19 6.55228 19 6C19 5.44772 18.5523 5 18 5Z" fill={color} />
     <path fillRule="evenodd" clipRule="evenodd" d="M1.65396 4.27606C1 5.55953 1 7.23969 1 10.6V13.4C1 16.7603 1 18.4405 1.65396 19.7239C2.2292 20.8529 3.14708 21.7708 4.27606 22.346C5.55953 23 7.23969 23 10.6 23H13.4C16.7603 23 18.4405 23 19.7239 22.346C20.8529 21.7708 21.7708 20.8529 22.346 19.7239C23 18.4405 23 16.7603 23 13.4V10.6C23 7.23969 23 5.55953 22.346 4.27606C21.7708 3.14708 20.8529 2.2292 19.7239 1.65396C18.4405 1 16.7603 1 13.4 1H10.6C7.23969 1 5.55953 1 4.27606 1.65396C3.14708 2.2292 2.2292 3.14708 1.65396 4.27606ZM13.4 3H10.6C8.88684 3 7.72225 3.00156 6.82208 3.0751C5.94524 3.14674 5.49684 3.27659 5.18404 3.43597C4.43139 3.81947 3.81947 4.43139 3.43597 5.18404C3.27659 5.49684 3.14674 5.94524 3.0751 6.82208C3.00156 7.72225 3 8.88684 3 10.6V13.4C3 15.1132 3.00156 16.2777 3.0751 17.1779C3.14674 18.0548 3.27659 18.5032 3.43597 18.816C3.81947 19.5686 4.43139 20.1805 5.18404 20.564C5.49684 20.7234 5.94524 20.8533 6.82208 20.9249C7.72225 20.9984 8.88684 21 10.6 21H13.4C15.1132 21 16.2777 20.9984 17.1779 20.9249C18.0548 20.8533 18.5032 20.7234 18.816 20.564C19.5686 20.1805 20.1805 19.5686 20.564 18.816C20.7234 18.5032 20.8533 18.0548 20.9249 17.1779C20.9984 16.2777 21 15.1132 21 13.4V10.6C21 8.88684 20.9984 7.72225 20.9249 6.82208C20.8533 5.94524 20.7234 5.49684 20.564 5.18404C20.1805 4.43139 19.5686 3.81947 18.816 3.43597C18.5032 3.27659 18.0548 3.14674 17.1779 3.0751C16.2777 3.00156 15.1132 3 13.4 3Z" fill={color} />
 </svg>
 
-
 export const FacebookIcon = ({ width = '50', height = '50', color = '#FFFFFF' }) => <svg width={width} height={height} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M20 1C21.6569 1 23 2.34315 23 4V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V4C1 2.34315 2.34315 1 4 1H20ZM20 3C20.5523 3 21 3.44772 21 4V20C21 20.5523 20.5523 21 20 21H15V13.9999H17.0762C17.5066 13.9999 17.8887 13.7245 18.0249 13.3161L18.4679 11.9871C18.6298 11.5014 18.2683 10.9999 17.7564 10.9999H15V8.99992C15 8.49992 15.5 7.99992 16 7.99992H18C18.5523 7.99992 19 7.5522 19 6.99992V6.31393C19 5.99091 18.7937 5.7013 18.4813 5.61887C17.1705 5.27295 16 5.27295 16 5.27295C13.5 5.27295 12 6.99992 12 8.49992V10.9999H10C9.44772 10.9999 9 11.4476 9 11.9999V12.9999C9 13.5522 9.44771 13.9999 10 13.9999H12V21H4C3.44772 21 3 20.5523 3 20V4C3 3.44772 3.44772 3 4 3H20Z" fill={color} />
 </svg>
 
-
-export const CrossCloseIcon = ({ width = '25', height = '25', color = '#FFFFFF', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M6 6.28882L18 18.2888" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M18 6.28882L6 18.2888" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const CrossCloseIcon = ({ width = '25', height = '25', strokeWidth = "1.5", color = '#FFFFFF', onClick, style }) => <svg style={style} onClick={onClick} width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6.28882L18 18.2888" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18 6.28882L6 18.2888" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
-
 
 export const LocationSettingIcon = ({ width = '25', height = '25', color = '#000000' }) => <svg width={width} height={height} viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M34.9993 15.0254V12.3971C34.9993 8.81373 32.0943 5.9104 28.511 5.9104H26.416" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
@@ -307,7 +303,6 @@ export const LocationSettingIcon = ({ width = '25', height = '25', color = '#000
     <path fillRule="evenodd" clipRule="evenodd" d="M19.9697 28.8253C18.9113 28.8253 13.3496 24.3237 13.3496 19.6137C13.3496 15.957 16.3129 12.9937 19.9697 12.9937C23.6263 12.9937 26.5897 15.957 26.5897 19.6137C26.5897 24.3237 21.028 28.8253 19.9697 28.8253Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M19.973 19.1882V19.2681M20.2972 19.2053C20.2972 19.3855 20.1512 19.5315 19.971 19.5315C19.791 19.5315 19.645 19.3855 19.645 19.2053C19.645 19.0251 19.791 18.8792 19.971 18.8792C20.1512 18.8792 20.2972 19.0251 20.2972 19.2053Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
-
 
 export const NotificationPermissionIcon = ({ width = '25', height = '25', color = '#000000' }) => <svg width={width} height={height} viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path fillRule="evenodd" clipRule="evenodd" d="M9.83842 17.3314C9.83842 11.7191 14.3886 7.16895 19.9992 7.16895C25.6115 7.16895 30.1617 11.7191 30.1617 17.3314L30.1633 19.3714C30.1633 20.5777 30.4292 21.7697 30.9433 22.8626L31.6648 24.3951C32.7675 26.7382 31.0568 29.4316 28.4687 29.4316H11.5313C8.94169 29.4316 7.23254 26.7382 8.33521 24.3951L9.05682 22.8626C9.57086 21.7697 9.83679 20.5777 9.83679 19.3714L9.83842 17.3314Z" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />

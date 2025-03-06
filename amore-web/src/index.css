@@ -110,6 +110,13 @@
   --overlayMid: rgba(0, 0, 0, 0.45)
 }
 
+body {
+  font-family: 'Ambit', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  background: var(--backGround2);
+}
+
 /* Registerde bir scroll cikiyor neden ? */
 .register::-webkit-scrollbar,
 .discover-users-side-bar::-webkit-scrollbar,
@@ -143,45 +150,6 @@
   height: 90%;
   align-self: center;
   margin-top: .1rem;
-}
-
-.permission-banner {
-  left: 0;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  height: 45px;
-  background: var(--brand1);
-  margin-block: 0 .25rem;
-  border-radius: 0 0 12px 12px;
-  gap: 0 10px;
-  padding: 0 1rem;
-  cursor: pointer;
-  z-index: 2;
-  transform: translateY(-120px);
-
-  align-items: center;
-
-  transition: transform 860ms ease;
-
-  box-shadow: var(--extraLowShadow);
-}
-
-.permission-banner.active {
-  transform: translateY(0px);
-  transition: transform 860ms ease;
-}
-
-.permission-banner svg {
-  transition: transform 250ms ease;
-}
-
-.permission-banner svg:hover {
-  transform: scale(1.2);
-}
-
-.permission-banner p {
-  color: var(--whiteText);
-  font-size: .8rem;
 }
 
 .header-language-dropbox {
@@ -227,11 +195,53 @@ header a,
   font-weight: 600;
 }
 
-body {
-  font-family: 'Ambit', sans-serif;
-  font-weight: 400;
-  overflow-x: hidden;
-  background: var(--backGround2);
+/* Notification Toastf */
+.toast-notification {
+  width: 330px;
+  outline: 1px solid var(--borderColor1);
+  outline-offset: -1px;
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.Toastify__progress-bar--bg {
+  background: var(--lowFadedText);
+  position: absolute;
+  bottom: -.5px;
+}
+
+.toast-notification-progress {
+  background: var(--brand2);
+  opacity: 1;
+  bottom: -.5px;
+}
+
+.push-notification {
+  padding: .1rem 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 10px;
+  align-items: center;
+  background-color: var(--backGround3);
+}
+
+.push-notification-image {
+  height: 55px;
+  width: 55px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.push-notification h4 {
+  font-weight: 600;
+  color: var(--darkText);
+  font-size: .9rem;
+}
+
+.push-notification p {
+  font-weight: 300;
+  color: var(--lowFadedText);
+  font-size: .9rem;
 }
 
 /* Component Styles */
@@ -300,6 +310,7 @@ header a {
   box-shadow: var(--lowShadow)
 }
 
+/* PREMIUM OFFER */
 .premium-box {
   width: 100%;
   max-width: 314px;
@@ -381,7 +392,7 @@ header a {
   background-color: var(--whiteText);
 }
 
-
+/* POPUPS AND BANNERS*/
 .limited-offer-wrapper,
 .logout,
 .permission-wrapper {
@@ -399,22 +410,29 @@ header a {
   background-color: var(--overlayMid);
 }
 
+.logout-container,
 .permission-popup-container {
-  width: 75%;
+  width: 70%;
   background-color: var(--backGround3);
   padding: 1rem;
   border: 1px solid var(--borderColor1);
   border-radius: 12px;
+  max-width: 280px;
+}
+
+.permission-popup-container {
   max-width: 290px;
 }
 
-.permission-popup-container h3 {
+.permission-popup-container h3,
+.logout-container h3 {
   color: var(--darkText);
   font-size: 1rem;
   font-weight: 600;
 }
 
-.permission-popup-container p {
+.permission-popup-container p,
+.logout-container p {
   margin-top: .4rem;
   color: var(--lowFadedText);
   font-size: .8rem;
@@ -428,26 +446,40 @@ header a {
   top: -70px;
 }
 
-.logout-container {
-  width: 70%;
-  background-color: var(--backGround3);
-  padding: 1rem;
-  border: 1px solid var(--borderColor1);
-  border-radius: 12px;
-  max-width: 280px;
+.permission-banner {
+  left: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  height: 45px;
+  background: var(--brand1);
+  margin-block: 0 .25rem;
+  border-radius: 0 0 12px 12px;
+  gap: 0 10px;
+  padding: 0 1rem;
+  cursor: pointer;
+  z-index: 2;
+  transform: translateY(-120px);
+  align-items: center;
+  transition: transform 860ms ease;
+  box-shadow: var(--extraLowShadow);
 }
 
-.logout-container h3 {
-  color: var(--darkText);
-  font-size: 1rem;
-  font-weight: 600;
+.permission-banner.active {
+  transform: translateY(0px);
+  transition: transform 860ms ease;
 }
 
-.logout-container p {
-  margin-top: .4rem;
-  color: var(--lowFadedText);
+.permission-banner svg {
+  transition: transform 250ms ease;
+}
+
+.permission-banner svg:hover {
+  transform: scale(1.2);
+}
+
+.permission-banner p {
+  color: var(--whiteText);
   font-size: .8rem;
-  font-weight: 300;
 }
 
 .limited-offer {
@@ -504,7 +536,7 @@ header a {
   justify-self: center;
   width: 56px;
   height: 56px;
-  background-image: url(assets/images/elipse_pink_blue.png);
+  background-image: url('assets/images/elipse_pink_blue.png');
   background-size: cover;
   border-radius: 50%;
   overflow: hidden;
@@ -655,8 +687,7 @@ header a {
   padding: 1rem;
 }
 
-
-/* Notification Layouy */
+/* Notification Layout */
 .notification-layout {
   width: 100%;
   height: 100px;
@@ -728,7 +759,7 @@ header a {
   color: var(--fadedText);
 }
 
-/* WhatsApp Button */
+/* SOCICAL BUTTONS */
 .user-social-button {
   height: 50px;
   padding: .4rem .8rem;
@@ -743,7 +774,6 @@ header a {
   cursor: pointer;
   font-weight: 400;
 }
-
 
 .whatsapp-button {
   background: #25D366;
@@ -765,7 +795,6 @@ header a {
 
 .facebook-button {
   background: #4267B2;
-
 
   &:hover {
     outline: 1.5px solid #477de8;

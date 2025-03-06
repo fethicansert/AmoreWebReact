@@ -17,7 +17,7 @@ import { ClipLoader } from 'react-spinners'
 import Lottie from 'lottie-react';
 import { useTranslation } from 'react-i18next';
 import { useBanner } from '../../hooks/use_banner';
-import { handlePermission, handlePushPermission } from '../../utils/functions';
+import { handleLocationPermission, handlePushPermission } from '../../utils/functions';
 import PermissionPopup from '../../copmonents/permission_popup';
 import PermissionBanner from '../../copmonents/permission_banner';
 
@@ -34,6 +34,8 @@ const routes = [
     { path: ROUTES.USER, icon: <UserIcon color='#4B164C' width={25} height={25} /> }];
 
 const Dashboard = () => {
+
+    //STATES
     const [showOverlay, setShowOverlay] = useState(false);
     const [currentposition, setCurrentPosition] = useState(0);
     const [hoverPosition, setHoverPosition] = useState(0);
@@ -41,12 +43,12 @@ const Dashboard = () => {
     const [showNotification, setShowNotification] = useState();
     const { unReadedCount, notifications, isUnReadedLoading } = useNotification();
 
-    const { t, _ } = useTranslation();
-
     //REFS
     const isNotifionsOpennedRef = useRef(false);
 
     //CONTEXT
+    const { t, _ } = useTranslation();
+
     const {
         setShowLocationBanner,
         setShowLocationSetting,
@@ -57,15 +59,17 @@ const Dashboard = () => {
         setShowNotificationPermission } = useBanner();
 
     useEffect(() => {
+        //Change Roout Color Better Visualtion on Mobile
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
+
+        //Ask Location Permission the User
         handleLocationPermissionOnFistOpen();
     }, []);
 
 
+    //UI
     return (
         <div className='layout'>
-
-            {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
             {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
@@ -110,7 +114,7 @@ const Dashboard = () => {
                             : <div
                                 key={uuidv4()}
                                 onMouseEnter={() => setHoverPosition(index * 61)}
-                                onClick={() => handleHeanderNotificationButtonClick(index)}
+                                onClick={() => onNotificationButtonClick(index)}
                                 className={`notification-button ${showNotification ? 'active' : ''}`}
                                 style={{ height: '29px', margin: '16px 0', display: 'block' }}>
                                 {
@@ -157,14 +161,13 @@ const Dashboard = () => {
                         </FlexBox>
 
                         <PermissionBanner
-                            onClik={(e) => handlePermissionBannerClick(e)}
+                            onClik={(e) => onNotificationPermissionBannerClick(e)}
                             onCrossCloseClick={() => setShowNotificationBanner(false)}
                             icon={<NotificationIcon width='23' height='23' className='' color={colors.whiteText} />}
                             text={"Daha iyi bir deneyim için bildirimlerinizi açın"}
                             style={{ position: 'absolute', width: '100%', top: '100%' }}
                             showPermissionBanner={showNotificationBanner}
                         />
-
 
                     </div>
 
@@ -181,17 +184,22 @@ const Dashboard = () => {
                                     </div>
                                 </div>
                         }
+
                     </div>
 
                 </div>
+
             </div>
 
             <Outlet />
 
         </div>
-    )
+    );
 
-    function handleHeanderNotificationButtonClick(index) {
+    //FUNCTIONS
+
+    //Show Notifications and handle notification permissions for fist openning of Show Notifications
+    function onNotificationButtonClick(index) {
         setCurrentPosition(index);
         setShowNotification(prev => !prev);
 
@@ -209,26 +217,20 @@ const Dashboard = () => {
         isNotifionsOpennedRef.current = true;
     };
 
-    function handlePermissionBannerClick(e) {
+    //Ask notification permissions on permission banner click if denied show Permissin Popup
+    function onNotificationPermissionBannerClick(e) {
         if (e.target.tagName === 'svg' || e.target.tagName === 'path') return;
 
         handlePushPermission({
             onDenied: () => setShowNotificationPermission(true),
             onPromptDenied: () => { },
-            onPromptGranted: () => {
-                console.log("Helloo");
-
-                const notifcation = new Notification("Amore Web", {
-                    body: "This is more text"
-                });
-
-                notifcation.addEventListener('error', () => console.log(error));
-            }
+            onPromptGranted: () => { }
         })
     }
 
+
     function handleLocationPermissionOnFistOpen() {
-        handlePermission({
+        handleLocationPermission({
             permissionType: "geolocation",
             listenChange: true,
             onChange: (e) => {

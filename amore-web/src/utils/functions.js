@@ -171,7 +171,7 @@ export const formatTimeAgo = (dateString, language) => {
 }
 
 
-export function handlePermission({ onGranted, onDenied, onPositionReveal, onPositionDenied, listenChange = false, onChange, onPrompt, permissionType }) {
+export function handleLocationPermission({ onGranted, onDenied, onPositionReveal, onPositionDenied, listenChange = false, onChange, onPrompt, permissionType }) {
     navigator.permissions.query({ name: permissionType }).then((result) => {
 
         if (result.state === "granted")
@@ -195,12 +195,13 @@ export function handlePermission({ onGranted, onDenied, onPositionReveal, onPosi
 };
 
 
+//
 export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onPromptDenied, onPrompt, showPrompt = true, timeOut = 0, listenChange = false, onChange }) {
     navigator.permissions.query({ name: 'push', userVisibleOnly: true }).then((result) => {
 
         if (result.state === "granted") {
             onGranted?.();
-            sendNotificatin()
+            sendNotificatin();
         }
 
         else if (result.state === "prompt") {
@@ -229,8 +230,6 @@ export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onP
                 body: "Artık hiçbir eşleşme veya mesajı kaçırmayacaksın!",
             });
         }
-
-
     });
 };
 
