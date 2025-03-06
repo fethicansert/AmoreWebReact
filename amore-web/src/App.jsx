@@ -23,6 +23,7 @@ import { useAuth } from './hooks/use_auth';
 import { ToastContainer, toast } from "react-toastify";
 import PushNotification from './copmonents/push_notification';
 import { onMessage } from "firebase/messaging";
+import { v4 as uuidv4 } from 'uuid';
 
 
 function App() {
@@ -34,25 +35,18 @@ function App() {
     requestPermission();
 
     onMessage(messaging, (payload) => {
-      console.log(payload.notification.title);
-      console.log(payload.notification.body);
-      toast(<PushNotification title={payload.notification.title} body={payload.notification.body} />,
+      const toastId = uuidv4();
+      toast(<PushNotification toastId={toastId} title={payload.notification.title} body={payload.notification.body} />,
         {
+          toastId,
           style: { padding: '10px 8px' },
           className: "toast-notification",
           progressClassName: "toast-notification-progress",
           position: 'top-center',
-          autoClose: 3000,
-
-          // pauseOnHover: true,
+          autoClose: 10000,
           closeButton: false,
-          // customProgressBar: true
-
-
         });
     });
-
-
 
   }, []);
 
@@ -99,7 +93,7 @@ function App() {
 
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
 
-      <ToastContainer />
+      <ToastContainer limit={3} />
 
     </>
   );

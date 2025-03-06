@@ -11,21 +11,19 @@ const AppDataProvider = ({ children }) => {
 
     //STATES
     const [language, setLanguage] = useLocalStorage('language', navigator.language.slice(0, 2) || 'en');
-    const [ipLocation, setIpLocation] = useState({});
     const [isdDataLoading, setIsDataLoading] = useState([]);
 
     const [interests, setInterests] = useState([]);
     const [locations, setLocations] = useState([]);
-    const [gifts, setGifts] = useState([]);
+    const [ipLocation, setIpLocation] = useState({});
     const [data, setData] = useState({});
+    const [gifts, setGifts] = useState([]);
 
     const [appData, dispatch] = useReducer(appDataReducer, {
-        interests: [], locations: [], gifts: [], data: {}
+        interests: [], locations: [], ip: {}, data: {}, gifts: {}
     });
 
     console.log(appData);
-
-
 
     //SIDE-EFFECTS
 
@@ -37,6 +35,7 @@ const AppDataProvider = ({ children }) => {
 
     return (
         <AppDataContext.Provider value={{
+            appData,
             interests,
             locations,
             ipLocation,
@@ -66,9 +65,10 @@ const AppDataProvider = ({ children }) => {
             if (appDataResponse.every(response => response.status === 200)) {
                 [setInterests, setLocations, setIpLocation, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
 
-                // console.log(appDataResponse[0].data.data);
+                ['interests', 'locations', 'ip', 'data', 'gifts'].forEach((key, index) => {
+                    dispatch({ type: key, payload: appDataResponse[index].data.data })
+                });
 
-                // dispatch({ type: 'interests', payload: appDataResponse[0].data.data })
             }
 
 
@@ -87,7 +87,7 @@ const AppDataProvider = ({ children }) => {
 
     //Return user interests
     function getUserInterests(interestIds) {
-        return interests ? interests.filter(interest => {
+        return appData.interests ? appData.interests.filter(interest => {
             return interestIds?.includes(interest._id);
         }) : [];
     }

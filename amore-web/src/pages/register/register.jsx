@@ -30,7 +30,8 @@ const registerLocalization = ['PHONE', 'VERIFY', 'USERNAME', 'BIRTH_DATE', 'GEND
 const Register = () => {
 
     //CONTEXT
-    const { ipLocation, language } = useAppData();
+    const { appData } = useAppData();
+    const { language } = useAppData();
 
     const { t, i18n } = useTranslation();
     const { setAuth } = useAuth();
@@ -44,7 +45,7 @@ const Register = () => {
     const [selectedHobbies, setSelectedHobbies] = useState([]);
     const [userImages, setUserImages] = useState([]);
     const [userLocation, setUserLocation] = useState({});
-    const [currentLocation, setCurrentLocation] = useState(ipLocation);
+    const [currentLocation, setCurrentLocation] = useState(appData.ip);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     //Burayi anlamadim isDataLoading
@@ -58,7 +59,7 @@ const Register = () => {
         digit4: ''
     });
 
-    const { interests, locations } = useAppData();
+
 
     //CONSTANTS
     const titles = registerLocalization.map(localization => t(`REGISTER.${localization}.TITLE`));
@@ -70,7 +71,7 @@ const Register = () => {
     //EFFECTS
     useEffect(() => { setError(''); }, [language]);
 
-    useEffect(() => { setCurrentLocation(ipLocation); }, [ipLocation]);
+    useEffect(() => { setCurrentLocation(appData.ip); }, [appData.ip]);
 
     useEffect(() => { scrollPage({ top: 0 }) }, [currentPageIndex]);
 
@@ -358,7 +359,7 @@ const Register = () => {
                     setGender={setGender} />;
             case 5:
                 return <RegisterHobbies
-                    interests={interests}
+                    interests={appData.interests}
                     selectedHobbies={selectedHobbies}
                     setSelectedHobbies={setSelectedHobbies} />;
             case 6:
@@ -370,7 +371,7 @@ const Register = () => {
                 return <RegisterLocation
                     currentLocation={currentLocation}
                     setCurrentLocation={setCurrentLocation}
-                    locations={locations}
+                    locations={appData.locations}
                     userLocation={userLocation}
                     setUserLocation={setUserLocation}
                 />;

@@ -225,6 +225,14 @@ header a,
   background-color: var(--backGround3);
 }
 
+.push-notification svg {
+  transition: scale 200ms ease;
+}
+
+.push-notification svg:hover {
+  scale: 1.1;
+}
+
 .push-notification-image {
   height: 55px;
   width: 55px;
@@ -243,6 +251,7 @@ header a,
   color: var(--lowFadedText);
   font-size: .9rem;
 }
+
 
 /* Component Styles */
 .blur-button,

@@ -3,8 +3,9 @@ import { CrossCloseIcon } from '../assets/svg/svg_package'
 import { colors } from '../utils/theme';
 import avatarImage from '../assets/images/avatar7.png'
 import FlexBox from './flex_box';
+import { toast } from 'react-toastify';
 
-const PushNotification = ({ title, body, image }) => {
+const PushNotification = ({ title, body, image, toastId }) => {
     return (
         <div className='push-notification'>
             <div className='push-notification-image'>
@@ -17,6 +18,7 @@ const PushNotification = ({ title, body, image }) => {
             </FlexBox>
 
             <CrossCloseIcon
+                onClick={() => toast.dismiss(toastId)}
                 color={colors.darkText}
                 width='24'
                 height='24'

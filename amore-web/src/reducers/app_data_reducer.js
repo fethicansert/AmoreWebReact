@@ -12,13 +12,11 @@ export const appDataReducer = (state, action) => {
             return { ...state, gifts: action.payload }
 
         case 'data':
-            return { ...state, interests: action.payload }
+            return { ...state, data: action.payload }
+
+        case 'ip':
+            return { ...state, ip: action.payload }
+
     }
 
 }
-
-
-//  const [interests, setInterests] = useState([]);
-//     const [locations, setLocations] = useState([]);
-//     const [gifts, setGifts] = useState([]);
-//     const [data, setData] = useState({});

@@ -19,8 +19,6 @@ const RegisterLocation = ({ userLocation, setUserLocation, locations, currentLoc
 
     const states = currentLocation?.country?.states || currentLocation?.states || [];
 
-    console.log(locations[1]);
-
 
     const handleSetCountry = (index) => {
         setCurrentLocation(locations[index])
