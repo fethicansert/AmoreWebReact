@@ -186,6 +186,10 @@
 
 @media (max-width: 575px) {
 
+    .discover-users-side-bar {
+        overflow-y: visible;
+    }
+
     .discover-users-filter-header .current-user-info-box {
         padding: .8rem;
     }

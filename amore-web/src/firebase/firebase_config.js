@@ -1,9 +1,9 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getMessaging, onMessage } from "firebase/messaging";
 import { FCM } from "../utils/constants";
 
+const isMyConfig = false;
 
 const myFirebaseConfig = {
     apiKey: "AIzaSyCLry_5xVTzZZRZsrslhP7N1yqeYrUYTcQ",
@@ -26,7 +26,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(myFirebaseConfig);
+const app = initializeApp(isMyConfig ? myFirebaseConfig : firebaseConfig);
 
 export const messaging = getMessaging(app);
 

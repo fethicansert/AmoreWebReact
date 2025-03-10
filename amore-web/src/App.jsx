@@ -17,14 +17,13 @@ import LoginPopup from '../src/copmonents/login_popup'
 import ProtectedRoute from './routes/protected_route';
 import PageNotFound from './routes/page_not_found';
 import { getToken } from 'firebase/messaging';
-import { messaging, onMessageListener } from './firebase/firebase_config';
+import { messaging } from './firebase/firebase_config';
 import { useEffect } from 'react';
 import { useAuth } from './hooks/use_auth';
 import { ToastContainer, toast } from "react-toastify";
 import PushNotification from './copmonents/push_notification';
 import { onMessage } from "firebase/messaging";
-import { v4 as uuidv4 } from 'uuid';
-
+import { axiosAmore } from './api/axios';
 
 function App() {
 
@@ -35,10 +34,11 @@ function App() {
     requestPermission();
 
     onMessage(messaging, (payload) => {
-      const toastId = uuidv4();
-      toast(<PushNotification toastId={toastId} title={payload.notification.title} body={payload.notification.body} />,
+      console.log(payload);
+
+      toast(<PushNotification toastId={payload.messageId} title={payload.notification.title} body={payload.notification.body} />,
         {
-          toastId,
+          toastId: payload.messageId,
           style: { padding: '10px 8px' },
           className: "toast-notification",
           progressClassName: "toast-notification-progress",
@@ -49,7 +49,6 @@ function App() {
     });
 
   }, []);
-
 
   const { auth } = useAuth();
 
@@ -85,14 +84,18 @@ function App() {
 
         </Route>
 
+        {/* Page Not Founded */}
         <Route path="*" element={<PageNotFound />} />
 
       </Routes>
 
+      {/* Limittied Offer Popup */}
       {limitedOfferOptions.show && <LimitedOffer setLimitedOfferOptions={setLimitedOfferOptions} limititedOfferOptions={limitedOfferOptions} />}
 
+      {/* Login Popup */}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
 
+      {/* Push Foreground Notifications */}
       <ToastContainer limit={3} />
 
     </>
@@ -108,48 +111,48 @@ function App() {
         const myVapidKey = "BCtux-N4VRkOrnPmqMOubJD9qd8DIqs5begMpUHUci8-4bMT52cRsyV3gIvH4E_dqhEbohAm5WI3dd0gg2dQ2iI";
         const amoreVapidKey = "BFkciB-OrPueQmN0vizjgIgmkzTwi0yO1AYCCa9Pv4Hh1M_iXr5pnpVdBwrSTOxOtNWhajHhL8ZcQZvVO_TbZx8"
 
-        const token = await getToken(messaging, {
-          vapidKey: myVapidKey
+        const isMyVapidKey = false;
 
+        const token = await getToken(messaging, {
+          vapidKey: isMyVapidKey ? myVapidKey : amoreVapidKey
         });
 
         console.log(token);
 
+        if (!token || !auth) return;
 
-        // if (!token || !auth) return;
+        const oldToken = JSON.parse(localStorage.getItem('fcmToken'));
 
-        // const oldToken = JSON.parse(localStorage.getItem('fcmToken'));
+        if (oldToken) {
 
-        // if (oldToken) {
+          if (oldToken !== token) {
+            const deleteResponse = await axiosAmore.post('user/fcmToken',
+              { type: 'delete', fcmToken: oldToken, language: 'tr' },
+              { useAuth: true });
 
-        //   if (oldToken !== token) {
-        //     const deleteResponse = await axiosAmore.post('user/fcmToken',
-        //       { type: 'delete', fcmToken: oldToken, language: 'tr' },
-        //       { useAuth: true });
+            // console.log(deleteResponse);
 
-        //     // console.log(deleteResponse);
+            const addResponse = await axiosAmore.post('user/fcmToken',
+              { type: 'add', fcmToken: token, language: 'tr' },
+              { useAuth: true });
 
-        //     const addResponse = await axiosAmore.post('user/fcmToken',
-        //       { type: 'add', fcmToken: token, language: 'tr' },
-        //       { useAuth: true });
+            localStorage.setItem('fcmToken', JSON.stringify(token));
 
-        //     localStorage.setItem('fcmToken', JSON.stringify(token));
+            // console.log(addResponse);
+          } else {
+            console.log("Old Token and Token Same !");
+          }
 
-        //     console.log(addResponse);
-        //   } else {
-        //     console.log("Old Token and Token Same !");
-        //   }
+        } else {
 
-        // } else {
+          const addResponse = await axiosAmore.post('user/fcmToken',
+            { type: 'add', fcmToken: token, language: 'tr' },
+            { useAuth: true });
 
-        //   const addResponse = await axiosAmore.post('user/fcmToken',
-        //     { type: 'add', fcmToken: token, language: 'tr' },
-        //     { useAuth: true });
+          console.log(addResponse);
 
-        //   console.log(addResponse);
-
-        //   localStorage.setItem('fcmToken', JSON.stringify(token));
-        // }
+          localStorage.setItem('fcmToken', JSON.stringify(token));
+        }
 
       } catch (e) {
         console.log(e);

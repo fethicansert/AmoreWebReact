@@ -35,7 +35,8 @@ i18n.use(initReactI18next).init({
 
                 BUTTONS: {
                     SEND_MESSAGE_BUTTON: "Mesaj Gönder",
-                    PAY_BUTTON: "Ödeme Yap"
+                    PAY_BUTTON: "Ödeme Yap",
+                    OKAY_BUTTON: "Tamam"
                 },
 
                 USER_CARD: {
@@ -326,9 +327,20 @@ i18n.use(initReactI18next).init({
                     MONTHLY: "Aylık"
                 },
 
+                PERMISSION: {
+                    LOCATION_BANNER_TEXT: "Daha iyi bir deneyim için konum iznini aktif edin",
+                    LOCATION_POPUP_TITLE: "Konum Aç",
+                    LOCATION_POPUP_TEXT: "En iyi eşleşmeleri sana gösterebilmemiz için ayarlara giderek konum erişimini açmalı ve ardından sayfayı yenilemelisin.",
+                    NOTIFICATION_BANNER_TEXT: "Daha iyi bir deneyim için bildirimlerinizi açın",
+                    NOTIFICATION_POPUP_TITLE: "Bildirimleri Aç",
+                    NOTIFICATION_POPUP_TEXT: "Yeni eşleşmeler ve mesajları kaçırmamak için ayarlardan bildirimleri açmalı ve ardından sayfayı yenilemelisin.",
+
+                },
+
                 //DASHBOARD
                 DASHBOARD: {
                     TITLES: {
+                        NOTIFICATIONS_TITLE: "Bildirimler",
                         QUICK_MESSAGES: "Hızlı Mesajlar",
                         EMPTY_MESSAGE: "Mesaj kutunuz boş.",
                         LIKES: "Beğeniler",
@@ -426,7 +438,8 @@ i18n.use(initReactI18next).init({
 
                 BUTTONS: {
                     SEND_MESSAGE_BUTTON: "Send Message",
-                    PAY_BUTTON: "Make Payment"
+                    PAY_BUTTON: "Make Payment",
+                    OKAY_BUTTON: "Okay"
                 },
 
                 USER_CARD: {
@@ -717,11 +730,19 @@ i18n.use(initReactI18next).init({
                     MONTHLY: "Monthly"
                 },
 
-
+                PERMISSION: {
+                    LOCATION_BANNER_TEXT: "Enable location permission for a better experience",
+                    LOCATION_POPUP_TITLE: "Allow Location",
+                    LOCATION_POPUP_TEXT: "To show you the best matches, you must enable location access in settings and then refresh the page.",
+                    NOTIFICATION_BANNER_TEXT: "Turn on your notifications for a better experience",
+                    NOTIFICATION_POPUP_TITLE: "Allow Notifications",
+                    NOTIFICATION_POPUP_TEXT: "To avoid missing new matches and messages, you should turn on notifications from settings and then refresh the page.",
+                },
                 // DASHBOARD
                 DASHBOARD: {
 
                     TITLES: {
+                        NOTIFICATIONS_TITLE: "Notifications",
                         QUICK_MESSAGES: "Quick Messages",
                         EMPTY_MESSAGES: "Message box is empty.",
                         LIKES: "Likes",

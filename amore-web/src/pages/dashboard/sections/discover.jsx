@@ -152,7 +152,7 @@ const Discover = () => {
 
             {
                 !isLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
-                    {searchedUsers.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} />)}
+                    {searchedUsers.map(user => <UserCard isDiscover={true} ref={userBox} key={uuidv4()} user={user} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
         </section>

@@ -201,7 +201,7 @@ export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onP
 
         if (result.state === "granted") {
             onGranted?.();
-            sendNotificatin();
+            // sendNotificatin();
         }
 
         else if (result.state === "prompt") {

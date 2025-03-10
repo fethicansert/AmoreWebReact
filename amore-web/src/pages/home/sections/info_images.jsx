@@ -1,8 +1,8 @@
 import React from 'react'
 import PaddingContainer from '../../../copmonents/padding_container';
-import image1 from '../../../assets/images/1.png';
-import image2 from '../../../assets/images/2.png';
-import image3 from '../../../assets/images/3.png';
+import image1 from '../../../assets/images/1.webp';
+import image2 from '../../../assets/images/2.webp';
+import image3 from '../../../assets/images/3.webp';
 import FlexBox from '../../../copmonents/flex_box';
 import { useMediaPredicate } from "react-media-hook";
 import InfoImageBox from '../comps/info_image_box';

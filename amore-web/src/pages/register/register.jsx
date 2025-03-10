@@ -30,10 +30,9 @@ const registerLocalization = ['PHONE', 'VERIFY', 'USERNAME', 'BIRTH_DATE', 'GEND
 const Register = () => {
 
     //CONTEXT
-    const { appData } = useAppData();
+    const { appData, isdDataLoading } = useAppData();
     const { language } = useAppData();
-
-    const { t, i18n } = useTranslation();
+    const { t, _ } = useTranslation();
     const { setAuth } = useAuth();
     const navigate = useNavigate();
 
@@ -48,8 +47,7 @@ const Register = () => {
     const [currentLocation, setCurrentLocation] = useState(appData.ip);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    //Burayi anlamadim isDataLoading
-    const [isDataLoading, setIsDataLoading] = useState(false);
+
     const [selectedDate, setSelectedDate] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [smsCode, setSmsCode] = useState({
@@ -58,8 +56,6 @@ const Register = () => {
         digit3: '',
         digit4: ''
     });
-
-
 
     //CONSTANTS
     const titles = registerLocalization.map(localization => t(`REGISTER.${localization}.TITLE`));
@@ -89,7 +85,7 @@ const Register = () => {
             setShowDatePicker(false);
         }}>
             {
-                isDataLoading ? <AmoreLoading
+                isdDataLoading ? <AmoreLoading
                     containerWidth={'100vw'}
                     containerHeight={'100vh'}
                     amoreWidth={'50%'}
@@ -177,6 +173,58 @@ const Register = () => {
     )
 
     //FUNCTIONS
+
+    //Chanhes register section accoring to currentPageIndex
+    function getCurrentSection() {
+        switch (currentPageIndex) {
+            case 0:
+
+                return <OtpRegister
+                    phone={phone}
+                    setPhone={setPhone}
+                />
+            case 1:
+                return <VerifyOtp
+                    phone={phone}
+                    smsCode={smsCode}
+                    setSmsCode={setSmsCode}
+                />
+            case 2:
+                return <RegisterName
+                    username={username}
+                    setUsername={setUsername}
+                />
+            case 3:
+                return <RegisterBirthDate
+                    selectedDate={selectedDate}
+                    setSelectedDate={setSelectedDate}
+                    showDatePicker={showDatePicker}
+                    setShowDatePicker={setShowDatePicker} />;
+            case 4:
+                return <RegisterGender
+                    gender={gender}
+                    setGender={setGender} />;
+            case 5:
+                return <RegisterHobbies
+                    interests={appData.interests}
+                    selectedHobbies={selectedHobbies}
+                    setSelectedHobbies={setSelectedHobbies} />;
+            case 6:
+                return <RegisterUserPhotos
+                    handleDeleteImage={handleDeleteImage}
+                    userImages={userImages}
+                    handleImageChange={handleImageChange} />;
+            case 7:
+                return <RegisterLocation
+                    currentLocation={currentLocation}
+                    setCurrentLocation={setCurrentLocation}
+                    locations={appData.locations}
+                    userLocation={userLocation}
+                    setUserLocation={setUserLocation}
+                />;
+        }
+    }
+
     async function handleLogin() {
         const request = await login({
             phone: `+${phone}`,
@@ -325,57 +373,6 @@ const Register = () => {
             console.log(e);
         }
 
-    }
-
-    //Chanhes register section accoring to currentPageIndex
-    function getCurrentSection() {
-        switch (currentPageIndex) {
-            case 0:
-
-                return <OtpRegister
-                    phone={phone}
-                    setPhone={setPhone}
-                />
-            case 1:
-                return <VerifyOtp
-                    phone={phone}
-                    smsCode={smsCode}
-                    setSmsCode={setSmsCode}
-                />
-            case 2:
-                return <RegisterName
-                    username={username}
-                    setUsername={setUsername}
-                />
-            case 3:
-                return <RegisterBirthDate
-                    selectedDate={selectedDate}
-                    setSelectedDate={setSelectedDate}
-                    showDatePicker={showDatePicker}
-                    setShowDatePicker={setShowDatePicker} />;
-            case 4:
-                return <RegisterGender
-                    gender={gender}
-                    setGender={setGender} />;
-            case 5:
-                return <RegisterHobbies
-                    interests={appData.interests}
-                    selectedHobbies={selectedHobbies}
-                    setSelectedHobbies={setSelectedHobbies} />;
-            case 6:
-                return <RegisterUserPhotos
-                    handleDeleteImage={handleDeleteImage}
-                    userImages={userImages}
-                    handleImageChange={handleImageChange} />;
-            case 7:
-                return <RegisterLocation
-                    currentLocation={currentLocation}
-                    setCurrentLocation={setCurrentLocation}
-                    locations={appData.locations}
-                    userLocation={userLocation}
-                    setUserLocation={setUserLocation}
-                />;
-        }
     }
 
     //Delete uploaded image

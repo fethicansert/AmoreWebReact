@@ -19,7 +19,7 @@
     content: '';
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(#412a7800, #412a78), url('../../assets/images/market_header_background.jpeg');
+    background-image: linear-gradient(#412a7800, #412a78), url('../../assets/images/market_header_background.webp');
     background-size: cover;
     opacity: 1;
     mix-blend-mode: luminosity;

@@ -12,7 +12,6 @@ const AppDataProvider = ({ children }) => {
     //STATES
     const [language, setLanguage] = useLocalStorage('language', navigator.language.slice(0, 2) || 'en');
     const [isdDataLoading, setIsDataLoading] = useState([]);
-
     const [interests, setInterests] = useState([]);
     const [locations, setLocations] = useState([]);
     const [ipLocation, setIpLocation] = useState({});
@@ -22,8 +21,6 @@ const AppDataProvider = ({ children }) => {
     const [appData, dispatch] = useReducer(appDataReducer, {
         interests: [], locations: [], ip: {}, data: {}, gifts: {}
     });
-
-    console.log(appData);
 
     //SIDE-EFFECTS
 
@@ -70,10 +67,6 @@ const AppDataProvider = ({ children }) => {
                 });
 
             }
-
-
-            //Loop data setters and sent data agording to index
-
         }
 
         catch (e) {

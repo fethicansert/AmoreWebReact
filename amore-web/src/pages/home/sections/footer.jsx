@@ -1,7 +1,7 @@
 import React from 'react'
 import { useMediaPredicate } from "react-media-hook";
 import FlexBox from '../../../copmonents/flex_box';
-import phones from '../../../assets/images/phones.png';
+import phones from '../../../assets/images/phones.webp';
 import appleLogo from '../../../assets/icons/app_store_logo.png';
 import googleLogo from '../../../assets/icons/google_logo_white.png';
 import amoreLogo from '../../../assets/icons/amore_icon.png';

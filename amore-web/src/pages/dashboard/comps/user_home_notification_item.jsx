@@ -1,13 +1,12 @@
 import React from 'react'
-import placeHolderUserImage from '../../../assets/images/placeholder_user_image.png'
-import FlexBox from '../../../copmonents/flex_box';
-import { EyeIcon, HeartLineIcon } from '../../../assets/svg/svg_package';
+import { HeartLineIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
 import NotificationLayout from '../../../copmonents/notification_layout';
 import { formatTimeAgo } from '../../../utils/functions';
 import { useTranslation } from 'react-i18next';
-const UserHomeNotificationItem = ({ notification, type }) => {
+import { useNavigate } from 'react-router-dom';
+const UserHomeNotificationItem = ({ notification, type, index, blurImage = false }) => {
 
     const { auth } = useAuth();
     const { t, _ } = useTranslation();
@@ -16,24 +15,27 @@ const UserHomeNotificationItem = ({ notification, type }) => {
     const content = getMessageContent(notification, type);
     const icon = getIcon(type);
     const time = getTime(type);
-    const hideTime = getHideTime(type)
+    const hideTime = getHideTime(type);
+    const path = getPath(type);
+    const navigate = useNavigate();
 
+    return <NotificationLayout blurImage={blurImage} onClick={() => navigate(`/dashboard/${path}`, { state: { type: type, index: index } })} image={userImage} title={user?.name || 'username'} content={content} icon={icon} time={time} hideTime={hideTime} />
 
-
-    return <NotificationLayout image={userImage} title={user?.name || 'username'} content={content} icon={icon} time={time} hideTime={hideTime} />
+    function getPath(type) {
+        switch (type) {
+            case 'like':
+                return 'matches'
+            case 'message':
+                return 'chat';
+        }
+    }
 
     function getIcon(type) {
         switch (type) {
             case 'like':
                 return <HeartLineIcon color={colors.fadedText} fill={colors.fadedText} width='26' height='26' />;
-            case 'visit':
-                return <FlexBox alignItems='center' justifyContent='center' style={{ width: '28px', height: '28px', borderRadius: '50%', backgroundColor: colors.blue }}>
-                    <EyeIcon color={colors.backGround3} fill={colors.brand2} width='18' height='18' />
-                </FlexBox>
             case 'message':
                 return null;
-            default:
-                return null
         }
     }
 

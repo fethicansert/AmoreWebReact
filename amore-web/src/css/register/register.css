@@ -10,7 +10,6 @@
 }
 
 .register-date-wrapper {
-
     position: absolute;
     left: 50%;
     top: 110px;
@@ -436,26 +435,27 @@ input[type=number] {
     position: absolute;
     left: 0%;
     bottom: -247px;
-    transition: scale 200ms ease;
-
-    border-radius: 12px;
-
     border: .7px solid var(--brand1);
+
+
+    border-radius: 12px 0 0 0;
+    /* border-radius: 12px; */
+
     scale: 1 0;
-    visibility: hidden;
     transform-origin: top;
     z-index: 999;
 
     overflow: scroll;
     user-select: none;
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand1) var(--backGround3);
+    /* scrollbar-gutter: stable; */
+    /* scrollbar-gutter: both-edges; */
 }
 
 .register-location-dropdown-list.active {
     scale: 1 1;
+    transition: scale 200ms ease;
     visibility: visible;
 }
 

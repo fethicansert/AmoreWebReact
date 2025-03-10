@@ -2,9 +2,9 @@ import React from 'react'
 import PaddingContainer from '../../../copmonents/padding_container'
 import '../../../css/home/introduction_section.css';
 import { Slide } from 'react-slideshow-image';
-import image1 from '../../../assets/images/image_1.png';
-import image2 from '../../../assets/images/image_2.png';
-import image3 from '../../../assets/images/image_3.png';
+import image1 from '../../../assets/images/image_1.webp';
+import image2 from '../../../assets/images/image_2.webp';
+import image3 from '../../../assets/images/image_3.webp';
 import { useMediaPredicate } from "react-media-hook";
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css';

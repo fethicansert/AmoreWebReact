@@ -10,16 +10,16 @@ import { colors } from '../../../utils/theme';
 import '../../../css/dashboard/matches.css';
 import CustomRadio from '../../../copmonents/custom_radio';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 const Matches = () => {
 
+
+    const location = useLocation();
     //STATES
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [currentIndex, setCurrentIndex] = useState(getCurrentIndex());
     const [users, setUsers] = useState([]);
     const [isUsersLoading, setIsUsersLoading] = useState(false);
-
-    //Kullanilacak sonra
-    // const [currentPage, setCurrentPage] = useState(0);
 
     //REFS
     const userBox = React.createRef();
@@ -31,8 +31,25 @@ const Matches = () => {
     //CONSTANTS
     const titles = ["MATCHES", "LIKES", "VISITS"];
 
+    console.log(currentIndex);
+
+
     //SIDE_EFFECTS
     useEffect(() => { fetchData(currentIndex); }, [currentIndex]);
+
+
+    function getCurrentIndex() {
+        switch (location?.state?.type) {
+            case 'matches':
+                return 0
+            case 'like':
+                return 1
+            case 'visit':
+                return 2
+            default:
+                return 0
+        }
+    };
 
     return (
         <section className='matches'>
@@ -62,7 +79,7 @@ const Matches = () => {
 
             {
                 !isUsersLoading ? <div className='discover-users' >
-                    {users.map(user => <UserCard ref={userBox} key={uuidv4()} user={user} isOnlyPremium={!auth.premiumSubscription} />)}
+                    {users.map((user, index) => <UserCard isFromHome={currentIndex === 1 && index === parseInt(location?.state?.index)} ref={userBox} key={uuidv4()} user={user} />)}
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'90%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
 
@@ -77,8 +94,6 @@ const Matches = () => {
             const response = await axiosAmore.get(link, {
                 headers: { Authorization: auth.token }
             });
-            console.log(response.data.data);
-
             setUsers(filterUserData(response.data.data));
         }
         catch (e) { console.log(e); }
@@ -87,8 +102,8 @@ const Matches = () => {
 
     function getLink(index) {
         switch (index) {
-            case 0: return 'user/likes';
-            case 1: return 'user/matches'
+            case 0: return 'user/matches'
+            case 1: return 'user/likes';
             case 2: return 'user/visits'
         };
     };

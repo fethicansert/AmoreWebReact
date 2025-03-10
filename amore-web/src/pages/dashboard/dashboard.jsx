@@ -75,15 +75,15 @@ const Dashboard = () => {
 
             {showLocationSetting && <PermissionPopup
                 onClick={() => setShowLocationSetting(false)}
-                title={"Konumu Aç"}
-                text={"En iyi eşleşmeleri sana gösterebilmemiz için ayarlara giderek konum erişimini açmalı ve ardından sayfayı yenilemelisin."}
+                title={t('PERMISSION.LOCATION_POPUP_TITLE')}
+                text={t('PERMISSION.LOCATION_POPUP_TEXT')}
                 icon={<LocationSettingIcon width='40px' height='40px' />}
             />}
 
             {showNotificationPermission && <PermissionPopup
                 onClick={() => setShowNotificationPermission(false)}
-                title={"Bildirimleri Aç"}
-                text={"Yeni eşleşmeler ve mesajları kaçırmamak için ayarlardan bildirimleri açmalı ve ardından sayfayı yenilemelisin."}
+                title={t('PERMISSION.NOTIFICATION_POPUP_TITLE')}
+                text={t('PERMISSION.NOTIFICATION_POPUP_TEXT')}
                 icon={<NotificationPermissionIcon className='' color={colors.darkText} width='40px' height='40px' />}
             />}
 
@@ -150,21 +150,19 @@ const Dashboard = () => {
 
                     <div className='notification-header-container'>
 
-                        <FlexBox justifyContent='space-between' className='notifications-header' style={{ padding: '1.2rem 1.2rem', borderBottom: `1px solid ${colors.borderColor1}` }}>
-                            <h3>Bildirimler</h3>
+                        <FlexBox justifyContent='space-between' className='notifications-header' >
+                            <h3>{t('DASHBOARD.TITLES.NOTIFICATIONS_TITLE')}</h3>
                             <FlexBox gap='0 14px'>
                                 <NotificationConfirmIcon width='25' height='25' />
                                 <NotificationTrashIcon width='24' height='24' />
                             </FlexBox>
-
-
                         </FlexBox>
 
                         <PermissionBanner
                             onClik={(e) => onNotificationPermissionBannerClick(e)}
                             onCrossCloseClick={() => setShowNotificationBanner(false)}
                             icon={<NotificationIcon width='23' height='23' className='' color={colors.whiteText} />}
-                            text={"Daha iyi bir deneyim için bildirimlerinizi açın"}
+                            text={t('PERMISSION.NOTIFICATION_BANNER_TEXT')}
                             style={{ position: 'absolute', width: '100%', top: '100%' }}
                             showPermissionBanner={showNotificationBanner}
                         />

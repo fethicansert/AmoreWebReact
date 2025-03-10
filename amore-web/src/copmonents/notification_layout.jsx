@@ -7,7 +7,7 @@ const NotificationLayout = ({ image, title, content, icon, time, className, onCl
     return (
         <div onClick={onClick} className={`notification-layout ${className || ''}`}>
             <div className='notification-layout-image-avatar'>
-                <img src={image}></img>
+                <img style={{ filter: `blur(${blurImage ? '6.5px' : '0'})` }} loading='lazy' src={image}></img>
             </div>
             <div className='notification-layout-content'>
                 {<span className='notification-layout-title'>{title}</span>}

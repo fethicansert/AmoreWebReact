@@ -12,7 +12,7 @@ import FlexBox from '../../../copmonents/flex_box';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
 import { useMediaPredicate } from "react-media-hook";
-import phoneImage from '../../../assets/images/image3.png'
+import phoneImage from '../../../assets/images/image3.webp'
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation, Trans } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';

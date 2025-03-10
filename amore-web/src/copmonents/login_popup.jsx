@@ -1,7 +1,6 @@
 import React from 'react'
 import '../css/login/login_popup.css';
-import loginBackGroundImage from '../assets/images//login_background.png';
-import logingrain from '../assets/images//login_grain.png';
+import loginBackGroundImage from '../assets/images//login_background.webp';
 import { colors } from '../utils/theme';
 import BasicButton from './basic_button';
 import FlexBox from './flex_box';

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { APP_INFO } from '../utils/constants';
 
 const isTesting = true;
-const baseURL = isTesting ? 'http://165.227.142.52:3169/' : 'https://serv.amoredateapp.com/';
+const baseURL = isTesting ? 'https://devapi.servicelabs.tech' : 'https://serv.amoredateapp.com/';
 
 //Axios Instance Headers
 const headers = {
@@ -23,8 +23,6 @@ axiosAmore.interceptors.request.use(
 
             //IF Auth => Take token else undefined
             const token = JSON.parse(localStorage.getItem('auth'))?.token;
-
-            console.log(token);
 
 
             //IF Token => Set token to headers

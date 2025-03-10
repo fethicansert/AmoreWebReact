@@ -192,7 +192,7 @@ const UserHome = () => {
                   onCrossCloseClick={() => setShowLocationBanner(false)}
                   onClik={handleLocationBanner}
                   showPermissionBanner={showLocationBanner}
-                  text={'Daha iyi bir deneyim için konum iznini aktif edin'}
+                  text={t('PERMISSION.LOCATION_BANNER_TEXT')}
                   icon={<LocationIcon color={colors.whiteText} width='20px' height='20px' />}
                 />
 
@@ -212,11 +212,11 @@ const UserHome = () => {
       <div className='user-home-notications'>
 
         <UserHomeNotifications path={'/dashboard/chat'} title={t('DASHBOARD.TITLES.QUICK_MESSAGES')} isLoading={isConversationsLoading} type='message'>
-          {conversations.slice(0, 4).map(message => message ? <UserHomeNotificationItem key={uuidv4()} type={'message'} notification={message} /> : null)}
+          {conversations.slice(0, 4).map((message, index) => message ? <UserHomeNotificationItem index={index} key={uuidv4()} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
         <UserHomeNotifications path={'/dashboard/matches'} title={t('DASHBOARD.TITLES.LIKES')} isLoading={isLikesLoading} type='like'>
-          {likes.slice(0, 4).map(like => like ? <UserHomeNotificationItem key={uuidv4()} type={'like'} notification={like} /> : null)}
+          {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem blurImage={true} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         {hidePremium && <PremiumBox style={{ margin: '0 auto 1rem auto' }} />}
@@ -251,7 +251,6 @@ const UserHome = () => {
       distanceRef.current = 200;
       getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: 'female', age: [25, 80] });
     }
-
   }
 
   function handleGender(gender) {
@@ -273,19 +272,18 @@ const UserHome = () => {
     likeSoundRef.current.play();
 
     setTimeout(() => {
+      setPopupAnimation(null);
       if (currentIndex + 1 === swipeList.length) return setSwipeList([]);
       setCurrentIndex(prev => prev + 1);
-      setPopupAnimation(null);
       swipeContainer.current.scroll({ top: 0, behavior: 'auto' });
     }, 1000);
 
     try {
-
       const response = await axiosAmore.post(`user/${type}`, body, { headers: { Authorization: auth.token } });
-
       if (response?.data?.response?.code !== 200 || response.status !== 200) setSwipeError(true);
+    }
 
-    } catch (e) {
+    catch (e) {
       setSwipeError(true);
       console.log(e);
     }
@@ -327,6 +325,7 @@ const UserHome = () => {
       setIsLikesLoading(false);
     }
   }
+
 
   //Fetch Swipe and Set Swipe List
   async function getSwipeList({ showLoading, isAutoDistance, isResetList, gender, distance, age }) {

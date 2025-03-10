@@ -1,6 +1,6 @@
 .info-images-section {
     background: var(--brand2);
-    background-image: url('../assets//images/pink_background.png');
+    background-image: url(../../assets/images/pink_background.png);
     background-size: cover;
     background-blend-mode: difference;
     height: fit-content;

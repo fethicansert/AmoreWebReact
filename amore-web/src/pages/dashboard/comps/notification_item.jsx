@@ -70,14 +70,11 @@ const NotificationItem = ({ notification }) => {
     function getIcon() {
         switch (type) {
             case 'LIKE_FREE':
-                return <div className='notification-item-icon-wrapper' style={{ backgroundColor: colors.brand2 }}>
-                    <HeartLineIcon color={colors.backGround3} fill={colors.backGround3} width='19' height='19' />
-                </div>
+                return <HeartLineIcon className='notification-item-heart-icon' color={colors.backGround3} fill={colors.backGround3} />
 
             case 'VISIT_FREE':
-                return <div className='notification-item-icon-wrapper' style={{ backgroundColor: colors.blue }}>
-                    <EyeIcon color={colors.backGround3} fill={colors.backGround3} width='19' height='19' />
-                </div>
+                return <EyeIcon className={'notification-item-eye-icon'} color={colors.backGround3} fill={colors.backGround3} />
+
             default:
                 return <span className='notification-time'>14:03</span>
         }

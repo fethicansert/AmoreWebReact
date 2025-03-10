@@ -5,7 +5,7 @@ import { colors } from '../../../utils/theme'
 const SwipeImageWrapper = ({ image }) => {
     return (
         <div className='swipe-container-image-wrapper' style={{ marginBlock: '1rem' }}>
-            <img src={image} />
+            <img loading='lazy' src={image} />
         </div>
     );
 }

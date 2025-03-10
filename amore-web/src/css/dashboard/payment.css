@@ -72,7 +72,7 @@
     width: 225px;
     height: 350px;
     background-size: cover;
-    background: url('../../assets/images/credit_card_grain.png'), var(--backGround3);
+    background: url('../../assets/grains/credit_card_grain.webp'), var(--backGround3);
     border: 1px solid var(--borderColor1);
     border-radius: var(--spacing4);
     position: absolute;
