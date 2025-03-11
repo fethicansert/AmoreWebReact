@@ -31,6 +31,7 @@ import { handleLocationPermission } from '../../../utils/functions.js';
 import { useBanner } from '../../../hooks/use_banner.jsx';
 import PermissionBanner from '../../../copmonents/permission_banner.jsx';
 
+
 const UserHome = () => {
 
   //STATS
@@ -43,7 +44,6 @@ const UserHome = () => {
   const [age, setAge] = useState([25, 80]);
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
-
 
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState('female');
@@ -69,6 +69,7 @@ const UserHome = () => {
   //MEDIA
   const hidePremium = useMediaPredicate("(max-width: 1190px)");
 
+
   //SIDE-EFFECTS
 
   useEffect(() => {
@@ -83,10 +84,10 @@ const UserHome = () => {
     });
   }, []);
 
+
   //fetch swipelist data
   useEffect(() => {
     getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: filterdGender, age: age });
-
     return () => setShowLocationBanner(false);
   }, []);
 
@@ -103,7 +104,6 @@ const UserHome = () => {
 
       {/* Premium Box */}
       {!hidePremium && <div className='user-home-sidebar-container' >
-
 
         <div className='user-home-filters' >
 
@@ -227,6 +227,9 @@ const UserHome = () => {
   );
 
   //FUNCTIONS
+
+
+
 
   function handleLocationBanner(e) {
 

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { APP_INFO } from '../utils/constants';
 
-const isTesting = true;
-const baseURL = isTesting ? 'https://devapi.servicelabs.tech' : 'https://serv.amoredateapp.com/';
+
+const baseURL = 'https://devapi.servicelabs.tech';
 
 //Axios Instance Headers
 const headers = {

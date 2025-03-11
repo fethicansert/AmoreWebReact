@@ -7,6 +7,7 @@ const ProtectedRoute = () => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
+
   return (
     isAuthenticated
       ? <Outlet />

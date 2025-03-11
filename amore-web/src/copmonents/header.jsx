@@ -153,7 +153,7 @@ const Header = ({
             isMobile && setShowNav(false);
             setShowLogin(true);
         }
-        else navigate(`${ROUTES.DASHBOARD}/${ROUTES.USER_HOME}`);
+        else navigate(`${ROUTES.DASHBOARD}/${ROUTES.USER_SWIPE}`);
     };
 
 

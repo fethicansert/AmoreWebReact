@@ -23,6 +23,9 @@ import { useAuth } from './hooks/use_auth';
 import { ToastContainer, toast } from "react-toastify";
 import PushNotification from './copmonents/push_notification';
 import { onMessage } from "firebase/messaging";
+import { userFcmToken } from './api/services/user_servives';
+import VisitRedirect from './routes/visit_redirect';
+import Visit from './pages/visit/visit';
 import { axiosAmore } from './api/axios';
 
 function App() {
@@ -60,11 +63,17 @@ function App() {
 
         <Route path='/register' element={<Register />} />
 
+        <Route element={<VisitRedirect />}>
+
+          <Route path='user/:userId' element={<Visit />} />
+
+        </Route>
+
         <Route element={<ProtectedRoute />}>
 
           <Route path='/dashboard' element={<Dashboard />}>
 
-            <Route index path='user-home' element={<UserHome />} />
+            <Route index path='user-swipe/:userId?' element={<UserHome />} />
 
             <Route path='discover' element={<Discover />} />
 
@@ -78,7 +87,9 @@ function App() {
 
             <Route path='payment' element={<Payment />} />
 
-            <Route path='user' element={<User />} />
+            <Route path='user-profile' element={<User />} />
+
+            <Route path='user/:userId' element={<Visit />} />
 
           </Route>
 
@@ -108,13 +119,11 @@ function App() {
 
       try {
 
-        const myVapidKey = "BCtux-N4VRkOrnPmqMOubJD9qd8DIqs5begMpUHUci8-4bMT52cRsyV3gIvH4E_dqhEbohAm5WI3dd0gg2dQ2iI";
-        const amoreVapidKey = "BFkciB-OrPueQmN0vizjgIgmkzTwi0yO1AYCCa9Pv4Hh1M_iXr5pnpVdBwrSTOxOtNWhajHhL8ZcQZvVO_TbZx8"
-
-        const isMyVapidKey = false;
+        // Voluntary Application Server Identification => Gönüllü Uygulama Sunucusu Tanımlaması
+        const vapidKey = "BFkciB-OrPueQmN0vizjgIgmkzTwi0yO1AYCCa9Pv4Hh1M_iXr5pnpVdBwrSTOxOtNWhajHhL8ZcQZvVO_TbZx8"
 
         const token = await getToken(messaging, {
-          vapidKey: isMyVapidKey ? myVapidKey : amoreVapidKey
+          vapidKey: vapidKey,
         });
 
         console.log(token);
@@ -126,28 +135,23 @@ function App() {
         if (oldToken) {
 
           if (oldToken !== token) {
-            const deleteResponse = await axiosAmore.post('user/fcmToken',
-              { type: 'delete', fcmToken: oldToken, language: 'tr' },
-              { useAuth: true });
 
-            // console.log(deleteResponse);
+            const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: 'tr' })
+            console.log(deleteResponse);
 
-            const addResponse = await axiosAmore.post('user/fcmToken',
-              { type: 'add', fcmToken: token, language: 'tr' },
-              { useAuth: true });
+
+            const addResponse = await userFcmToken({ type: 'add', token: token, language: 'tr' })
+            console.log(addResponse);
 
             localStorage.setItem('fcmToken', JSON.stringify(token));
 
-            // console.log(addResponse);
           } else {
             console.log("Old Token and Token Same !");
           }
 
         } else {
 
-          const addResponse = await axiosAmore.post('user/fcmToken',
-            { type: 'add', fcmToken: token, language: 'tr' },
-            { useAuth: true });
+          const addResponse = await userFcmToken({ type: 'add', token: token, language: 'tr' })
 
           console.log(addResponse);
 

@@ -13,19 +13,11 @@ const firebaseConfig = {
 };
 
 
-
 firebase.initializeApp(firebaseConfig);
 
-
-let messaging;
-try {
-    messaging = firebase.messaging.isSupported() ? firebase.messaging() : null
-} catch (err) {
-    console.error(err);
-}
+const messaging = firebase.messaging.isSupported() ? firebase.messaging() : undefined;
 
 if (messaging) {
-
     messaging.onBackgroundMessage((payload) => {
         console.log(
             '[firebase-messaging-sw.js] Received background message ',
@@ -34,12 +26,14 @@ if (messaging) {
 
         const extraData = payload?.data?.extraData ? JSON.parse(payload.data.extraData) : undefined;
 
+        console.log(extraData);
+
         // Customize notification here
         const notificationTitle = payload.notification.title;
         const notificationOptions = {
             body: payload.notification.body,
             icon: extraData.senderImage || '/firebase-logo.png',
-            data: { url: `https://fth_1.servicelabs.tech/${extraData.userId}` }
+            data: { url: `https://fth_1.servicelabs.tech/user/${extraData.userId}` }
         };
 
         self.registration.showNotification(notificationTitle, notificationOptions);
@@ -47,7 +41,8 @@ if (messaging) {
 
     self.addEventListener('notificationclick', (event) => {
         event.notification.close(); // CLosing the notification when clicked
-        const urlToOpen = 'https://www.trendyol.com/hellim-peyniri-y-s20860';
+        const urlToOpen = event.notification.data?.url || 'https://fth_1.servicelabs.tech'
+
         // Open the URL in the default browser.
         event.waitUntil(
             clients.matchAll({
@@ -67,7 +62,10 @@ if (messaging) {
                 })
         );
     });
+} else {
+    console.log("FCM Not Supported")
 }
+
 
 
 

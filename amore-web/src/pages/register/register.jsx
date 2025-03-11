@@ -256,7 +256,7 @@ const Register = () => {
                 console.log(loginReq);
 
                 if (loginReq.status == 200) {
-                    navigate('/dashboard/user-home');
+                    navigate('/dashboard/user-swipe');
                     console.log(loginReq.data);
 
                     setAuth({ ...loginReq.data });

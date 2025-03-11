@@ -24,14 +24,14 @@ import PermissionBanner from '../../copmonents/permission_banner';
 const linkTitles = ['MAIN_PAGE', 'NOTIFICATIONS', 'DISCOVER', 'MATCHES', 'MESSAGES', 'MARKET', 'PREMIUM_SUBSCRIPTION', 'PROFILE'];
 
 const routes = [
-    { path: ROUTES.USER_HOME, icon: <HomeIcon /> },
+    { path: ROUTES.USER_SWIPE, icon: <HomeIcon /> },
     { path: null, icon: <NotificationIcon /> },
     { path: ROUTES.DISCOVER, icon: <DiscoverIcon /> },
     { path: ROUTES.MATCHES, icon: <DoubleHeartIcon /> },
     { path: ROUTES.CHAT, icon: <ChatBubbleIcon /> },
     { path: ROUTES.MARKET, icon: <CoinIcon /> },
     { path: ROUTES.PREMIM_SUBSCRIPTION, icon: <DiamondIcon /> },
-    { path: ROUTES.USER, icon: <UserIcon color='#4B164C' width={25} height={25} /> }];
+    { path: ROUTES.USER_PROFILE, icon: <UserIcon color='#4B164C' width={25} height={25} /> }];
 
 const Dashboard = () => {
 

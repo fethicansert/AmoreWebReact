@@ -118,6 +118,8 @@ body {
 }
 
 /* Registerde bir scroll cikiyor neden ? */
+.visit-grid-container-right-column::-webkit-scrollbar,
+.visit-user-container::-webkit-scrollbar,
 .register::-webkit-scrollbar,
 .discover-users-side-bar::-webkit-scrollbar,
 .user-home-sidebar-container::-webkit-scrollbar,
@@ -131,6 +133,8 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.visit-grid-container-right-column,
+.visit-user-container,
 .register,
 .discover-users-side-bar,
 .user-home-sidebar-container,

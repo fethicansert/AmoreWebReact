@@ -10,13 +10,13 @@ export const ROUTES = {
     HOME: '/',
     DASHBOARD: 'dashboard',
     REGISTER: 'register',
-    USER_HOME: 'user-home',
+    USER_SWIPE: 'user-swipe',
     DISCOVER: 'discover',
     MATCHES: 'matches',
     CHAT: 'chat',
     MARKET: 'market',
     PREMIM_SUBSCRIPTION: 'premium-subscription',
-    USER: 'user',
+    USER_PROFILE: 'user-profile',
     PAYMENT: '/dashboard/payment'
 };
 

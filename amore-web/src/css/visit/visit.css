@@ -1,0 +1,28 @@
+.visit {
+    max-width: 1400px;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.visit-grid-container {
+    display: grid;
+    grid-template-columns: 270px 4fr 2.5fr;
+    gap: 0 clamp(.4rem, 1vw, 1rem);
+    overflow: hidden;
+    height: 100%;
+}
+
+.visit-user-container {
+    width: 100%;
+    overflow-y: scroll;
+    position: relative;
+    border-radius: 12px 12px 0 0;
+    overflow: scroll;
+}
+
+.visit-grid-container-right-column {
+    overflow: scroll;
+}

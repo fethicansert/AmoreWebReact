@@ -7,7 +7,7 @@ import FlexBox from "./flex_box.jsx";
 import BasicButton from "./basic_button.jsx";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/use_auth.jsx"
-import { ZAxis } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 const UserCard = forwardRef((props, ref) => {
 
@@ -21,10 +21,12 @@ const UserCard = forwardRef((props, ref) => {
     const { t, _ } = useTranslation();
     const { auth } = useAuth();
 
+    const navigate = useNavigate();
+
     const isPremium = auth.premiumSubscription || false;
 
 
-    return <div className='discover-user-box' onClick={() => isPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : null}>
+    return <div className='discover-user-box' onClick={() => isPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : navigate(`/dashboard/user/${user.id}`)}>
         <div className='discover-user-image-container' ref={ref}>
             <img style={{ filter: `blur(${isPremium || isDiscover ? '0' : '35px'})` }} src={user?.photos[0].url}></img>
             <div
@@ -60,13 +62,7 @@ const UserCard = forwardRef((props, ref) => {
                     <p>{t('USER_CARD.ONLY_PREMIUM_USERS')}</p>
                 </div>
 
-
-
         }
-
-
-
-
 
     </div>
 })
