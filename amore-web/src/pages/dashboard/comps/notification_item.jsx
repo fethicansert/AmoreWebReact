@@ -48,7 +48,7 @@ const NotificationItem = ({ notification }) => {
     }
 
     function getUserName() {
-        return notification?.titleArgs[0];
+        return notification?.titleArgs[0] || notification?.args[0];
     }
 
     function getTitle() {
@@ -64,6 +64,7 @@ const NotificationItem = ({ notification }) => {
         if (auth?.premiumSubscription && (type === 'VISIT_FREE' || type === 'LIKE_FREE')) {
             return t(`NOTIFICATION.${type.slice(0, -5)}.DESCRIPTION`, { user: userName });
         }
+
         return t(`NOTIFICATION.${type}.DESCRIPTION`, { user: userName, jetonQuantity: 100 });
     };
 
@@ -88,7 +89,6 @@ const NotificationItem = ({ notification }) => {
                 return notification?.extraData?.senderImage || amoreIcon;
         }
     };
-
 
 }
 

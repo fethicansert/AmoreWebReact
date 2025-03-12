@@ -84,7 +84,6 @@ const UserHome = () => {
     });
   }, []);
 
-
   //fetch swipelist data
   useEffect(() => {
     getSwipeList({ showLoading: true, isAutoDistance: true, isResetList: true, gender: filterdGender, age: age });

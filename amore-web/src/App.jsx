@@ -73,7 +73,7 @@ function App() {
 
           <Route path='/dashboard' element={<Dashboard />}>
 
-            <Route index path='user-swipe/:userId?' element={<UserHome />} />
+            <Route index path='user-swipe' element={<UserHome />} />
 
             <Route path='discover' element={<Discover />} />
 

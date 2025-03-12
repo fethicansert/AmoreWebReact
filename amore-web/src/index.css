@@ -35,6 +35,8 @@
   font-display: swap;
 }
 
+
+
 * {
   margin: 0;
   padding: 0;
@@ -119,6 +121,7 @@ body {
 
 /* Registerde bir scroll cikiyor neden ? */
 .visit-grid-container-right-column::-webkit-scrollbar,
+.visit-grid-container-left-column::-webkit-scrollbar,
 .visit-user-container::-webkit-scrollbar,
 .register::-webkit-scrollbar,
 .discover-users-side-bar::-webkit-scrollbar,
@@ -134,6 +137,7 @@ body {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .visit-grid-container-right-column,
+.visit-grid-container-left-column,
 .visit-user-container,
 .register,
 .discover-users-side-bar,
@@ -848,8 +852,6 @@ header a {
   0% {
     scale: 1;
   }
-
-
 }
 
 @keyframes fadeHeader {
@@ -859,5 +861,21 @@ header a {
 
   100% {
     background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, #f0f0f0 25%, #dd88cfba 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.3s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
   }
 }

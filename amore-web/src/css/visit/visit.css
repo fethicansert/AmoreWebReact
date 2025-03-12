@@ -23,6 +23,7 @@
     overflow: scroll;
 }
 
+.visit-grid-container-left-column,
 .visit-grid-container-right-column {
     overflow: scroll;
 }

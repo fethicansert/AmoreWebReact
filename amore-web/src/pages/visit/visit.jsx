@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import UserHomeNotificationItem from '../dashboard/comps/user_home_notification_item';
 import { v4 as uuidv4 } from 'uuid';
 import { axiosAmore } from '../../api/axios';
+import CurrentUserInfoBox from '../../copmonents/current_user_info_box';
 
 const Visit = () => {
 
@@ -50,6 +51,7 @@ const Visit = () => {
 
             <div className='visit-grid-container'>
                 <div className='visit-grid-container-left-column'>
+                    <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '.8rem', borderRadius: '12px' }} />
                     <PremiumBox />
                 </div>
                 <div className='visit-user-container'>
