@@ -4,11 +4,14 @@ import BasicButton from './basic_button'
 import { colors } from '../utils/theme'
 import { useAuth } from '../hooks/use_auth'
 import { useTranslation } from 'react-i18next'
+import { replace, useLocation, useNavigate } from 'react-router-dom'
 
 const Logout = ({ closeLogout }) => {
 
     const { setAuth } = useAuth();
     const { t, _ } = useTranslation();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     return (
         <div className='logout'>
@@ -46,7 +49,10 @@ const Logout = ({ closeLogout }) => {
         </div>
     );
 
-    function handleLogout() { setAuth({}) }
+    function handleLogout() {
+        navigate('/');
+        setTimeout(() => setAuth({}), 0)
+    }
 }
 
 export default Logout

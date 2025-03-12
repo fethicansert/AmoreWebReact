@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next'
 import { useBanner } from '../../../hooks/use_banner'
 import { useAppData } from '../../../hooks/use_add_data'
+import { useLocation } from 'react-router-dom'
 
 const SwipeItem = ({ user, loading }) => {
     const userProfilPhoto = user?.photos[0]?.url;
@@ -19,10 +20,11 @@ const SwipeItem = ({ user, loading }) => {
     const userState = user?.country?.state?.name || user?.country?.name;
     const gender = user?.gender || 'female';
     const bio = user?.bio;
+    const location = useLocation();
 
     //CONTEXT
     const { t, i18n } = useTranslation();
-    const { setLimitedOfferOptions } = useBanner();
+    const { setLimitedOfferOptions, setShowLogin } = useBanner();
     const { getUserInterests } = useAppData();
 
     const interests = getUserInterests(user?.interests.map(interest => interest.id))
@@ -153,6 +155,7 @@ const SwipeItem = ({ user, loading }) => {
 
     //FUNCTIONS
     function handleSocialButtonClick() {
+        if (location.pathname.slice(0, 6) === '/user/') return setShowLogin(true);
         setLimitedOfferOptions({ show: true, type: 'premium-subscription' });
     }
 }

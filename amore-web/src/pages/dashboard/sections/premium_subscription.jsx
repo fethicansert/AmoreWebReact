@@ -1,13 +1,12 @@
 import React from 'react';
 import '../../../css/dashboard/premium_subscription.css';
 import { colors } from '../../../utils/theme';
-import PremiumCard from '../comps/premium_card';
+import PremiumCard from '../components/premium_card';
 import { useTranslation } from 'react-i18next';
 
 const cardFeatures1 = ['Other territories cob', 'Office pee needle down', 'Reference stands', 'Die up another', 'Back data engagement'];
 const cardFeatures2 = ['Support version only', 'Meaningful 2', 'This us move up', 'Space fruit', 'Big would adoption'];
 const cardFeatures3 = ['Best space', 'Points adoption', 'Fured downloaded', 'Lift prioritize', 'Ideal spaces'];
-
 
 const PremiumSubscription = () => {
 

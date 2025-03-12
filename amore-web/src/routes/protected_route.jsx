@@ -8,12 +8,13 @@ const ProtectedRoute = () => {
   const location = useLocation();
 
 
+  // (!isAuthenticated && location.pathname.includes('/dashboard/user/')) ?
+  //     <Navigate to={`/user/${location.pathname.slice(16)}`} /> :
+
   return (
     isAuthenticated
       ? <Outlet />
-      : location.pathname.slice(0, 10) === '/dashboard'
-        ? <Navigate to='/' />
-        : <Navigate to='/register' />)
+      : <Navigate to='/' />)
 }
 
 export default ProtectedRoute

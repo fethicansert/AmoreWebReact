@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 
 
-const SwipeBottomBar = ({ onSwipe }) => {
+const SwipeBottomBar = ({ onSwipe, onMessage }) => {
 
     const { t, _ } = useTranslation();
 
@@ -27,7 +27,7 @@ const SwipeBottomBar = ({ onSwipe }) => {
                 </div>
             </div>
 
-            <div className='swipe-bottom-bar-send-message-button'>
+            <div className='swipe-bottom-bar-send-message-button' onClick={onMessage}>
                 <ChatBubbleIcon
                     width='22'
                     height='22'

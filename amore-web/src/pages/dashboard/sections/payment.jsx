@@ -3,8 +3,7 @@ import FlexBox from '../../../copmonents/flex_box';
 import { MasterCardIcon } from '../../../assets/svg/svg_package';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
-import CreditCard from '../comps/credit_card';
-import ahmetOffaBass from '../../../sounds/ahmet-off-a-bass.mp3';
+import CreditCard from '../components/credit_card';
 import '../../../css/dashboard/payment.css';
 import { useTranslation } from 'react-i18next';
 

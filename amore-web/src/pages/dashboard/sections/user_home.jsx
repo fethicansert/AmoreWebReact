@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import PremiumBox from '../../../copmonents/premium_box';
 import { useMediaPredicate } from 'react-media-hook';
 import { axiosAmore } from '../../../api/axios';
-import UserHomeNotificationItem from '../comps/user_home_notification_item';
-import UserHomeNotifications from '../comps/user_home_notifications';
+import UserHomeNotificationItem from '../components/user_home_notification_item.jsx';
+import UserHomeNotifications from '../components/user_home_notifications.jsx';
 import { v4 as uuidv4 } from 'uuid';
-import SwipeBottomBar from '../comps/swipe_bottom_bar';
-import SwipeItem from '../comps/swipe_item';
+import SwipeBottomBar from '../components/swipe_bottom_bar';
+import SwipeItem from '../components/swipe_item.jsx';
 import { useConversation } from '../../../hooks/use_conversation';
 import { useAuth } from '../../../hooks/use_auth';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +25,7 @@ import amoreDissLike from '../../../assets/lottie/amore_dislike.json';
 import likeSound from '../../../sounds/like_sound.mp3'
 import FlexBox from '../../../copmonents/flex_box.jsx';
 import '../../../css/dashboard/user_home.css';
-import SwipeErrorContainer from '../comps/swipe_error_container.jsx';
+import SwipeErrorContainer from '../components/swipe_error_container.jsx';
 import { LocationIcon } from '../../../assets/svg/svg_package.jsx';
 import { handleLocationPermission } from '../../../utils/functions.js';
 import { useBanner } from '../../../hooks/use_banner.jsx';
@@ -52,8 +52,8 @@ const UserHome = () => {
 
   //CONTEXT
   const { conversations, isConversationsLoading } = useConversation();
-  const { auth, setAuth } = useAuth();
-  const { t, i18n } = useTranslation();
+  const { auth } = useAuth();
+  const { t, _ } = useTranslation();
   const { showLocationBanner, setShowLocationBanner, setShowLocationSetting } = useBanner();
 
 
@@ -69,9 +69,7 @@ const UserHome = () => {
   //MEDIA
   const hidePremium = useMediaPredicate("(max-width: 1190px)");
 
-
   //SIDE-EFFECTS
-
   useEffect(() => {
     //Fetch likes
     getLikes();
@@ -197,7 +195,7 @@ const UserHome = () => {
 
                 <SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading} />
 
-                {!isSwipeListLoading && <SwipeBottomBar onSwipe={handleSwipe} />}
+                {!isSwipeListLoading && <SwipeBottomBar onMessage={null} onSwipe={handleSwipe} o />}
 
                 {popAnimation && <div className='like-popup' style={{ marginTop: `${swipeContainer?.current?.scrollTop}px` }}>
                   {popAnimation.icon}

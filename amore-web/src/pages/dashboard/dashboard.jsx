@@ -4,12 +4,12 @@ import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
 import { v4 as uuidv4 } from 'uuid';
 import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon, LocationSettingIcon, NotificationPermissionIcon } from '../../assets/svg/svg_package';
-import LayoutLinkIcon from './comps/layout_link_icon';
+import LayoutLinkIcon from './components/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
-import LayoutLinkBox from './comps/layout_link_box';
+import LayoutLinkBox from './components/layout_link_box';
 import { useNotification } from '../../hooks/use_notification';
-import NotificationItem from './comps/notification_item';
+import NotificationItem from './components/notification_item';
 import { ROUTES } from '../../utils/constants';
 import ghostLottie from '../../assets/lottie/ghost.json';
 import '../../css/dashboard/dashboard.css';

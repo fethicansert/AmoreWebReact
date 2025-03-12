@@ -3,7 +3,7 @@ import '../../../css/dashboard/market.css';
 import FlexBox from '../../../copmonents/flex_box';
 import BasicButton from '../../../copmonents/basic_button';
 import { colors } from '../../../utils/theme';
-import MarkeItem from '../comps/market_item';
+import MarkeItem from '../components/market_item';
 import { useTranslation } from 'react-i18next';
 import { useBanner } from '../../../hooks/use_banner';
 

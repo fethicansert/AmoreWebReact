@@ -67,29 +67,29 @@ function App() {
 
           <Route path='user/:userId' element={<Visit />} />
 
-        </Route>
+          <Route element={<ProtectedRoute />}>
 
-        <Route element={<ProtectedRoute />}>
+            <Route path='/dashboard' element={<Dashboard />}>
 
-          <Route path='/dashboard' element={<Dashboard />}>
+              <Route index path='user-swipe' element={<UserHome />} />
 
-            <Route index path='user-swipe' element={<UserHome />} />
+              <Route path='discover' element={<Discover />} />
 
-            <Route path='discover' element={<Discover />} />
+              <Route path='matches' element={<Matches />} />
 
-            <Route path='matches' element={<Matches />} />
+              <Route path='chat' element={<Chat />} />
 
-            <Route path='chat' element={<Chat />} />
+              <Route path='market' element={<Market />} />
 
-            <Route path='market' element={<Market />} />
+              <Route path='premium-subscription' element={<Premium />} />
 
-            <Route path='premium-subscription' element={<Premium />} />
+              <Route path='payment' element={<Payment />} />
 
-            <Route path='payment' element={<Payment />} />
+              <Route path='user-profile' element={<User />} />
 
-            <Route path='user-profile' element={<User />} />
+              <Route path='user/:userId' element={<Visit />} />
 
-            <Route path='user/:userId' element={<Visit />} />
+            </Route>
 
           </Route>
 

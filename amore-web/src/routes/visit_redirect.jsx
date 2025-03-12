@@ -1,16 +1,23 @@
 import React from 'react'
 import { useAuth } from '../hooks/use_auth'
-import { Outlet, Navigate, useParams } from 'react-router-dom';
+import { Outlet, Navigate, useParams, useLocation } from 'react-router-dom';
 
 const VisitRedirect = () => {
 
     const { isAuthenticated } = useAuth();
     const { userId } = useParams();
+    const location = useLocation();
+
+    const isVisitor = location.pathname.slice(0, 16) === '/dashboard/user/' && !isAuthenticated;
+    const isUserVisitor = location.pathname.slice(0, 6) === '/user/' && isAuthenticated;
+
+    console.log(isVisitor);
 
     return (
-        isAuthenticated
-            ? <Navigate to={`/dashboard/user/${userId}`} />
-            : <Outlet />
+        isVisitor
+            ? <Navigate to={`/user/${userId}`} /> :
+            isUserVisitor ? <Navigate to={`/dashboard/user/${userId}`} />
+                : <Outlet />
     );
 }
 
