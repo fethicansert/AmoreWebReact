@@ -1,4 +1,26 @@
 import { axiosAmore } from "../api/axios"
+import amoreLike from '../assets/lottie/amore_like.json';
+import amoreSuperLike from '../assets/lottie/amore_superlike.json';
+import amoreDissLike from '../assets/lottie/amore_dislike.json'
+import Lottie from "lottie-react";
+
+//Return Swipe Popup Animation according to given parameter type
+export function getSwipePopupAnimation(type) {
+    switch (type) {
+        case 'like':
+            return {
+                icon: <Lottie animationData={amoreLike} />
+            }
+        case 'superlike':
+            return {
+                icon: <Lottie animationData={amoreSuperLike} />
+            }
+        case 'dismiss':
+            return {
+                icon: <Lottie animationData={amoreDissLike} />
+            }
+    }
+}
 
 //Create OTP Request
 export const createOtp = async ({

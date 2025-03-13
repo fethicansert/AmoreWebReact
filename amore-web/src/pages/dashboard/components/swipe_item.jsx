@@ -1,5 +1,4 @@
-import React from 'react'
-import FlexBox from '../../../copmonents/flex_box'
+import React, { useEffect, useRef, useState } from 'react'
 import AmoreLoading from '../../../copmonents/amore_loading'
 import { colors } from '../../../utils/theme'
 import { calculateAge } from '../../../utils/functions'
@@ -12,79 +11,77 @@ import { useTranslation } from 'react-i18next'
 import { useBanner } from '../../../hooks/use_banner'
 import { useAppData } from '../../../hooks/use_add_data'
 import { useLocation } from 'react-router-dom'
+import SwipeSlide from './swipe_slide'
+import SwipeItemOverlayTag from './swipe_item_overlay_tag'
+import 'react-slideshow-image/dist/styles.css';
 
 const SwipeItem = ({ user, loading }) => {
+
+    //USER VARIABLES
     const userProfilPhoto = user?.photos[0]?.url;
     const userPhotos = user?.photos.slice(1,);
     const userAge = calculateAge(user?.birthday);
     const userState = user?.country?.state?.name || user?.country?.name;
     const gender = user?.gender || 'female';
     const bio = user?.bio;
+
+    //LOCATION
     const location = useLocation();
 
+    //STATE
+    const [showGalery, setShowGalery] = useState(false);
+
     //CONTEXT
-    const { t, i18n } = useTranslation();
+    const { t, _ } = useTranslation();
     const { setLimitedOfferOptions, setShowLogin } = useBanner();
     const { getUserInterests } = useAppData();
 
-    const interests = getUserInterests(user?.interests.map(interest => interest.id))
+    //USER INTERESTS
+    const interests = getUserInterests(user?.interests.map(interest => interest.id));
 
+    //REFS
+    const galeryPhotos = useRef(user?.photos);
+    const galeryPhotoIndex = useRef(0);
 
+    //UPDATE PHOTOS IF USERS CHANGE
+    useEffect(() => {
+        galeryPhotos.current = user?.photos;
+    }, [user]);
+
+    //USER PROPERTIES WITH VALUES AND ICONS
     const userProperties = [
-        {
-            value: t(`GENDER.${gender.toUpperCase()}`),
-            icon: <GenderIcon />
-        },
-        {
-            value: t('DASHBOARD.SWIPE.USERINFO.AGE', { age: userAge }),
-            icon: <BirthdayIcon width='29' height='29' />
-        },
-        {
-            value: userState,
-            icon: <LocactionHomeIcon width='29' height='29' />
-        },
-        {
-            value: t('DASHBOARD.SWIPE.USERINFO.NO_JOB_TITLE'),
-            icon: <JobIcon width='29' height='29' />
-        },
-        {
-            value: t('DASHBOARD.SWIPE.USERINFO.NO_SCOOL_TITLE'),
-            icon: <SchollIcon width='29' height='29' />
-        }
+        { value: t(`GENDER.${gender.toUpperCase()}`), icon: <GenderIcon /> },
+        { value: t('DASHBOARD.SWIPE.USERINFO.AGE', { age: userAge }), icon: <BirthdayIcon width='29' height='29' /> },
+        { value: userState, icon: <LocactionHomeIcon width='29' height='29' /> },
+        { value: t('DASHBOARD.SWIPE.USERINFO.NO_JOB_TITLE'), icon: <JobIcon width='29' height='29' /> },
+        { value: t('DASHBOARD.SWIPE.USERINFO.NO_SCOOL_TITLE'), icon: <SchollIcon width='29' height='29' /> }
     ];
 
     return (
-        <div className='swipe-item'>
+        <div className='swipe-item' >
 
+            {(showGalery) && <SwipeSlide closeGalery={closeGalery} galeryPhotoIndex={galeryPhotoIndex} galeryPhotos={galeryPhotos} />}
 
-            <div className='swipe-container-image-wrapper'>
-
+            <SwipeImageWrapper onClick={() => handleShowGalery(0)} style={{ height: loading ? '100vw' : '' }}>
                 {
                     loading ? <AmoreLoading
                         style={{ border: `1px solid ${colors.borderColor1}`, backgroundColor: colors.backGround3, borderRadius: '12px' }}
-                        amoreWidth={'30%'}
+                        amoreWidth={'35%'}
                         containerWidth={'100%'}
-                        containerHeight={'100%'} />
+                        containerHeight={'100%'}
+                    />
                         : <>
-                            <div className='swipe-container-image-wrapper-overlay'>
-                                <FlexBox alignItems='start' gap='5px' flexDirection='column'>
-                                    <FlexBox gap='0 5px' >
-                                        <span style={{ width: '8px', height: '8px' }} className='online-circle'></span>
-                                        <span className='swipe-item-user-status'>{t('STATUS.ONLINE')}</span>
-                                    </FlexBox>
-                                    <span className='swipe-item-user-info'>{user?.name}, {userAge}</span>
-                                </FlexBox>
-                            </div>
+                            <SwipeItemOverlayTag usernmae={user?.name} userAge={userAge} />
                             <img src={userProfilPhoto} />
                         </>
                 }
 
-            </div>
+            </SwipeImageWrapper>
 
             <div className='swipe-container-item-about-container'>
                 {loading
-                    ? <SwipeInfoShimmer /> : <>
-
+                    ? <SwipeInfoShimmer />
+                    : <>
                         <div className='swipe-item-user-bio'>
                             <h4>{t('DASHBOARD.SWIPE.USERINFO.BIO_TITLE')}</h4>
                             <p className='swipe-item-info-text'>{bio || t('DASHBOARD.SWIPE.USERINFO.NO_BIO_TEXT')}</p>
@@ -97,7 +94,6 @@ const SwipeItem = ({ user, loading }) => {
                                 icon={propertie?.icon}
                             />)}
                         </div>
-
 
                         <h4 style={{ marginTop: '1.5rem' }}>{t('DASHBOARD.SWIPE.USERINFO.SOCIAL_PLATFORM_TITLE')}</h4>
 
@@ -117,36 +113,33 @@ const SwipeItem = ({ user, loading }) => {
                                 Facebook
                             </div>
                         </div>
-
                     </>}
-
             </div>
 
-            {(userPhotos?.length > 0 && !loading) && <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhotos[0].url} />}
+            {(userPhotos?.length > 0 && !loading) && <SwipeImageWrapper onClick={() => handleShowGalery(1)} key={uuidv4()} loading={loading} image={userPhotos[0].url} />}
 
             <div className='swipe-container-item-about-container'>
                 {loading
-                    ? <SwipeInfoShimmer /> : <>
-
+                    ? <SwipeInfoShimmer />
+                    : <>
                         <h4>{t('DASHBOARD.SWIPE.USERINFO.INTEREST_TITLE')}</h4>
-
-                        {interests?.length > 0 ? <div className='swipe-item-user-properties'>
-                            {
-                                interests.map(propertie => <UserPropertie
-                                    key={uuidv4()}
-                                    value={t(`REGISTER.INTERESTS.INTEREST_ITEMS.${propertie.name}`)}
-                                    icon={propertie?.emoji}
-                                />)
-                            }
-                        </div> : <p className='swipe-item-info-text'>{t('DASHBOARD.SWIPE.USERINFO.NO_INTEREST_TEXT')}</p>}
-
+                        {interests?.length > 0
+                            ? <div className='swipe-item-user-properties'>
+                                {
+                                    interests.map(propertie => <UserPropertie
+                                        key={uuidv4()}
+                                        value={t(`REGISTER.INTERESTS.INTEREST_ITEMS.${propertie.name}`)}
+                                        icon={propertie?.emoji}
+                                    />)
+                                }
+                            </div>
+                            : <p className='swipe-item-info-text'>{t('DASHBOARD.SWIPE.USERINFO.NO_INTEREST_TEXT')}</p>}
                     </>}
-
             </div>
 
             {/* Rest of the user photos */}
-            {(userPhotos?.length > 1 && !loading) && userPhotos.slice(1,).map(userPhoto =>
-                <SwipeImageWrapper key={uuidv4()} loading={loading} image={userPhoto.url} />
+            {(userPhotos?.length > 1 && !loading) && userPhotos.slice(1,).map((userPhoto, index) =>
+                <SwipeImageWrapper style={{ marginBlock: '1rem' }} onClick={() => handleShowGalery(index + 2)} key={uuidv4()} loading={loading} image={userPhoto.url} />
             )}
 
         </div>
@@ -157,6 +150,17 @@ const SwipeItem = ({ user, loading }) => {
     function handleSocialButtonClick() {
         if (location.pathname.slice(0, 6) === '/user/') return setShowLogin(true);
         setLimitedOfferOptions({ show: true, type: 'premium-subscription' });
+    }
+
+    function handleShowGalery(index) {
+        if (loading) return;
+        setShowGalery(true);
+        galeryPhotoIndex.current = index;
+    }
+
+    function closeGalery(e) {
+        if (e.target.tagName === 'DIV')
+            setShowGalery(false);
     }
 }
 

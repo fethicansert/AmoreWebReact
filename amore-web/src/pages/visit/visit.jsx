@@ -18,9 +18,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { axiosAmore } from '../../api/axios';
 import CurrentUserInfoBox from '../../copmonents/current_user_info_box';
 import { useBanner } from '../../hooks/use_banner';
+import { getSwipePopupAnimation } from '../../utils/functions';
 
 const Visit = () => {
-
     const { conversations, isConversationsLoading } = useConversation();
     const { userId } = useParams();
     const [isLikesLoading, setIsLikesLoading] = useState(false);
@@ -30,10 +30,11 @@ const Visit = () => {
     const { auth, isAuthenticated } = useAuth()
     const { t, _ } = useTranslation();
     const { setShowLogin } = useBanner();
+    const [popAnimation, setPopupAnimation] = useState();
 
     useEffect(() => {
         getUser(userId);
-        getLikes();
+        if (isAuthenticated) getLikes();
     }, []);
 
     return (
@@ -52,7 +53,6 @@ const Visit = () => {
                 languageIconColor={colors.brand1}
             />}
 
-
             <div className='visit-grid-container' style={{ marginTop: !isAuthenticated ? '.75rem' : '', gridTemplateColumns: !isAuthenticated ? '2fr 4fr 2fr' : '270px 4fr 2.5fr' }}>
 
                 <div className='visit-grid-container-left-column' >
@@ -64,7 +64,10 @@ const Visit = () => {
 
                 <div className='visit-user-container'>
                     <SwipeItem user={user} loading={isUserLoading} />
-                    <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={() => !isAuthenticated ? setShowLogin(true) : null} />
+                    <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={() => !isAuthenticated ? setShowLogin(true) : handleSwipe({ type: 'like' })} />
+                    {popAnimation && <div className='like-popup' >
+                        {popAnimation.icon}
+                    </div>}
                 </div>
 
                 <div className='visit-grid-container-right-column'>
@@ -82,8 +85,15 @@ const Visit = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 
+
+    async function handleSwipe({ type = 'like' }) {
+        const swipePopupAnimation = getSwipePopupAnimation(type);
+        setPopupAnimation(swipePopupAnimation);
+    }
+
+    //Return Popup Animation according to given parameter type
     async function getUser(id) {
         setIsUserLoading(true);
         try {

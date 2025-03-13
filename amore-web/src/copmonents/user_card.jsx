@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { calculateAge } from "../utils/functions.js"
+import { calculateAge } from "../utils/functions"
 import { useBanner } from "../hooks/use_banner.jsx"
 import { colors } from "../utils/theme.js";
 import { FilledLocationIcon, PremiumStartIcon } from "../assets/svg/svg_package.jsx";

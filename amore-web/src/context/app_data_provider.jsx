@@ -5,6 +5,7 @@ import { useLocalStorage } from "../hooks/use_localstorage";
 import i18n from "../localization/i18n_localization";
 import { appDataReducer } from "../reducers/app_data_reducer";
 
+
 export const AppDataContext = createContext({});
 
 const AppDataProvider = ({ children }) => {
@@ -21,6 +22,7 @@ const AppDataProvider = ({ children }) => {
     const [appData, dispatch] = useReducer(appDataReducer, {
         interests: [], locations: [], ip: {}, data: {}, gifts: {}
     });
+
 
     //SIDE-EFFECTS
 

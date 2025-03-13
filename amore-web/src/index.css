@@ -35,8 +35,6 @@
   font-display: swap;
 }
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -146,7 +144,7 @@ body {
 .notifications,
 .webkit-scrollbar,
 .market,
-.swipe-containe,
+.swipe-container,
 .user-home-notications {
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -411,7 +409,8 @@ header a {
 /* POPUPS AND BANNERS*/
 .limited-offer-wrapper,
 .logout,
-.permission-wrapper {
+.permission-wrapper,
+.swipe-item-galery {
   position: fixed;
   left: 0;
   right: 0;
@@ -833,7 +832,17 @@ header a {
   animation: shimmer 1.3s infinite;
 }
 
+
+
+@media (max-width: 500px) {
+
+  .slide-container {
+    width: 95%;
+  }
+}
+
 @media (min-width: 500px) {
+
 
   .blur-button,
   .basic-button {

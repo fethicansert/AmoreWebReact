@@ -121,8 +121,6 @@
 
 .swipe-container-image-wrapper {
     width: 100%;
-    height: 100vw;
-    margin: 0 auto;
     border-radius: 12px;
     overflow: hidden;
     position: relative;
@@ -132,7 +130,6 @@
     display: block;
     object-fit: cover;
     width: 100%;
-    height: 100%;
 }
 
 .swipe-container-image-wrapper-overlay {
@@ -304,7 +301,57 @@
     color: var(--lowFadedText);
 }
 
+.swipe-slide {
+    border-radius: 10px;
+}
 
+.swipe-slide-container {
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.swipe-item-slide-image-box {
+    width: 95%;
+    height: 100%;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.swipe-item-slide-image {
+    display: block;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.swipe-slide-arrow-left-button,
+.swipe-slide-arrow-right-button {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    background: var(--backGround3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--borderColor1);
+    opacity: .9;
+}
+
+.swipe-slide-arrow-right-button:active,
+.swipe-slide-arrow-left-button:active {
+    opacity: .7;
+}
 
 @media (min-width: 400px) {
     .swipe-container-image-wrapper {

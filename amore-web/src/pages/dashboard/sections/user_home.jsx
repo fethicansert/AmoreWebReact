@@ -17,19 +17,15 @@ import CustomRadio from '../../../copmonents/custom_radio.jsx';
 import RadioWrapper from '../../../copmonents/radio_wrapper.jsx';
 import locationVaveLottie from '../../../assets/lottie/location_vawe.json';
 import somethingWentWrongLottie from '../../../assets/lottie/something_went_wrong.json';
-import Lottie from 'lottie-react';
 import BasicButton from '../../../copmonents/basic_button.jsx';
-import amoreLike from '../../../assets/lottie/amore_like.json';
-import amoreSuperLike from '../../../assets/lottie/amore_superlike.json';
-import amoreDissLike from '../../../assets/lottie/amore_dislike.json';
 import likeSound from '../../../sounds/like_sound.mp3'
 import FlexBox from '../../../copmonents/flex_box.jsx';
-import '../../../css/dashboard/user_home.css';
 import SwipeErrorContainer from '../components/swipe_error_container.jsx';
 import { LocationIcon } from '../../../assets/svg/svg_package.jsx';
-import { handleLocationPermission } from '../../../utils/functions.js';
+import { getSwipePopupAnimation, handleLocationPermission } from '../../../utils/functions';
 import { useBanner } from '../../../hooks/use_banner.jsx';
 import PermissionBanner from '../../../copmonents/permission_banner.jsx';
+import '../../../css/dashboard/user_home.css';
 
 
 const UserHome = () => {
@@ -44,6 +40,9 @@ const UserHome = () => {
   const [age, setAge] = useState([25, 80]);
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
+
+  console.log(swipeList);
+
 
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState('female');
@@ -225,9 +224,6 @@ const UserHome = () => {
 
   //FUNCTIONS
 
-
-
-
   function handleLocationBanner(e) {
 
     //SVG VE PATH ise iconlara tikaldim
@@ -265,9 +261,10 @@ const UserHome = () => {
   }
 
   async function handleSwipe(type) {
-    const popupAnimation = getPopupAnimation(type);
+    const popupAnimation = getSwipePopupAnimation(type);
     const body = { receiverUserId: swipeList[currentIndex].id };
 
+    //Return Popup Animation according to given parameter type
     setPopupAnimation(popupAnimation);
     likeSoundRef.current.play();
 
@@ -288,24 +285,6 @@ const UserHome = () => {
       console.log(e);
     }
 
-  }
-
-  //Return Popup Animation according to given parameter type
-  function getPopupAnimation(type) {
-    switch (type) {
-      case 'like':
-        return {
-          icon: <Lottie animationData={amoreLike} />
-        }
-      case 'superlike':
-        return {
-          icon: <Lottie animationData={amoreSuperLike} />
-        }
-      case 'dismiss':
-        return {
-          icon: <Lottie animationData={amoreDissLike} />
-        }
-    }
   }
 
   //Fecth and Set User Likes
