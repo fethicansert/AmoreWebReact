@@ -175,7 +175,7 @@ const Dashboard = () => {
                             notifications.length > 0
                                 ? notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)
                                 : <div className='notifications-empty-notifications'>
-                                    <Lottie animationData={ghostLottie} />
+                                    <Lottie animationData={ghostLottie} className='ghost-lottie' />
                                     <div>
                                         <p>{t('DASHBOARD.TITLES.EMPTY_NOTIFICATIONS_TITLE')}</p>
                                         <p>{t('DASHBOARD.TITLES.EMPTY_NOTIFICATIONS_SUB_TITLE')}</p>

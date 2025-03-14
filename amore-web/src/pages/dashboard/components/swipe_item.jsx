@@ -98,6 +98,7 @@ const SwipeItem = ({ user, loading }) => {
                         <h4 style={{ marginTop: '1.5rem' }}>{t('DASHBOARD.SWIPE.USERINFO.SOCIAL_PLATFORM_TITLE')}</h4>
 
                         <div className='swipe-item-user-properties'>
+
                             <div className='user-social-button whatsapp-button' onClick={handleSocialButtonClick}>
                                 <WhatsAppIcon width='28' height='28' />
                                 WhatsApp
@@ -112,6 +113,7 @@ const SwipeItem = ({ user, loading }) => {
                                 <FacebookIcon width='28' height='28' />
                                 Facebook
                             </div>
+
                         </div>
                     </>}
             </div>

@@ -346,7 +346,7 @@ i18n.use(initReactI18next).init({
                         LIKES: "Beğeniler",
                         EMPTY_LIKES: "Henüz beğeni almadın.",
                         SEE_ALL: "Tümünü Gör",
-                        EMPTY_NOTIFICATIONS_TITLE: "Burda Çok Yalnızım",
+                        EMPTY_NOTIFICATIONS_TITLE: "Burda Çok Yalnızım !",
                         EMPTY_NOTIFICATIONS_SUB_TITLE: "Etkilişeme geçip bana yardımcı ol.",
                         FILTER_CHANGE_TITLE: "Aranan Niteliklerde Kullanıcı Bulunamiyor !",
                         FILTER_CHANGE_SUB_TITLE: "Filtre seçeneklerini değiştirmeyi denemelisin."
@@ -748,7 +748,7 @@ i18n.use(initReactI18next).init({
                         LIKES: "Likes",
                         EMPTY_LIKES: "You haven't received any likes yet.",
                         SEE_ALL: "See All",
-                        EMPTY_NOTIFICATIONS_TITLE: "I Feel So Alone Here",
+                        EMPTY_NOTIFICATIONS_TITLE: "I Feel So Alone Here !",
                         EMPTY_NOTIFICATIONS_SUB_TITLE: "Start interacting and help me out.",
                         FILTER_CHANGE_TITLE: "No Users Found with the Searched Criteria!",
                         FILTER_CHANGE_SUB_TITLE: "You should try changing the filter options."

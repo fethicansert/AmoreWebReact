@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
-import { createOtp, objectToFormData, login, isAdult, scrollPage, changeRootThemeColor } from '../../utils/functions';
+import { createOtp, login, isAdult, scrollPage, changeRootThemeColor, base64ToBlob } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
 import { useAppData } from '../../hooks/use_add_data';
@@ -38,13 +38,13 @@ const Register = () => {
 
     //STATES
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
-    const [phone, setPhone] = useState('905555555552');
+    const [phone, setPhone] = useState('905338823063');
     const [username, setUsername] = useState('');
     const [gender, setGender] = useState('male');
     const [selectedHobbies, setSelectedHobbies] = useState([]);
     const [userImages, setUserImages] = useState([]);
-    const [userLocation, setUserLocation] = useState({});
-    const [currentLocation, setCurrentLocation] = useState(appData.ip);
+    const [userLocation, setUserLocation] = useState({ country: '', countryId: '', countryCode: '', state: '', stateId: '' });
+
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -66,8 +66,6 @@ const Register = () => {
 
     //EFFECTS
     useEffect(() => { setError(''); }, [language]);
-
-    useEffect(() => { setCurrentLocation(appData.ip); }, [appData.ip]);
 
     useEffect(() => { scrollPage({ top: 0 }) }, [currentPageIndex]);
 
@@ -216,8 +214,6 @@ const Register = () => {
                     handleImageChange={handleImageChange} />;
             case 7:
                 return <RegisterLocation
-                    currentLocation={currentLocation}
-                    setCurrentLocation={setCurrentLocation}
                     locations={appData.locations}
                     userLocation={userLocation}
                     setUserLocation={setUserLocation}
@@ -320,7 +316,7 @@ const Register = () => {
 
         const otpCode = `${smsCode.digit1 + smsCode.digit2 + smsCode.digit3 + smsCode.digit4}`;
         const birthday = new Date(selectedDate);
-        const deviveType = "web";
+        const deviveType = "ios";
 
         const body = {
             otpId: otpId.current,
@@ -338,35 +334,34 @@ const Register = () => {
             files: userImages,
         };
 
-        const formDataObject = new FormData();
+        const formData = new FormData();
 
-        formDataObject.append('otpId', otpId.current);
-        formDataObject.append('otpCode', otpCode);
-        formDataObject.append('name', username);
-        formDataObject.append('phone', `+${phone}`);
-        formDataObject.append('isoCode', userLocation.countryCode);
-        formDataObject.append('country', userLocation.countryId);
-        formDataObject.append('city', userLocation.stateId);
-        formDataObject.append('birthday', birthday);
-        formDataObject.append('deviceType', deviveType);
-        formDataObject.append('language', language);
-        formDataObject.append('gender', gender);
+        formData.append('otpId', otpId.current);
+        formData.append('otpCode', otpCode);
+        formData.append('name', username);
+        formData.append('phone', `+${phone}`);
+        formData.append('isoCode', userLocation.countryCode);
+        formData.append('country', userLocation.countryId);
+        formData.append('city', userLocation.stateId);
+        formData.append('birthday', birthday);
+        formData.append('deviceType', deviveType);
+        formData.append('language', language);
+        formData.append('gender', gender);
 
-        // 'interests' dizisini ekleme
         selectedHobbies.forEach((hobby, index) => {
-            formDataObject.append(`interests[${index}]`, hobby);
+            formData.append(`interests[${index}]`, hobby);
         });
 
-        // 'files' dizisini ekleme
-        userImages.forEach((file, index) => {
-            formDataObject.append(`files`, file);
-        });
+        console.log(userImages);
 
-        const formData = objectToFormData(body);
+
+        userImages.forEach((file) => {
+            formData.append(`files`, base64ToBlob({ base64String: file, mimeType: "image/png" }));
+        });
 
 
         try {
-            const response = await axiosAuth.post('user/register', formDataObject);
+            const response = await axiosAmore.post('user/register', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
             console.log(response);
 
         } catch (e) {
@@ -385,11 +380,10 @@ const Register = () => {
         });
 
         setUserImages(updateImages);
-        setPreviewImageIndex(null);
     }
 
     //Work when user upload image reads file-image and setStates
-    function handleImageChange(e, index) {
+    function handleImageChange(e) {
         if (e.target.files && e.target.files[0]) {
             let reader = new FileReader();
             let file = e.target.files[0];

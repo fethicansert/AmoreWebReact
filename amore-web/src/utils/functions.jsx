@@ -256,3 +256,14 @@ export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onP
 };
 
 
+export function base64ToBlob({ base64String, mimeType }) {
+    const byteCharacters = atob(base64String.split(',')[1]); // Base64'ü çözüyoruz
+    const byteNumbers = new Array(byteCharacters.length);
+
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+    return new Blob([byteArray], { type: mimeType }); // Blob nesnesi oluştur
+}

@@ -832,6 +832,10 @@ header a {
   animation: shimmer 1.3s infinite;
 }
 
+.ghost-lottie {
+  width: 70%;
+}
+
 
 
 @media (max-width: 500px) {

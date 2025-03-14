@@ -434,23 +434,15 @@ input[type=number] {
     background: white;
     position: absolute;
     left: 0%;
-    bottom: -247px;
+    top: calc(100% + 10px);
     border: .7px solid var(--brand1);
-
-
     border-radius: 12px 0 0 0;
-    /* border-radius: 12px; */
-
     scale: 1 0;
     transform-origin: top;
     z-index: 999;
-
     overflow: scroll;
     user-select: none;
-    scrollbar-width: thin;
-    scrollbar-color: var(--brand1) var(--backGround3);
-    /* scrollbar-gutter: stable; */
-    /* scrollbar-gutter: both-edges; */
+    scrollbar-color: var(--brand1) rgba(216, 216, 216, 0.263);
 }
 
 .register-location-dropdown-list.active {
