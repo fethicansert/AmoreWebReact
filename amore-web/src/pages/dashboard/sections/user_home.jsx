@@ -25,8 +25,10 @@ import { LocationIcon } from '../../../assets/svg/svg_package.jsx';
 import { getSwipePopupAnimation, handleLocationPermission } from '../../../utils/functions';
 import { useBanner } from '../../../hooks/use_banner.jsx';
 import PermissionBanner from '../../../copmonents/permission_banner.jsx';
+import { useNavigate } from 'react-router-dom';
+import DiscoverCTA from '../../../copmonents/discover_cta.jsx';
 import '../../../css/dashboard/user_home.css';
-
+import UsersMatchPopup from '../components/users_match_popup.jsx';
 
 const UserHome = () => {
 
@@ -40,9 +42,7 @@ const UserHome = () => {
   const [age, setAge] = useState([25, 80]);
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
-
-  console.log(swipeList);
-
+  const [showUserMatchesPopup, setShowUserMatchesPopup] = useState(false);
 
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState('female');
@@ -51,9 +51,10 @@ const UserHome = () => {
 
   //CONTEXT
   const { conversations, isConversationsLoading } = useConversation();
-  const { auth } = useAuth();
+  const { auth, isPremium } = useAuth();
   const { t, _ } = useTranslation();
-  const { showLocationBanner, setShowLocationBanner, setShowLocationSetting } = useBanner();
+  const { showLocationBanner, setShowLocationBanner, setShowLocationSetting, setLimitedOfferOptions } = useBanner();
+  const navigate = useNavigate();
 
 
   //REFS
@@ -61,6 +62,7 @@ const UserHome = () => {
   const swipeContainer = useRef();
   const userViewedIds = useRef([]);
   const isFecthing = useRef(false);
+  const matchedUserRef = useRef({});
 
   //SOUNDS
   const likeSoundRef = useRef(new Audio(likeSound));
@@ -73,7 +75,6 @@ const UserHome = () => {
     //Fetch likes
     getLikes();
 
-    //
     handleLocationPermission({
       permissionType: "geolocation",
       onPrompt: () => setShowLocationBanner(true),
@@ -104,6 +105,7 @@ const UserHome = () => {
         <div className='user-home-filters' >
 
           <CurrentUserInfoBox
+            image={auth.photos?.[0].url}
             credits={auth.credits}
             name={auth.name}
             style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }}
@@ -178,7 +180,7 @@ const UserHome = () => {
 
             ? <SwipeErrorContainer errorText={t('ERRORS.UNEXPECTED_ERROR.TITLE')} subErrorText={t('ERRORS.UNEXPECTED_ERROR.SUB_TITLE')} animation={somethingWentWrongLottie} width={'62%'} />
 
-            : !isSwipeListLoading && swipeList.length === 0
+            : !isSwipeListLoading && swipeList.length === 0 && !showUserMatchesPopup
 
               ? <SwipeErrorContainer errorText={t('DASHBOARD.TITLES.FILTER_CHANGE_TITLE')} subErrorText={t('DASHBOARD.TITLES.FILTER_CHANGE_SUB_TITLE')} animation={locationVaveLottie} width={'70%'} />
 
@@ -192,13 +194,16 @@ const UserHome = () => {
                   icon={<LocationIcon color={colors.whiteText} width='20px' height='20px' />}
                 />
 
-                <SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading} />
+                {<SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading || swipeList.length === 0} />}
 
-                {!isSwipeListLoading && <SwipeBottomBar onMessage={null} onSwipe={handleSwipe} o />}
+                {(!isSwipeListLoading && swipeList.length !== 0) && <SwipeBottomBar onMessage={null} onSwipe={handleSwipe} />}
 
                 {popAnimation && <div className='like-popup' style={{ marginTop: `${swipeContainer?.current?.scrollTop}px` }}>
                   {popAnimation.icon}
                 </div>}
+
+                {showUserMatchesPopup && <UsersMatchPopup onClose={() => setShowUserMatchesPopup(false)} images={[auth?.photos?.[0]?.url, matchedUserRef.current?.photos?.[0].url]} matchedName={matchedUserRef.current?.name} />}
+
               </>
         }
 
@@ -215,7 +220,7 @@ const UserHome = () => {
           {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem blurImage={true} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
-        {hidePremium && <PremiumBox style={{ margin: '0 auto 1rem auto' }} />}
+        <DiscoverCTA />
 
       </div>
 
@@ -223,7 +228,6 @@ const UserHome = () => {
   );
 
   //FUNCTIONS
-
   function handleLocationBanner(e) {
 
     //SVG VE PATH ise iconlara tikaldim
@@ -261,10 +265,16 @@ const UserHome = () => {
   }
 
   async function handleSwipe(type) {
+
+    if (type === 'superlike' && !isPremium)
+      return setLimitedOfferOptions({ show: true, type: 'premium-subscription' })
+
+    //Return Popup Animation according to given parameter type
     const popupAnimation = getSwipePopupAnimation(type);
     const body = { receiverUserId: swipeList[currentIndex].id };
 
-    //Return Popup Animation according to given parameter type
+    matchedUserRef.current = swipeList[currentIndex];
+
     setPopupAnimation(popupAnimation);
     likeSoundRef.current.play();
 
@@ -276,10 +286,15 @@ const UserHome = () => {
     }, 1000);
 
     try {
-      const response = await axiosAmore.post(`user/${type}`, body, { headers: { Authorization: auth.token } });
-      if (response?.data?.response?.code !== 200 || response.status !== 200) setSwipeError(true);
+      const response = await axiosAmore.post(`user/${type}`, body, { useAuth: true });
+      if (response.status === 200 && response.data.response.code === 200) {
+        if (response.data?.data?.isMatch) {
+          setShowUserMatchesPopup(true);
+          setPopupAnimation(null);
+        }
+      } else
+        setSwipeError(true);
     }
-
     catch (e) {
       setSwipeError(true);
       console.log(e);
@@ -364,7 +379,7 @@ const UserHome = () => {
         swapListCount = response.data.data.status;
 
         //if count equal 0 mins no data at this distance so increase(100) to distance and try again until distance smaller and equal to 1000
-        if (swapListCount === 0 && distanceRef.current <= 1500) {
+        if (swapListCount < 2 && distanceRef.current <= 1500) {
           distanceRef.current += 100;
           await updateDistance({ gender: gender, age: age });
         }

@@ -7,7 +7,6 @@ import { useBanner } from '../hooks/use_banner';
 
 const CurrentUserInfoBox = ({ credits, image, name, style }) => {
 
-
     const { setLimitedOfferOptions } = useBanner();
 
     return (
@@ -21,7 +20,7 @@ const CurrentUserInfoBox = ({ credits, image, name, style }) => {
                     <span style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '600' }}>{credits}</span>
                 </FlexBox>
 
-                <img src={image || userAvatar} style={{ borderRadius: '12px' }} width={35} />
+                <img src={image || userAvatar} style={{ borderRadius: '12px' }} width={40} height={40} />
                 <FlexBox gap='0 2px' >
                     <span className='current-user-info-box-user-name' style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '300' }} >{name}</span>
                 </FlexBox>

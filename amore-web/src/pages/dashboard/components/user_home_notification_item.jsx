@@ -55,8 +55,10 @@ const UserHomeNotificationItem = ({ notification, type, index, blurImage = false
 
         if (type === 'like') return t(`NOTIFICATION.QUICK_NOTIFICATIONS.${type?.toUpperCase()}`, { user: user?.name });
 
+        if (!notification?.lastMessage && type === 'message') return `İlk adımı at, ${user?.name} seni bekliyor! ✨`
+
         else {
-            const message = notification.lastMessage.content.length < 30 ? notification.lastMessage.content : notification.lastMessage.content.slice(0, 30) + '...';
+            const message = notification.lastMessage?.content.length < 30 ? notification.lastMessage?.content : notification.lastMessage?.content.slice(0, 30) + '...';
             return t(`NOTIFICATION.QUICK_NOTIFICATIONS.${notification?.lastMessage?.type.toUpperCase()}`, { user: user?.name, message });
         }
     };

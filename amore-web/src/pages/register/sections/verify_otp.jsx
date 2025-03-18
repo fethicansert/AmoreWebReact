@@ -14,7 +14,6 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
     const { t, i18n } = useTranslation();
     const interval = useRef();
 
-
     //IF iterval still working clear interval on Unmounted State!
     useEffect(() => {
         const clear = () => clearInterval(interval.current);
@@ -29,7 +28,7 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
             <div className='verify-container'>
 
                 <OtpIpnut
-                    isFocused={false}
+                    autoFocus={(smsCode.digit1 === '')}
                     value={smsCode.digit1}
                     setValue={setSmsCode}
                     digit={'digit1'}

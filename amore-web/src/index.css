@@ -107,7 +107,7 @@
 
   /* Overlay Blacks */
   --overlayLow: rgba(0, 0, 0, 0.15);
-  --overlayMid: rgba(0, 0, 0, 0.45)
+  --overlayMid: rgba(0, 0, 0, 0.5)
 }
 
 body {
@@ -410,7 +410,8 @@ header a {
 .limited-offer-wrapper,
 .logout,
 .permission-wrapper,
-.swipe-item-galery {
+.swipe-item-galery,
+.users-match-popup-overlay {
   position: fixed;
   left: 0;
   right: 0;
@@ -790,6 +791,53 @@ header a {
   font-weight: 400;
 }
 
+.discover-call-to-action-box {
+  width: 100%;
+  min-height: 390px;
+  background: var(--brand2);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--borderColor1);
+  position: relative;
+  margin-bottom: .85rem;
+}
+
+.discover-call-to-action-box::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url('assets/images/discover_call_to_action_background.png');
+  background-size: 100%;
+  opacity: 1;
+  mix-blend-mode: luminosity;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.discover-call-to-action-box-content {
+  padding: 1rem;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  color: var(--whiteText);
+}
+
+.discover-call-to-action-box-content p:nth-child(1) {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: .2rem;
+}
+
+.discover-call-to-action-box-content p:nth-child(2) {
+  font-size: .95rem;
+  font-weight: 300;
+}
+
 .whatsapp-button {
   background: #25D366;
 
@@ -836,10 +884,109 @@ header a {
   width: 70%;
 }
 
+.users-match-popup {
+  padding: 4.2rem 1rem 1rem;
+  background-color: var(--brand1);
+  border-radius: 12px;
+  color: var(--whiteText);
+  width: 250px;
+  position: relative;
+  opacity: .5;
+  animation: fade 550ms ease forwards;
+}
 
+.users-match-popup-heart-animation {
+  position: absolute;
+  width: 79px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  top: -18px;
+  animation: fade 550ms ease forwards 100ms;
+  transform-origin: center;
+}
+
+.users-match-popup-image-container {
+  z-index: 2;
+  position: absolute;
+  width: 165px;
+  height: 165px;
+  border: .7px solid var(--borderColor1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.users-match-popup-image-container-left {
+  top: -120px;
+  left: -30px;
+  rotate: -11.78deg;
+  z-index: 3;
+  transform: translateX(-45%);
+  animation: userMatchesPopupLeftContainer 1s ease-in-out forwards;
+}
+
+.users-match-popup-image-container-right {
+  top: -128px;
+  right: -38px;
+  rotate: 10deg;
+  z-index: 4;
+  transform: translateX(45%);
+  animation: userMatchesPopupRightContainer 1.1s ease-in-out forwards;
+}
+
+.users-match-popup h3 {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.users-match-popup p {
+  font-weight: 300;
+  font-size: .85rem;
+}
+
+.users-match-popup-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.users-match-popup-send-message-button,
+.users-match-popup-close-button {
+  border: none;
+  border-radius: 12px;
+  width: 100%;
+  color: var(--whiteText);
+  font-weight: 400;
+  font-size: .8rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.users-match-popup-send-message-button {
+  border: none;
+  background-color: var(--backGround4);
+  margin-top: .85rem;
+  height: 41px;
+}
+
+.users-match-popup-close-button {
+  background-color: var(--brand1);
+  margin-top: .6rem;
+  outline: 1px solid var(--borderColor1);
+  height: 40px;
+}
+
+.users-match-popup-send-message-button:hover {
+  background-color: var(--backGround3);
+  color: var(--backGround4);
+}
+
+.users-match-popup-close-button:hover {
+  background-color: var(--backGround3);
+  color: var(--brand1);
+}
 
 @media (max-width: 500px) {
-
   .slide-container {
     width: 95%;
   }
@@ -847,14 +994,12 @@ header a {
 
 @media (min-width: 500px) {
 
-
   .blur-button,
   .basic-button {
 
     &:hover {
       opacity: .8;
     }
-
   }
 }
 
@@ -891,5 +1036,37 @@ header a {
 
   100% {
     background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+@keyframes userMatchesPopupLeftContainer {
+  0% {
+    transform: translateX(-45%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes userMatchesPopupRightContainer {
+  0% {
+    transform: translateX(45%);
+  }
+
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fade {
+  0% {
+    scale: 0.2;
+    opacity: .3;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 1;
   }
 }

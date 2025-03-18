@@ -13,6 +13,7 @@ const UserCard = forwardRef((props, ref) => {
 
     const isFromHome = props?.isFromHome || false;
     const isDiscover = props?.isDiscover || false;
+    const isOnlyPremium = props?.isOnlyPremium || false;
     const user = props.user;
     const age = calculateAge(user?.birthday);
 
@@ -23,20 +24,18 @@ const UserCard = forwardRef((props, ref) => {
 
     const navigate = useNavigate();
 
-    const isPremium = auth.premiumSubscription || false;
 
-
-    return <div className='discover-user-box' onClick={() => isPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : navigate(`/dashboard/user/${user.id}`)}>
+    return <div className='discover-user-box' onClick={() => isOnlyPremium ? setLimitedOfferOptions({ show: true, type: 'premium-subscription' }) : navigate(`/dashboard/user/${user.id}`)}>
         <div className='discover-user-image-container' ref={ref}>
-            <img style={{ filter: `blur(${isPremium || isDiscover ? '0' : '35px'})` }} src={user?.photos[0].url}></img>
+            <img style={{ filter: `blur(${!isOnlyPremium || isDiscover ? '0' : '35px'})` }} src={user?.photos[0].url}></img>
             <div
                 className='discover-user-image-container-overlay'
-                style={{ background: isPremium || isDiscover ? 'linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)' : `linear-gradient(rgba(22,30,42,0) 20%, ${isFromHome ? '#412A78' : 'rgba(230, 73, 151,.85)'}  100%)` }}>
+                style={{ background: !isOnlyPremium || isDiscover ? 'linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)' : `linear-gradient(rgba(22,30,42,0) 20%, ${isFromHome ? '#412A78' : 'rgba(230, 73, 151,.85)'}  100%)` }}>
             </div>
         </div>
 
         {
-            isPremium || (!isPremium && isFromHome) || isDiscover
+            !isOnlyPremium || (!!isOnlyPremium && isFromHome) || isDiscover
                 ? <div className='discover-user-info'>
 
                     <FlexBox gap='0 10px'>

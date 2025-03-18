@@ -32,27 +32,6 @@ function App() {
 
   const { limitedOfferOptions, setLimitedOfferOptions, showLogin, setShowLogin } = useBanner();
 
-  useEffect(() => {
-
-    requestPermission();
-
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-
-      toast(<PushNotification toastId={payload.messageId} title={payload.notification.title} body={payload.notification.body} />,
-        {
-          toastId: payload.messageId,
-          style: { padding: '10px 8px' },
-          className: "toast-notification",
-          progressClassName: "toast-notification-progress",
-          position: 'top-center',
-          autoClose: 10000,
-          closeButton: false,
-        });
-    });
-
-  }, []);
-
   const { auth } = useAuth();
 
   return (
@@ -112,57 +91,6 @@ function App() {
     </>
   );
 
-  async function requestPermission() {
-    const permission = await Notification.requestPermission();
-
-    if (permission === "granted") {
-
-      try {
-
-        // Voluntary Application Server Identification => Gönüllü Uygulama Sunucusu Tanımlaması
-        const vapidKey = "BFkciB-OrPueQmN0vizjgIgmkzTwi0yO1AYCCa9Pv4Hh1M_iXr5pnpVdBwrSTOxOtNWhajHhL8ZcQZvVO_TbZx8"
-
-        const token = await getToken(messaging, {
-          vapidKey: vapidKey,
-        });
-
-        console.log(token);
-
-        if (!token || !auth) return;
-
-        const oldToken = JSON.parse(localStorage.getItem('fcmToken'));
-
-        if (oldToken) {
-
-          if (oldToken !== token) {
-
-            const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: 'tr' })
-            console.log(deleteResponse);
-
-
-            const addResponse = await userFcmToken({ type: 'add', token: token, language: 'tr' })
-            console.log(addResponse);
-
-            localStorage.setItem('fcmToken', JSON.stringify(token));
-
-          } else {
-            console.log("Old Token and Token Same !");
-          }
-
-        } else {
-
-          const addResponse = await userFcmToken({ type: 'add', token: token, language: 'tr' })
-
-          console.log(addResponse);
-
-          localStorage.setItem('fcmToken', JSON.stringify(token));
-        }
-
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  }
 }
 
 export default App

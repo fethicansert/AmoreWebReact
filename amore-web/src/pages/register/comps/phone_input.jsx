@@ -1,16 +1,17 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect, useLayoutEffect } from 'react'
 import { scrollPage } from '../../../utils/functions';
 
-const OtpIpnut = ({ value, setValue, digit, isFocused }) => {
+const OtpIpnut = ({ value, setValue, digit, isFocused, autoFocus = false }) => {
 
     const inputRef = useRef();
 
     if (isFocused)
-        inputRef.current.focus();
+        inputRef?.current?.focus();
 
     return (
         <div className='verify-input-container' >
             <input
+                autoFocus={autoFocus}
                 onBlur={() => scrollPage({ top: 0 })}
                 ref={inputRef}
                 type='number'

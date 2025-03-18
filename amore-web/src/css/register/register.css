@@ -486,8 +486,6 @@ input[type=number] {
     display: flex;
     align-items: center;
     justify-content: center;
-
-    animation: otp_input_border 750ms ease 150ms forwards;
 }
 
 .verify-input-container input {
@@ -584,20 +582,5 @@ input[type=number] {
         &:hover {
             border: 1px solid var(--brand1);
         }
-    }
-}
-
-/* ANIMATIONS */
-@keyframes otp_input_border {
-    0% {
-        border: 1px solid var(--borderColor1);
-    }
-
-    50% {
-        border: 1.9px solid var(--brand1);
-    }
-
-    100% {
-        border: 1px solid var(--borderColor1);
     }
 }

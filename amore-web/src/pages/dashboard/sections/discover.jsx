@@ -9,13 +9,16 @@ import CurrentUserInfoBox from '../../../copmonents/current_user_info_box.jsx';
 import { colors } from '../../../utils/theme.js';
 import FlexBox from '../../../copmonents/flex_box.jsx';
 import BasicButton from '../../../copmonents/basic_button.jsx';
-import { SearchIcon } from '../../../assets/svg/svg_package.jsx';
+import { DiscoverIcon, SearchIcon } from '../../../assets/svg/svg_package.jsx';
 import { useMediaPredicate } from 'react-media-hook';
 import UserCard from '../../../copmonents/user_card.jsx';
 import FilterSlider from '../../../copmonents/filter_slider.jsx';
 import CustomRadio from '../../../copmonents/custom_radio.jsx';
 import PremiumBox from '../../../copmonents/premium_box.jsx';
 import { useTranslation } from 'react-i18next';
+import EmptyUsersPopup from '../components/empty_users_popup.jsx';
+import { useNavigate } from 'react-router-dom';
+import { checkScrollThresold } from '../../../utils/functions.jsx';
 
 
 
@@ -41,11 +44,12 @@ const Discover = () => {
 
     //REFS
     const currentPage = useRef(1);
-    const userBox = React.createRef();
+    const userCardRef = React.createRef();
 
     //CONTEXT
     const { auth } = useAuth();
     const { t, _ } = useTranslation();
+    const navigate = useNavigate();
 
     //SIDE_EFFECTS
     useEffect(() => {
@@ -118,6 +122,7 @@ const Discover = () => {
 
                             <span style={{ color: colors.darkText, fontSize: '.8rem' }}>{t('FILTER.USER_STATUS')}</span>
 
+
                             <div className='discover-user-filter-radio-wrapper'>
                                 {userStatus.map(status => <CustomRadio
                                     key={uuidv4()}
@@ -152,29 +157,44 @@ const Discover = () => {
 
             {
                 !isLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
-                    {searchedUsers.map(user => <UserCard isDiscover={true} ref={userBox} key={uuidv4()} user={user} />)}
+
+                    {
+                        searchedUsers.length > 0
+                            ? searchedUsers.map(user => <UserCard isDiscover={true} ref={userCardRef} key={uuidv4()} user={user} />)
+                            : <EmptyUsersPopup
+                                icon={<DiscoverIcon
+                                    className=''
+                                    width='50px'
+                                    height='50px'
+                                    strokeWidth={1.3}
+                                />}
+                                title={"Kullanıcı Bulunamadı!"}
+                                text={"Daha fazla kişiyi görmek için lokasyonunu genişletebilir veya filtrelerini değiştirebilirsin."}
+                                buttonText={"Konum Değiştir"}
+                                onClick={() => navigate('/dashboard/user-profile')}
+                            />
+                    }
                 </div> : <AmoreLoading className='discover-loading' containerWidth={'100%'} containerHeight={'100%'} amoreWidth={'70%'} amoreMaxWidth={'200px'} />
             }
         </section>
-    )
+    );
+
+    function getCardColumnCount(width) {
+        if (width < 844) return 1;
+        else if (width >= 1674) return 5;
+        else if (width >= 1402) return 4;
+        else if (width >= 1110) return 3;
+        else if (width >= 844) return 2;
+    }
 
     //FUNCTIONS
     async function handleScrollFetch(e) {
         if (isScrollLoading) return;
-        const totalScroll = e.target.scrollTop;
-        const userBoxHeight = userBox.current.offsetHeight
-        const boxColumnCount = getBoxColumnCount(window.innerWidth);
-        const calculatedHeight = ((userBoxHeight * users.length) / boxColumnCount) * 0.7;
-        if (totalScroll > calculatedHeight) await getScrollUser();
+        const columnCount = getCardColumnCount(window.innerWidth)
+        const isFecthUser = checkScrollThresold({ e: e, card: userCardRef, rowLength: users.length, columnCount: columnCount, thresholdPercentage: .7 });
+        if (isFecthUser) await getScrollUser();
     }
 
-    function getBoxColumnCount(width) {
-        if (width < 842) return 1;
-        else if (width >= 1663) return 5;
-        else if (width >= 1393) return 4;
-        else if (width >= 1103) return 3;
-        else if (width >= 842) return 2;
-    };
 
     async function fetchUsers(loading) {
 

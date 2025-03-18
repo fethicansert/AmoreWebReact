@@ -6,6 +6,8 @@
     grid-template-rows: auto 1fr;
     gap: 15px 0;
     overflow-y: hidden;
+    max-width: 1550px;
+    margin: 0 auto;
 }
 
 .matches-header {
@@ -34,6 +36,34 @@
     border-bottom: none;
     padding: 0;
 }
+
+.empty-matches {
+    background-color: var(--backGround3);
+    border: 1px solid var(--borderColor1);
+    height: fit-content;
+    padding: 1.5em 2rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.empty-matches h3 {
+    margin-top: .5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.empty-matches p {
+    font-size: .95rem;
+    font-weight: 300;
+    color: var(--lowFadedText);
+    margin-block: .5rem 1rem;
+}
+
 
 @media (max-width: 650px) {
     .matches {

@@ -265,5 +265,21 @@ export function base64ToBlob({ base64String, mimeType }) {
     }
 
     const byteArray = new Uint8Array(byteNumbers);
+    console.log(new Blob([byteArray], { type: mimeType }));
     return new Blob([byteArray], { type: mimeType }); // Blob nesnesi oluştur
+}
+
+
+
+export function checkScrollThresold({ e, card, rowLength, columnCount, thresholdPercentage }) {
+
+
+    const totalScroll = e.target.scrollTop + e.target.offsetHeight;
+
+
+    const cardHeight = card.current.offsetHeight
+    const threshold = ((cardHeight * rowLength) / columnCount) * thresholdPercentage;
+    if (totalScroll > threshold) return true;
+
+    return false
 }

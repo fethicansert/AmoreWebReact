@@ -5,7 +5,7 @@ import { Outlet, Navigate, useLocation } from 'react-router-dom';
 const ProtectedRoute = () => {
 
   const { isAuthenticated } = useAuth();
-  const location = useLocation();
+  // const location = useLocation();
 
 
   // (!isAuthenticated && location.pathname.includes('/dashboard/user/')) ?

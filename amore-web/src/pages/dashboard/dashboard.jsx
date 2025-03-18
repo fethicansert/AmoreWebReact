@@ -20,6 +20,13 @@ import { useBanner } from '../../hooks/use_banner';
 import { handleLocationPermission, handlePushPermission } from '../../utils/functions';
 import PermissionPopup from '../../copmonents/permission_popup';
 import PermissionBanner from '../../copmonents/permission_banner';
+import PushNotification from '../../copmonents/push_notification';
+import { toast } from 'react-toastify';
+import { getToken, onMessage } from 'firebase/messaging';
+import { messaging } from '../../firebase/firebase_config';
+import { useAuth } from '../../hooks/use_auth';
+import { userFcmToken } from '../../api/services/user_servives';
+import { useAppData } from '../../hooks/use_add_data';
 
 const linkTitles = ['MAIN_PAGE', 'NOTIFICATIONS', 'DISCOVER', 'MATCHES', 'MESSAGES', 'MARKET', 'PREMIUM_SUBSCRIPTION', 'PROFILE'];
 
@@ -48,6 +55,8 @@ const Dashboard = () => {
 
     //CONTEXT
     const { t, _ } = useTranslation();
+    const { auth } = useAuth();
+    const { language } = useAppData();
 
     const {
         setShowLocationBanner,
@@ -64,6 +73,23 @@ const Dashboard = () => {
 
         //Ask Location Permission the User
         handleLocationPermissionOnFistOpen();
+
+        requestPermission();
+
+        onMessage(messaging, (payload) => {
+            console.log(payload);
+
+            toast(<PushNotification toastId={payload.messageId} title={payload.notification.title} body={payload.notification.body} />,
+                {
+                    toastId: payload.messageId,
+                    style: { padding: '10px 8px' },
+                    className: "toast-notification",
+                    progressClassName: "toast-notification-progress",
+                    position: 'top-center',
+                    autoClose: 10000,
+                    closeButton: false,
+                });
+        });
     }, []);
 
 
@@ -247,6 +273,59 @@ const Dashboard = () => {
             onPositionDenied: (error) => setShowLocationBanner(true)
         });
     }
+
+    async function requestPermission() {
+        const permission = await Notification.requestPermission();
+
+        if (permission === "granted") {
+
+            try {
+
+                // Voluntary Application Server Identification => Gönüllü Uygulama Sunucusu Tanımlaması
+                const vapidKey = "BFkciB-OrPueQmN0vizjgIgmkzTwi0yO1AYCCa9Pv4Hh1M_iXr5pnpVdBwrSTOxOtNWhajHhL8ZcQZvVO_TbZx8"
+
+                const token = await getToken(messaging, {
+                    vapidKey: vapidKey,
+                });
+
+                console.log(token);
+
+                if (!token || !auth) return;
+
+                const oldToken = JSON.parse(localStorage.getItem('fcmToken'));
+
+                if (oldToken) {
+
+                    if (oldToken !== token) {
+
+                        const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: language })
+                        console.log(deleteResponse);
+
+
+                        const addResponse = await userFcmToken({ type: 'add', token: token, language: language })
+                        console.log(addResponse);
+
+                        localStorage.setItem('fcmToken', JSON.stringify(token));
+
+                    } else {
+                        console.log("Old Token and Token Same !");
+                    }
+
+                } else {
+
+                    const addResponse = await userFcmToken({ type: 'add', token: token, language: language })
+
+                    console.log(addResponse);
+
+                    localStorage.setItem('fcmToken', JSON.stringify(token));
+                }
+
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
+
 }
 
 

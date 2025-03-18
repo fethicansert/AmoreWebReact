@@ -1,6 +1,6 @@
 .user-home {
     display: grid;
-    grid-template-columns: 270px 4fr 2.5fr;
+    grid-template-columns: 280px 4fr 2.4fr;
     gap: 0 clamp(.4rem, 1vw, 1rem);
     justify-items: center;
     width: 100%;
@@ -8,7 +8,6 @@
     overflow: hidden;
     margin: 0 auto;
 }
-
 
 .swipe-container {
     width: 100%;
@@ -124,6 +123,7 @@
     border-radius: 12px;
     overflow: hidden;
     position: relative;
+    cursor: pointer;
 }
 
 .swipe-container-image-wrapper img {

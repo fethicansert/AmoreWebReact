@@ -38,7 +38,7 @@ const Register = () => {
 
     //STATES
     const [currentPageIndex, setCurrentPageIndex] = useState(0);
-    const [phone, setPhone] = useState('905338823063');
+    const [phone, setPhone] = useState('905555555555');
     const [username, setUsername] = useState('');
     const [gender, setGender] = useState('male');
     const [selectedHobbies, setSelectedHobbies] = useState([]);
@@ -65,6 +65,11 @@ const Register = () => {
     const otpId = useRef('');
 
     //EFFECTS
+    useEffect(() => {
+        const isSmsCode = Object.entries(smsCode).every(code => code[1] !== '');
+        if (isSmsCode) verifyOtp();
+    }, [smsCode]);
+
     useEffect(() => { setError(''); }, [language]);
 
     useEffect(() => { scrollPage({ top: 0 }) }, [currentPageIndex]);
@@ -264,8 +269,6 @@ const Register = () => {
                 setError("Code is Wrong !");
 
         } catch (e) {
-            console.log(e);
-
             const responsMessage = e?.response?.data?.response?.message;
             if (responsMessage === 'OTP_ALREADY_VERIFIED')
                 setError('Code already used !');
@@ -312,7 +315,9 @@ const Register = () => {
 
 
     async function register() {
-        // if (validateInputs()) return;
+        if (validateInputs()) return;
+
+        setIsLoading(true);
 
         const otpCode = `${smsCode.digit1 + smsCode.digit2 + smsCode.digit3 + smsCode.digit4}`;
         const birthday = new Date(selectedDate);
@@ -352,20 +357,21 @@ const Register = () => {
             formData.append(`interests[${index}]`, hobby);
         });
 
-        console.log(userImages);
-
-
         userImages.forEach((file) => {
             formData.append(`files`, base64ToBlob({ base64String: file, mimeType: "image/png" }));
         });
 
-
         try {
             const response = await axiosAmore.post('user/register', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
-            console.log(response);
+            if (response.status === 200) {
+                setAuth(response.data.data);
+                navigate('/dashboard/user-swipe');
+            }
 
         } catch (e) {
             console.log(e);
+        } finally {
+            setIsLoading(false);
         }
 
     }

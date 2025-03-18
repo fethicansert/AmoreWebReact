@@ -109,10 +109,12 @@ i18n.use(initReactI18next).init({
                         TEXT: "{{message}}",
                         LIKE: "{{user}} seni beğendi",
                         CALL: "{{user}} seni aradı 📞",
+                        CALL_REQUEST: "{{user}} seni aradı 📞",
                         VIDEO_CALL_REQUEST: "{{user}} seni görüntülü aradı 🎥",
                         AUDIO: "{{user}} bir ses kaydı gönderdi 🎵",
                         IMAGE: "{{user}} bir fotoğraf gönderdi 📷",
                         GIFT: "{{user}} bir gift gönderdi 🎁",
+
                     },
                     MESSAGE: {
                         TITLE: "{{user}}",
@@ -514,6 +516,7 @@ i18n.use(initReactI18next).init({
                         TEXT: "{{message}}",
                         LIKE: "{{user}} liked you",
                         CALL: "{{user}} called you 📞",
+                        CALL_REQUEST: "{{user}} called you 📞",
                         VIDEO_CALL_REQUEST: "{{user}} made a video call 🎥",
                         AUDIO: "{{user}} sent a voice message 🎵",
                         IMAGE: "{{user}} sent a photo 📷",

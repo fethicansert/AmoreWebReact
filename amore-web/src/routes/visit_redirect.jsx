@@ -9,14 +9,12 @@ const VisitRedirect = () => {
     const location = useLocation();
 
     const isVisitor = location.pathname.slice(0, 16) === '/dashboard/user/' && !isAuthenticated;
-    const isUserVisitor = location.pathname.slice(0, 6) === '/user/' && isAuthenticated;
-
-    console.log(isVisitor);
+    const isUser = location.pathname.slice(0, 6) === '/user/' && isAuthenticated;
 
     return (
         isVisitor
             ? <Navigate to={`/user/${userId}`} /> :
-            isUserVisitor ? <Navigate to={`/dashboard/user/${userId}`} />
+            isUser ? <Navigate to={`/dashboard/user/${userId}`} />
                 : <Outlet />
     );
 }

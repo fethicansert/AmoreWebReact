@@ -5,12 +5,14 @@ import { colors } from '../utils/theme'
 import { useAuth } from '../hooks/use_auth'
 import { useTranslation } from 'react-i18next'
 import { replace, useLocation, useNavigate } from 'react-router-dom'
+import { userFcmToken } from '../api/services/user_servives'
+import { useAppData } from '../hooks/use_add_data'
 
 const Logout = ({ closeLogout }) => {
 
     const { setAuth } = useAuth();
     const { t, _ } = useTranslation();
-    const location = useLocation();
+    const { language } = useAppData();
     const navigate = useNavigate();
 
     return (
@@ -49,9 +51,12 @@ const Logout = ({ closeLogout }) => {
         </div>
     );
 
-    function handleLogout() {
+    async function handleLogout() {
         navigate('/');
-        setTimeout(() => setAuth({}), 0)
+        const token = localStorage.getItem('fcmToken');
+        const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: language });
+        localStorage.clear('fcmToken');
+        setTimeout(() => { setAuth({}); }, 0)
     }
 }
 

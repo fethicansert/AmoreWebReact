@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getUserData } from '../../api/services/user_servives';
 import Header from '../../copmonents/header';
@@ -19,6 +19,9 @@ import { axiosAmore } from '../../api/axios';
 import CurrentUserInfoBox from '../../copmonents/current_user_info_box';
 import { useBanner } from '../../hooks/use_banner';
 import { getSwipePopupAnimation } from '../../utils/functions';
+import DiscoverCTA from '../../copmonents/discover_cta.jsx';
+import likeSound from '../../sounds/like_sound.mp3'
+import UsersMatchPopup from '../dashboard/components/users_match_popup.jsx';
 
 const Visit = () => {
     const { conversations, isConversationsLoading } = useConversation();
@@ -27,10 +30,13 @@ const Visit = () => {
     const [user, setUser] = useState();
     const [isUserLoading, setIsUserLoading] = useState();
     const [likes, setLikes] = useState([]);
-    const { auth, isAuthenticated } = useAuth()
+    const { auth, isAuthenticated, isPremium } = useAuth()
     const { t, _ } = useTranslation();
-    const { setShowLogin } = useBanner();
+    const { setShowLogin, setLimitedOfferOptions } = useBanner();
     const [popAnimation, setPopupAnimation] = useState();
+    const [showUserMatchesPopup, setShowUserMatchesPopup] = useState();
+
+    const likeSoundRef = useRef(new Audio(likeSound));
 
     useEffect(() => {
         getUser(userId);
@@ -53,21 +59,29 @@ const Visit = () => {
                 languageIconColor={colors.brand1}
             />}
 
-            <div className='visit-grid-container' style={{ marginTop: !isAuthenticated ? '.75rem' : '', gridTemplateColumns: !isAuthenticated ? '2fr 4fr 2fr' : '270px 4fr 2.5fr' }}>
+            <div className='visit-grid-container' style={{ marginTop: !isAuthenticated ? '.75rem' : '', gridTemplateColumns: !isAuthenticated ? '2fr 4fr 2fr' : '280px 4fr 2.4fr' }}>
 
                 <div className='visit-grid-container-left-column' >
                     {isAuthenticated && <>
                         <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '1rem', borderRadius: '12px' }} />
                         <PremiumBox />
+
+                        <DiscoverCTA style={{ marginTop: '.85rem' }} />
                     </>}
                 </div>
 
                 <div className='visit-user-container'>
+
                     <SwipeItem user={user} loading={isUserLoading} />
-                    <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={() => !isAuthenticated ? setShowLogin(true) : handleSwipe({ type: 'like' })} />
+
+                    <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={handleSwipe} />
+
                     {popAnimation && <div className='like-popup' >
                         {popAnimation.icon}
                     </div>}
+
+                    {showUserMatchesPopup && <UsersMatchPopup onClose={() => setShowUserMatchesPopup(false)} images={[auth?.photos?.[0]?.url, user?.photos?.[0].url]} matchedName={user?.name} />}
+
                 </div>
 
                 <div className='visit-grid-container-right-column'>
@@ -88,9 +102,37 @@ const Visit = () => {
     );
 
 
-    async function handleSwipe({ type = 'like' }) {
+    async function handleSwipe(type) {
+        if (!isAuthenticated) return setShowLogin(true);
+        if (type === 'superlike' && !isPremium) return setLimitedOfferOptions({ show: true, type: 'premium-subscription' });
+
         const swipePopupAnimation = getSwipePopupAnimation(type);
         setPopupAnimation(swipePopupAnimation);
+
+        const body = { receiverUserId: userId };
+
+        setPopupAnimation(swipePopupAnimation);
+        likeSoundRef.current.play();
+
+        setTimeout(() => {
+            setPopupAnimation(null);
+        }, 1000);
+
+        try {
+            const response = await axiosAmore.post(`user/${type}`, body, { useAuth: true });
+            if (response.status === 200) {
+                if (!response.data.data.isMatch) {
+                    setShowUserMatchesPopup(true);
+                    setPopupAnimation(null);
+                }
+            }
+
+            if (response?.data?.response?.code !== 200 || response.status !== 200) setSwipeError(true);
+        }
+
+        catch (e) {
+            console.log(e);
+        }
     }
 
     //Return Popup Animation according to given parameter type

@@ -19,7 +19,7 @@ const BasicButton = ({
         <button
             type={type}
             onClick={onClick}
-            className={`basic-button ${className} `}
+            className={`basic-button ${className}`}
             style={{ width, height, backgroundColor, color, borderRadius, gap: gap, fontSize, margin, ...style }}>
             {children}
         </button>
