@@ -179,20 +179,20 @@ const Discover = () => {
         </section>
     );
 
-    function getCardColumnCount(width) {
-        if (width < 844) return 1;
-        else if (width >= 1674) return 5;
-        else if (width >= 1402) return 4;
-        else if (width >= 1110) return 3;
-        else if (width >= 844) return 2;
-    }
-
     //FUNCTIONS
     async function handleScrollFetch(e) {
         if (isScrollLoading) return;
         const columnCount = getCardColumnCount(window.innerWidth)
         const isFecthUser = checkScrollThresold({ e: e, card: userCardRef, rowLength: users.length, columnCount: columnCount, thresholdPercentage: .7 });
         if (isFecthUser) await getScrollUser();
+    }
+
+    function getCardColumnCount(width) {
+        if (width < 844) return 1;
+        else if (width >= 1674) return 5;
+        else if (width >= 1402) return 4;
+        else if (width >= 1110) return 3;
+        else if (width >= 844) return 2;
     }
 
 
@@ -212,9 +212,10 @@ const Discover = () => {
                 return response.data.data;
             }
         }
-        //Set Error There !!!
+
         catch (e) {
             return [];
+            console.log(e);
         }
 
         finally { loading(false); }

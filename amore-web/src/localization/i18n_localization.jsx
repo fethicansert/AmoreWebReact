@@ -107,7 +107,7 @@ i18n.use(initReactI18next).init({
                     QUICK_NOTIFICATIONS: {
                         TITLE: "{{user}}",
                         TEXT: "{{message}}",
-                        LIKE: "{{user}} seni beğendi",
+                        LIKE: "<span>{{user}}</span> seni beğendi!",
                         CALL: "{{user}} seni aradı 📞",
                         CALL_REQUEST: "{{user}} seni aradı 📞",
                         VIDEO_CALL_REQUEST: "{{user}} seni görüntülü aradı 🎥",
@@ -514,7 +514,7 @@ i18n.use(initReactI18next).init({
                     QUICK_NOTIFICATIONS: {
                         TITLE: "{{user}}",
                         TEXT: "{{message}}",
-                        LIKE: "{{user}} liked you",
+                        LIKE: "<span>{{user}}</span> liked you!",
                         CALL: "{{user}} called you 📞",
                         CALL_REQUEST: "{{user}} called you 📞",
                         VIDEO_CALL_REQUEST: "{{user}} made a video call 🎥",
@@ -916,7 +916,7 @@ i18n.use(initReactI18next).init({
                     QUICK_NOTIFICATIONS: {
                         TITLE: "{{user}}",
                         TEXT: "{{message}}",
-                        LIKE: "{{user}} vous a aimé",
+                        LIKE: "<span>{{user}}</span> vous a aimé!",
                         CALL: "{{user}} vous a appelé 📞",
                         VIDEO_CALL_REQUEST: "{{user}} a fait un appel vidéo 🎥",
                         AUDIO: "{{user}} a envoyé un message vocal 🎵",

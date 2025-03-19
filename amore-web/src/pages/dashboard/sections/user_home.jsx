@@ -217,7 +217,7 @@ const UserHome = () => {
         </UserHomeNotifications>
 
         <UserHomeNotifications path={'/dashboard/matches'} title={t('DASHBOARD.TITLES.LIKES')} isLoading={isLikesLoading} type='like'>
-          {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem blurImage={true} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
+          {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem isBlur={!isPremium} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         <DiscoverCTA />

@@ -31,8 +31,8 @@ export const ImageAddIcon = ({ width = '25', height = '25', className = 'image-a
 </svg>
 
 //Color not used with this commonent
-export const ArrowDownIcon = ({ width = '17', height = '17', className = 'arrow-down-icon', color = '#18181C' }) => <svg width={width} height={height} className={className} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M13.2277 6.4364L8.62803 11.1031L4.02832 6.4364" strokeLinecap="round" strokeLinejoin="round" />
+export const ArrowDownIcon = ({ width = '17', height = '17', className = 'arrow-down-icon', color = '#18181C', strokeWidth = 1 }) => <svg width={width} height={height} className={className} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.2277 6.4364L8.62803 11.1031L4.02832 6.4364" strokeLinecap="round" strokeLinejoin="round" stroke={color} strokeWidth={strokeWidth} />
 </svg>
 
 //Location Icon
@@ -310,5 +310,14 @@ export const NotificationPermissionIcon = ({ width = '25', height = '25', color 
     <path d="M7.39258 10.8275C8.14984 9.17836 9.35631 7.63299 10.9195 6.41357" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M32.6054 10.8275C31.8483 9.17836 30.6418 7.63299 29.0786 6.41357" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M15.2017 30.229C15.2017 32.877 17.3487 35.0255 19.9983 35.0255C22.6463 35.0255 24.7933 32.877 24.7933 30.229" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+
+export const LanguageIcon = ({ width = '25', height = '25', color = '#FFFFFF' }) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.7306 19.0413C13.1697 19.2846 8.15037 14.8636 7.25528 11.0779" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.57071 6.17169H17.0778" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.97501 4.492V6.17419" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.0473 21.2755L16.8088 11.949L21.5703 21.2755" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M13.9161 6.17169C14.0299 6.41005 13.45 14.8142 4.15469 17.6581" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 

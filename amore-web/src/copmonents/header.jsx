@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import FlexBox from './flex_box'
 import BasicButton from './basic_button'
@@ -6,12 +6,12 @@ import { colors } from '../utils/theme'
 import { useMediaPredicate } from "react-media-hook";
 import { TbMenu2 } from "react-icons/tb";
 import { useTranslation } from 'react-i18next'
-import { GrLanguage } from "react-icons/gr";
 import { useBanner } from '../hooks/use_banner'
 import { useAuth } from '../hooks/use_auth'
 import { ROUTES } from '../utils/constants'
 import { useAppData } from '../hooks/use_add_data'
 import Flag from 'react-flagkit';
+import { ArrowDownIcon, LanguageIcon } from '../assets/svg/svg_package'
 
 const Header = ({
     backgroundColor,
@@ -25,6 +25,16 @@ const Header = ({
     hasBorder,
     languageIconColor }) => {
 
+    const languageList = [
+        { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
+        { flag: 'GB', languageOption: 'en', languageText: 'English' },
+        { flag: 'FR', languageOption: 'fr', languageText: 'Fraçais' },
+        { flag: 'IT', languageOption: 'it', languageText: 'Italiano' },
+        { flag: 'DE', languageOption: 'de', languageText: 'Deutsch' },
+        { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
+        { flag: 'GB', languageOption: 'en', languageText: 'English' },
+    ]
+
     //STATES
     const hideButtons = useMediaPredicate("(min-width: 700px)");
     const hideNavigation = useMediaPredicate("(min-width: 900px)");
@@ -32,8 +42,8 @@ const Header = ({
     const [showLanguageBox, setShowLanguageBox] = useState(false);
 
     //HOOKS
-    const { auth } = useAuth();
-    const { t, i18n } = useTranslation();
+    const { auth, isAuthenticated } = useAuth();
+    const { t, _ } = useTranslation();
     const { language, setLanguage } = useAppData();
     const { setShowLogin } = useBanner();
     const navigate = useNavigate();
@@ -42,6 +52,10 @@ const Header = ({
     useEffect(() => {
         if (hideButtons) { setShowNav(false); }
     }, [hideButtons]);
+
+
+    //REF
+    const selectedLanguageRef = useRef(languageList.find(_language => _language.languageOption === language).languageText);
 
     //UI
     return (
@@ -78,15 +92,31 @@ const Header = ({
                         {t(`HEADER.${Object.keys(auth).length > 0 ? 'CONTINUE_BUTTON' : 'LOGIN_BUTTON'}`)}
                     </BasicButton>
 
-                    <FlexBox
-                        style={{ cursor: 'pointer' }}
-                        gap='0 3.5px'
-                        alignItems='center'
-                        justifyContent='center'
-                        onClick={() => setShowLanguageBox(prev => !prev)}>
-                        <GrLanguage color={languageIconColor} size={22} />
-                        <span style={{ color: languageIconColor, fontSize: 14 }}>{language}</span>
-                    </FlexBox>
+                    <button className={`header-language-dropbox-button ${showLanguageBox ? 'active' : ''}`}>
+                        <FlexBox
+                            width={'100%'}
+                            style={{ cursor: 'pointer', padding: '0 .7rem' }}
+                            alignItems='center'
+                            justifyContent='space-evenly'
+                            onClick={() => setShowLanguageBox(prev => !prev)}>
+                            <LanguageIcon color={languageIconColor} width={24} height={24} />
+                            <span style={{ color: languageIconColor, fontSize: 13.5 }}>{selectedLanguageRef.current}</span>
+                            <ArrowDownIcon color={colors.whiteText} className={`header-language-dropbox-arrow ${showLanguageBox ? 'active' : ''}`} strokeWidth={1.5} width='18px' height='18px' />
+                        </FlexBox>
+
+                        <div className={`header-language-dropbox ${showLanguageBox ? 'active' : ''}`}>
+                            <ul className={`${showLanguageBox ? 'active' : ''}`}>
+                                {languageList.map(language => <li onClick={() => {
+                                    handleChangeLanguage(language.languageOption);
+                                    selectedLanguageRef.current = language.languageText;
+                                }}>
+                                    <Flag country={language.flag} size={20} />
+                                    <span>{language.languageText}</span>
+                                </li>)}
+                            </ul>
+                        </div>
+
+                    </button>
 
                 </FlexBox>
             }
@@ -120,36 +150,22 @@ const Header = ({
                 </div>
             }
 
-            {
-                <div className='header-language-dropbox' style={{ backgroundColor: backgroundColor, transform: `translateX(${showLanguageBox ? '0%' : '100vw'})` }}>
-                    <ul>
-                        <li onClick={() => handleChangeLanguage('tr')}>
-                            <Flag country='TR' />
-                            <span>Türkçe</span>
-                        </li>
-                        <li onClick={() => handleChangeLanguage('en')}>
-                            <Flag country='GB' />
-                            <span>English</span>
-                        </li>
-                        <li onClick={() => handleChangeLanguage('fr')}>
-                            <Flag country='FR' />
-                            <span>Français</span>
-                        </li>
-                    </ul>
-                </div>
-            }
+
 
         </header>
-    )
+    );
 
+    //FUNCTIONS
+
+    //Set global language and close language dropbox
     function handleChangeLanguage(language) {
         setLanguage(language);
         setShowLanguageBox(false);
     }
 
-    //FUNCTIONS
+
     function handleClick({ isMobile = false }) {
-        if (Object.keys(auth).length === 0) {
+        if (!isAuthenticated) {
             isMobile && setShowNav(false);
             setShowLogin(true);
         }

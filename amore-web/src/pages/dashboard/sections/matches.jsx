@@ -7,16 +7,16 @@ import UserCard from '../../../copmonents/user_card';
 import AmoreLoading from '../../../copmonents/amore_loading';
 import { v4 as uuidv4 } from 'uuid';
 import { colors } from '../../../utils/theme';
-import '../../../css/dashboard/matches.css';
 import CustomRadio from '../../../copmonents/custom_radio';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { DoubleHeartIcon, HeartLineIcon, UserIcon } from '../../../assets/svg/svg_package';
 import EmptyUsersPopup from '../components/empty_users_popup';
 import { checkScrollThresold } from '../../../utils/functions';
+import '../../../css/dashboard/matches.css';
 const Matches = () => {
 
-
+    //LOCATION
     const location = useLocation();
     //STATES
     const [currentIndex, setCurrentIndex] = useState(getCurrentIndex());
@@ -187,7 +187,7 @@ const Matches = () => {
 
         //if users scrolls the page ang get specific point we determine fetch users from behind !
         const columnCount = getBoxColumnCount(window.innerWidth);
-        const isFecthUser = checkScrollThresold({ e: e, card: userCardRef, rowLength: users.length, columnCount: columnCount, thresholdPercentage: .7 });
+        const isFecthUser = checkScrollThresold({ e: e, card: userCardRef, rowLength: users.length, columnCount: columnCount, thresholdPercentage: .9 });
         if (isFecthUser) {
             isScrollLoading.current = true;
             fetchData({ index: currentIndex });

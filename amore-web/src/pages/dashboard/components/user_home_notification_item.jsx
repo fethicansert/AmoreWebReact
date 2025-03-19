@@ -4,9 +4,9 @@ import { colors } from '../../../utils/theme';
 import { useAuth } from '../../../hooks/use_auth';
 import NotificationLayout from '../../../copmonents/notification_layout';
 import { formatTimeAgo } from '../../../utils/functions';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-const UserHomeNotificationItem = ({ notification, type, index, blurImage = false }) => {
+const UserHomeNotificationItem = ({ notification, type, index, isBlur = false }) => {
 
     const { auth } = useAuth();
     const { t, _ } = useTranslation();
@@ -19,7 +19,15 @@ const UserHomeNotificationItem = ({ notification, type, index, blurImage = false
     const path = getPath(type);
     const navigate = useNavigate();
 
-    return <NotificationLayout blurImage={blurImage} onClick={() => navigate(`/dashboard/${path}`, { state: { type: type, index: index } })} image={userImage} title={user?.name || 'username'} content={content} icon={icon} time={time} hideTime={hideTime} />
+    return <NotificationLayout
+        isBlur={isBlur}
+        onClick={() => navigate(`/dashboard/${path}`, { state: { type: type, index: index } })}
+        image={userImage}
+        title={user?.name || 'username'}
+        content={content}
+        icon={icon}
+        time={time}
+        hideTime={hideTime} />
 
     function getPath(type) {
         switch (type) {
@@ -52,8 +60,13 @@ const UserHomeNotificationItem = ({ notification, type, index, blurImage = false
     }
 
     function getMessageContent(notification, type) {
-
-        if (type === 'like') return t(`NOTIFICATION.QUICK_NOTIFICATIONS.${type?.toUpperCase()}`, { user: user?.name });
+        if (type === 'like') return <Trans
+            i18nKey={`NOTIFICATION.QUICK_NOTIFICATIONS.${type?.toUpperCase()}`}
+            values={{ user: user?.name }}
+            components={{
+                span: <span style={isBlur ? { color: 'transparent', textShadow: '0 0 6.4px rgba(230, 73, 151, 1)', marginRight: '.15rem' } : null} />,
+            }}
+        />
 
         if (!notification?.lastMessage && type === 'message') return `İlk adımı at, ${user?.name} seni bekliyor! ✨`
 
