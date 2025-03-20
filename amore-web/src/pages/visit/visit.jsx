@@ -22,6 +22,7 @@ import { getSwipePopupAnimation } from '../../utils/functions';
 import DiscoverCTA from '../../copmonents/discover_cta.jsx';
 import likeSound from '../../sounds/like_sound.mp3'
 import UsersMatchPopup from '../dashboard/components/users_match_popup.jsx';
+import { useMediaPredicate } from 'react-media-hook';
 
 const Visit = () => {
     const { conversations, isConversationsLoading } = useConversation();
@@ -37,6 +38,9 @@ const Visit = () => {
     const [showUserMatchesPopup, setShowUserMatchesPopup] = useState();
 
     const likeSoundRef = useRef(new Audio(likeSound));
+
+    const hideLeftCol = useMediaPredicate("(max-width: 1190px)");
+    const hideRightCol = useMediaPredicate("(max-width: 765px)");
 
     useEffect(() => {
         getUser(userId);
@@ -59,18 +63,25 @@ const Visit = () => {
                 languageIconColor={colors.brand1}
             />}
 
-            <div className='visit-grid-container' style={{ marginTop: !isAuthenticated ? '.75rem' : '', gridTemplateColumns: !isAuthenticated ? '2fr 4fr 2fr' : '280px 4fr 2.4fr' }}>
+            <div className='visit-grid-container'
+                style={{
+                    maxWidth: !isAuthenticated ? '600px' : '1400px',
+                    margin: !isAuthenticated ? '.75rem auto 0 auto' : '',
+                    gridTemplateColumns: !isAuthenticated ? '1fr' : hideRightCol ? '1fr' : hideLeftCol ? '5fr 3.5fr' : '280px 4fr 2.4fr'
+                }}>
 
-                <div className='visit-grid-container-left-column' >
-                    {isAuthenticated && <>
-                        <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '1rem', borderRadius: '12px' }} />
-                        <PremiumBox />
+                {
+                    !hideLeftCol && <div className='visit-grid-container-left-column' >
+                        {isAuthenticated && <>
+                            <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '1rem', borderRadius: '12px' }} />
+                            <PremiumBox />
 
-                        <DiscoverCTA style={{ marginTop: '.85rem' }} />
-                    </>}
-                </div>
+                            <DiscoverCTA style={{ marginTop: '.85rem' }} />
+                        </>}
+                    </div>
+                }
 
-                <div className='visit-user-container'>
+                <div className='visit-user-container' >
 
                     <SwipeItem user={user} loading={isUserLoading} />
 
@@ -84,7 +95,7 @@ const Visit = () => {
 
                 </div>
 
-                <div className='visit-grid-container-right-column'>
+                {!hideRightCol && <div className='visit-grid-container-right-column'>
 
                     {isAuthenticated && <>
                         <UserHomeNotifications path={'/dashboard/chat'} title={t('DASHBOARD.TITLES.QUICK_MESSAGES')} isLoading={isConversationsLoading} type='message'>
@@ -96,7 +107,8 @@ const Visit = () => {
                             {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem blurImage={true} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
                         </UserHomeNotifications></>}
 
-                </div>
+                </div>}
+
             </div>
         </div>
     );

@@ -2,9 +2,9 @@ import React from 'react'
 import FlexBox from '../../../copmonents/flex_box';
 import PinkShimmer from '../../../copmonents/pink_shimmer';
 
-const NotificationShimmer = () => {
+const NotificationShimmer = ({ marginBlock = '33.5px' }) => {
     return (
-        <div style={{ width: '100%', height: '100%', display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '0 14px', alignItems: 'center', justifyContent: 'center', margin: '33.5px 0' }}>
+        <div style={{ width: '100%', height: 'none', display: 'grid', gridTemplateColumns: 'auto 1fr auto', gap: '0 14px', alignItems: 'center', justifyContent: 'center', marginBlock: marginBlock }}>
 
             <PinkShimmer height={62} width={62} rounded={'50%'} />
 

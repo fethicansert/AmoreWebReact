@@ -308,16 +308,8 @@
     }
 
 
-    .layout-header-navigation a::before {
-        left: -18.5px;
-    }
-
-    .layout-header-navigation-postion {
-        left: -18.5px;
-    }
 
 }
-
 
 
 @media (max-width: 499px) {
@@ -368,6 +360,10 @@
 
     .layout-header-navigation-postion {
         display: none;
+    }
+
+    .layout-header-navigation a::before {
+        left: -19px;
     }
 
     .layout-header-active-part {

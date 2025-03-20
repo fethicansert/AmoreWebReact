@@ -359,23 +359,6 @@
     }
 }
 
-@media (max-width: 970px) {
-
-    .user-home-notications-container a,
-    .user-home-notications-container h4 {
-        font-size: .75rem;
-    }
-
-    .user-home-notications .notification-layout-image-avatar {
-        width: 57px;
-        height: 57px;
-    }
-
-    .user-home-notications .notification-time {
-        display: none;
-    }
-}
-
 @media (max-width: 1190px) {
     .user-home {
         grid-template-columns: 5fr 3.5fr;

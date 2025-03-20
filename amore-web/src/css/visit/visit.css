@@ -1,5 +1,4 @@
 .visit {
-    max-width: 1400px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -8,7 +7,6 @@
 
 .visit-grid-container {
     display: grid;
-    grid-template-columns: 270px 4fr 2.5fr;
     gap: 0 clamp(.4rem, 1vw, 1rem);
     overflow: hidden;
     height: 100%;
@@ -25,4 +23,11 @@
 .visit-grid-container-left-column,
 .visit-grid-container-right-column {
     overflow: scroll;
+}
+
+@media (min-width: 1300px) {
+    .visit-grid-container {
+        grid-template-columns: 250px 4fr 2.5fr;
+    }
+
 }

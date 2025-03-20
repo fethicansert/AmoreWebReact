@@ -8,7 +8,7 @@ export const ConversationContext = createContext();
 const ConversationProvider = ({ children }) => {
 
     const [conversations, setConversations] = useState([]);
-    const [isConversationsLoading, setIsConversationsLoading] = useState(false);
+    const [isConversationsLoading, setIsConversationsLoading] = useState(true);
     const { auth } = useAuth();
 
     useEffect(() => {

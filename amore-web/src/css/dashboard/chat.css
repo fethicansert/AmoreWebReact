@@ -1,9 +1,9 @@
 .chat {
     display: grid;
-    grid-template-columns: 1fr 2.2fr;
-    gap: 0 1rem;
+    grid-template-columns: minmax(280px, 1fr) 2.2fr;
+    gap: 0 .85rem;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: hidden;
     padding-left: .3rem;
     position: relative;
 }
@@ -24,6 +24,7 @@
 }
 
 .chat-card-user-wrapper {
+    position: relative;
     overflow-y: scroll;
     flex: 1;
 }
@@ -75,10 +76,20 @@
 }
 
 .chat-card-image {
-    width: 62px;
-    height: 62px;
     border-radius: 50%;
     outline: 1px solid var(--input1);
+    position: relative;
+}
+
+.chat-card-status-circle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    outline: 2px solid var(--backGround3);
+    border-radius: 50%;
+    background-color: var(--onlineColor);
+    right: 4px;
+    bottom: 4px;
 }
 
 .chat-card-image img {
@@ -88,7 +99,8 @@
     border-radius: 50%;
 }
 
-.chat-card h3 {
+.chat-card h3,
+.current-chat-user-name {
     font-size: .9rem;
     font-weight: 600;
 }
@@ -131,6 +143,10 @@
     transition: background-color 400ms ease;
 }
 
+.chat-card-user.active {
+    background-color: rgba(221, 136, 207, 0.05);
+}
+
 .chat-card-user:hover {
     background-color: rgba(221, 136, 207, 0.114);
 }
@@ -156,4 +172,57 @@
     width: 3px;
     background-color: var(--brand1);
     border-radius: 5px;
+}
+
+.sidebar-empty-chat-text {
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--lowFadedText);
+    max-width: 300px;
+    font-weight: 300;
+    font-size: .95rem;
+}
+
+.chat-content {
+    overflow: hidden;
+}
+
+.chat-content-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--borderColor1);
+    padding: 0 1rem;
+    background-color: var(--backGround3);
+}
+
+.current-chat-user {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0 8px;
+    align-items: center;
+}
+
+.current-chat-user-image-container {
+    width: 53px;
+    height: 53px;
+    border-radius: 50%;
+    outline: 1px solid var(--input1);
+    overflow: hidden;
+}
+
+.current-chat-user-image-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+.current-chat-user-status {
+    color: var(--fadedText);
+    font-weight: 300;
+    font-size: .75rem;
 }
