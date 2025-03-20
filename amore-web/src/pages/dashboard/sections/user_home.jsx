@@ -56,7 +56,6 @@ const UserHome = () => {
   const { showLocationBanner, setShowLocationBanner, setShowLocationSetting, setLimitedOfferOptions } = useBanner();
   const navigate = useNavigate();
 
-
   //REFS
   const distanceRef = useRef(200);
   const swipeContainer = useRef();

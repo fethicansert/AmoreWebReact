@@ -43,7 +43,9 @@ export const colors = {
     sprayPink: "#E451DA",
     sprayPurple: "#A418F5",
     sprayGray: "#D3D3D3",
-    sprayTransparent: "#FFFFFF00"
+    sprayTransparent: "#FFFFFF00",
+
+    iconColor: "#18181C"
 }
 
 export const shadows = {

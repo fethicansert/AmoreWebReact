@@ -118,6 +118,8 @@ body {
 }
 
 /* Registerde bir scroll cikiyor neden ? */
+.chat-sidebar::-webkit-scrollbar,
+.chat-card-user-wrapper::-webkit-scrollbar,
 .visit-grid-container-right-column::-webkit-scrollbar,
 .visit-grid-container-left-column::-webkit-scrollbar,
 .visit-user-container::-webkit-scrollbar,
@@ -134,6 +136,8 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.chat-sidebar,
+.chat-card-user-wrapper,
 .visit-grid-container-right-column,
 .visit-grid-container-left-column,
 .visit-user-container,

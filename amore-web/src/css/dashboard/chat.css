@@ -1,0 +1,159 @@
+.chat {
+    display: grid;
+    grid-template-columns: 1fr 2.2fr;
+    gap: 0 1rem;
+    height: 100%;
+    overflow-y: scroll;
+    padding-left: .3rem;
+    position: relative;
+}
+
+.chat-sidebar,
+.chat-content {
+    border-radius: 12px;
+    border: 1px solid var(--borderColor1);
+    background: var(--backGround3);
+}
+
+.chat-sidebar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem 0 .5rem 0;
+    overflow-y: scroll;
+}
+
+.chat-card-user-wrapper {
+    overflow-y: scroll;
+    flex: 1;
+}
+
+.chat-sidebar-search {
+    width: 90%;
+    height: 57px;
+    border-radius: 12px;
+    background-color: var(--input1);
+    display: flex;
+    align-items: center;
+    margin: 0 auto .5rem auto;
+}
+
+.chat-sidebar-search:hover {
+    background: rgb(252, 252, 252);
+    outline: 1px solid var(--brand1);
+}
+
+.chat-sidebar-search.active {
+    background-color: rgb(252, 252, 252);
+    outline: 1px solid var(--brand1);
+}
+
+.chat-sidebar-search-input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    font-size: 1rem;
+    color: var(--darkText);
+}
+
+.chat-sidebar-search-input:focus {
+    outline: none;
+}
+
+.chat-sidebar-search-input::placeholder {
+    font-family: inherit;
+    color: var(--fadedText);
+    font-size: .9rem;
+}
+
+.chat-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0 12px;
+    cursor: pointer;
+}
+
+.chat-card-image {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    outline: 1px solid var(--input1);
+}
+
+.chat-card-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.chat-card h3 {
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+.chat-card p {
+    font-size: .8rem;
+    font-weight: 300;
+    color: var(--lowFadedText);
+}
+
+.chat-card-time {
+    align-self: center;
+    font-size: .65rem;
+    color: var(--lowFadedText);
+    font-weight: 300;
+}
+
+.chat-card-whatsapp {
+    background-color: rgba(48, 207, 109, 0.114);
+    padding: 1.4rem 1rem;
+    transition: background-color 400ms ease;
+}
+
+.chat-card-whatssapp-arrow {
+    align-self: center;
+    transition: transform 500ms ease;
+}
+
+.chat-card-whatsapp:hover {
+    background-color: #30cf6d6a;
+}
+
+.chat-card-whatsapp:hover .chat-card-whatssapp-arrow {
+    transform: translateX(4px);
+}
+
+.chat-card-user {
+    padding: 1.2rem 1rem;
+    position: relative;
+    transition: background-color 400ms ease;
+}
+
+.chat-card-user:hover {
+    background-color: rgba(221, 136, 207, 0.114);
+}
+
+.chat-card-user::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: .5px;
+    background: rgba(0, 0, 0, 0.14);
+}
+
+.chat-card-user.active::before,
+.chat-card-user:hover::before {
+    content: '';
+    position: absolute;
+    left: 0px;
+    transform: translateY(20px);
+    height: 60px;
+    width: 3px;
+    background-color: var(--brand1);
+    border-radius: 5px;
+}

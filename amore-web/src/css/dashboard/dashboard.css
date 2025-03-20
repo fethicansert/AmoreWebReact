@@ -175,7 +175,7 @@
     background: var(--brand1);
     top: 42%;
     transform: translateY(-50%);
-    left: -22.5px;
+    left: -21px;
     border-radius: 4px;
     display: none;
 }
@@ -200,7 +200,7 @@
     position: absolute;
     bottom: 0;
     top: 14px;
-    left: -22.5px;
+    left: -21px;
     border-radius: 4px;
 
     transition: transform 200ms ease;
