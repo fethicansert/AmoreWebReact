@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from 'react'
-import { io } from 'socket.io-client'
 import { useAuth } from '../hooks/use_auth';
 import { axiosAmore } from '../api/axios';
 
@@ -9,10 +8,10 @@ const ConversationProvider = ({ children }) => {
 
     const [conversations, setConversations] = useState([]);
     const [isConversationsLoading, setIsConversationsLoading] = useState(true);
-    const { auth } = useAuth();
+    const { auth, isAuthenticated } = useAuth();
 
     useEffect(() => {
-        if (Object.keys(auth).length > 0) getMessages();
+        if (isAuthenticated) getMessages();
     }, [auth]);
 
     return (

@@ -9,6 +9,7 @@ import NotificationProvider from './context/notification_provider.jsx'
 import BannerProvider from './context/banner_provider.jsx'
 import SocketProvider from './context/socket_provider.jsx'
 import AppDataProvider from './context/app_data_provider.jsx'
+import LikeProvider from './context/like_provider.jsx'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -16,11 +17,13 @@ createRoot(document.getElementById('root')).render(
       <AppDataProvider>
         <SocketProvider>
           <ConversationProvider>
-            <NotificationProvider>
-              <BannerProvider>
-                <App />
-              </BannerProvider>
-            </NotificationProvider>
+            <LikeProvider>
+              <NotificationProvider>
+                <BannerProvider>
+                  <App />
+                </BannerProvider>
+              </NotificationProvider>
+            </LikeProvider>
           </ConversationProvider>
         </SocketProvider>
       </AppDataProvider>

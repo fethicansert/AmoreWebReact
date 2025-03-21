@@ -189,6 +189,8 @@
 
 .chat-content {
     overflow: hidden;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
 }
 
 .chat-content-header {
@@ -196,7 +198,7 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--borderColor1);
-    padding: 0 1rem;
+    padding: 0 .5rem 0 1rem;
     background-color: var(--backGround3);
 }
 
@@ -205,6 +207,7 @@
     grid-template-columns: auto auto;
     gap: 0 8px;
     align-items: center;
+    cursor: pointer;
 }
 
 .current-chat-user-image-container {
@@ -225,4 +228,86 @@
     color: var(--fadedText);
     font-weight: 300;
     font-size: .75rem;
+}
+
+.chat-content-messages {
+    padding: 0 2rem;
+    width: 100%;
+    overflow: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+}
+
+
+.chat-bubble {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: .5rem 0;
+    gap: 0 15px;
+    align-items: end;
+    width: fit-content;
+}
+
+.chat-input-container-wrapper {
+    padding: .85rem;
+}
+
+.chat-input-container {
+    height: 47px;
+    width: 100%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: .1rem .8rem;
+    gap: 0 5px;
+    border-radius: 12px;
+    border: 1px solid var(--borderColor1);
+}
+
+.chat-input {
+    border: none;
+    color: var(--darkText);
+    font-size: .9rem;
+}
+
+.chat-input::placeholder {
+    color: var(--fadedText);
+    font-size: .82rem;
+}
+
+.chat-input:focus {
+    outline: none;
+}
+
+.chat-send-message-icon {
+    align-self: center;
+    cursor: pointer;
+    transition: scale 150ms ease;
+}
+
+.chat-send-message-icon:hover {
+    fill: var(--brand1);
+    scale: 1.1;
+}
+
+.chat-send-message-icon:hover path {
+    stroke: var(--backGround3);
+}
+
+.chat-bubble-shimmer {
+    width: 40%;
+    display: grid;
+    align-items: end;
+    margin: .5rem 0;
+}
+
+.chat-bubble-shimmer-reciever {
+    grid-template-columns: auto;
+    align-self: end;
+}
+
+.chat-bubble-shimmer-sender {
+    grid-template-columns: 42px auto;
+    gap: 0 6px;
 }

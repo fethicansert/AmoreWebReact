@@ -321,3 +321,8 @@ export const LanguageIcon = ({ width = '25', height = '25', color = '#FFFFFF' })
     <path d="M13.9161 6.17169C14.0299 6.41005 13.45 14.8142 4.15469 17.6581" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
+
+export const SendMessageIcon = ({ width = '22', height = '22', color = "#E64997", style, className = '' }) => <svg width={width} height={height} className={className} style={style} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.97643 4.57899L15.5343 1.39302C19.8236 -0.036719 22.1539 2.30491 20.7354 6.59413L17.5495 16.152C15.4105 22.5802 11.8981 22.5802 9.75907 16.152L8.8134 13.315L5.97643 12.3694C-0.451779 10.2304 -0.451779 6.72923 5.97643 4.57899Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.02734 12.8307L13.0576 8.78917" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+</svg>

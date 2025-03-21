@@ -16,23 +16,13 @@ import { useBanner } from './hooks/use_banner';
 import LoginPopup from '../src/copmonents/login_popup'
 import ProtectedRoute from './routes/protected_route';
 import PageNotFound from './routes/page_not_found';
-import { getToken } from 'firebase/messaging';
-import { messaging } from './firebase/firebase_config';
-import { useEffect } from 'react';
-import { useAuth } from './hooks/use_auth';
 import { ToastContainer, toast } from "react-toastify";
-import PushNotification from './copmonents/push_notification';
-import { onMessage } from "firebase/messaging";
-import { userFcmToken } from './api/services/user_servives';
 import VisitRedirect from './routes/visit_redirect';
 import Visit from './pages/visit/visit';
-import { axiosAmore } from './api/axios';
 
 function App() {
 
   const { limitedOfferOptions, setLimitedOfferOptions, showLogin, setShowLogin } = useBanner();
-
-  const { auth } = useAuth();
 
   return (
     <>
@@ -86,7 +76,7 @@ function App() {
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
 
       {/* Push Foreground Notifications */}
-      <ToastContainer limit={3} />
+      <ToastContainer limit={2} />
 
     </>
   );

@@ -23,28 +23,35 @@ import DiscoverCTA from '../../copmonents/discover_cta.jsx';
 import likeSound from '../../sounds/like_sound.mp3'
 import UsersMatchPopup from '../dashboard/components/users_match_popup.jsx';
 import { useMediaPredicate } from 'react-media-hook';
+import { useLikes } from '../../hooks/use_likes.jsx';
 
 const Visit = () => {
-    const { conversations, isConversationsLoading } = useConversation();
+
+    //PARAM
     const { userId } = useParams();
-    const [isLikesLoading, setIsLikesLoading] = useState(false);
+
+    //STATES
     const [user, setUser] = useState();
     const [isUserLoading, setIsUserLoading] = useState();
-    const [likes, setLikes] = useState([]);
-    const { auth, isAuthenticated, isPremium } = useAuth()
-    const { t, _ } = useTranslation();
-    const { setShowLogin, setLimitedOfferOptions } = useBanner();
     const [popAnimation, setPopupAnimation] = useState();
     const [showUserMatchesPopup, setShowUserMatchesPopup] = useState();
 
+    //CONTEXT
+    const { conversations, isConversationsLoading } = useConversation();
+    const { auth, isAuthenticated, isPremium } = useAuth()
+    const { likes, isLikesLoading } = useLikes();
+    const { setShowLogin, setLimitedOfferOptions } = useBanner();
+    const { t, _ } = useTranslation();
+
+    //REFS
     const likeSoundRef = useRef(new Audio(likeSound));
 
+    //MEDIA QUERY
     const hideLeftCol = useMediaPredicate("(max-width: 1190px)");
     const hideRightCol = useMediaPredicate("(max-width: 765px)");
 
     useEffect(() => {
         getUser(userId);
-        if (isAuthenticated) getLikes();
     }, []);
 
     return (
@@ -158,23 +165,6 @@ const Visit = () => {
             console.log(err);
         } finally {
             setIsUserLoading(false);
-        }
-    }
-
-    async function getLikes() {
-
-        setIsLikesLoading(true);
-        try {
-            const response = await axiosAmore.get('user/likes', { headers: { Authorization: auth.token } });
-            console.log(response);
-
-            setLikes(response.data.data);
-        }
-        catch (e) {
-            console.log(e);
-        }
-        finally {
-            setIsLikesLoading(false);
         }
     }
 }

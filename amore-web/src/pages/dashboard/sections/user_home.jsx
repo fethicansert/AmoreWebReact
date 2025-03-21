@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import DiscoverCTA from '../../../copmonents/discover_cta.jsx';
 import '../../../css/dashboard/user_home.css';
 import UsersMatchPopup from '../components/users_match_popup.jsx';
+import { useLikes } from '../../../hooks/use_likes.jsx';
 
 const UserHome = () => {
 
@@ -37,8 +38,7 @@ const UserHome = () => {
   const [isSwipeListLoading, setIsSwipeListLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [popAnimation, setPopupAnimation] = useState();
-  const [likes, setLikes] = useState([]);
-  const [isLikesLoading, setIsLikesLoading] = useState(false);
+
   const [age, setAge] = useState([25, 80]);
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
@@ -50,6 +50,7 @@ const UserHome = () => {
   const [filterDistance, setFilterDistance] = useState(200)
 
   //CONTEXT
+  const { likes, isLikesLoading } = useLikes();
   const { conversations, isConversationsLoading } = useConversation();
   const { auth, isPremium } = useAuth();
   const { t, _ } = useTranslation();
@@ -72,7 +73,6 @@ const UserHome = () => {
   //SIDE-EFFECTS
   useEffect(() => {
     //Fetch likes
-    getLikes();
 
     handleLocationPermission({
       permissionType: "geolocation",
@@ -300,25 +300,6 @@ const UserHome = () => {
     }
 
   }
-
-  //Fecth and Set User Likes
-  async function getLikes() {
-
-    setIsLikesLoading(true);
-    try {
-      const response = await axiosAmore.get('user/likes', { headers: { Authorization: auth.token } });
-      setLikes(response.data.data);
-    }
-
-    catch (e) {
-      console.log(e);
-    }
-
-    finally {
-      setIsLikesLoading(false);
-    }
-  }
-
 
   //Fetch Swipe and Set Swipe List
   async function getSwipeList({ showLoading, isAutoDistance, isResetList, gender, distance, age }) {

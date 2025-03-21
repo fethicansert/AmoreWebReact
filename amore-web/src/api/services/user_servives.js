@@ -14,3 +14,8 @@ export const getUserData = async ({ userId }) => axiosAmore.get(`user/user?userI
 export const userSwipe = async ({ type }) => {
 
 }
+
+//user Messages
+export const fetchMessages = async ({ conversationId }) => {
+    return axiosAmore.get(`chat/messages_v2?page=1&conversation=${conversationId}`, { useAuth: true });
+}
