@@ -16,6 +16,8 @@ import { axiosAmore } from '../../../api/axios';
 import ChatBubble from '../components/chat_bubble';
 import { ClipLoader } from 'react-spinners';
 import ChatBubbleShimmer from '../components/chat_bubble_shimmer';
+import ChatType from '../components/chat_type';
+
 const Chat = () => {
 
     //NAVIGATION
@@ -29,6 +31,7 @@ const Chat = () => {
     const [currentChatIndex, setCurrentChatIndex] = useState(location?.state?.index || 0);
     const [messages, setMessages] = useState([]);
     const [isMessagesLoading, setIsMessagesLoading] = useState(true);
+    const [messageText, setMessageText] = useState('');
 
     //CONTEXT
     const { auth } = useAuth();
@@ -37,8 +40,6 @@ const Chat = () => {
     //CONSTANTS
     const placeHolderText = searchFocused ? 'Aramaya başla!' : 'Birini mi arıyorsun?';
     const currentChatUser = getUser({ conversation: conversations[currentChatIndex] });
-
-    console.log(currentChatUser?.id);
 
 
     useEffect(() => {
@@ -124,18 +125,18 @@ const Chat = () => {
 
                 <div className='chat-content-messages'>
 
-
                     {isMessagesLoading
                         ? <ChatBubbleShimmer />
-                        : messages.map(message => <ChatBubble key={uuidv4()} message={message} />)
+                        : messages.map(message => {
+                            return <ChatType key={uuidv4()} message={message} />
+                        })
                     }
-
 
                 </div>
 
                 <div className='chat-input-container-wrapper'>
                     <div className='chat-input-container'>
-                        <input className='chat-input' placeholder='Hadi mesaj yaz' />
+                        <input className='chat-input' placeholder='Hadi mesaj yaz' value={messageText} onChange={(e) => setMessageText(e.target.value)} />
                         <SendMessageIcon className='chat-send-message-icon' />
                     </div>
                 </div>

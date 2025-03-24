@@ -311,3 +311,36 @@
     grid-template-columns: 42px auto;
     gap: 0 6px;
 }
+
+.chat-audio-container {
+    position: relative;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: auto 200px;
+    gap: 0 2px;
+    align-items: center;
+    padding: .75rem 1.1rem .7rem .6rem;
+    margin-block: .85rem;
+    border-radius: 20px;
+    height: 60px;
+}
+
+.audio-duration {
+    font-size: .6rem;
+    font-weight: 600;
+    position: absolute;
+    top: 100%;
+    left: 0%;
+    margin-top: .6rem;
+}
+
+.audio-duration-progress-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--backGround3);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -5px;
+}

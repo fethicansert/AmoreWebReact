@@ -326,3 +326,12 @@ export const SendMessageIcon = ({ width = '22', height = '22', color = "#E64997"
     <path d="M5.97643 4.57899L15.5343 1.39302C19.8236 -0.036719 22.1539 2.30491 20.7354 6.59413L17.5495 16.152C15.4105 22.5802 11.8981 22.5802 9.75907 16.152L8.8134 13.315L5.97643 12.3694C-0.451779 10.2304 -0.451779 6.72923 5.97643 4.57899Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
     <path d="M9.02734 12.8307L13.0576 8.78917" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
+
+export const PlayButtonIcon = ({ width = '35', height = '35', color = "#FFFFFF", style, className = '', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M25.6495 21.8016C22.6155 24.5495 18.8242 27.0216 14.652 28.7028C11.1014 30.1023 8.12724 28.3569 7.69091 24.8575C7.15971 19.6987 7.17138 14.7604 7.69091 10.1504C8.16665 6.51371 11.4428 4.96974 14.652 6.32108C18.76 8.00368 22.4448 10.2875 25.6495 13.2222C28.3872 15.7016 28.4514 19.2259 25.6495 21.8016Z" fill={color} />
+</svg>
+
+export const PauseButtonIcon = ({ width = '35', height = '35', color = "#FFFFFF", style, className = '', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 24 24" fill="none">
+    <path fillRule="evenodd" clipRule="evenodd" d="M8.58963 3.5H6.27563C5.44863 3.5 4.77563 4.173 4.77563 5V19C4.77563 19.827 5.44863 20.5 6.27563 20.5H8.58963C9.41664 20.5 10.0896 19.827 10.0896 19V5C10.0896 4.173 9.41664 3.5 8.58963 3.5Z" fill={color} />
+    <path fillRule="evenodd" clipRule="evenodd" d="M17.7243 3.5H15.4103C14.5833 3.5 13.9103 4.173 13.9103 5V19C13.9103 19.827 14.5833 20.5 15.4103 20.5H17.7243C18.5513 20.5 19.2243 19.827 19.2243 19V5C19.2243 4.173 18.5513 3.5 17.7243 3.5Z" fill={color} />
+</svg>
