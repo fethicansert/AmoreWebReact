@@ -79,7 +79,7 @@ const Dashboard = () => {
         onMessage(messaging, (payload) => {
             console.log(payload);
 
-            toast(<PushNotification toastId={payload.messageId} title={payload.notification.title} body={payload.notification.body} />,
+            toast(<PushNotification payload={payload} />,
                 {
                     toastId: payload.messageId,
                     style: { padding: '10px 8px' },

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { startTransition, useEffect, useLayoutEffect, useRef, useState, useTransition } from 'react';
 import { useConversation } from '../../../hooks/use_conversation';
-import { ArrowHeadRight, MicrophoneIcon, PlayIcon, SearchIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
+import { ArrowHeadRight, MicrophoneIcon, PlayIcon, SearchIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import ChatCard from '../components/chat_card';
 import whatsAppIcon from '../../../assets/icons/whatsapp_icon.png';
@@ -16,10 +16,9 @@ import { axiosAmore } from '../../../api/axios';
 import ChatBubbleShimmer from '../components/chat_bubble_shimmer';
 import ChatType from '../components/chat_type';
 import { useOptimistic } from "react";
+import ChatInput from '../components/chat_input';
 
 const Chat = () => {
-
-
 
     //NAVIGATION
     const navigate = useNavigate();
@@ -31,23 +30,8 @@ const Chat = () => {
     const [searchFocused, setSearchFocused] = useState(false);
     const [currentChatIndex, setCurrentChatIndex] = useState(location?.state?.index || 0);
     const [messages, setMessages] = useState([]);
-    // const [oMessages, setOMessages] = useOptimistic(messages, []);
+
     const [isMessagesLoading, setIsMessagesLoading] = useState(true);
-    const [messageText, setMessageText] = useState('');
-    const [messageTextFocused, setMessageTextFocused] = useState(false);
-
-    console.log(messages);
-
-    const [optimisticMessages, addOptimisticMessage] = useOptimistic(
-        [],
-        (state, newMessage) => [
-            ...state,
-            {
-                text: newMessage,
-                sending: true
-            }
-        ]
-    );
 
     //CONTEXT
     const { auth } = useAuth();
@@ -57,6 +41,12 @@ const Chat = () => {
     const placeHolderText = searchFocused ? 'Aramaya başla!' : 'Birini mi arıyorsun?';
     const currentChatUser = getUser({ conversation: conversations[currentChatIndex] });
 
+    const messageContentRef = useRef();
+
+
+    useEffect(() => {
+        messageContentRef.current.scroll({ top: 0, behavior: 'auto' });
+    }, [messages])
 
     useEffect(() => {
         const arr = conversations.filter(conversation => {
@@ -74,7 +64,7 @@ const Chat = () => {
     return (
         <section className='chat'>
 
-            <div className='chat-sidebar'>
+            <div className='chat-sidebar' onClick={() => messageContentRef.current.scroll({ top: 0, behavior: 'auto' })}>
 
                 <div className={`chat-sidebar-search ${searchFocused ? 'active' : ''}`} >
                     <SearchIcon color={colors.iconColor} width='27' height='27' style={{ margin: '0 1rem' }} />
@@ -89,7 +79,7 @@ const Chat = () => {
 
                 <ChatCard image={whatsAppIcon} title={'WhatsApp Destek'} text={'Destek için hemen yaz.'} className={'chat-card-whatsapp'} icon={<ArrowHeadRight className='chat-card-whatssapp-arrow' color={'#000000'} width='35px' height='35px' />} />
 
-                <div className='chat-card-user-wrapper'>
+                <div className='chat-card-user-wrapper' >
 
                     {
                         isConversationsLoading
@@ -139,7 +129,7 @@ const Chat = () => {
                     <CurrentUserInfoBox style={{ width: 'fit-content', border: 'none' }} credits={auth.credits} image={auth.photos?.[0].url} name={auth.name} />
                 </div>
 
-                <div className='chat-content-messages'>
+                <div className='chat-content-messages' ref={messageContentRef}>
 
                     {isMessagesLoading
                         ? <ChatBubbleShimmer />
@@ -150,32 +140,43 @@ const Chat = () => {
 
                 </div>
 
-                <div className='chat-input-container-wrapper'>
-                    <div className='chat-input-container'>
-                        <input className='chat-input' placeholder='Hadi mesaj yaz' value={messageText} onChange={(e) => setMessageText(e.target.value)} onFocus={() => setMessageTextFocused(true)} onBlur={() => setMessageTextFocused(false)} />
-                        {(messageTextFocused || messageText) ? <SendMessageIcon onClick={() => sendText()} className='chat-input-icon chat-send-message-icon' /> : <MicrophoneIcon className='chat-input-icon' color={colors.brand1} />}
-                    </div>
-                </div>
+                <ChatInput sendText={sendText} />
 
             </div>
 
-        </section>
+        </section >
+
     );
 
-    async function sendText() {
+    async function sendText(text) {
+
+        const tempId = uuidv4();
+
+        const optimisticMessage = {
+            id: tempId,
+            content: text,
+            type: 'text',
+            user: auth,
+            isSending: true
+        };
 
         const message = {
-            content: messageText,
+            content: text,
+            type: 'text',
             user: currentChatUser.id,
-            type: 'text'
         };
+
+
+        setMessages(prev => [optimisticMessage, ...prev]);
 
         try {
             const response = await axiosAmore.post('chat/send_message', message, { useAuth: true });
-            console.log(response);
+            setMessages(prev => prev.map(msg => msg.id === tempId ? response.data.data : msg));
         } catch (err) {
             console.log(err);
         }
+
+
     }
 
     function getUser({ conversation }) {
@@ -186,9 +187,7 @@ const Chat = () => {
         setIsMessagesLoading(true);
         try {
             const response = await axiosAmore.get(`chat/messages_v2?page=1&conversation=${conversationId}`, { useAuth: true });
-            console.log(response);
             setMessages(response.data.data.messages);
-
         } catch (e) {
             console.log(e);
         } finally {

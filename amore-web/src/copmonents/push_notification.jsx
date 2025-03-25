@@ -5,20 +5,23 @@ import avatarImage from '../assets/images/avatar7.png'
 import FlexBox from './flex_box';
 import { toast } from 'react-toastify';
 
-const PushNotification = ({ title, body, image, toastId }) => {
+const PushNotification = ({ payload }) => {
+
+    const extraData = JSON.parse(payload?.data?.extraData);
+
     return (
         <div className='push-notification'>
             <div className='push-notification-image'>
-                <img width={'100%'} height={'100%'} src={avatarImage} />
+                <img width={'100%'} height={'100%'} src={extraData?.senderImage || avatarImage} />
             </div>
 
             <FlexBox flexDirection='column' alignItems='flex-start' gap='6px 0'>
-                <h4>{title}</h4>
-                <p>{body}</p>
+                <h4>{payload?.notification.title}</h4>
+                <p>{payload?.notification.body}</p>
             </FlexBox>
 
             <CrossCloseIcon
-                onClick={() => toast.dismiss(toastId)}
+                onClick={() => toast.dismiss(payload.messageId)}
                 color={colors.darkText}
                 width='24'
                 height='24'

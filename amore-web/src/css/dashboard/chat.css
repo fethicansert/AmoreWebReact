@@ -236,27 +236,95 @@
     overflow: scroll;
     display: flex;
     flex-direction: column-reverse;
-    position: relative;
+    /* align-items: flex-end; */
+    /* grid-auto-flow: row; */
 }
 
+.chat-bubble,
+.chat-bubble-wrapper {
+    display: grid;
+}
 
 .chat-bubble {
-    display: grid;
-    grid-template-columns: auto auto;
-    margin: .5rem 0;
-    gap: 0 15px;
     align-items: end;
-    width: fit-content;
+    margin: .65rem 0;
+    gap: 0 10px;
+    max-width: 80%;
+}
+
+.chat-bubble-wrapper {
+    max-width: 100%;
+    gap: 0 8px;
+    grid-template-columns: auto 30px;
+}
+
+.chat-bubble p {
+    word-break: break-word;
 }
 
 .chat-input-container-wrapper {
     padding: .85rem;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: 0 8px;
 }
+
+.chat-send-image-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.chat-send-image-button,
+.chat-send-gift-button {
+    width: 47px;
+    height: 47px;
+    border: 1px solid var(--borderColor1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.chat-send-image-button:hover {
+    background-color: var(--brand2);
+}
+
+.chat-send-gift-button:hover {
+    background-color: var(--backGround4);
+}
+
+.chat-send-image-button:hover svg path,
+.chat-send-gift-button:hover svg path {
+    stroke: var(--whiteText);
+}
+
+.chat-image-input {
+    background: red;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    right: 0px;
+    opacity: 0;
+    /* z-index: 3; */
+    /* height: 100%; */
+}
+
+/* .chat-send-image-button svg,
+.chat-send-gift-button svg {
+    transition: scale 200ms ease-in;
+}
+
+.chat-send-image-button:hover svg,
+.chat-send-gift-button:hover svg {
+    scale: 1.15;
+} */
+
 
 .chat-input-container {
     height: 47px;
     width: 100%;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr auto;
     align-items: center;
@@ -274,7 +342,7 @@
 
 .chat-input::placeholder {
     color: var(--fadedText);
-    font-size: .82rem;
+    font-size: .8rem;
 }
 
 .chat-input:focus {

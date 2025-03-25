@@ -341,3 +341,20 @@ export const MicrophoneIcon = ({ width = '24', height = '24', color = "#FFFFFF",
     <path d="M16.0016 9.09341C16.0097 12.4177 13.3204 15.1191 9.99609 15.1272C6.67096 15.1191 3.98214 12.4177 3.99025 9.09341" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
     <path fillRule="evenodd" clipRule="evenodd" d="M9.99576 12.1308C8.30766 12.1276 6.94225 10.7557 6.9463 9.06842V5.54946C6.9463 3.86541 8.31171 2.5 9.99576 2.5C11.6798 2.5 13.0453 3.86541 13.0453 5.54946V9.06842C13.0493 10.7557 11.6847 12.1268 9.99742 12.1308H9.99576Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
+
+export const SendImageIcon = ({ width = '21', height = '21', color = "#4B164C", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.4984 9.12742V13.3125C17.4984 15.7661 15.9629 17.4968 13.5094 17.4968H6.48095C4.02739 17.4968 2.5 15.7661 2.5 13.3125V6.69004C2.5 4.23567 4.0355 2.50652 6.48095 2.50652H10.8443" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M15.3584 2.56184V6.62463" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.391 4.5946H13.3281" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M8.99774 7.46664C8.99774 8.29476 8.32601 8.9665 7.49789 8.9665C6.66977 8.9665 5.99805 8.29476 5.99805 7.46664C5.99805 6.63852 6.66977 5.9668 7.49789 5.9668C8.32601 5.96598 8.99691 6.63691 8.99774 7.46502V7.46664Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.34668 16.0583C3.98033 14.9369 4.77685 13.9135 5.703 13.0278C6.91357 12.028 8.28621 13.5886 9.78933 13.5886C11.3013 13.5886 12.2032 10.1432 13.7711 10.1432C15.3147 10.1432 16.7448 11.6625 17.5 12.4428" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+export const SendGiftIcon = ({ width = '21', height = '21', color = "#4B164C", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M9.99642 5.95162H6.99401C6.07293 5.95162 5.32617 5.17892 5.32617 4.22622C5.32617 3.2727 6.07293 2.5 6.99401 2.5C9.32917 2.5 9.99642 5.95162 9.99642 5.95162Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M9.99707 5.95162H12.9993C13.9204 5.95162 14.6672 5.17892 14.6672 4.22622C14.6672 3.2727 13.9204 2.5 12.9993 2.5C10.6642 2.5 9.99707 5.95162 9.99707 5.95162Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M5.93574 5.95378H14.0568C15.8503 5.95378 16.9684 7.28919 16.9684 9.17592V14.2768C16.9684 16.1635 15.8431 17.4989 14.0568 17.4989H5.93574C4.14223 17.4989 3.03223 16.1635 3.03223 14.2768V9.17592C3.03223 7.28919 4.14223 5.95378 5.93574 5.95378Z" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.99707 17.5004V10.9863" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8.28061 9.92842H3.03223M16.9683 9.92842H11.7199" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.99517 10.9855L8.2793 11.5524L8.27957 9.92942L8.2793 5.97M10.0031 10.9857L11.7188 11.5443L11.7189 9.92942L11.7107 5.95378" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+</svg>
