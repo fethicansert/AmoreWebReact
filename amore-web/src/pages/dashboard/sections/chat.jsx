@@ -1,6 +1,6 @@
 import React, { startTransition, useEffect, useLayoutEffect, useRef, useState, useTransition } from 'react';
 import { useConversation } from '../../../hooks/use_conversation';
-import { ArrowHeadRight, MicrophoneIcon, PlayIcon, SearchIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
+import { ArrowHeadRight, CrossCloseIcon, MicrophoneIcon, PlayIcon, SearchIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import ChatCard from '../components/chat_card';
 import whatsAppIcon from '../../../assets/icons/whatsapp_icon.png';
@@ -30,6 +30,7 @@ const Chat = () => {
     const [searchFocused, setSearchFocused] = useState(false);
     const [currentChatIndex, setCurrentChatIndex] = useState(location?.state?.index || 0);
     const [messages, setMessages] = useState([]);
+    const [showPreviewImage, setShowPreviewImage] = useState(false);
 
     const [isMessagesLoading, setIsMessagesLoading] = useState(true);
 
@@ -42,10 +43,17 @@ const Chat = () => {
     const currentChatUser = getUser({ conversation: conversations[currentChatIndex] });
 
     const messageContentRef = useRef();
-
+    const isInitialLoadRef = useRef(true);
+    const sendImageRef = useRef(null);
 
     useEffect(() => {
-        messageContentRef.current.scroll({ top: 0, behavior: 'auto' });
+        if (isInitialLoadRef.current && messages.length > 0) {
+            messageContentRef.current.scroll({ top: messageContentRef.current.scrollHeight, behavior: 'instant' });
+            isInitialLoadRef.current = false;
+        } else {
+            messageContentRef.current.scroll({ top: messageContentRef.current.scrollHeight, behavior: 'smooth' });
+        }
+
     }, [messages])
 
     useEffect(() => {
@@ -64,7 +72,7 @@ const Chat = () => {
     return (
         <section className='chat'>
 
-            <div className='chat-sidebar' onClick={() => messageContentRef.current.scroll({ top: 0, behavior: 'auto' })}>
+            <div className='chat-sidebar'>
 
                 <div className={`chat-sidebar-search ${searchFocused ? 'active' : ''}`} >
                     <SearchIcon color={colors.iconColor} width='27' height='27' style={{ margin: '0 1rem' }} />
@@ -83,11 +91,9 @@ const Chat = () => {
 
                     {
                         isConversationsLoading
-
                             ? <div style={{ padding: '0 1rem' }}>
                                 {Array(10).fill().map((_, i) => <NotificationShimmer key={uuidv4()} marginBlock='27px' />)}
                             </div>
-
                             : searchedConversations.length > 0 ?
                                 searchedConversations.map((conversation, index) => {
                                     const user = getUser({ conversation: conversation })
@@ -97,7 +103,10 @@ const Chat = () => {
 
                                     return <ChatCard
                                         key={uuidv4()}
-                                        onClick={() => setCurrentChatIndex(index)}
+                                        onClick={() => {
+                                            setCurrentChatIndex(index);
+                                            isInitialLoadRef.current = true;
+                                        }}
                                         className={`chat-card-user ${currentUser.id === user.id ? 'active' : ''}`}
                                         image={user.photos[0].url} title={user.name}
                                         text={text}
@@ -113,6 +122,26 @@ const Chat = () => {
             </div>
 
             <div className='chat-content'>
+
+                {/* //Send image preview */}
+                {showPreviewImage && <div className='chat-image-preview'>
+
+                    <div className='chat-image-preview-container'>
+                        <CrossCloseIcon onClick={() => {
+                            setShowPreviewImage(false);
+                            sendImageRef.current = null;
+                        }} width='28px' height='28px' style={{ position: 'absolute', top: '0', right: '0', margin: '1.5rem', cursor: 'pointer' }} />
+                        <img src={sendImageRef.current} />
+                    </div>
+
+                    <div className='chat-image-preview-input-wrapper'>
+                        <input className='chat-image-preview-input' placeholder='Bir şeyler yaz' autoFocus={true} />
+                        <div className='send-image-button' onClick={sendImage}>
+                            <SendImageIcon width='28px' height='28px' color={colors.backGround3} />
+                        </div>
+                    </div>
+                </div>}
+
 
                 <div className='chat-content-header'>
                     {
@@ -131,6 +160,7 @@ const Chat = () => {
 
                 <div className='chat-content-messages' ref={messageContentRef}>
 
+
                     {isMessagesLoading
                         ? <ChatBubbleShimmer />
                         : messages.map(message => {
@@ -140,13 +170,52 @@ const Chat = () => {
 
                 </div>
 
-                <ChatInput sendText={sendText} />
+                <ChatInput sendText={sendText} handleImageChange={handleImageChange} />
 
             </div>
 
         </section >
 
     );
+
+    //Work when user upload image reads file-image and setStates
+    function handleImageChange(e) {
+
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            let file = e.target.files[0];
+            reader.onloadend = function () {
+                sendImageRef.current = reader.result;
+                setShowPreviewImage(true);
+            };
+            reader.readAsDataURL(file);
+
+            e.target.value = "";
+        }
+    }
+
+    async function sendImage() {
+
+        const tempId = uuidv4();
+
+        // const optimisticMessage = {
+        //     id: tempId,
+        //     content: text,
+        //     type: 'text',
+        //     user: auth,
+        //     isSending: true
+        // };
+
+        const imageMessage = {
+            dataUrl: sendImageRef.current,
+            type: 'image',
+            user: auth,
+            // isSending: true
+        };
+
+        setMessages(prev => [...prev, imageMessage]);
+        setShowPreviewImage(false);
+    }
 
     async function sendText(text) {
 
@@ -166,8 +235,7 @@ const Chat = () => {
             user: currentChatUser.id,
         };
 
-
-        setMessages(prev => [optimisticMessage, ...prev]);
+        setMessages(prev => [...prev, optimisticMessage]);
 
         try {
             const response = await axiosAmore.post('chat/send_message', message, { useAuth: true });
@@ -187,7 +255,8 @@ const Chat = () => {
         setIsMessagesLoading(true);
         try {
             const response = await axiosAmore.get(`chat/messages_v2?page=1&conversation=${conversationId}`, { useAuth: true });
-            setMessages(response.data.data.messages);
+            const reversedMessages = response.data.data.messages.reverse();
+            setMessages(reversedMessages);
         } catch (e) {
             console.log(e);
         } finally {

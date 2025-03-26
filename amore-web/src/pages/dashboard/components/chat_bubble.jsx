@@ -1,6 +1,7 @@
 import ChatCardImage from './chat_card_image';
 import { colors } from '../../../utils/theme';
 import { BeatLoader } from 'react-spinners';
+import { getTimeFromISO } from '../../../utils/functions';
 
 
 const ChatBubble = ({ message, isSender }) => {
@@ -45,29 +46,9 @@ const ChatBubble = ({ message, isSender }) => {
     </div>
 
 
-    function getTimeFromISO(isoString) {
-        const date = new Date(isoString);
-        const hours = date.getUTCHours().toString().padStart(2, '0');
-        const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
-    }
+
 }
 
 export default ChatBubble
 
 
-{/* <div className='chat-bubble' style={{ justifySelf: isSender ? 'self-start' : 'self-end', gridTemplateColumns: isSender ? 'auto auto' : 'auto auto' }}>
-{isSender && <ChatCardImage image={message?.user?.photos?.[0]?.url} showStatus={false} radius='37px' />}
-<div style={wrapperStyle}>
-    <p style={messageStyle} className='chat-bubble-wrapper'>
-        {message?.content || message?.type}
-    </p>
-
-    {
-        message?.isSending
-            ? <BeatLoader size={3.5} color={'rgba(255, 255, 255, .8)'} style={{ position: 'relative', top: '1.5px' }} />
-            : <span style={timeStyle}>{time}</span>
-    }
-</div>
-</div>
-); */}

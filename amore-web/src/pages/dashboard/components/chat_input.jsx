@@ -2,7 +2,7 @@ import React, { startTransition, useState } from 'react'
 import { MicrophoneIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 
-const ChatInput = ({ sendText }) => {
+const ChatInput = ({ sendText, handleImageChange }) => {
     const [messageText, setMessageText] = useState('');
     const [messageTextFocused, setMessageTextFocused] = useState(false);
     return (
@@ -10,6 +10,7 @@ const ChatInput = ({ sendText }) => {
 
             <div className='chat-send-image-button'>
                 <input
+                    onChange={handleImageChange}
                     className='chat-image-input'
                     style={{ borderRadius: '50%' }}
                     type='file'
