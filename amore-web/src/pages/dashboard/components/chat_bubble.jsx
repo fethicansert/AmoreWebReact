@@ -16,7 +16,7 @@ const ChatBubble = ({ message, isSender }) => {
     }
 
     const timeStyle = {
-        color: isSender ? 'rgba(0, 0, 0, .6.5)' : 'rgba(255, 255, 255, .7)',
+        color: isSender ? 'rgba(0, 0, 0, .65)' : 'rgba(255, 255, 255, .7)',
         fontWeight: isSender ? 400 : 600,
         fontSize: '.6rem',
         alignSelf: 'self-end',

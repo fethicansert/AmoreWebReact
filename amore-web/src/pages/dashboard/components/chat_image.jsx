@@ -1,23 +1,29 @@
 import React from 'react'
 import { colors } from '../../../utils/theme'
 import { getTimeFromISO } from '../../../utils/functions'
-import { BeatLoader, CircleLoader, ClipLoader, FadeLoader, MoonLoader, PuffLoader, } from 'react-spinners'
+import { BeatLoader } from 'react-spinners';
+import ChatCardImage from './chat_card_image';
 
 const ChatImage = ({ message, isSender }) => {
 
     return (
-        <div className='chat-image' style={{ background: isSender ? colors.borderColor1 : colors.brand1, alignSelf: isSender ? 'flex-start' : 'flex-end' }}>
-            <div className='chat-image-sending'>
+        <div className='chat-image' style={{ alignSelf: isSender ? 'flex-start' : 'flex-end', gridTemplateColumns: isSender ? 'auto auto' : 'auto' }}>
 
+            {isSender && <ChatCardImage image={message?.user?.photos?.[0]?.url} showStatus={false} radius='37px' />}
 
-                <BeatLoader size={30} color={colors.brand1} style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)' }} />
+            <div className='chat-image-container' style={{ background: isSender ? colors.inputColor : colors.brand1 }}>
+                <img src={message.dataUrl} />
+
+                {!message?.isSending && <span className='chat-image-time' style={{ color: isSender ? 'rgba(0, 0, 0, .65)' : 'rgba(255, 255, 255, .8)', }}>
+                    {getTimeFromISO('2025-03-26T08:12:23.717Z')}
+                </span>}
+
+                {message.isSending && <div className='chat-image-sending'>
+                    <BeatLoader size={30} color={colors.brand1} />
+                </div>}
+
             </div>
 
-
-            <img src={message.dataUrl} />
-            {/* <div className='chat-image-time'>
-                {message.isSending ? <BeatLoader color={colors.brand1} size={5} /> : getTimeFromISO('2025-03-26T08:12:23.717Z')}
-            </div> */}
         </div>
     )
 }

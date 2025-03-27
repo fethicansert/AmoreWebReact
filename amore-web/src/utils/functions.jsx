@@ -256,6 +256,7 @@ export function handlePushPermission({ onGranted, onDenied, onPromptGranted, onP
 };
 
 
+//Transfrom base64 to Blob
 export function base64ToBlob({ base64String, mimeType }) {
     const byteCharacters = atob(base64String.split(',')[1]); // Base64'ü çözüyoruz
     const byteNumbers = new Array(byteCharacters.length);
@@ -265,10 +266,10 @@ export function base64ToBlob({ base64String, mimeType }) {
     }
 
     const byteArray = new Uint8Array(byteNumbers);
-    console.log(new Blob([byteArray], { type: mimeType }));
-    return new Blob([byteArray], { type: mimeType }); // Blob nesnesi oluştur
-}
+    const blob = new Blob([byteArray], { type: mimeType })
 
+    return blob; // Blob nesnesi oluştur
+}
 
 
 export function checkScrollThresold({ e, card, rowLength, columnCount, thresholdPercentage }) {
@@ -279,10 +280,19 @@ export function checkScrollThresold({ e, card, rowLength, columnCount, threshold
     return false
 }
 
-
 export function getTimeFromISO(isoString) {
     const date = new Date(isoString);
     const hours = date.getUTCHours().toString().padStart(2, '0');
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
     return `${hours}:${minutes}`;
+}
+
+export function getImageDimensions(file) {
+    return new Promise(function (resolved, rejected) {
+        var i = new Image()
+        i.onload = function () {
+            resolved({ w: i.width, h: i.height })
+        };
+        i.src = file
+    })
 }

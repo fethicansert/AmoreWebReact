@@ -1,6 +1,6 @@
-import React, { startTransition, useEffect, useLayoutEffect, useRef, useState, useTransition } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useConversation } from '../../../hooks/use_conversation';
-import { ArrowHeadRight, CrossCloseIcon, MicrophoneIcon, PlayIcon, SearchIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
+import { ArrowHeadRight, CrossCloseIcon, SearchIcon, SendImageIcon, } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 import ChatCard from '../components/chat_card';
 import whatsAppIcon from '../../../assets/icons/whatsapp_icon.png';
@@ -15,8 +15,8 @@ import '../../../css/dashboard/chat.css'
 import { axiosAmore } from '../../../api/axios';
 import ChatBubbleShimmer from '../components/chat_bubble_shimmer';
 import ChatType from '../components/chat_type';
-import { useOptimistic } from "react";
 import ChatInput from '../components/chat_input';
+import { base64ToBlob, getImageDimensions } from '../../../utils/functions';
 
 const Chat = () => {
 
@@ -44,7 +44,7 @@ const Chat = () => {
 
     const messageContentRef = useRef();
     const isInitialLoadRef = useRef(true);
-    const sendImageRef = useRef(null);
+    const sendImageRef = useRef({ base64: '', dimensions: {}, fileSize: 0, mimeType: '' });
 
     useEffect(() => {
         if (isInitialLoadRef.current && messages.length > 0) {
@@ -131,7 +131,7 @@ const Chat = () => {
                             setShowPreviewImage(false);
                             sendImageRef.current = null;
                         }} width='28px' height='28px' style={{ position: 'absolute', top: '0', right: '0', margin: '1.5rem', cursor: 'pointer' }} />
-                        <img src={sendImageRef.current} />
+                        <img src={sendImageRef.current.base64} />
                     </div>
 
                     <div className='chat-image-preview-input-wrapper'>
@@ -179,13 +179,16 @@ const Chat = () => {
     );
 
     //Work when user upload image reads file-image and setStates
-    function handleImageChange(e) {
+    async function handleImageChange(e) {
 
         if (e.target.files && e.target.files[0]) {
+
             let reader = new FileReader();
             let file = e.target.files[0];
-            reader.onloadend = function () {
-                sendImageRef.current = reader.result;
+
+            reader.onloadend = async function () {
+                const dimensions = await getImageDimensions(reader.result);
+                sendImageRef.current = { fileSize: file.size, base64: reader.result, dimensions, mimeType: file.type };
                 setShowPreviewImage(true);
             };
             reader.readAsDataURL(file);
@@ -198,24 +201,49 @@ const Chat = () => {
 
         const tempId = uuidv4();
 
-        // const optimisticMessage = {
-        //     id: tempId,
-        //     content: text,
-        //     type: 'text',
-        //     user: auth,
-        //     isSending: true
-        // };
+        const image = sendImageRef.current;
 
-        const imageMessage = {
-            dataUrl: sendImageRef.current,
+        const optimisticMessage = {
+            id: tempId,
+            dataUrl: image.base64,
             type: 'image',
             user: auth,
-            // isSending: true
+            isSending: true,
         };
 
-        setMessages(prev => [...prev, imageMessage]);
+        const message = {
+            file: base64ToBlob({ base64String: image.base64, mimeType: image.mimeType }),
+            size: image.fileSize,
+            width: image.dimensions.w,
+            height: image.dimensions.h,
+            type: 'image',
+            user: currentChatUser.id,
+            isSending: false
+        };
+
+        const formData = new FormData();
+
+        for (const key in message) {
+            if (message.hasOwnProperty(key)) {
+                formData.append(key, message[key]);
+            }
+        }
+
+        setMessages(prev => [...prev, optimisticMessage]);
         setShowPreviewImage(false);
+
+        try {
+            const response = await axiosAmore.post('chat/send_message', formData, { useAuth: true });
+            if (response.status === 200) {
+                console.log(response);
+                const responseMessage = { ...response.data.data, dataUrl: image.base64 };
+                setMessages(prev => prev.map(msg => msg.id === tempId ? responseMessage : msg));
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
+
 
     async function sendText(text) {
 
@@ -237,14 +265,20 @@ const Chat = () => {
 
         setMessages(prev => [...prev, optimisticMessage]);
 
+        const formData = new FormData();
+
+        for (const key in message) {
+            if (message.hasOwnProperty(key)) {
+                formData.append(key, message[key]);
+            }
+        }
+
         try {
-            const response = await axiosAmore.post('chat/send_message', message, { useAuth: true });
+            const response = await axiosAmore.post('chat/send_message', formData, { useAuth: true });
             setMessages(prev => prev.map(msg => msg.id === tempId ? response.data.data : msg));
         } catch (err) {
             console.log(err);
         }
-
-
     }
 
     function getUser({ conversation }) {
