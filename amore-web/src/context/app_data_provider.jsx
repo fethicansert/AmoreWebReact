@@ -23,6 +23,7 @@ const AppDataProvider = ({ children }) => {
         interests: [], locations: [], ip: {}, data: {}, gifts: {}
     });
 
+    console.log(appData.gifts);
 
     //SIDE-EFFECTS
 

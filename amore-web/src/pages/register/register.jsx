@@ -48,6 +48,8 @@ const Register = () => {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    const imagesRef = useRef([]);
+
     const [selectedDate, setSelectedDate] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [smsCode, setSmsCode] = useState({
@@ -357,12 +359,20 @@ const Register = () => {
             formData.append(`interests[${index}]`, hobby);
         });
 
-        userImages.forEach((file) => {
-            formData.append(`files`, base64ToBlob({ base64String: file, mimeType: "image/png" }));
+        console.log(imagesRef.current);
+
+        console.log(userImages);
+
+
+        imagesRef.current.forEach((file) => {
+            const fileName = file.name.split('/').pop()
+            formData.append(`files`, file, fileName);
         });
 
         try {
-            const response = await axiosAmore.post('user/register', formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+            const response = await axiosAmore.post('user/register', formData);
+            console.log(response);
+
             if (response.status === 200) {
                 setAuth(response.data.data);
                 navigate('/dashboard/user-swipe');
@@ -394,6 +404,7 @@ const Register = () => {
             let reader = new FileReader();
             let file = e.target.files[0];
             reader.onloadend = function () {
+                imagesRef.current.push(file);
                 setUserImages(function (prev) {
                     return [...prev, reader.result];
                 });

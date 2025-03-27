@@ -16,7 +16,8 @@ import { axiosAmore } from '../../../api/axios';
 import ChatBubbleShimmer from '../components/chat_bubble_shimmer';
 import ChatType from '../components/chat_type';
 import ChatInput from '../components/chat_input';
-import { base64ToBlob, getImageDimensions } from '../../../utils/functions';
+import { getImageDimensions } from '../../../utils/functions';
+import ChatGiftSelect from '../components/chat_gift_select';
 
 const Chat = () => {
 
@@ -44,7 +45,7 @@ const Chat = () => {
 
     const messageContentRef = useRef();
     const isInitialLoadRef = useRef(true);
-    const sendImageRef = useRef({ base64: '', dimensions: {}, fileSize: 0, mimeType: '' });
+    const sendImageRef = useRef({ base64: '', dimensions: {}, fileSize: 0, mimeType: '', file: null });
 
     useEffect(() => {
         if (isInitialLoadRef.current && messages.length > 0) {
@@ -96,8 +97,9 @@ const Chat = () => {
                             </div>
                             : searchedConversations.length > 0 ?
                                 searchedConversations.map((conversation, index) => {
-                                    const user = getUser({ conversation: conversation })
-                                    const text = !conversation?.lastMessage?.content ? 'Hadi ilk adımı sen at!' : conversation?.lastMessage?.content.length > 30 ? `${conversation?.lastMessage?.content.slice(0, 30)}...` : conversation?.lastMessage?.content;
+
+                                    const user = getUser({ conversation: conversation });
+                                    const text = getLastMessage({ conversation: conversation });
                                     const time = conversation?.createdDate;
                                     const currentUser = conversations[currentChatIndex].participants[0].id !== auth.id ? conversations[currentChatIndex].participants[0] : conversations[currentChatIndex].participants[1];
 
@@ -124,24 +126,28 @@ const Chat = () => {
             <div className='chat-content'>
 
                 {/* //Send image preview */}
-                {showPreviewImage && <div className='chat-image-preview'>
+                {showPreviewImage &&
+                    <div className='chat-image-preview'>
 
-                    <div className='chat-image-preview-container'>
-                        <CrossCloseIcon onClick={() => {
-                            setShowPreviewImage(false);
-                            sendImageRef.current = null;
-                        }} width='28px' height='28px' style={{ position: 'absolute', top: '0', right: '0', margin: '1.5rem', cursor: 'pointer' }} />
-                        <img src={sendImageRef.current.base64} />
-                    </div>
+                        <div className='chat-image-preview-container'>
+                            <CrossCloseIcon onClick={() => {
+                                setShowPreviewImage(false);
+                                sendImageRef.current = null;
+                            }} width='28px' height='28px' style={{ position: 'absolute', top: '0', right: '0', margin: '1.5rem', cursor: 'pointer' }} />
+                            <img src={sendImageRef.current.base64} />
+                        </div>
 
-                    <div className='chat-image-preview-input-wrapper'>
-                        <input className='chat-image-preview-input' placeholder='Bir şeyler yaz' autoFocus={true} />
-                        <div className='send-image-button' onClick={sendImage}>
-                            <SendImageIcon width='28px' height='28px' color={colors.backGround3} />
+                        <div className='chat-image-preview-input-wrapper'>
+                            <input className='chat-image-preview-input' placeholder='Bir şeyler yaz' autoFocus={true} />
+                            <div className='send-image-button' onClick={sendImage}>
+                                <SendImageIcon width='28px' height='28px' color={colors.backGround3} />
+                            </div>
                         </div>
                     </div>
-                </div>}
+                }
 
+
+                <ChatGiftSelect />
 
                 <div className='chat-content-header'>
                     {
@@ -160,7 +166,6 @@ const Chat = () => {
 
                 <div className='chat-content-messages' ref={messageContentRef}>
 
-
                     {isMessagesLoading
                         ? <ChatBubbleShimmer />
                         : messages.map(message => {
@@ -178,6 +183,32 @@ const Chat = () => {
 
     );
 
+    function getLastMessage({ conversation }) {
+
+        if (!conversation?.lastMessage) return 'Hadi ilk adımı sen at!'
+
+        switch (conversation?.lastMessage.type) {
+
+            case 'text':
+                return conversation?.lastMessage?.content.length > 30
+                    ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
+                    : conversation?.lastMessage?.content;
+
+            case 'image':
+                return '📷 Fotoğraf';
+
+            case 'audio':
+                return '🎵 Ses Kaydı';
+
+            case 'gift':
+                return '🎁 gift';
+
+            default:
+                return '✉️ mesaj';
+        }
+
+    }
+
     //Work when user upload image reads file-image and setStates
     async function handleImageChange(e) {
 
@@ -188,7 +219,7 @@ const Chat = () => {
 
             reader.onloadend = async function () {
                 const dimensions = await getImageDimensions(reader.result);
-                sendImageRef.current = { fileSize: file.size, base64: reader.result, dimensions, mimeType: file.type };
+                sendImageRef.current = { fileSize: file.size, base64: reader.result, dimensions, mimeType: file.type, file };
                 setShowPreviewImage(true);
             };
             reader.readAsDataURL(file);
@@ -212,7 +243,7 @@ const Chat = () => {
         };
 
         const message = {
-            file: base64ToBlob({ base64String: image.base64, mimeType: image.mimeType }),
+            //   file: base64ToBlob({ base64String: image.base64, mimeType: image.mimeType }),
             size: image.fileSize,
             width: image.dimensions.w,
             height: image.dimensions.h,
@@ -228,6 +259,11 @@ const Chat = () => {
                 formData.append(key, message[key]);
             }
         }
+
+        const fileName = image.file.name.split('/').pop()
+        console.log(fileName)
+
+        formData.append('file', image.file, fileName)
 
         setMessages(prev => [...prev, optimisticMessage]);
         setShowPreviewImage(false);

@@ -85,6 +85,8 @@ export const login = async ({ phone, otpId, otpCode, onStart,
     };
     try {
         const response = await axiosAmore.post('user/login', body);
+        console.log('login', response);
+
         if (response.status === 200) {
             request.response = response;
             request.status = response.status;
