@@ -529,8 +529,23 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0 1rem;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.chat-gift-select-filter-items-wrapper{
+    display: flex;
     overflow: scroll;
-    white-space: nowrap
+    white-space: nowrap;
+}
+
+.chat-gift-select-filter-user-coin{
+    display: flex;
+    align-items: center;
+    gap: 0 5px;
+    color: var(--whiteText);
+    font-size: .9rem;
 }
 
 .chat-gift-select-filter-item {

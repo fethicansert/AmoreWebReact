@@ -150,7 +150,7 @@ const Chat = () => {
                 }
 
 
-              {showGifts &&   <ChatGiftSelect />}
+              {showGifts && <ChatGiftSelect />}
 
                 <div className='chat-content-header'>
                     {

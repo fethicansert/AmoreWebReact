@@ -2,12 +2,15 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppData } from '../../../hooks/use_add_data'
 import { t } from 'i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { AmoreHeartIcon, ArrorHeadLeft, ArrowHeadRight } from '../../../assets/svg/svg_package';
+import { AmoreCoinIcon, AmoreHeartIcon, ArrorHeadLeft, ArrowHeadRight } from '../../../assets/svg/svg_package';
+import { useAuth } from '../../../hooks/use_auth';
+
 
 const ChatGiftSelect = () => {
 
     //CONTEXT
     const { gifts } = useAppData();
+    const {auth} = useAuth();
     
     //STATES
     const [activeCategorieId, setActiveCategorieId] = useState(null);
@@ -28,8 +31,21 @@ const ChatGiftSelect = () => {
     return (
         <div className='chat-gift-select'>
             <div className='chat-gift-select-filter'>
-                <div onClick={() => setActiveCategorieId(null)} className={`chat-gift-select-filter-item ${activeCategorieId === null ? 'active' : ''}`} key={uuidv4()}>Tüm İçerikler</div>
-                {giftCategories.map(categorie => <div className={`chat-gift-select-filter-item ${activeCategorieId === categorie._id ? 'active' : ''}`} onClick={() => setActiveCategorieId(categorie._id)} key={uuidv4()}>{categorie.name}</div>)}
+                <div className='chat-gift-select-filter-items-wrapper'>
+                    <div onClick={() => setActiveCategorieId(null)} className={`chat-gift-select-filter-item ${activeCategorieId === null ? 'active' : ''}`} key={uuidv4()}>Tüm İçerikler</div>
+                    { 
+                        giftCategories.map(categorie => <div 
+                                className={`chat-gift-select-filter-item ${activeCategorieId === categorie._id ? 'active' : ''}`} 
+                                onClick={() => setActiveCategorieId(categorie._id)} 
+                                key={uuidv4()}>{categorie.name}    
+                            </div>)
+                    }
+                </div>
+                
+                <div className='chat-gift-select-filter-user-coin'>
+                    <AmoreCoinIcon width='20' height='20'/>
+                    <span>{auth?.credits}</span>
+                </div>
             </div>
 
             <div className='chat-gifts'>
