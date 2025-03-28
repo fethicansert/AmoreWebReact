@@ -523,13 +523,14 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-
 }
 
 .chat-gift-select-filter {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0 1rem;
     display: flex;
+    overflow: scroll;
+    white-space: nowrap
 }
 
 .chat-gift-select-filter-item {
@@ -538,6 +539,7 @@
     font-size: .9rem;
     color: var(--whiteText);
     cursor: pointer;
+    /* width: max-content; */
 }
 
 .chat-gift-select-filter-item.active {
@@ -591,7 +593,13 @@
     max-height: 55px;
     min-height: 55px;
     display: block;
+    transition: scale 250ms ease;
 }
+
+.chat-gift-container:hover img{
+    scale:1.08;
+}  
+ 
 
 .chat-gifts-scroll-button {
     display: flex;

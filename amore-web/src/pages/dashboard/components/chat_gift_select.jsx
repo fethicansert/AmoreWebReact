@@ -40,7 +40,7 @@ const ChatGiftSelect = () => {
 
                 <div className='chat-gifts-wrapper' ref={giftsRef}>
                     {currentGifts.map(gift => <div className='chat-gift-container'>
-                        <img src={gift.url} />
+                        <img src={gift.url} draggable="false" />
                         <div className='chat-gift-price'><AmoreHeartIcon width='11' height='11'/> {gift.price}</div>
                     </div>)}
 
