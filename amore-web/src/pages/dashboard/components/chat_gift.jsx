@@ -1,15 +1,31 @@
-import React from 'react'
+import React from "react";
+import ChatCardImage from "./chat_card_image";
+import { colors } from "../../../utils/theme";
 
-const ChatGift = ({message, isSender}) => {
-    console.log(message);
-    
+const ChatGift = ({ message, isSender }) => {
+  console.log(message);
+ 
+
   return (
-    <div className='chat-gift' style={{ alignSelf: isSender ? 'flex-start' : 'flex-end' }}>
-        <div className='chat-gift-image-container'>
-                <img src={message.gift.url}/>
-        </div>
+    <div
+      className="chat-gift"
+      style={{
+        alignSelf: isSender ? "flex-start" : "flex-end",
+        gridTemplateColumns: isSender ? "auto auto" : "auto",
+      }}
+    >
+      {isSender && (
+        <ChatCardImage
+          image={message?.user?.photos?.[0]?.url}
+          showStatus={false}
+          radius="37px"
+        />
+      )}
+      <div className="chat-gift-image-container" style={{background: isSender ? colors.inputColor : colors.brand1}}>
+        <img src={message.gift.url} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChatGift
+export default ChatGift;
