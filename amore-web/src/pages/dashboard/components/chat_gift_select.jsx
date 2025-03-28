@@ -7,7 +7,7 @@ import { useAuth } from '../../../hooks/use_auth';
 import { useTranslation } from 'react-i18next';
 
 
-const ChatGiftSelect = () => {
+const ChatGiftSelect = ({sendGift}) => {
 
     //CONTEXT
     const { gifts } = useAppData();
@@ -58,7 +58,7 @@ const ChatGiftSelect = () => {
                 </div>
 
                 <div className='chat-gifts-wrapper' ref={giftsRef}>
-                    {currentGifts.map(gift => <div className='chat-gift-container'>
+                    {currentGifts.map(gift => <div onClick={() => sendGift({giftId:gift._id})} className='chat-gift-container'>
                         <img src={gift.url} draggable="false" />
                         <div className='chat-gift-price'><AmoreHeartIcon width='11' height='11'/> {gift.price}</div>
                     </div>)}

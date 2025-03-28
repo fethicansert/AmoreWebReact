@@ -150,7 +150,7 @@ const Chat = () => {
                 }
 
 
-              {showGifts && <ChatGiftSelect />}
+              {showGifts && <ChatGiftSelect sendGift={sendGift}/>}
 
                 <div className='chat-content-header'>
                     {
@@ -209,7 +209,22 @@ const Chat = () => {
             default:
                 return '✉️ mesaj';
         }
+    }
 
+    async function sendGift({giftId}){
+
+        const gift = {
+            gift : giftId,
+            user: currentChatUser.id
+        }
+
+        try {
+            const response = await axiosAmore.post('chat/send_gift',gift, { useAuth: true });
+            console.log(response);
+          
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     //Work when user upload image reads file-image and setStates
@@ -282,7 +297,6 @@ const Chat = () => {
             console.log(err);
         }
     }
-
 
     async function sendText(text) {
 
