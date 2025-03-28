@@ -118,6 +118,7 @@ body {
 }
 
 /* Registerde bir scroll cikiyor neden ? */
+.chat-gift-select-filter::-webkit-scrollbar,
 .chat-gifts-wrapper::-webkit-scrollbar,
 .chat-content-messages::-webkit-scrollbar,
 .chat-sidebar::-webkit-scrollbar,
@@ -138,6 +139,7 @@ body {
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
+.chat-gift-select-filter,
 .chat-gifts-wrapper,
 .chat-content-messages,
 .chat-sidebar,

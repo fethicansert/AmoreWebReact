@@ -539,7 +539,6 @@
     font-size: .9rem;
     color: var(--whiteText);
     cursor: pointer;
-    /* width: max-content; */
 }
 
 .chat-gift-select-filter-item.active {
