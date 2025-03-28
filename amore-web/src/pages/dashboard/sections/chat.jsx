@@ -47,6 +47,8 @@ const Chat = () => {
     const isInitialLoadRef = useRef(true);
     const sendImageRef = useRef({ base64: '', dimensions: {}, fileSize: 0, mimeType: '', file: null });
 
+    
+
     useEffect(() => {
         if (isInitialLoadRef.current && messages.length > 0) {
             messageContentRef.current.scroll({ top: messageContentRef.current.scrollHeight, behavior: 'instant' });

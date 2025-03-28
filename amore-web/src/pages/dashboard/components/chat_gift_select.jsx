@@ -1,23 +1,26 @@
-import React, { useMemo, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { useAppData } from '../../../hooks/use_add_data'
 import { t } from 'i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { ArrorHeadLeft, ArrowHeadRight } from '../../../assets/svg/svg_package';
+import { AmoreHeartIcon, ArrorHeadLeft, ArrowHeadRight } from '../../../assets/svg/svg_package';
 
 const ChatGiftSelect = () => {
 
+    //CONTEXT
     const { gifts } = useAppData();
-    const giftCategories = getGiftTypes();
+    
+    //STATES
     const [activeCategorieId, setActiveCategorieId] = useState(null);
 
-    const currentGifts = useMemo(() => {
-        if (activeCategorieId === null) return gifts;
-        return gifts.filter(gift => gift.giftCategory._id === activeCategorieId)
-    }, [activeCategorieId]);
+    //CONSTANTS
+    const currentGifts =  useMemo(() => activeCategorieId === null ? gifts : gifts.filter(gift => gift.giftCategory._id === activeCategorieId),
+    [activeCategorieId,gifts]);
+    const giftCategories = getGiftTypes();
 
-    console.log(currentGifts);
+    //REF
+    const giftsRef = useRef();
 
-
+    
     return (
         <div className='chat-gift-select'>
             <div className='chat-gift-select-filter'>
@@ -27,24 +30,28 @@ const ChatGiftSelect = () => {
 
             <div className='chat-gifts'>
 
-                <div className='chat-gifts-scroll-button'>
-                    <ArrorHeadLeft strokeWidth='1.8' />
+                <div className='chat-gifts-scroll-button'  onClick={() => scrollGifts(-115)}>
+                    <ArrorHeadLeft strokeWidth='1.8'  width='14' height='14'/>
                 </div>
 
-                <div className='chat-gifts-wrapper'>
+                <div className='chat-gifts-wrapper' ref={giftsRef}>
                     {currentGifts.map(gift => <div className='chat-gift-container'>
                         <img src={gift.url} />
+                        <div className='chat-gift-price'><AmoreHeartIcon width='11' height='11'/> {gift.price}</div>
                     </div>)}
 
                 </div>
 
-                <div className='chat-gifts-scroll-button'>
-                    <ArrowHeadRight strokeWidth='1.8' />
+                <div className='chat-gifts-scroll-button' onClick={() => scrollGifts(115)}>
+                    <ArrowHeadRight strokeWidth='1.8' width='14' height='14'/>
                 </div>
             </div>
         </div>
     );
 
+    function scrollGifts(scroll){
+       giftsRef.current.scrollBy(scroll,0);   
+    }
 
     function getGiftTypes() {
         const categorieIds = [];
