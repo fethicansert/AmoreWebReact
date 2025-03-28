@@ -305,6 +305,18 @@ i18n.use(initReactI18next).init({
                     VERIFY_BUTTON: "Doğrula"
                 },
 
+                GIFTS: {
+                    CATEGORIE_TITLES:{
+                        ALL:"Tüm İçerikler",
+                        SPECIAL: "Özel",
+                        FLOWERS: "Çiçekler",
+                        ROMANCE: "Romantizm",
+                        DRINKS: "İçecekler",
+                        HEARTS: "Kalpler",
+                        CELEBRATION: "Kutlama"
+                    }  
+                },
+
                 //STATUS
                 STATUS: {
                     TITLE: "Kullanıc Durumu",
@@ -711,6 +723,20 @@ i18n.use(initReactI18next).init({
                     VERIFY_BUTTON: "Verify",
                     SEND_AGAIN_BUTTON: "Send Again"
                 },
+
+                //GIFTS
+                GIFTS: {
+                    CATEGORIE_TITLES:{
+                        ALL:"All Contents",
+                        SPECIAL:"Special",
+                        FLOWERS:"FLowers",
+                        ROMANCE:"Romance",
+                        DRINKS:"Drinks",
+                        HEARTS:"Hearts",
+                        CELEBRATION:"Celebration"
+                    }  
+                },
+
                 // STATUS
                 STATUS: {
                     ONLINE: "Online",

@@ -4,6 +4,7 @@ import { t } from 'i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { AmoreCoinIcon, AmoreHeartIcon, ArrorHeadLeft, ArrowHeadRight } from '../../../assets/svg/svg_package';
 import { useAuth } from '../../../hooks/use_auth';
+import { useTranslation } from 'react-i18next';
 
 
 const ChatGiftSelect = () => {
@@ -11,6 +12,7 @@ const ChatGiftSelect = () => {
     //CONTEXT
     const { gifts } = useAppData();
     const {auth} = useAuth();
+    const {t,_} = useTranslation();
     
     //STATES
     const [activeCategorieId, setActiveCategorieId] = useState(null);
@@ -32,12 +34,13 @@ const ChatGiftSelect = () => {
         <div className='chat-gift-select'>
             <div className='chat-gift-select-filter'>
                 <div className='chat-gift-select-filter-items-wrapper'>
-                    <div onClick={() => setActiveCategorieId(null)} className={`chat-gift-select-filter-item ${activeCategorieId === null ? 'active' : ''}`} key={uuidv4()}>Tüm İçerikler</div>
+                    <div onClick={() => setActiveCategorieId(null)} className={`chat-gift-select-filter-item ${activeCategorieId === null ? 'active' : ''}`} key={uuidv4()}>{t('GIFTS.CATEGORIE_TITLES.ALL')}</div>
                     { 
                         giftCategories.map(categorie => <div 
                                 className={`chat-gift-select-filter-item ${activeCategorieId === categorie._id ? 'active' : ''}`} 
                                 onClick={() => setActiveCategorieId(categorie._id)} 
-                                key={uuidv4()}>{categorie.name}    
+                                key={uuidv4()}>
+                                {t(`GIFTS.CATEGORIE_TITLES.${categorie?.name.toUpperCase()}`)}    
                             </div>)
                     }
                 </div>
