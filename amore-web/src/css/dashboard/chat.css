@@ -523,6 +523,8 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
+    animation: fade 100ms ease;
+    transform-origin: center;
 }
 
 .chat-gift-select-filter {

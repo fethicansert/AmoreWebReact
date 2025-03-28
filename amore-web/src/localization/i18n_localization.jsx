@@ -729,7 +729,7 @@ i18n.use(initReactI18next).init({
                     CATEGORIE_TITLES:{
                         ALL:"All Contents",
                         SPECIAL:"Special",
-                        FLOWERS:"FLowers",
+                        FLOWERS:"Flowers",
                         ROMANCE:"Romance",
                         DRINKS:"Drinks",
                         HEARTS:"Hearts",
