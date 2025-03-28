@@ -32,6 +32,7 @@ const Chat = () => {
     const [currentChatIndex, setCurrentChatIndex] = useState(location?.state?.index || 0);
     const [messages, setMessages] = useState([]);
     const [showPreviewImage, setShowPreviewImage] = useState(false);
+    const [showGifts, setShowGifts] = useState(false);
 
     const [isMessagesLoading, setIsMessagesLoading] = useState(true);
 
@@ -149,7 +150,7 @@ const Chat = () => {
                 }
 
 
-                <ChatGiftSelect />
+              {showGifts &&   <ChatGiftSelect />}
 
                 <div className='chat-content-header'>
                     {
@@ -177,7 +178,7 @@ const Chat = () => {
 
                 </div>
 
-                <ChatInput sendText={sendText} handleImageChange={handleImageChange} />
+                <ChatInput sendText={sendText} handleImageChange={handleImageChange} setShowGifts={setShowGifts} showGifts={showGifts}/>
 
             </div>
 

@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useAppData } from '../../../hooks/use_add_data'
 import { t } from 'i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -13,12 +13,16 @@ const ChatGiftSelect = () => {
     const [activeCategorieId, setActiveCategorieId] = useState(null);
 
     //CONSTANTS
-    const currentGifts =  useMemo(() => activeCategorieId === null ? gifts : gifts.filter(gift => gift.giftCategory._id === activeCategorieId),
+    const currentGifts =  useMemo(() => activeCategorieId === null ? gifts.sort((a,b) => b.price - a.price) : gifts.filter(gift => gift.giftCategory._id === activeCategorieId).sort((a,b) => b.price - a.price) ,
     [activeCategorieId,gifts]);
     const giftCategories = getGiftTypes();
 
     //REF
     const giftsRef = useRef();
+
+    useEffect(() => {
+        giftsRef.current.scroll({left:0, behavior:'instant'});
+    },[activeCategorieId])
 
     
     return (
