@@ -3,9 +3,6 @@ import ChatCardImage from "./chat_card_image";
 import { colors } from "../../../utils/theme";
 
 const ChatGift = ({ message, isSender }) => {
-  console.log(message);
- 
-
   return (
     <div
       className="chat-gift"
@@ -21,7 +18,10 @@ const ChatGift = ({ message, isSender }) => {
           radius="37px"
         />
       )}
-      <div className="chat-gift-image-container" style={{background: isSender ? colors.inputColor : colors.brand1}}>
+      <div
+        className="chat-gift-image-container"
+        style={{ background: isSender ? colors.inputColor : colors.brand1 }}
+      >
         <img src={message.gift.url} />
       </div>
     </div>

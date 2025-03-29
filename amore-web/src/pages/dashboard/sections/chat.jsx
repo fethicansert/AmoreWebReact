@@ -274,29 +274,6 @@ const Chat = () => {
     </section>
   );
 
-  function getLastMessage({ conversation }) {
-    if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";
-
-    switch (conversation?.lastMessage.type) {
-      case "text":
-        return conversation?.lastMessage?.content.length > 30
-          ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
-          : conversation?.lastMessage?.content;
-
-      case "image":
-        return "📷 Fotoğraf";
-
-      case "audio":
-        return "🎵 Ses Kaydı";
-
-      case "gift":
-        return "🎁 gift";
-
-      default:
-        return "✉️ mesaj";
-    }
-  }
-
   async function sendGift({ giftId }) {
     const gift = {
       gift: giftId,
@@ -308,31 +285,13 @@ const Chat = () => {
         useAuth: true,
       });
       console.log(response);
+
+      if (response.status === 200) {
+        setMessages((prev) => [...prev, response.data.data]);
+        setShowGifts(false);
+      }
     } catch (e) {
       console.log(e);
-    }
-  }
-
-  //Work when user upload image reads file-image and setStates
-  async function handleImageChange(e) {
-    if (e.target.files && e.target.files[0]) {
-      let reader = new FileReader();
-      let file = e.target.files[0];
-
-      reader.onloadend = async function () {
-        const dimensions = await getImageDimensions(reader.result);
-        sendImageRef.current = {
-          fileSize: file.size,
-          base64: reader.result,
-          dimensions,
-          mimeType: file.type,
-          file,
-        };
-        setShowPreviewImage(true);
-      };
-      reader.readAsDataURL(file);
-
-      e.target.value = "";
     }
   }
 
@@ -430,6 +389,52 @@ const Chat = () => {
       );
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  //Work when user upload image reads file-image and setStates
+  async function handleImageChange(e) {
+    if (e.target.files && e.target.files[0]) {
+      let reader = new FileReader();
+      let file = e.target.files[0];
+
+      reader.onloadend = async function () {
+        const dimensions = await getImageDimensions(reader.result);
+        sendImageRef.current = {
+          fileSize: file.size,
+          base64: reader.result,
+          dimensions,
+          mimeType: file.type,
+          file,
+        };
+        setShowPreviewImage(true);
+      };
+      reader.readAsDataURL(file);
+
+      e.target.value = "";
+    }
+  }
+
+  function getLastMessage({ conversation }) {
+    if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";
+
+    switch (conversation?.lastMessage.type) {
+      case "text":
+        return conversation?.lastMessage?.content.length > 30
+          ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
+          : conversation?.lastMessage?.content;
+
+      case "image":
+        return "📷 Fotoğraf";
+
+      case "audio":
+        return "🎵 Ses Kaydı";
+
+      case "gift":
+        return "🎁 Gift";
+
+      default:
+        return "✉️ Mesaj";
     }
   }
 
