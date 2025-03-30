@@ -52,10 +52,10 @@ const Logout = ({ closeLogout }) => {
     );
 
     async function handleLogout() {
-        navigate('/');
         const token = localStorage.getItem('fcmToken');
         const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: language });
         localStorage.clear('fcmToken');
+        navigate('/');
         setTimeout(() => { setAuth({}); }, 0)
     }
 }

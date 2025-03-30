@@ -65,18 +65,19 @@ const Chat = () => {
   });
 
   useEffect(() => {
-    if (isInitialLoadRef.current && messages.length > 0) {
-      messageContentRef.current.scroll({
-        top: messageContentRef.current.scrollHeight,
-        behavior: "instant",
-      });
-      isInitialLoadRef.current = false;
-    } else {
+
+      if(isInitialLoadRef.current && messages.length > 0){
+        isInitialLoadRef.current = false
+        messageContentRef.current.scroll({
+          top: messageContentRef.current.scrollHeight,
+          behavior: "instant",
+        });
+      }
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
         behavior: "smooth",
       });
-    }
+    
   }, [messages]);
 
   useEffect(() => {

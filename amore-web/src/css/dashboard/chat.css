@@ -443,7 +443,7 @@
     border-radius: 12px;
 }
 
-.chat-image-time {
+.chat-image-time{
     font-size: .65rem;
     justify-self: self-end;
     position: absolute;
@@ -615,7 +615,6 @@
     scale:1.08;
 }  
  
-
 .chat-gifts-scroll-button {
     display: flex;
     align-items: center;
@@ -638,10 +637,18 @@
 
 .chat-gift-image-container{
     border-radius: 12px;
+    padding: .7rem;
+    position: relative;
 }
 
 .chat-gift-image-container img{
     display: block;
     width: 100%;
     height: 100%;
+}
+.chat-gift-time {
+    position: absolute;
+    right: 10px;
+    bottom: 5px;
+    font-size: .65rem;
 }
