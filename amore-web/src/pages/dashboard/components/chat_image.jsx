@@ -4,7 +4,7 @@ import { getTimeFromISO } from '../../../utils/functions'
 import { BeatLoader } from 'react-spinners';
 import ChatCardImage from './chat_card_image';
 
-const ChatImage = ({ message, isSender }) => {
+const ChatImage = ({ message, isSender,bubbleStyle }) => {
 
     return (
         <div className='chat-image' style={{ alignSelf: isSender ? 'flex-start' : 'flex-end', gridTemplateColumns: isSender ? 'auto auto' : 'auto' }}>
