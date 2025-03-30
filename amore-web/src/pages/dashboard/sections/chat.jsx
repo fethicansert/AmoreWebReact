@@ -66,18 +66,18 @@ const Chat = () => {
 
   useEffect(() => {
 
-      if(isInitialLoadRef.current && messages.length > 0){
-        isInitialLoadRef.current = false
-        messageContentRef.current.scroll({
-          top: messageContentRef.current.scrollHeight,
-          behavior: "instant",
-        });
-      }
+    if (isInitialLoadRef.current && messages.length > 0) {
+      isInitialLoadRef.current = false
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
-        behavior: "smooth",
+        behavior: "instant",
       });
-    
+    }
+    messageContentRef.current.scroll({
+      top: messageContentRef.current.scrollHeight,
+      behavior: "smooth",
+    });
+
   }, [messages]);
 
   useEffect(() => {
@@ -154,9 +154,8 @@ const Chat = () => {
                     setCurrentChatIndex(index);
                     isInitialLoadRef.current = true;
                   }}
-                  className={`chat-card-user ${
-                    currentUser.id === user.id ? "active" : ""
-                  }`}
+                  className={`chat-card-user ${currentUser.id === user.id ? "active" : ""
+                    }`}
                   image={user.photos[0].url}
                   title={user.name}
                   text={text}
@@ -310,7 +309,6 @@ const Chat = () => {
     };
 
     const message = {
-      //   file: base64ToBlob({ base64String: image.base64, mimeType: image.mimeType }),
       size: image.fileSize,
       width: image.dimensions.w,
       height: image.dimensions.h,
