@@ -646,4 +646,6 @@
     font-size: .65rem;
 }
 
-
+.chat-gift{
+    position: relative;
+}
