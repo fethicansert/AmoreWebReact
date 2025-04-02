@@ -313,6 +313,7 @@
     bottom: 0px;
     right: 0px;
     opacity: 0;
+    cursor: pointer;
 }
 
 .chat-input-container {
@@ -488,13 +489,25 @@
 
 .chat-image-preview-close-icon {
     position: absolute;
-    top: -13px;
-    right: -13px;
     cursor: pointer;
     background-color: var(--negativeBlack);
     border-radius: 50%;
-    padding: .2rem;
     border: 1px solid var(--backGround3);
+    transition: scale 200ms ease;
+
+    top: -13px;
+    right: -13px;
+    padding: .12rem;
+}
+
+.chat-image-preview-close-icon:hover{
+    scale: 1.05;
+}
+
+.chat-image-preview-close-icon.small{
+    padding: .0;
+    top: -6px;
+    right:-7px;
 }
 
 .chat-image-preview-input-wrapper {
@@ -518,7 +531,6 @@
     border-radius: 12px;
     background-color: rgba(255, 255, 255, 0.1);
     position: relative;
-    cursor: pointer;
 }
 
 .chat-image-preview-row-item img {

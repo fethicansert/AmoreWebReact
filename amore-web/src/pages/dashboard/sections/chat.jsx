@@ -194,18 +194,34 @@ const Chat = () => {
                 {new Array(4).fill(null).map((_, index) => {
                   return (
                     <div
+                      key={uuidv4()}
                       className="chat-image-preview-row-item"
                       style={
                         !selectedImages?.[index + 1]
                           ? {
                               border: "1.5px solid rgba(255, 255, 255, 0.4)",
                               backdropFilter: "blur(8px)",
+                              cursor: "pointer",
                             }
                           : null
                       }
                     >
                       {selectedImages?.[index + 1] ? (
-                        <img src={selectedImages?.[index + 1]?.base64} />
+                        <>
+                          <img src={selectedImages?.[index + 1]?.base64} />
+                          <CrossCloseIcon
+                            className="chat-image-preview-close-icon small"
+                            onClick={() =>
+                              setSelectedImages((prev) =>
+                                prev.filter(
+                                  (image, _index) => _index !== index + 1
+                                )
+                              )
+                            }
+                            width="17px"
+                            height="17px"
+                          />
+                        </>
                       ) : (
                         <>
                           <SendImageIcon
@@ -443,6 +459,8 @@ const Chat = () => {
       console.log(err);
     }
   }
+
+  function handleDeleteImage(index) {}
 
   //Work when user upload image reads file-image and setStates
   async function handleImageChange(e) {
