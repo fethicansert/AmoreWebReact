@@ -1,21 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useConversation } from "../../../hooks/use_conversation";
-import {
-  ArrowHeadRight,
-  CrossCloseIcon,
-  SearchIcon,
-  SendImageIcon,
-  SendMessageIcon,
-} from "../../../assets/svg/svg_package";
-import { colors } from "../../../utils/theme";
+import { ArrowHeadRight, SearchIcon } from "../../../assets/svg/svg_package";
 import ChatCard from "../components/chat_card";
 import whatsAppIcon from "../../../assets/icons/whatsapp_icon.png";
 import { useAuth } from "../../../hooks/use_auth";
 import { v4 as uuidv4 } from "uuid";
 import NotificationShimmer from "../components/notification_shimmer";
-import CurrentUserInfoBox from "../../../copmonents/current_user_info_box";
-import FlexBox from "../../../copmonents/flex_box";
-import ChatCardImage from "../components/chat_card_image";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../../css/dashboard/chat.css";
 import { axiosAmore } from "../../../api/axios";
@@ -24,6 +14,10 @@ import ChatType from "../components/chat_type";
 import ChatInput from "../components/chat_input";
 import { getImageDimensions } from "../../../utils/functions";
 import ChatGiftSelect from "../components/chat_gift_select";
+import ChatImagePreview from "../components/chat_image_preview";
+import ChatContentHeader from "../components/chat_content_header";
+import ChatSidebarSearch from "../components/chat_sidebar_search";
+import ChatSidebarUsers from "../components/chat_sidebar_users";
 
 const Chat = () => {
   //NAVIGATION
@@ -33,7 +27,8 @@ const Chat = () => {
   //STATES
   const [searchedConversations, setSearchedConversations] = useState([]);
   const [search, setSearch] = useState("");
-  const [searchFocused, setSearchFocused] = useState(false);
+
+  //User can come from another pages with state user index so I can show selected user conversation.
   const [currentChatIndex, setCurrentChatIndex] = useState(
     location?.state?.index || 0
   );
@@ -49,18 +44,24 @@ const Chat = () => {
   const { auth } = useAuth();
   const { conversations, isConversationsLoading } = useConversation();
 
-  //CONSTANTS
-  const placeHolderText = searchFocused
-    ? "Aramaya başla!"
-    : "Birini mi arıyorsun?";
-  const currentChatUser = getUser({
-    conversation: conversations[currentChatIndex],
-  });
 
+  const isSearching = search.length > 0;
+
+  //REFS
+  const currentChatUser = useRef(getUser({
+    conversation: !isSearching ? conversations[currentChatIndex] : searchedConversations[currentChatIndex],
+  })
+)
+  //Use this to get height of message content so and we can know how much sroll need to scroll to bottom.
   const messageContentRef = useRef();
+  //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
   const isInitialLoadRef = useRef(true);
 
-  console.log(selectedImages);
+  useEffect(() => {
+    currentChatUser.current = getUser({
+      conversation: !isSearching ? conversations[currentChatIndex] : searchedConversations[currentChatIndex],
+    })
+  },[currentChatIndex, conversations]);
 
   useEffect(() => {
     if (isInitialLoadRef.current && messages.length > 0) {
@@ -76,6 +77,15 @@ const Chat = () => {
     });
   }, [messages]);
 
+  //Fetch Messages if currentChatIndex or searched conversation changge
+  useEffect(() => {
+      
+      if(conversations.length > 1){
+        getMessages(!isSearching ? conversations[currentChatIndex]?.id : searchedConversations[currentChatIndex]?.id);
+      }
+        
+  }, [currentChatIndex, conversations]);
+
   useEffect(() => {
     const arr = conversations.filter((conversation) => {
       const user = getUser({ conversation: conversation });
@@ -84,30 +94,11 @@ const Chat = () => {
     setSearchedConversations(arr);
   }, [search, conversations]);
 
-  useEffect(() => {
-    if (conversations.length > 1)
-      getMessages(conversations[currentChatIndex].id);
-  }, [currentChatIndex, conversations]);
 
   return (
     <section className="chat">
       <div className="chat-sidebar">
-        <div className={`chat-sidebar-search ${searchFocused ? "active" : ""}`}>
-          <SearchIcon
-            color={colors.iconColor}
-            width="27"
-            height="27"
-            style={{ margin: "0 1rem" }}
-          />
-          <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onBlur={() => setSearchFocused(false)}
-            onFocus={() => setSearchFocused(true)}
-            className="chat-sidebar-search-input"
-            placeholder={placeHolderText}
-          />
-        </div>
+        <ChatSidebarSearch search={search} setSearch={setSearch} />
 
         <ChatCard
           image={whatsAppIcon}
@@ -124,192 +115,30 @@ const Chat = () => {
           }
         />
 
-        <div className="chat-card-user-wrapper">
-          {isConversationsLoading ? (
-            <div style={{ padding: "0 1rem" }}>
-              {Array(10)
-                .fill()
-                .map((_, i) => (
-                  <NotificationShimmer key={uuidv4()} marginBlock="27px" />
-                ))}
-            </div>
-          ) : searchedConversations.length > 0 ? (
-            searchedConversations.map((conversation, index) => {
-              const user = getUser({ conversation: conversation });
-              const text = getLastMessage({ conversation: conversation });
-              const time = conversation?.createdDate;
-              const currentUser =
-                conversations[currentChatIndex].participants[0].id !== auth.id
-                  ? conversations[currentChatIndex].participants[0]
-                  : conversations[currentChatIndex].participants[1];
-
-              return (
-                <ChatCard
-                  key={uuidv4()}
-                  onClick={() => {
-                    setCurrentChatIndex(index);
-                    isInitialLoadRef.current = true;
-                  }}
-                  className={`chat-card-user ${
-                    currentUser.id === user.id ? "active" : ""
-                  }`}
-                  image={user.photos[0].url}
-                  title={user.name}
-                  text={text}
-                  time={time}
-                  showStatus={true}
-                  status={index % 2 === 0}
-                />
-              );
-            })
-          ) : (
-            <p className="sidebar-empty-chat-text">
-              Sohmbet bulunamadı. Birileriyle eşleşin ve konuşmaya başlayın!
-            </p>
-          )}
-        </div>
+        <ChatSidebarUsers
+          getUser={getUser}
+          currentChatUser={currentChatUser.current}
+          isConversationsLoading={isConversationsLoading}
+          searchedConversations={searchedConversations}
+          handleConversationChange={handleConversationChange}
+        />
       </div>
 
       <div className="chat-content">
-        {/* //Send image preview */}
         {showPreviewImage && (
-          <div className="chat-image-preview">
-            <div className="chat-image-preview-container">
-              <CrossCloseIcon
-                className="chat-image-preview-close-icon"
-                onClick={() => {
-                  setShowPreviewImage(false);
-                  setSelectedImages([]);
-                }}
-                width="28px"
-                height="28px"
-              />
-
-              <img
-                className="chat-image-preview-big-image"
-                src={selectedImages[0].base64}
-              />
-
-              <div className="chat-image-preview-row">
-                {new Array(4).fill(null).map((_, index) => {
-                  return (
-                    <div
-                      key={uuidv4()}
-                      className="chat-image-preview-row-item"
-                      style={
-                        !selectedImages?.[index + 1]
-                          ? {
-                              border: "1.5px solid rgba(255, 255, 255, 0.4)",
-                              backdropFilter: "blur(8px)",
-                              cursor: "pointer",
-                            }
-                          : null
-                      }
-                    >
-                      {selectedImages?.[index + 1] ? (
-                        <>
-                          <img src={selectedImages?.[index + 1]?.base64} />
-                          <CrossCloseIcon
-                            className="chat-image-preview-close-icon small"
-                            onClick={() =>
-                              setSelectedImages((prev) =>
-                                prev.filter(
-                                  (image, _index) => _index !== index + 1
-                                )
-                              )
-                            }
-                            width="17px"
-                            height="17px"
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <SendImageIcon
-                            className="chat-image-preview-send-image-icon"
-                            color={colors.backGround3}
-                          />
-                          <input
-                            onChange={handleImageChange}
-                            className="chat-image-input"
-                            style={{ borderRadius: "50%" }}
-                            type="file"
-                            accept="image/*"
-                          />
-                        </>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className="chat-image-preview-input-wrapper">
-                <input
-                  className="chat-image-preview-input"
-                  placeholder="Bir şeyler yaz"
-                  autoFocus={true}
-                />
-                <div
-                  className="send-image-button"
-                  onClick={() => {
-                    selectedImages.forEach(async (_, index) => {
-                      await sendImage(index);
-                    });
-                  }}
-                >
-                  <SendMessageIcon
-                    width="15px"
-                    height="15px"
-                    strokeWidth="1.5"
-                    color={colors.backGround3}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Preview Image */}
-          </div>
+          <ChatImagePreview
+            setShowPreviewImage={setShowPreviewImage}
+            selectedImages={selectedImages}
+            setSelectedImages={setSelectedImages}
+            handleImageChange={handleImageChange}
+            sendImage={sendImage}
+          />
         )}
 
-        {showGifts && <ChatGiftSelect sendGift={sendGift} />}
-
-        <div className="chat-content-header">
-          {!isConversationsLoading ? (
-            <div
-              className="current-chat-user"
-              onClick={() => navigate(`/dashboard/user/${currentChatUser.id}`)}
-            >
-              <ChatCardImage
-                image={currentChatUser?.photos[0].url}
-                showStatus={true}
-                radius="53px"
-                status={true}
-              />
-              <FlexBox
-                width={"100%"}
-                flexDirection="column"
-                alignItems="flex-start"
-                gap="2.5px 0"
-              >
-                <span className="current-chat-user-name">
-                  {currentChatUser?.name}
-                </span>
-                <span className="current-chat-user-status">Çevrim içi</span>
-              </FlexBox>
-            </div>
-          ) : (
-            <NotificationShimmer
-              marginBlock="0"
-              width="200px"
-              showIcon={false}
-            />
-          )}
-          <CurrentUserInfoBox
-            style={{ width: "fit-content", border: "none" }}
-            credits={auth.credits}
-            image={auth.photos?.[0].url}
-            name={auth.name}
-          />
-        </div>
+        <ChatContentHeader
+          isConversationsLoading={isConversationsLoading}
+          currentChatUser={currentChatUser.current}
+        />
 
         <div className="chat-content-messages" ref={messageContentRef}>
           {isMessagesLoading ? (
@@ -321,6 +150,8 @@ const Chat = () => {
           )}
         </div>
 
+        {showGifts && <ChatGiftSelect sendGift={sendGift} />}
+
         <ChatInput
           sendText={sendText}
           handleImageChange={handleImageChange}
@@ -330,6 +161,13 @@ const Chat = () => {
       </div>
     </section>
   );
+
+
+
+  function handleConversationChange(index) {
+    setCurrentChatIndex(index);
+    isInitialLoadRef.current = true;
+  }
 
   async function sendGift({ gift }) {
     const tempId = uuidv4();
@@ -344,7 +182,7 @@ const Chat = () => {
 
     const giftMessage = {
       gift: gift._id,
-      user: currentChatUser.id,
+      user: currentChatUser.current.id,
     };
 
     setMessages((prev) => [...prev, optimisticGiftMessage]);
@@ -383,7 +221,7 @@ const Chat = () => {
       width: image.dimensions.w,
       height: image.dimensions.h,
       type: "image",
-      user: currentChatUser.id,
+      user: currentChatUser.current.id,
       isSending: false,
     };
 
@@ -435,7 +273,7 @@ const Chat = () => {
     const message = {
       content: text,
       type: "text",
-      user: currentChatUser.id,
+      user: currentChatUser.current.id,
     };
 
     setMessages((prev) => [...prev, optimisticMessage]);
@@ -459,8 +297,6 @@ const Chat = () => {
       console.log(err);
     }
   }
-
-  function handleDeleteImage(index) {}
 
   //Work when user upload image reads file-image and setStates
   async function handleImageChange(e) {
@@ -490,31 +326,6 @@ const Chat = () => {
     }
   }
 
-  function getLastMessage({ conversation }) {
-    if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";
-
-    switch (conversation?.lastMessage.type) {
-      case "text":
-        return conversation?.lastMessage?.content.length > 30
-          ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
-          : conversation?.lastMessage?.content;
-
-      case "image":
-        return "📷 Fotoğraf";
-
-      case "audio":
-        return "🎵 Ses Kaydı";
-
-      case "gift":
-        return "🎁 Gift";
-
-      case "call_request":
-        return "📞 Arama";
-
-      default:
-        return "✉️ Mesaj";
-    }
-  }
 
   function getUser({ conversation }) {
     return conversation?.participants?.[0]?.id !== auth.id
@@ -523,6 +334,9 @@ const Chat = () => {
   }
 
   async function getMessages(conversationId) {
+
+    console.log("Heloos");
+    
     setIsMessagesLoading(true);
     try {
       const response = await axiosAmore.get(
