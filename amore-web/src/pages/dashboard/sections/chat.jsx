@@ -59,6 +59,7 @@ const Chat = () => {
   //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
   const isInitialLoadRef = useRef(true);
 
+  //If user searching setUser from searched conversation if not user main conversation
   useEffect(() => {
     currentChatUser.current = getUser({
       conversation: !isSearching
@@ -67,7 +68,10 @@ const Chat = () => {
     });
   }, [currentChatIndex, conversations]);
 
+
+  //If initialMessageLoading instantly go down if not smoothly scroll to show scroll animation
   useEffect(() => {
+    //INSTANT SCROLL
     if (isInitialLoadRef.current && messages.length > 0) {
       isInitialLoadRef.current = false;
       messageContentRef.current.scroll({
@@ -75,6 +79,7 @@ const Chat = () => {
         behavior: "instant",
       });
     }
+    //SMOOTH SCROLL
     messageContentRef.current.scroll({
       top: messageContentRef.current.scrollHeight,
       behavior: "smooth",
@@ -91,6 +96,7 @@ const Chat = () => {
       );
   }, [currentChatIndex, conversations]);
 
+  //Search and set searchedConversations
   useEffect(() => {
     const arr = conversations.filter((conversation) => {
       const user = getUser({ conversation: conversation });
@@ -102,8 +108,11 @@ const Chat = () => {
   return (
     <section className="chat">
       <div className="chat-sidebar">
+
+        {/* SIDEBAR SEARCH */}
         <ChatSidebarSearch search={search} setSearch={setSearch} />
 
+        {/* WHATSAPP SUPPORT */}
         <ChatCard
           image={whatsAppIcon}
           title={"WhatsApp Destek"}
@@ -119,6 +128,7 @@ const Chat = () => {
           }
         />
 
+        {/* SIDEBAR CHAT USERS */}
         <ChatSidebarUsers
           getUser={getUser}
           currentChatUser={currentChatUser.current}
@@ -129,21 +139,14 @@ const Chat = () => {
       </div>
 
       <div className="chat-content">
-        {showPreviewImage && (
-          <ChatImagePreview
-            setShowPreviewImage={setShowPreviewImage}
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-            handleImageChange={handleImageChange}
-            sendImage={sendImage}
-          />
-        )}
 
+        {/*CHAT CONTENT HEADER */}
         <ChatContentHeader
           isConversationsLoading={isConversationsLoading}
           currentChatUser={currentChatUser.current}
         />
 
+        {/* CHAT CONTENT MESSAGES */}
         <div className="chat-content-messages" ref={messageContentRef}>
           {isMessagesLoading ? (
             <ChatBubbleShimmer />
@@ -154,14 +157,27 @@ const Chat = () => {
           )}
         </div>
 
-        {showGifts && <ChatGiftSelect sendGift={sendGift} />}
-
+        {/* CHAT CONTENT INPUTS */}
         <ChatInput
           sendText={sendText}
           handleImageChange={handleImageChange}
           setShowGifts={setShowGifts}
           showGifts={showGifts}
         />
+
+        {/* CHAT GIFT SELECTION */}
+        {showGifts && <ChatGiftSelect sendGift={sendGift} />}
+
+        {/* SHOW PREVIEW OF IMAGES SELECTED TO SEND */}
+        {showPreviewImage && (
+          <ChatImagePreview
+            setShowPreviewImage={setShowPreviewImage}
+            selectedImages={selectedImages}
+            setSelectedImages={setSelectedImages}
+            handleImageChange={handleImageChange}
+            sendImage={sendImage}
+          />
+        )}
       </div>
     </section>
   );
@@ -335,8 +351,6 @@ const Chat = () => {
   }
 
   async function getMessages(conversationId) {
-    console.log("Heloos");
-
     setIsMessagesLoading(true);
     try {
       const response = await axiosAmore.get(

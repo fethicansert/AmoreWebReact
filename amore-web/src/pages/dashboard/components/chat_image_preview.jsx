@@ -41,10 +41,10 @@ const ChatImagePreview = ({
                 style={
                   !selectedImages?.[index + 1]
                     ? {
-                        border: "1.5px solid rgba(255, 255, 255, 0.4)",
-                        backdropFilter: "blur(8px)",
-                        cursor: "pointer",
-                      }
+                      border: "1.5px solid rgba(255, 255, 255, 0.4)",
+                      backdropFilter: "blur(8px)",
+                      cursor: "pointer",
+                    }
                     : null
                 }
               >
@@ -55,7 +55,7 @@ const ChatImagePreview = ({
                       className="chat-image-preview-close-icon small"
                       onClick={() =>
                         setSelectedImages((prev) =>
-                          prev.filter((image, _index) => _index !== index + 1)
+                          prev.filter((_, _index) => _index !== index + 1)
                         )
                       }
                       width="17px"
