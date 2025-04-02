@@ -94,6 +94,7 @@ const ChatImagePreview = ({
               selectedImages.forEach(async (_, index) => {
                 await sendImage(index);
               });
+              setSelectedImages([]);
             }}
           >
             <SendMessageIcon

@@ -5,7 +5,6 @@ import ChatCard from "../components/chat_card";
 import whatsAppIcon from "../../../assets/icons/whatsapp_icon.png";
 import { useAuth } from "../../../hooks/use_auth";
 import { v4 as uuidv4 } from "uuid";
-import NotificationShimmer from "../components/notification_shimmer";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../../css/dashboard/chat.css";
 import { axiosAmore } from "../../../api/axios";
@@ -44,14 +43,17 @@ const Chat = () => {
   const { auth } = useAuth();
   const { conversations, isConversationsLoading } = useConversation();
 
-
+  // If user type something means user in searching state
   const isSearching = search.length > 0;
 
   //REFS
-  const currentChatUser = useRef(getUser({
-    conversation: !isSearching ? conversations[currentChatIndex] : searchedConversations[currentChatIndex],
-  })
-)
+  const currentChatUser = useRef(
+    getUser({
+      conversation: !isSearching
+        ? conversations[currentChatIndex]
+        : searchedConversations[currentChatIndex],
+    })
+  );
   //Use this to get height of message content so and we can know how much sroll need to scroll to bottom.
   const messageContentRef = useRef();
   //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
@@ -59,9 +61,11 @@ const Chat = () => {
 
   useEffect(() => {
     currentChatUser.current = getUser({
-      conversation: !isSearching ? conversations[currentChatIndex] : searchedConversations[currentChatIndex],
-    })
-  },[currentChatIndex, conversations]);
+      conversation: !isSearching
+        ? conversations[currentChatIndex]
+        : searchedConversations[currentChatIndex],
+    });
+  }, [currentChatIndex, conversations]);
 
   useEffect(() => {
     if (isInitialLoadRef.current && messages.length > 0) {
@@ -79,11 +83,12 @@ const Chat = () => {
 
   //Fetch Messages if currentChatIndex or searched conversation changge
   useEffect(() => {
-      
-      if(conversations.length > 1){
-        getMessages(!isSearching ? conversations[currentChatIndex]?.id : searchedConversations[currentChatIndex]?.id);
-      }
-        
+    if (conversations.length > 1)
+      getMessages(
+        !isSearching
+          ? conversations[currentChatIndex]?.id
+          : searchedConversations[currentChatIndex]?.id
+      );
   }, [currentChatIndex, conversations]);
 
   useEffect(() => {
@@ -93,7 +98,6 @@ const Chat = () => {
     });
     setSearchedConversations(arr);
   }, [search, conversations]);
-
 
   return (
     <section className="chat">
@@ -161,8 +165,6 @@ const Chat = () => {
       </div>
     </section>
   );
-
-
 
   function handleConversationChange(index) {
     setCurrentChatIndex(index);
@@ -326,7 +328,6 @@ const Chat = () => {
     }
   }
 
-
   function getUser({ conversation }) {
     return conversation?.participants?.[0]?.id !== auth.id
       ? conversation?.participants[0]
@@ -334,9 +335,8 @@ const Chat = () => {
   }
 
   async function getMessages(conversationId) {
-
     console.log("Heloos");
-    
+
     setIsMessagesLoading(true);
     try {
       const response = await axiosAmore.get(
