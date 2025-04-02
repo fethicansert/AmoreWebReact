@@ -328,6 +328,53 @@
     border: 1px solid var(--borderColor1);
 }
 
+.chat-voice-recording{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-voice-recording span{
+    font-size: .75rem;
+    color: var(--brand1);
+}
+
+.chat-voice-recording-container{
+    display: flex;   
+    align-items: center;
+    gap: 5px;
+}
+
+.chat-voice-recording-cancel-button,
+.chat-voice-recording-pause-button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-voice-recording-cancel-button{
+    background: var(--negative);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+}
+
+.chat-voice-recording-pause-button{
+    background: var(--backGround3);
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    gap: 3px;
+}
+
+.chat-voice-recording-pause-button-line{
+height: 7px;
+width: 1px;
+background: black;
+}
+
+
 .chat-input {
     border: none;
     color: var(--darkText);
