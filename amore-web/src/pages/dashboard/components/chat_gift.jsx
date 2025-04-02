@@ -40,11 +40,11 @@ const ChatGift = ({ message, isSender }) => {
           </span>
         )}
 
-        {/* {!message.isSending && (
+        {message.isSending && (
           <div className="chat-image-sending">
-            <BeatLoader size={30} color={colors.backGround3} />
+            <BeatLoader size={10} color={colors.backGround3} />
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

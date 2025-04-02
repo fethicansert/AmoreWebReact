@@ -5,6 +5,7 @@ import {
   CrossCloseIcon,
   SearchIcon,
   SendImageIcon,
+  SendMessageIcon,
 } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
 import ChatCard from "../components/chat_card";
@@ -41,6 +42,8 @@ const Chat = () => {
   const [showGifts, setShowGifts] = useState(false);
 
   const [isMessagesLoading, setIsMessagesLoading] = useState(true);
+
+  const [selectedImages, setSelectedImages] = useState([]);
 
   //CONTEXT
   const { auth } = useAuth();
@@ -177,39 +180,75 @@ const Chat = () => {
         {/* //Send image preview */}
         {showPreviewImage && (
           <div className="chat-image-preview">
+
             <div className="chat-image-preview-container">
+
               <CrossCloseIcon
+                className="chat-image-preview-close-icon"
                 onClick={() => {
                   setShowPreviewImage(false);
                   sendImageRef.current = null;
                 }}
                 width="28px"
                 height="28px"
-                style={{
-                  position: "absolute",
-                  top: "0",
-                  right: "0",
-                  margin: "1.5rem",
-                  cursor: "pointer",
-                }}
               />
-              <img src={sendImageRef.current.base64} />
+
+              <img className="chat-image-preview-big-image" src={selectedImages[0].base64} />
+
+              <div className="chat-image-preview-row">
+
+                <div className="chat-image-preview-row-item">
+                  {
+                    selectedImages?.[1]?.base64
+                      ? <img src={selectedImages?.[1]?.base64} />
+                      : <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
+                  }
+                  <input
+                    onChange={handleImageChange}
+                    className='chat-image-input'
+                    style={{ borderRadius: '50%' }}
+                    type='file'
+                    accept="image/*"
+                  />
+                </div>
+
+                <div className="chat-image-preview-row-item">
+                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
+
+                </div>
+
+                <div className="chat-image-preview-row-item">
+                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
+                </div>
+
+                <div className="chat-image-preview-row-item">
+                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
+                </div>
+
+              </div>
+
+              <div className="chat-image-preview-input-wrapper">
+                <input
+                  className="chat-image-preview-input"
+                  placeholder="Bir şeyler yaz"
+                  autoFocus={true}
+                />
+                <div className="send-image-button" onClick={sendImage}>
+                  <SendMessageIcon
+                    width="15px"
+                    height="15px"
+                    strokeWidth="1.5"
+                    color={colors.backGround3}
+                  />
+                </div>
+
+              </div>
+
             </div>
 
-            <div className="chat-image-preview-input-wrapper">
-              <input
-                className="chat-image-preview-input"
-                placeholder="Bir şeyler yaz"
-                autoFocus={true}
-              />
-              <div className="send-image-button" onClick={sendImage}>
-                <SendImageIcon
-                  width="28px"
-                  height="28px"
-                  color={colors.backGround3}
-                />
-              </div>
-            </div>
+            {/* Preview Image */}
+
+
           </div>
         )}
 
@@ -274,21 +313,35 @@ const Chat = () => {
     </section>
   );
 
-  async function sendGift({ giftId }) {
-    const gift = {
-      gift: giftId,
+  async function sendGift({ gift }) {
+
+    const tempId = uuidv4();
+
+    const optimisticGiftMessage = {
+      id: tempId,
+      type: "gift",
+      user: auth,
+      gift: gift,
+      isSending: true,
+    };
+
+    const giftMessage = {
+      gift: gift._id,
       user: currentChatUser.id,
     };
 
+    setMessages((prev) => [...prev, optimisticGiftMessage]);
+    setShowGifts(false);
+
     try {
-      const response = await axiosAmore.post("chat/send_gift", gift, {
+      const response = await axiosAmore.post("chat/send_gift", giftMessage, {
         useAuth: true,
       });
-      console.log(response);
 
       if (response.status === 200) {
-        setMessages((prev) => [...prev, response.data.data]);
-        setShowGifts(false);
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === tempId ? response.data.data : msg))
+        );
       }
     } catch (e) {
       console.log(e);
@@ -326,7 +379,6 @@ const Chat = () => {
     }
 
     const fileName = image.file.name.split("/").pop();
-    console.log(fileName);
 
     formData.append("file", image.file, fileName);
 
@@ -399,13 +451,15 @@ const Chat = () => {
 
       reader.onloadend = async function () {
         const dimensions = await getImageDimensions(reader.result);
-        sendImageRef.current = {
+
+        setSelectedImages(prev => [{
           fileSize: file.size,
           base64: reader.result,
           dimensions,
           mimeType: file.type,
           file,
-        };
+        }, ...prev]);
+
         setShowPreviewImage(true);
       };
       reader.readAsDataURL(file);
@@ -415,6 +469,7 @@ const Chat = () => {
   }
 
   function getLastMessage({ conversation }) {
+
     if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";
 
     switch (conversation?.lastMessage.type) {
@@ -431,6 +486,9 @@ const Chat = () => {
 
       case "gift":
         return "🎁 Gift";
+
+      case "call_request":
+        return "📞 Arama"
 
       default:
         return "✉️ Mesaj";
@@ -461,3 +519,5 @@ const Chat = () => {
 };
 
 export default Chat;
+
+

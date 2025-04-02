@@ -9,6 +9,7 @@ const ChatType = ({ message }) => {
   //CONTEXT
   const { auth } = useAuth();
 
+
   //COSTANT
   const isSender = auth?.id !== message?.user?.id;
 
@@ -18,7 +19,7 @@ const ChatType = ({ message }) => {
   function getMessage() {
     switch (message?.type) {
       case "text":
-        return <ChatBubble message={message} isSender={isSender}/>;
+        return <ChatBubble message={message} isSender={isSender} />;
       case "audio":
         return <ChatAudio message={message} isSender={isSender} />;
       case "image":

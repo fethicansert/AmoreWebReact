@@ -2,7 +2,7 @@ import React, { startTransition, useState } from 'react'
 import { MicrophoneIcon, SendGiftIcon, SendImageIcon, SendMessageIcon } from '../../../assets/svg/svg_package';
 import { colors } from '../../../utils/theme';
 
-const ChatInput = ({ sendText, handleImageChange, setShowGifts,showGifts }) => {
+const ChatInput = ({ sendText, handleImageChange, setShowGifts, showGifts }) => {
     const [messageText, setMessageText] = useState('');
     const [messageTextFocused, setMessageTextFocused] = useState(false);
     return (
@@ -12,15 +12,14 @@ const ChatInput = ({ sendText, handleImageChange, setShowGifts,showGifts }) => {
                 <input
                     onChange={handleImageChange}
                     className='chat-image-input'
-                    style={{ borderRadius: '50%' }}
                     type='file'
                     accept="image/*"
                 />
                 <SendImageIcon />
             </div>
 
-            <div className='chat-send-gift-button' style={showGifts ? {background:colors.backGround4}: {}} onClick={() => setShowGifts(prev => !prev)}>
-                <SendGiftIcon color={showGifts ? colors.backGround3 : colors.iconColor}/>
+            <div className='chat-send-gift-button' style={showGifts ? { background: colors.backGround4 } : {}} onClick={() => setShowGifts(prev => !prev)}>
+                <SendGiftIcon color={showGifts ? colors.backGround3 : colors.iconColor} />
             </div>
 
             <div className='chat-input-container'>
