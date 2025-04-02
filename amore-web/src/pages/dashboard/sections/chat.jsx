@@ -59,18 +59,12 @@ const Chat = () => {
 
   const messageContentRef = useRef();
   const isInitialLoadRef = useRef(true);
-  const sendImageRef = useRef({
-    base64: "",
-    dimensions: {},
-    fileSize: 0,
-    mimeType: "",
-    file: null,
-  });
+
+  console.log(selectedImages);
 
   useEffect(() => {
-
     if (isInitialLoadRef.current && messages.length > 0) {
-      isInitialLoadRef.current = false
+      isInitialLoadRef.current = false;
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
         behavior: "instant",
@@ -80,7 +74,6 @@ const Chat = () => {
       top: messageContentRef.current.scrollHeight,
       behavior: "smooth",
     });
-
   }, [messages]);
 
   useEffect(() => {
@@ -157,8 +150,9 @@ const Chat = () => {
                     setCurrentChatIndex(index);
                     isInitialLoadRef.current = true;
                   }}
-                  className={`chat-card-user ${currentUser.id === user.id ? "active" : ""
-                    }`}
+                  className={`chat-card-user ${
+                    currentUser.id === user.id ? "active" : ""
+                  }`}
                   image={user.photos[0].url}
                   title={user.name}
                   text={text}
@@ -180,51 +174,56 @@ const Chat = () => {
         {/* //Send image preview */}
         {showPreviewImage && (
           <div className="chat-image-preview">
-
             <div className="chat-image-preview-container">
-
               <CrossCloseIcon
                 className="chat-image-preview-close-icon"
                 onClick={() => {
                   setShowPreviewImage(false);
-                  sendImageRef.current = null;
+                  setSelectedImages([]);
                 }}
                 width="28px"
                 height="28px"
               />
 
-              <img className="chat-image-preview-big-image" src={selectedImages[0].base64} />
+              <img
+                className="chat-image-preview-big-image"
+                src={selectedImages[0].base64}
+              />
 
               <div className="chat-image-preview-row">
-
-                <div className="chat-image-preview-row-item">
-                  {
-                    selectedImages?.[1]?.base64
-                      ? <img src={selectedImages?.[1]?.base64} />
-                      : <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
-                  }
-                  <input
-                    onChange={handleImageChange}
-                    className='chat-image-input'
-                    style={{ borderRadius: '50%' }}
-                    type='file'
-                    accept="image/*"
-                  />
-                </div>
-
-                <div className="chat-image-preview-row-item">
-                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
-
-                </div>
-
-                <div className="chat-image-preview-row-item">
-                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
-                </div>
-
-                <div className="chat-image-preview-row-item">
-                  <SendImageIcon className='chat-image-preview-send-image-icon' color={colors.backGround3} />
-                </div>
-
+                {new Array(4).fill(null).map((_, index) => {
+                  return (
+                    <div
+                      className="chat-image-preview-row-item"
+                      style={
+                        !selectedImages?.[index + 1]
+                          ? {
+                              border: "1.5px solid rgba(255, 255, 255, 0.4)",
+                              backdropFilter: "blur(8px)",
+                            }
+                          : null
+                      }
+                    >
+                      {selectedImages?.[index + 1] ? (
+                        <img src={selectedImages?.[index + 1]?.base64} />
+                      ) : (
+                        <>
+                          <SendImageIcon
+                            className="chat-image-preview-send-image-icon"
+                            color={colors.backGround3}
+                          />
+                          <input
+                            onChange={handleImageChange}
+                            className="chat-image-input"
+                            style={{ borderRadius: "50%" }}
+                            type="file"
+                            accept="image/*"
+                          />
+                        </>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
 
               <div className="chat-image-preview-input-wrapper">
@@ -233,7 +232,14 @@ const Chat = () => {
                   placeholder="Bir şeyler yaz"
                   autoFocus={true}
                 />
-                <div className="send-image-button" onClick={sendImage}>
+                <div
+                  className="send-image-button"
+                  onClick={() => {
+                    selectedImages.forEach(async (_, index) => {
+                      await sendImage(index);
+                    });
+                  }}
+                >
                   <SendMessageIcon
                     width="15px"
                     height="15px"
@@ -241,14 +247,10 @@ const Chat = () => {
                     color={colors.backGround3}
                   />
                 </div>
-
               </div>
-
             </div>
 
             {/* Preview Image */}
-
-
           </div>
         )}
 
@@ -314,7 +316,6 @@ const Chat = () => {
   );
 
   async function sendGift({ gift }) {
-
     const tempId = uuidv4();
 
     const optimisticGiftMessage = {
@@ -348,10 +349,10 @@ const Chat = () => {
     }
   }
 
-  async function sendImage() {
+  async function sendImage(index) {
     const tempId = uuidv4();
 
-    const image = sendImageRef.current;
+    const image = selectedImages[index];
 
     const optimisticMessage = {
       id: tempId,
@@ -452,13 +453,16 @@ const Chat = () => {
       reader.onloadend = async function () {
         const dimensions = await getImageDimensions(reader.result);
 
-        setSelectedImages(prev => [{
-          fileSize: file.size,
-          base64: reader.result,
-          dimensions,
-          mimeType: file.type,
-          file,
-        }, ...prev]);
+        setSelectedImages((prev) => [
+          ...prev,
+          {
+            fileSize: file.size,
+            base64: reader.result,
+            dimensions,
+            mimeType: file.type,
+            file,
+          },
+        ]);
 
         setShowPreviewImage(true);
       };
@@ -469,7 +473,6 @@ const Chat = () => {
   }
 
   function getLastMessage({ conversation }) {
-
     if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";
 
     switch (conversation?.lastMessage.type) {
@@ -488,7 +491,7 @@ const Chat = () => {
         return "🎁 Gift";
 
       case "call_request":
-        return "📞 Arama"
+        return "📞 Arama";
 
       default:
         return "✉️ Mesaj";
@@ -519,5 +522,3 @@ const Chat = () => {
 };
 
 export default Chat;
-
-

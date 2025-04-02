@@ -53,8 +53,8 @@ const AppDataProvider = ({ children }) => {
         setIsDataLoading(true);
 
         //Create Request Promises in Array
-        // const requests = ['interest', 'countries', 'ip', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
-        const requests = ['interest', 'countries', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
+        const requests = ['interest', 'countries', 'ip', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
+        // const requests = ['interest', 'countries', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
 
         try {
             //Fecth All Request...
@@ -62,8 +62,8 @@ const AppDataProvider = ({ children }) => {
 
             //IF All Response Status 200 => Set Datas
             if (appDataResponse.every(response => response.status === 200)) {
-                // [setInterests, setLocations, setIpLocation, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
-                [setInterests, setLocations, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
+                [setInterests, setLocations, setIpLocation, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
+                // [setInterests, setLocations, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
                 ['interests', 'locations', 'ip', 'data', 'gifts'].forEach((key, index) => {
                     dispatch({ type: key, payload: appDataResponse[index].data.data })
                 });
