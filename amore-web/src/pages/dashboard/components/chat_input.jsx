@@ -62,32 +62,42 @@ const ChatInput = ({
         ) : (
           <div className="chat-voice-recording">
             <span>Ses Kaydediliyor...</span>
+
             <div className="chat-voice-recording-container">
-              <div className="chat-voice-recording-cancel-button">
+
+              <div className="chat-voice-recording-cancel-button" onClick={() => setIsRecording(false)}>
                 <CrossCloseIcon width="16px" height="16px" />
               </div>
 
-              <div></div>
+              <div className="chat-voice-record"></div>
 
               <div className="chat-voice-recording-pause-button">
                 <div className="chat-voice-recording-pause-button-line"></div>
                 <div className="chat-voice-recording-pause-button-line"></div>
               </div>
+
+              <div className="chat-voice-recording-send-button">
+                <SendMessageIcon width="16" height="16" strokeWidth="1.5" />
+              </div>
+
             </div>
           </div>
         )}
-        {messageTextFocused || messageText ? (
-          <SendMessageIcon
-            onClick={() => handleSendMessage()}
-            className="chat-input-icon chat-send-message-icon"
-          />
-        ) : (
-          <MicrophoneIcon
-            className="chat-input-icon"
-            color={colors.brand1}
-            onClick={handleVoiceRecording}
-          />
-        )}
+        {
+          !isRecording &&
+          (
+            messageTextFocused || messageText ? (
+              <SendMessageIcon
+                onClick={() => handleSendMessage()}
+                className="chat-input-icon chat-send-message-icon"
+              />
+            ) : (
+              <MicrophoneIcon
+                className="chat-input-icon"
+                color={colors.brand1}
+                onClick={handleVoiceRecording}
+              />
+            ))}
       </div>
     </div>
   );
