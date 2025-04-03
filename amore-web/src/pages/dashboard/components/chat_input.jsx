@@ -8,6 +8,7 @@ import {
   SendMessageIcon,
 } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
+import ChatVoiceRecord from "./chat_voice_record";
 
 const ChatInput = ({
   sendText,
@@ -60,28 +61,7 @@ const ChatInput = ({
             onBlur={() => setMessageTextFocused(false)}
           />
         ) : (
-          <div className="chat-voice-recording">
-            <span>Ses Kaydediliyor...</span>
-
-            <div className="chat-voice-recording-container">
-
-              <div className="chat-voice-recording-cancel-button" onClick={() => setIsRecording(false)}>
-                <CrossCloseIcon width="16px" height="16px" />
-              </div>
-
-              <div className="chat-voice-record"></div>
-
-              <div className="chat-voice-recording-pause-button">
-                <div className="chat-voice-recording-pause-button-line"></div>
-                <div className="chat-voice-recording-pause-button-line"></div>
-              </div>
-
-              <div className="chat-voice-recording-send-button">
-                <SendMessageIcon width="16" height="16" strokeWidth="1.5" />
-              </div>
-
-            </div>
-          </div>
+          <ChatVoiceRecord isRecording={isRecording} setIsRecording={setIsRecording}/>
         )}
         {
           !isRecording &&
