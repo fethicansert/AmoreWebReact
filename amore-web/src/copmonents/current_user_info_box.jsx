@@ -20,7 +20,8 @@ const CurrentUserInfoBox = ({ credits, image, name, style }) => {
                     <span style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '600' }}>{credits}</span>
                 </FlexBox>
 
-                <img src={image || userAvatar} style={{ borderRadius: '12px' }} width={40} height={40} />
+                <img className='current-user-info-box-image' src={image || userAvatar} style={{ borderRadius: '12px' }} width={40} height={40} />
+
                 <FlexBox gap='0 2px' >
                     <span className='current-user-info-box-user-name' style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '300' }} >{name}</span>
                 </FlexBox>

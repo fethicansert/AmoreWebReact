@@ -770,6 +770,10 @@ header a {
   padding: 1rem;
 }
 
+.current-user-info-box-image {
+  object-fit: cover;
+}
+
 /* Notification Layout */
 .notification-layout {
   width: 100%;

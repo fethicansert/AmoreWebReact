@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
 import { v4 as uuidv4 } from 'uuid';
-import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, NotificationTrashIcon, UserIcon, NotificationConfirmIcon, LocationSettingIcon, NotificationPermissionIcon } from '../../assets/svg/svg_package';
+import { ChatBubbleIcon, CoinIcon, DiamondIcon, DiscoverIcon, DoubleHeartIcon, HomeIcon, LogoutIcon, NotificationIcon, UserIcon, NotificationConfirmIcon, LocationSettingIcon, NotificationPermissionIcon, TrashIcon } from '../../assets/svg/svg_package';
 import LayoutLinkIcon from './components/layout_link_icon';
 import Logout from '../../copmonents/logout';
 import { colors } from '../../utils/theme';
@@ -180,7 +180,7 @@ const Dashboard = () => {
                             <h3>{t('DASHBOARD.TITLES.NOTIFICATIONS_TITLE')}</h3>
                             <FlexBox gap='0 14px'>
                                 <NotificationConfirmIcon width='25' height='25' />
-                                <NotificationTrashIcon width='24' height='24' />
+                                <TrashIcon width='24' height='24' />
                             </FlexBox>
                         </FlexBox>
 

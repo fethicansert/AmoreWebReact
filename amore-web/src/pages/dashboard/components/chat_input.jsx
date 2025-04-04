@@ -11,6 +11,7 @@ import { colors } from "../../../utils/theme";
 import ChatVoiceRecord from "./chat_voice_record";
 
 const ChatInput = ({
+  sendVoice,
   sendText,
   handleImageChange,
   setShowGifts,
@@ -18,9 +19,7 @@ const ChatInput = ({
 }) => {
   const [messageText, setMessageText] = useState("");
   const [messageTextFocused, setMessageTextFocused] = useState(false);
-  const [isRecording, setIsRecording] = useState(false);
-
-  console.log(isRecording);
+  const [isShowRecording, setIsShowRecording] = useState(false);
 
   return (
     <div className="chat-input-container-wrapper">
@@ -47,10 +46,10 @@ const ChatInput = ({
       <div
         className="chat-input-container"
         style={{
-          background: isRecording ? "rgba(221, 136, 207, 0.2)" : "none",
+          background: isShowRecording ? "rgba(221, 136, 207, 0.2)" : "none",
         }}
       >
-        {!isRecording ? (
+        {!isShowRecording ? (
           <input
             onKeyUp={(e) => (e.key === "Enter" ? handleSendMessage() : null)}
             className="chat-input"
@@ -61,10 +60,10 @@ const ChatInput = ({
             onBlur={() => setMessageTextFocused(false)}
           />
         ) : (
-          <ChatVoiceRecord isRecording={isRecording} setIsRecording={setIsRecording}/>
+          <ChatVoiceRecord setIsShowRecording={setIsShowRecording} sendVoice={sendVoice} />
         )}
         {
-          !isRecording &&
+          !isShowRecording &&
           (
             messageTextFocused || messageText ? (
               <SendMessageIcon
@@ -83,7 +82,7 @@ const ChatInput = ({
   );
 
   function handleVoiceRecording() {
-    setIsRecording((prev) => !prev);
+    setIsShowRecording(true);
   }
 
   function handleSendMessage() {

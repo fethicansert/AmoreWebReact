@@ -159,6 +159,7 @@ const Chat = () => {
 
         {/* CHAT CONTENT INPUTS */}
         <ChatInput
+          sendVoice={sendVoice}
           sendText={sendText}
           handleImageChange={handleImageChange}
           setShowGifts={setShowGifts}
@@ -182,11 +183,57 @@ const Chat = () => {
     </section>
   );
 
-  function handleConversationChange(index) {
-    setCurrentChatIndex(index);
-    isInitialLoadRef.current = true;
+
+  //SEND VOICE
+  async function sendVoice({ audio, audioBlob, duration }) {
+
+    console.log(audioBlob);
+
+
+    const tempId = uuidv4();
+
+    const optimisticVoiceMessage = {
+      id: tempId,
+      type: "audio",
+      metadata: { duration },
+      dataUrl: audio,
+      user: auth,
+      isSending: true,
+    };
+
+    const message = {
+      type: "audio",
+      user: currentChatUser.current.id,
+      duration: duration
+    };
+
+
+    setMessages((prev) => [...prev, optimisticVoiceMessage]);
+
+    const formData = new FormData();
+
+    for (const key in message) {
+      if (message.hasOwnProperty(key)) {
+        formData.append(key, message[key]);
+      }
+    }
+
+    formData.append("file", audioBlob, 'record.webm');
+
+    // try {
+    //   const response = await axiosAmore.post("chat/send_message", formData, {
+    //     useAuth: true,
+    //   });
+    //   console.log(response.data.data);
+    //   // setMessages((prev) => [...prev, response.data.data]);
+
+    // } catch (err) {
+    //   console.log(err);
+    // }
+
   }
 
+  //SEND GIFT
   async function sendGift({ gift }) {
     const tempId = uuidv4();
 
@@ -221,6 +268,7 @@ const Chat = () => {
     }
   }
 
+  //SEND IMAGE
   async function sendImage(index) {
     const tempId = uuidv4();
 
@@ -240,7 +288,6 @@ const Chat = () => {
       height: image.dimensions.h,
       type: "image",
       user: currentChatUser.current.id,
-      isSending: false,
     };
 
     const formData = new FormData();
@@ -277,6 +324,7 @@ const Chat = () => {
     }
   }
 
+  //SEND TEXT
   async function sendText(text) {
     const tempId = uuidv4();
 
@@ -342,6 +390,11 @@ const Chat = () => {
 
       e.target.value = "";
     }
+  }
+
+  function handleConversationChange(index) {
+    setCurrentChatIndex(index);
+    isInitialLoadRef.current = true;
   }
 
   function getUser({ conversation }) {

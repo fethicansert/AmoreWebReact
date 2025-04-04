@@ -283,8 +283,8 @@
 
 .chat-send-image-button,
 .chat-send-gift-button {
-    width: 47px;
-    height: 47px;
+    aspect-ratio: 1 / 1;
+    height: 100%;
     border: 1px solid var(--borderColor1);
     border-radius: 12px;
     display: flex;
@@ -317,7 +317,7 @@
 }
 
 .chat-input-container {
-    height: 47px;
+    height: 53px;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr auto;
@@ -337,7 +337,7 @@
     transform-origin: left;
 }
 
-.chat-voice-recording span {
+.chat-voice-recording-loading-text {
     font-size: .75rem;
     color: var(--brand1);
 }
@@ -351,7 +351,9 @@
 
 .chat-voice-recording-cancel-button,
 .chat-voice-recording-pause-button,
-.chat-voice-recording-send-button {
+.chat-voice-recording-send-button,
+.chat-voice-recording-play-button,
+.chat-voice-recording-trash-button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -371,25 +373,44 @@
     height: 26px;
 }
 
-.chat-voice-recording-pause-button {
-    background: var(--backGround3);
-    width: 25px;
-    height: 25px;
+.chat-voice-recording-pause-button,
+.chat-voice-recording-trash-button {
+    width: 29px;
+    height: 29px;
     gap: 3px;
 }
 
+.chat-voice-recording-trash-button {
+    background: var(--backGround3);
+}
+
 .chat-voice-recording-pause-button-line {
-    height: 45%;
+    height: 30%;
     width: 2px;
     background: black;
     border-radius: 2px;
 }
 
 .chat-voice-record {
-    width: 170px;
-    height: 85%;
+    width: 200px;
+    height: 90%;
     background: var(--backGround3);
     border-radius: 20px;
+    display: grid;
+    align-items: center;
+    gap: 0 5px;
+    padding: 0 .6rem;
+}
+
+.chat-voice-recording-play-button {
+    background-color: var(--brand2);
+    width: 26px;
+    height: 26px;
+}
+
+.chat-voice-record-time {
+    font-size: .6rem;
+    color: var(--brand2);
 }
 
 .chat-input {
@@ -440,14 +461,12 @@
 }
 
 .chat-audio {
-    position: relative;
-    width: fit-content;
     display: grid;
     grid-template-columns: auto 200px;
     gap: 0 2px;
     align-items: center;
-    padding: .75rem 1.1rem .7rem .6rem;
-    margin-block: .85rem;
+    padding: .8rem 1.1rem .8rem .6rem;
+    margin-block: .6rem;
     border-radius: 20px;
     height: 60px;
 }

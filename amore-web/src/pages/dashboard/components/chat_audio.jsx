@@ -4,23 +4,33 @@ import { PauseIcon, PlayIcon } from "../../../assets/svg/svg_package";
 
 const ChatAudio = ({ message, isSender }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [canPlay, setCanPlay] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef(new Audio(message?.dataUrl));
+
+  const audioRef = useRef(new Audio(message.dataUrl));
   const currentTimeRef = useRef(0);
+  const durationRef = useRef(message?.metadata?.duration ?? 0);
 
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
 
     audioRef.current.addEventListener(
+      "loadedmetadata",
+      (e) => {
+        // console.log(e.target.duration);
+      },
+      { signal }
+    );
+
+
+    audioRef.current.addEventListener(
       "timeupdate",
       (e) => {
-        console.log(e.target.currentTime);
-
-        setProgress((e.target.currentTime / e.target.duration) * 100);
-        currentTimeRef.current = e.target.currentTime;
+        const progress = e.target.currentTime / durationRef.current * 100;
+        if (progress <= 100) {
+          setProgress(progress);
+          currentTimeRef.current = e.target.currentTime;
+        }
       },
       { signal }
     );
@@ -34,21 +44,15 @@ const ChatAudio = ({ message, isSender }) => {
       { signal }
     );
 
-    audioRef.current.addEventListener(
-      "canplay",
-      () => setDuration(audioRef.current.duration),
-      { signal }
-    );
-
     return () => controller.abort();
   }, []);
 
   const togglePlay = () => {
-    const audio = audioRef.current;
+    // const audio = audioRef.current;
     if (isPlaying) {
-      audio.pause();
+      audioRef.current.pause();
     } else {
-      audio.play();
+      audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
   };
@@ -72,6 +76,7 @@ const ChatAudio = ({ message, isSender }) => {
         alignSelf: isSender ? "flex-start" : "flex-end",
       }}
     >
+
       {isPlaying ? (
         <PauseIcon
           color={isSender ? colors.darkText : colors.backGround3}
@@ -111,7 +116,7 @@ const ChatAudio = ({ message, isSender }) => {
 
         <span className="audio-duration">
           {" "}
-          {formatTime(currentTimeRef.current)} / {formatTime(duration)}
+          {formatTime(currentTimeRef.current)} / {formatTime(durationRef.current)}
         </span>
       </div>
     </div>

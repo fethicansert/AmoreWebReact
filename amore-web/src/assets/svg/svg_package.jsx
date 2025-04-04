@@ -228,7 +228,7 @@ export const CreditCardChipIcon = ({ width = '28', height = '36' }) => <svg widt
     <path d="M18.3094 5.43138L18.3094 12.6519C18.3094 12.8701 18.1328 13.0571 17.9042 13.0571C17.686 13.0571 17.499 12.8805 17.499 12.6519L17.499 5.43138C17.499 5.21321 17.6756 5.0262 17.9042 5.0262C18.1224 5.03659 18.3094 5.21321 18.3094 5.43138Z" fill="#7D662D" />
 </svg>
 
-export const NotificationTrashIcon = ({ width = '28', height = '29', color = '#18181C', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const TrashIcon = ({ width = '28', height = '29', color = '#18181C', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 28 29" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M21.7305 11.9633C21.7305 21.3188 23.0579 25.5477 14.1301 25.5477C5.20112 25.5477 6.55584 21.3188 6.55584 11.9633" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M23.4283 8.37659H4.85645" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M18.0803 8.37662C18.0803 8.37662 18.6882 3.98328 14.141 3.98328C9.59502 3.98328 10.2028 8.37662 10.2028 8.37662" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
