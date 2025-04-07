@@ -10,6 +10,7 @@ const ChatAudio = ({ message, isSender }) => {
   const currentTimeRef = useRef(0);
   const durationRef = useRef(message?.metadata?.duration ?? 0);
 
+
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
@@ -17,20 +18,18 @@ const ChatAudio = ({ message, isSender }) => {
     audioRef.current.addEventListener(
       "loadedmetadata",
       (e) => {
-        // console.log(e.target.duration);
+        if (e.target.duration !== Infinity)
+          durationRef.current = e.target.duration;
       },
       { signal }
     );
-
 
     audioRef.current.addEventListener(
       "timeupdate",
       (e) => {
         const progress = e.target.currentTime / durationRef.current * 100;
-        if (progress <= 100) {
-          setProgress(progress);
-          currentTimeRef.current = e.target.currentTime;
-        }
+        setProgress(progress > 100 ? 100 : progress);
+        currentTimeRef.current = Math.round(e.target.currentTime);
       },
       { signal }
     );
@@ -38,6 +37,7 @@ const ChatAudio = ({ message, isSender }) => {
     audioRef.current.addEventListener(
       "ended",
       () => {
+        currentTimeRef.current = 0;
         setIsPlaying(false);
         setProgress(0);
       },
@@ -112,13 +112,20 @@ const ChatAudio = ({ message, isSender }) => {
               background: isSender ? colors.darkText : colors.backGround3,
             }}
           ></div>
+
         </div>
 
-        <span className="audio-duration">
-          {" "}
+        <span className="chat-audio-duration">
           {formatTime(currentTimeRef.current)} / {formatTime(durationRef.current)}
         </span>
+
+        <span className="chat-audio-time" style={{ color: isSender ? 'rgba(0, 0, 0, .65)' : 'rgba(255, 255, 255, .8)', }}>
+          13:00
+        </span>
+
       </div>
+
+
     </div>
   );
 };

@@ -2,36 +2,53 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   CrossCloseIcon,
   MicrophoneIcon,
-  TrashIcon,
   PlayIcon,
   SendMessageIcon,
 } from "../../../assets/svg/svg_package";
 import { LiveAudioVisualizer, AudioVisualizer } from 'react-audio-visualize';
 import { colors } from "../../../utils/theme";
 
-const mimeType = "audio/webm;codecs=opus";
+const mimeType = "audio/webm";
 
 const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const [permission, setPermission] = useState(false);
   const [stream, setStream] = useState(null);
-  const [recordingStatus, setRecordingStatus] = useState('inactive'); //recording inactive paused
-  const [audio, setAudio] = useState(null);
+  const [recordingStatus, setRecordingStatus] = useState('inactive');
   const [time, setTime] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(0);
 
 
   const mediaRecorder = useRef(null);
   const audioChunks = useRef([]);
   const visualizerRef = useRef(null);
   const counterIntetvalRef = useRef();
-  const audioBlobRef = useRef();
+  const totalDurationCounterRef = useRef();
   const voicePlayerRef = useRef();
 
   useEffect(() => {
+
     getMicrophonePermission();
 
     const clear = () => {
-      if (counterIntetvalRef.current)
-        clearInterval(counterIntetvalRef.current)
+      //Array kullanilabilir
+      if (counterIntetvalRef.current) {
+        stopCounter({ counterRef: totalDurationCounterRef });
+        stopCounter({ counterRef: counterIntetvalRef })
+      }
+
+      if (voicePlayerRef.current) {
+        voicePlayerRef.current.pause();
+        voicePlayerRef.current = null;
+      }
+
+      if (mediaRecorder.current) {
+        mediaRecorder.current.stop();
+        setIsShowRecording(false);
+        if (stream) {
+          stream.getTracks().forEach(track => track.stop());
+        }
+      }
+
     }
     return clear
   }, []);
@@ -39,6 +56,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
   return (
     <div className="chat-voice-recording">
+
       <span className="chat-voice-recording-loading-text">
         {recordingStatus !== 'pause' ? 'Ses Kaydediliyor...' : "Duraklatıldı"}
       </span>
@@ -75,10 +93,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
           {
             (audioChunks.current.length > 0 && recordingStatus === 'pause') &&
             <>
-              <div
-                className="chat-voice-recording-play-button"
-                onClick={() => playAudio(audio)}
-              >
+              <div className="chat-voice-recording-play-button" onClick={playAudio}>
                 <PlayIcon width="17px" height="17px" />
               </div>
 
@@ -91,11 +106,8 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 gap={3}
                 barColor={colors.brand2}
               />
-
-              <span className="chat-voice-record-time">{formatTime(time)}</span>
-
+              <span className="chat-voice-record-time">{formatTime(totalDuration)}</span>
             </>
-
           }
         </div>
 
@@ -112,49 +124,56 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
         </div>
 
-        <div className="chat-voice-recording-send-button" onClick={() => handleSendVoice()} >
+        <div className="chat-voice-recording-send-button" onClick={handleSendVoice} >
           <SendMessageIcon width="16" height="16" strokeWidth="1.5" />
         </div>
       </div>
     </div>
   );
 
-  function playAudio(voiceRecord) {
-    const audioBlob = new Blob(audioChunks.current, { type: mimeType });
-    const audioUrl = URL.createObjectURL(audioBlob);
+  function handleSendVoice() {
+    const { audioUrl, audioBlob } = processAudioChucks({ chunks: audioChunks.current });
+    const fileMimeType = 'webm';
+    const audioFile = new File([audioBlob], `recording.${fileMimeType}`, { type: audioBlob.type });
+
+    sendVoice({ audioUrl, audioFile, duration: time });
+  }
+
+  function playAudio() {
+    const { audioUrl } = processAudioChucks({ chunks: audioChunks.current })
     voicePlayerRef.current = new Audio(audioUrl);
     voicePlayerRef.current.play();
     playCounter();
-  }
+  };
 
-  async function pauseRecording() {
-    mediaRecorder.current.pause();
-    console.log(mediaRecorder.current.state);
-    setRecordingStatus('pause');
-    stopCounter();
-  }
-
-  async function resumeRecording() {
-    if (visualizerRef.current) {
+  function resumeRecording() {
+    //Stop player if playing the record
+    if (voicePlayerRef.current) {
       voicePlayerRef.current.pause();
       voicePlayerRef.current.currentTime = 0;
+      stopCounter({ counterRef: totalDurationCounterRef });
     }
     mediaRecorder.current.resume();
     setRecordingStatus('recording');
-    startCounter();
+    startCounter({ counterRef: counterIntetvalRef });
   }
+
+  function pauseRecording() {
+    mediaRecorder.current.pause();
+    setRecordingStatus('pause');
+    setTotalDuration(time);
+    stopCounter({ counterRef: counterIntetvalRef });
+  }
+
+  function processAudioChucks({ chunks }) {
+    const audioBlob = new Blob(chunks, { type: mimeType });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    return { audioBlob, audioUrl };
+  };
 
   async function stopRecording() {
     setRecordingStatus('pause')
     mediaRecorder.current.stop();
-    stopCounter()
-
-    mediaRecorder.current.onstop = () => {
-      const audioBlob = new Blob(audioChunks.current, { type: mimeType });
-      const audioUrl = URL.createObjectURL(audioBlob);
-      audioBlobRef.current = audioBlob;
-      setAudio(audioUrl);
-    }
   }
 
   async function startRecording(stream) {
@@ -167,30 +186,50 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
     mediaRecorder.current = media;
 
     //start recording
-    mediaRecorder.current.start(500);
+    mediaRecorder.current.start(450);
 
-    startCounter();
+    startCounter({ counterRef: counterIntetvalRef });
 
     //start(timeSlice) olmadığı için mediaRecorder.current.stop() anında tek bir kez çalışır 
     mediaRecorder.current.ondataavailable = (event) => {
       if (typeof event.data === "undefined" && event.data.size === 0) return;
       audioChunks.current.push(event.data);
-      console.log(event);
-
     };
 
-  }
-
-  function handleSendVoice() {
-    sendVoice({ audio: audio, audioBlob: audioBlobRef.current, duration: time });
+    // mediaRecorder.current.onstop = () => {}
   }
 
   function handleCancel() {
+    mediaRecorder.current.stop();
+    setIsShowRecording(false);
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
     }
-    mediaRecorder.current.stop();
-    setIsShowRecording(false);
+
+  }
+
+  function playCounter() {
+    const totalCount = totalDuration;
+    let currentCounter = 1;
+    totalDurationCounterRef.current = setInterval(() => {
+      if (currentCounter <= totalCount) {
+        setTotalDuration(currentCounter);
+        currentCounter += 1;
+      } else {
+        stopCounter({ counterRef: totalDurationCounterRef });
+      }
+
+    }, 1000);
+  }
+
+  function startCounter({ counterRef }) {
+    counterRef.current = setInterval(() => {
+      setTime(prev => prev + 1);
+    }, 1000);
+  }
+
+  function stopCounter({ counterRef }) {
+    clearInterval(counterRef.current)
   }
 
   async function getMicrophonePermission() {
@@ -210,32 +249,6 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
     }
   }
 
-  function startCounter() {
-    counterIntetvalRef.current = setInterval(() => {
-      setTime(prev => prev + 1);
-    }, 1000);
-  }
-
-  function stopCounter() {
-    clearInterval(counterIntetvalRef.current)
-  }
-
-  function playCounter() {
-    // const totalCount = time;
-    // let currentCounter = 1;
-    // counterIntetvalRef.current = setInterval(() => {
-    //   if (currentCounter <= totalCount) {
-    //     setTime(currentCounter);
-    //     currentCounter += 1;
-    //   } else {
-    //     stopCounter();
-    //   }
-
-    // }, 1000);
-  }
-
-
-
   function formatTime(time) {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -251,13 +264,3 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 export default ChatVoiceRecord;
 
 
-// function record() {
-//   // Yeni kaydı başlat
-//   if (stream) {
-//     setRecordingStatus('recording');
-//     setTime(0);
-//     audioChunks.current = [];
-//     mediaRecorder.current.start();
-//     startCounter();
-//   }
-// }

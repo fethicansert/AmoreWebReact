@@ -20,7 +20,6 @@ import ChatSidebarUsers from "../components/chat_sidebar_users";
 
 const Chat = () => {
   //NAVIGATION
-  const navigate = useNavigate();
   const location = useLocation();
 
   //STATES
@@ -185,10 +184,10 @@ const Chat = () => {
 
 
   //SEND VOICE
-  async function sendVoice({ audio, audioBlob, duration }) {
-
-    console.log(audioBlob);
-
+  async function sendVoice({ audioUrl, audioFile, duration }) {
+    console.log(audioUrl);
+    console.log(audioFile);
+    console.log(duration);
 
     const tempId = uuidv4();
 
@@ -196,7 +195,7 @@ const Chat = () => {
       id: tempId,
       type: "audio",
       metadata: { duration },
-      dataUrl: audio,
+      dataUrl: audioUrl,
       user: auth,
       isSending: true,
     };
@@ -204,9 +203,9 @@ const Chat = () => {
     const message = {
       type: "audio",
       user: currentChatUser.current.id,
-      duration: duration
+      duration: duration,
+      size: audioFile.size
     };
-
 
     setMessages((prev) => [...prev, optimisticVoiceMessage]);
 
@@ -218,18 +217,18 @@ const Chat = () => {
       }
     }
 
-    formData.append("file", audioBlob, 'record.webm');
+    formData.append("file", audioFile, audioFile.name);
 
-    // try {
-    //   const response = await axiosAmore.post("chat/send_message", formData, {
-    //     useAuth: true,
-    //   });
-    //   console.log(response.data.data);
-    //   // setMessages((prev) => [...prev, response.data.data]);
+    try {
+      const response = await axiosAmore.post("chat/send_message", formData, {
+        useAuth: true,
+      });
+      console.log(response.data.data);
+      // setMessages((prev) => [...prev, response.data.data]);
 
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    } catch (err) {
+      console.log(err);
+    }
 
   }
 
@@ -298,9 +297,7 @@ const Chat = () => {
       }
     }
 
-    const fileName = image.file.name.split("/").pop();
-
-    formData.append("file", image.file, fileName);
+    formData.append("file", image.file, image.file.name);
 
     setMessages((prev) => [...prev, optimisticMessage]);
     setShowPreviewImage(false);
