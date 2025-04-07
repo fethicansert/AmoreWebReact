@@ -53,7 +53,7 @@ const AppDataProvider = ({ children }) => {
         setIsDataLoading(true);
 
         //Create Request Promises in Array
-        const requests = ['interest', 'countries', 'ip', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
+        const requests = ['interest', 'countries', 'ip', 'data', 'gifts'].map(endpoint => axiosAmore.get(`api/${endpoint}`));
         // const requests = ['interest', 'countries', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
 
         try {

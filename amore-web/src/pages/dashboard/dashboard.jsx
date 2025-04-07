@@ -77,7 +77,7 @@ const Dashboard = () => {
         requestPermission();
 
         onMessage(messaging, (payload) => {
-            console.log(payload);
+            // console.log(payload);
 
             toast(<PushNotification payload={payload} />,
                 {
@@ -288,7 +288,7 @@ const Dashboard = () => {
                     vapidKey: vapidKey,
                 });
 
-                console.log(token);
+                // console.log(token);
 
                 if (!token || !auth) return;
 
@@ -308,7 +308,7 @@ const Dashboard = () => {
                         localStorage.setItem('fcmToken', JSON.stringify(token));
 
                     } else {
-                        console.log("Old Token and Token Same !");
+                        // console.log("Old Token and Token Same !");
                     }
 
                 } else {

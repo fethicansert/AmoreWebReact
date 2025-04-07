@@ -1,43 +1,63 @@
 import { createContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import React from 'react'
+import React from "react";
 import { useAuth } from "../hooks/use_auth";
 
 export const SocketContext = createContext();
 
-
 const SocketProvider = ({ children }) => {
+  const [socket, setSocket] = useState();
+  const [isSocketConnected, setIsSocketConnnected] = useState(false);
 
-    const [socketData, setSocketData] = useState();
-    const { auth } = useAuth();
+  const { auth, isAuthenticated } = useAuth();
 
-    useEffect(() => {
-        const socket = io('https://devsok.servicelabs.tech', {
-            transports: ['websocket'],
-            autoConnect: true,
-            forceNew: true,
-            extraHeaders: {
-                'Authorization': auth?.token
-            },
-            query: {
-                'Authorization': auth?.token
-            }
-        }, []);
+  useEffect(() => {
+    if (!isAuthenticated) return;
 
-        socket.on('connect', () => { console.log('Connected to socket server'); });
+    const newSocket = io(
+      "https://devsok.servicelabs.tech",
+      {
+        transports: ["websocket"],
+        autoConnect: true,
+        forceNew: true,
+        extraHeaders: {
+          Authorization: auth?.token,
+        },
+        query: {
+          Authorization: auth?.token,
+        },
+      },
+      []
+    );
 
-        socket.on('connect_error', () => { console.log('Connected to socket server'); });
+    console.log(newSocket);
 
-        socket.on('error', (error) => { console.log(`Socket Error:, ${error}`); });
+    setSocket(newSocket);
 
-        return () => socket.disconnect();
-    })
+    newSocket.on("connect", () => {
+      setIsSocketConnnected(true)
+    });
 
-    return (
-        <SocketContext.Provider value={{ socketData }}>
-            {children}
-        </SocketContext.Provider>
-    )
-}
+    newSocket.on("connect_error", (error) => {
+      console.error("Connection Error:", error);
+    });
 
-export default SocketProvider
+    newSocket.on("error", (error) => {
+      console.error("Socket Error:", error);
+    });
+
+    // newSocket.on('onAppData', (data) => {
+    //     console.log('App Data:', data);
+    // });
+
+    return () => newSocket.disconnect();
+  }, [auth]);
+
+  return (
+    <SocketContext.Provider value={{ socket, isSocketConnected }}>
+      {children}
+    </SocketContext.Provider>
+  );
+};
+
+export default SocketProvider;

@@ -14,8 +14,8 @@ import LikeProvider from './context/like_provider.jsx'
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <AuthProvider>
+    <SocketProvider>
       <AppDataProvider>
-        <SocketProvider>
           <ConversationProvider>
             <LikeProvider>
               <NotificationProvider>
@@ -25,8 +25,8 @@ createRoot(document.getElementById('root')).render(
               </NotificationProvider>
             </LikeProvider>
           </ConversationProvider>
-        </SocketProvider>
       </AppDataProvider>
+      </SocketProvider>
     </AuthProvider>
   </BrowserRouter>
 )

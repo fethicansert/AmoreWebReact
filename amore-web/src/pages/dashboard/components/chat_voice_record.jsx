@@ -5,7 +5,7 @@ import {
   PlayIcon,
   SendMessageIcon,
 } from "../../../assets/svg/svg_package";
-import { LiveAudioVisualizer, AudioVisualizer } from 'react-audio-visualize';
+import { LiveAudioVisualizer, AudioVisualizer } from "react-audio-visualize";
 import { colors } from "../../../utils/theme";
 
 const mimeType = "audio/webm";
@@ -13,10 +13,9 @@ const mimeType = "audio/webm";
 const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const [permission, setPermission] = useState(false);
   const [stream, setStream] = useState(null);
-  const [recordingStatus, setRecordingStatus] = useState('inactive');
+  const [recordingStatus, setRecordingStatus] = useState("inactive");
   const [time, setTime] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
-
 
   const mediaRecorder = useRef(null);
   const audioChunks = useRef([]);
@@ -26,14 +25,13 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const voicePlayerRef = useRef();
 
   useEffect(() => {
-
     getMicrophonePermission();
 
     const clear = () => {
       //Array kullanilabilir
       if (counterIntetvalRef.current) {
         stopCounter({ counterRef: totalDurationCounterRef });
-        stopCounter({ counterRef: counterIntetvalRef })
+        stopCounter({ counterRef: counterIntetvalRef });
       }
 
       if (voicePlayerRef.current) {
@@ -45,24 +43,20 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
         mediaRecorder.current.stop();
         setIsShowRecording(false);
         if (stream) {
-          stream.getTracks().forEach(track => track.stop());
+          stream.getTracks().forEach((track) => track.stop());
         }
       }
-
-    }
-    return clear
+    };
+    return clear;
   }, []);
-
 
   return (
     <div className="chat-voice-recording">
-
       <span className="chat-voice-recording-loading-text">
-        {recordingStatus !== 'pause' ? 'Ses Kaydediliyor...' : "Duraklatıldı"}
+        {recordingStatus !== "pause" ? "Ses Kaydediliyor..." : "Duraklatıldı"}
       </span>
 
       <div className="chat-voice-recording-container">
-
         <div
           className="chat-voice-recording-cancel-button"
           onClick={handleCancel}
@@ -70,12 +64,15 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
           <CrossCloseIcon width="16px" height="16px" />
         </div>
 
-
-        <div className="chat-voice-record" style={{ gridTemplateColumns: recordingStatus === 'recording' ? '30px auto' : 'auto auto 30px' }}>
-
-          {
-            (mediaRecorder.current && recordingStatus === 'recording') && <>
-
+        <div
+          className="chat-voice-record"
+          style={{
+            gridTemplateColumns:
+              recordingStatus === "recording" ? "30px auto" : "auto auto 30px",
+          }}
+        >
+          {mediaRecorder.current && recordingStatus === "recording" && (
+            <>
               <span className="chat-voice-record-time">{formatTime(time)}</span>
 
               <LiveAudioVisualizer
@@ -86,14 +83,15 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 gap={3}
                 barWidth={2}
               />
-
             </>
-          }
+          )}
 
-          {
-            (audioChunks.current.length > 0 && recordingStatus === 'pause') &&
+          {audioChunks.current.length > 0 && recordingStatus === "pause" && (
             <>
-              <div className="chat-voice-recording-play-button" onClick={playAudio}>
+              <div
+                className="chat-voice-recording-play-button"
+                onClick={playAudio}
+              >
                 <PlayIcon width="17px" height="17px" />
               </div>
 
@@ -106,25 +104,42 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 gap={3}
                 barColor={colors.brand2}
               />
-              <span className="chat-voice-record-time">{formatTime(totalDuration)}</span>
+              <span className="chat-voice-record-time">
+                {formatTime(totalDuration)}
+              </span>
             </>
-          }
+          )}
         </div>
 
-        <div className="chat-voice-recording-pause-button"
-          onClick={recordingStatus === 'pause' ? resumeRecording : pauseRecording}
-          style={{ background: recordingStatus === 'pause' ? 'unset' : colors.backGround3 }}>
-
-          {
-            recordingStatus === 'pause' ? <MicrophoneIcon color={colors.brand1} width="21.5" height="21.5" style={{ strokeWidth: "1.3" }} /> : <>
+        <div
+          className="chat-voice-recording-pause-button"
+          onClick={
+            recordingStatus === "pause" ? resumeRecording : pauseRecording
+          }
+          style={{
+            background:
+              recordingStatus === "pause" ? "unset" : colors.backGround3,
+          }}
+        >
+          {recordingStatus === "pause" ? (
+            <MicrophoneIcon
+              color={colors.brand1}
+              width="21.5"
+              height="21.5"
+              style={{ strokeWidth: "1.3" }}
+            />
+          ) : (
+            <>
               <div className="chat-voice-recording-pause-button-line"></div>
               <div className="chat-voice-recording-pause-button-line"></div>
             </>
-          }
-
+          )}
         </div>
 
-        <div className="chat-voice-recording-send-button" onClick={handleSendVoice} >
+        <div
+          className="chat-voice-recording-send-button"
+          onClick={handleSendVoice}
+        >
           <SendMessageIcon width="16" height="16" strokeWidth="1.5" />
         </div>
       </div>
@@ -132,19 +147,23 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   );
 
   function handleSendVoice() {
-    const { audioUrl, audioBlob } = processAudioChucks({ chunks: audioChunks.current });
-    const fileMimeType = 'webm';
-    const audioFile = new File([audioBlob], `recording.${fileMimeType}`, { type: audioBlob.type });
+    const { audioUrl, audioBlob } = processAudioChucks({
+      chunks: audioChunks.current,
+    });
+    const fileMimeType = "webm";
+    const audioFile = new File([audioBlob], `recording.${fileMimeType}`, {
+      type: audioBlob.type,
+    });
 
-    sendVoice({ messageType: 'audio', audioUrl, audioFile, duration: time });
+    sendVoice({ messageType: "audio", audioUrl, audioFile, duration: time });
   }
 
   function playAudio() {
-    const { audioUrl } = processAudioChucks({ chunks: audioChunks.current })
+    const { audioUrl } = processAudioChucks({ chunks: audioChunks.current });
     voicePlayerRef.current = new Audio(audioUrl);
     voicePlayerRef.current.play();
     playCounter();
-  };
+  }
 
   function resumeRecording() {
     //Stop player if playing the record
@@ -154,13 +173,13 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
       stopCounter({ counterRef: totalDurationCounterRef });
     }
     mediaRecorder.current.resume();
-    setRecordingStatus('recording');
+    setRecordingStatus("recording");
     startCounter({ counterRef: counterIntetvalRef });
   }
 
   function pauseRecording() {
     mediaRecorder.current.pause();
-    setRecordingStatus('pause');
+    setRecordingStatus("pause");
     setTotalDuration(time);
     stopCounter({ counterRef: counterIntetvalRef });
   }
@@ -169,15 +188,15 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
     const audioBlob = new Blob(chunks, { type: mimeType });
     const audioUrl = URL.createObjectURL(audioBlob);
     return { audioBlob, audioUrl };
-  };
+  }
 
   async function stopRecording() {
-    setRecordingStatus('pause')
+    setRecordingStatus("pause");
     mediaRecorder.current.stop();
   }
 
   async function startRecording(stream) {
-    setRecordingStatus('recording');
+    setRecordingStatus("recording");
 
     //crete new MediaRecorder instance using stream coming from permissions
     const media = new MediaRecorder(stream, { mimeType });
@@ -190,7 +209,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
     startCounter({ counterRef: counterIntetvalRef });
 
-    //start(timeSlice) olmadığı için mediaRecorder.current.stop() anında tek bir kez çalışır 
+    //start(timeSlice) olmadığı için mediaRecorder.current.stop() anında tek bir kez çalışır
     mediaRecorder.current.ondataavailable = (event) => {
       if (typeof event.data === "undefined" && event.data.size === 0) return;
       audioChunks.current.push(event.data);
@@ -203,9 +222,8 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
     mediaRecorder.current.stop();
     setIsShowRecording(false);
     if (stream) {
-      stream.getTracks().forEach(track => track.stop());
+      stream.getTracks().forEach((track) => track.stop());
     }
-
   }
 
   function playCounter() {
@@ -218,27 +236,25 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
       } else {
         stopCounter({ counterRef: totalDurationCounterRef });
       }
-
     }, 1000);
   }
 
   function startCounter({ counterRef }) {
     counterRef.current = setInterval(() => {
-      setTime(prev => prev + 1);
+      setTime((prev) => prev + 1);
     }, 1000);
   }
 
   function stopCounter({ counterRef }) {
-    clearInterval(counterRef.current)
+    clearInterval(counterRef.current);
   }
 
   async function getMicrophonePermission() {
-
     if ("MediaRecorder" in window) {
       try {
         const streamData = await navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: false
+          video: false,
         });
         setPermission(true);
         setStream(streamData);
@@ -257,10 +273,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
       2,
       "0"
     )}`;
-  };
-
+  }
 };
 
 export default ChatVoiceRecord;
-
-
