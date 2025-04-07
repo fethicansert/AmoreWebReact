@@ -48,7 +48,7 @@ const Dashboard = () => {
     const [hoverPosition, setHoverPosition] = useState(0);
     const [showLogout, setShowLogout] = useState(false);
     const [showNotification, setShowNotification] = useState();
-    const { unReadedCount, notifications, isUnReadedLoading } = useNotification();
+    const { unReadedCount, notifications, isUnReadedLoading, readAllNotifications } = useNotification();
 
     //REFS
     const isNotifionsOpennedRef = useRef(false);
@@ -180,7 +180,7 @@ const Dashboard = () => {
                             <h3>{t('DASHBOARD.TITLES.NOTIFICATIONS_TITLE')}</h3>
                             <FlexBox gap='0 14px'>
                                 <NotificationConfirmIcon width='25' height='25' />
-                                <TrashIcon width='24' height='24' />
+                                <TrashIcon width='24' height='24' onClick={readAllNotifications} />
                             </FlexBox>
                         </FlexBox>
 
@@ -251,7 +251,6 @@ const Dashboard = () => {
             onPromptGranted: () => { }
         })
     }
-
 
     function handleLocationPermissionOnFistOpen() {
         handleLocationPermission({

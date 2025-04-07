@@ -266,7 +266,7 @@
 }
 
 .notifications .notification-layout:hover {
-    border-bottom: 1px solid #DD88CF80;
+    border-bottom: .5px solid #DD88CF80;
 }
 
 .notifications-header {
