@@ -26,6 +26,8 @@ const SocketProvider = ({ children }) => {
 
         socket.on('connect', () => { console.log('Connected to socket server'); });
 
+        socket.on('connect_error', () => { console.log('Connected to socket server'); });
+
         socket.on('error', (error) => { console.log(`Socket Error:, ${error}`); });
 
         return () => socket.disconnect();
