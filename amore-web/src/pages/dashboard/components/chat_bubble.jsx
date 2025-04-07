@@ -4,7 +4,6 @@ import { BeatLoader } from "react-spinners";
 import { getTimeFromISO } from "../../../utils/functions";
 
 const ChatBubble = ({ message, isSender }) => {
-  const time = getTimeFromISO(message?.createdDate);
 
   const messageStyle = {
     color: isSender ? colors.darkText : colors.whiteText,
@@ -57,7 +56,7 @@ const ChatBubble = ({ message, isSender }) => {
             }}
           />
         ) : (
-          <span style={timeStyle}>{time}</span>
+          <span style={timeStyle}>{getTimeFromISO(message?.createdDate)}</span>
         )}
       </div>
     </div>

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { colors } from "../../../utils/theme";
 import { PauseIcon, PlayIcon } from "../../../assets/svg/svg_package";
+import { getTimeFromISO } from "../../../utils/functions";
+import { BeatLoader } from "react-spinners";
 
 const ChatAudio = ({ message, isSender }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -120,7 +122,17 @@ const ChatAudio = ({ message, isSender }) => {
         </span>
 
         <span className="chat-audio-time" style={{ color: isSender ? 'rgba(0, 0, 0, .65)' : 'rgba(255, 255, 255, .8)', }}>
-          13:00
+          {message.isSending ? <BeatLoader
+            size={4}
+            color={"rgba(255, 255, 255, .8)"}
+            style={{
+              alignSelf: "self-end",
+              jusifySelf: "center",
+              position: "relative",
+              top: "2px",
+            }}
+          /> : getTimeFromISO(message?.createdDate)}
+
         </span>
 
       </div>

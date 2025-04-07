@@ -136,7 +136,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
     const fileMimeType = 'webm';
     const audioFile = new File([audioBlob], `recording.${fileMimeType}`, { type: audioBlob.type });
 
-    sendVoice({ audioUrl, audioFile, duration: time });
+    sendVoice({ messageType: 'audio', audioUrl, audioFile, duration: time });
   }
 
   function playAudio() {

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useAppData } from "../../../hooks/use_add_data";
-import { t } from "i18next";
 import { v4 as uuidv4 } from "uuid";
 import {
   AmoreCoinIcon,
@@ -29,8 +28,8 @@ const ChatGiftSelect = ({ sendGift }) => {
       activeCategorieId === null
         ? gifts.sort((a, b) => b.price - a.price)
         : gifts
-            .filter((gift) => gift.giftCategory._id === activeCategorieId)
-            .sort((a, b) => b.price - a.price),
+          .filter((gift) => gift.giftCategory._id === activeCategorieId)
+          .sort((a, b) => b.price - a.price),
     [activeCategorieId, gifts]
   );
   const giftCategories = getGiftTypes();
@@ -48,18 +47,16 @@ const ChatGiftSelect = ({ sendGift }) => {
         <div className="chat-gift-select-filter-items-wrapper">
           <div
             onClick={() => setActiveCategorieId(null)}
-            className={`chat-gift-select-filter-item ${
-              activeCategorieId === null ? "active" : ""
-            }`}
+            className={`chat-gift-select-filter-item ${activeCategorieId === null ? "active" : ""
+              }`}
             key={uuidv4()}
           >
             {t("GIFTS.CATEGORIE_TITLES.ALL")}
           </div>
           {giftCategories.map((categorie) => (
             <div
-              className={`chat-gift-select-filter-item ${
-                activeCategorieId === categorie._id ? "active" : ""
-              }`}
+              className={`chat-gift-select-filter-item ${activeCategorieId === categorie._id ? "active" : ""
+                }`}
               onClick={() => setActiveCategorieId(categorie._id)}
               key={uuidv4()}
             >
@@ -86,7 +83,7 @@ const ChatGiftSelect = ({ sendGift }) => {
           {currentGifts.map((gift) => (
             <div
               key={uuidv4()}
-              onClick={() => sendGift({ gift: gift })}
+              onClick={() => sendGift({ messageType: 'gift', gift: gift })}
               className="chat-gift-container"
             >
               <img src={gift.url} draggable="false" />

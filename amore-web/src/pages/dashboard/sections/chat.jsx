@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useConversation } from "../../../hooks/use_conversation";
-import { ArrowHeadRight, SearchIcon } from "../../../assets/svg/svg_package";
+import { ArrowHeadRight } from "../../../assets/svg/svg_package";
 import ChatCard from "../components/chat_card";
 import whatsAppIcon from "../../../assets/icons/whatsapp_icon.png";
 import { useAuth } from "../../../hooks/use_auth";
 import { v4 as uuidv4 } from "uuid";
-import { useLocation, useNavigate } from "react-router-dom";
-import "../../../css/dashboard/chat.css";
+import { useLocation } from "react-router-dom";
 import { axiosAmore } from "../../../api/axios";
 import ChatBubbleShimmer from "../components/chat_bubble_shimmer";
 import ChatType from "../components/chat_type";
@@ -17,6 +16,7 @@ import ChatImagePreview from "../components/chat_image_preview";
 import ChatContentHeader from "../components/chat_content_header";
 import ChatSidebarSearch from "../components/chat_sidebar_search";
 import ChatSidebarUsers from "../components/chat_sidebar_users";
+import "../../../css/dashboard/chat.css";
 
 const Chat = () => {
   //NAVIGATION
@@ -158,15 +158,14 @@ const Chat = () => {
 
         {/* CHAT CONTENT INPUTS */}
         <ChatInput
-          sendVoice={sendVoice}
-          sendText={sendText}
+          sendMessage={sendMessage}
           handleImageChange={handleImageChange}
           setShowGifts={setShowGifts}
           showGifts={showGifts}
         />
 
         {/* CHAT GIFT SELECTION */}
-        {showGifts && <ChatGiftSelect sendGift={sendGift} />}
+        {showGifts && <ChatGiftSelect sendGift={sendMessage} />}
 
         {/* SHOW PREVIEW OF IMAGES SELECTED TO SEND */}
         {showPreviewImage && (
@@ -175,187 +174,113 @@ const Chat = () => {
             selectedImages={selectedImages}
             setSelectedImages={setSelectedImages}
             handleImageChange={handleImageChange}
-            sendImage={sendImage}
+            sendImage={sendMessage}
           />
         )}
       </div>
     </section>
   );
 
-
-  //SEND VOICE
-  async function sendVoice({ audioUrl, audioFile, duration }) {
-    console.log(audioUrl);
-    console.log(audioFile);
-    console.log(duration);
+  //SEND TEXT
+  async function sendMessage({
+    text = '',
+    messageType = null,
+    audioUrl = null,
+    audioFile = null,
+    duration = null,
+    imageIndex,
+    gift = null }) {
 
     const tempId = uuidv4();
 
-    const optimisticVoiceMessage = {
-      id: tempId,
-      type: "audio",
-      metadata: { duration },
-      dataUrl: audioUrl,
-      user: auth,
-      isSending: true,
-    };
+    //If image get selected image
+    const image = messageType === 'image' ? selectedImages[imageIndex] : null;
+    //If image or audio get data url
+    const dataUrl = messageType === 'image' ? image.base64 : messageType === 'audio' ? audioUrl : null;
+    //If audio get voice duration
+    const metaData = messageType === 'audio' ? { duration } : null;
 
-    const message = {
-      type: "audio",
-      user: currentChatUser.current.id,
-      duration: duration,
-      size: audioFile.size
-    };
-
-    setMessages((prev) => [...prev, optimisticVoiceMessage]);
-
-    const formData = new FormData();
-
-    for (const key in message) {
-      if (message.hasOwnProperty(key)) {
-        formData.append(key, message[key]);
-      }
-    }
-
-    formData.append("file", audioFile, audioFile.name);
-
-    try {
-      const response = await axiosAmore.post("chat/send_message", formData, {
-        useAuth: true,
-      });
-      console.log(response.data.data);
-      // setMessages((prev) => [...prev, response.data.data]);
-
-    } catch (err) {
-      console.log(err);
-    }
-
-  }
-
-  //SEND GIFT
-  async function sendGift({ gift }) {
-    const tempId = uuidv4();
-
-    const optimisticGiftMessage = {
-      id: tempId,
-      type: "gift",
-      user: auth,
-      gift: gift,
-      isSending: true,
-    };
-
-    const giftMessage = {
-      gift: gift._id,
-      user: currentChatUser.current.id,
-    };
-
-    setMessages((prev) => [...prev, optimisticGiftMessage]);
-    setShowGifts(false);
-
-    try {
-      const response = await axiosAmore.post("chat/send_gift", giftMessage, {
-        useAuth: true,
-      });
-
-      if (response.status === 200) {
-        setMessages((prev) =>
-          prev.map((msg) => (msg.id === tempId ? response.data.data : msg))
-        );
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  }
-
-  //SEND IMAGE
-  async function sendImage(index) {
-    const tempId = uuidv4();
-
-    const image = selectedImages[index];
-
+    //set optimistic message
     const optimisticMessage = {
       id: tempId,
-      dataUrl: image.base64,
-      type: "image",
       user: auth,
+      type: messageType,
+      content: text,
+      dataUrl: dataUrl,
+      gift: gift,
+      metadata: metaData,
       isSending: true,
     };
 
+    //Close Image Preview
+    messageType === 'image' && setShowPreviewImage(false);
+
+    //Close Gifts
+    messageType === 'gift' && setShowGifts(false);
+
+    setMessages((prev) => [...prev, optimisticMessage]);
+
+    //IF Message Image or Audio get size or null
+    const size = messageType === 'image' ? image.fileSize : messageType === 'audio' ? audioFile.size : null;
+
+    //Prepare real message
     const message = {
-      size: image.fileSize,
-      width: image.dimensions.w,
-      height: image.dimensions.h,
-      type: "image",
+      type: messageType,
+      content: text,
+      size,
+      width: image?.dimensions?.w,
+      height: image?.dimensions?.h,
+      duration: duration,
+      gift: gift?._id,
       user: currentChatUser.current.id,
     };
 
-    const formData = new FormData();
+    let formData = null;
 
-    for (const key in message) {
-      if (message.hasOwnProperty(key)) {
-        formData.append(key, message[key]);
+    //if not 'gift' I have to use formData to send API !
+    if (messageType !== 'gift') {
+
+      formData = new FormData();
+
+      //Fill Form Data
+      for (const key in message) {
+        if (message.hasOwnProperty(key)) {
+          formData.append(key, message[key]);
+        }
       }
+
+      //Set File
+      if (messageType === 'image' || messageType === 'audio') {
+        const file = messageType === 'image' ? image.file : audioFile
+        formData.append("file", file, file?.name);
+      }
+
     }
 
-    formData.append("file", image.file, image.file.name);
-
-    setMessages((prev) => [...prev, optimisticMessage]);
-    setShowPreviewImage(false);
+    //If gift use gift end point else message => send_gift or send_message
+    const endpoint = messageType === 'gift' ? 'gift' : 'message';
 
     try {
-      const response = await axiosAmore.post("chat/send_message", formData, {
+      const response = await axiosAmore.post(`chat/send_${endpoint}`, (formData || message), {
         useAuth: true,
       });
+
       if (response.status === 200) {
+        //if image use base64 response message has url not neend to fetcth again
+        const responseMessage = messageType === 'image'
+          ? { ...response.data.data, dataUrl: image.base64 }
+          : messageType === 'audio'
+            ? { ...response.data.data, dataUrl: audioUrl }
+            : response.data.data;
+
         console.log(response);
-        const responseMessage = {
-          ...response.data.data,
-          dataUrl: image.base64,
-        };
+
+
+        //Exchange optimistic message with real message !!!
         setMessages((prev) =>
           prev.map((msg) => (msg.id === tempId ? responseMessage : msg))
         );
       }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  //SEND TEXT
-  async function sendText(text) {
-    const tempId = uuidv4();
-
-    const optimisticMessage = {
-      id: tempId,
-      content: text,
-      type: "text",
-      user: auth,
-      isSending: true,
-    };
-
-    const message = {
-      content: text,
-      type: "text",
-      user: currentChatUser.current.id,
-    };
-
-    setMessages((prev) => [...prev, optimisticMessage]);
-
-    const formData = new FormData();
-
-    for (const key in message) {
-      if (message.hasOwnProperty(key)) {
-        formData.append(key, message[key]);
-      }
-    }
-
-    try {
-      const response = await axiosAmore.post("chat/send_message", formData, {
-        useAuth: true,
-      });
-      setMessages((prev) =>
-        prev.map((msg) => (msg.id === tempId ? response.data.data : msg))
-      );
     } catch (err) {
       console.log(err);
     }
@@ -389,17 +314,20 @@ const Chat = () => {
     }
   }
 
+  //Change Current Conversation
   function handleConversationChange(index) {
     setCurrentChatIndex(index);
     isInitialLoadRef.current = true;
   }
 
+  //Used this for participants indexs changes sometimes 0 is sender sometimes 1 use id to get user
   function getUser({ conversation }) {
     return conversation?.participants?.[0]?.id !== auth.id
       ? conversation?.participants[0]
       : conversation?.participants[1];
   }
 
+  //Fetch Messages with given conversation Id
   async function getMessages(conversationId) {
     setIsMessagesLoading(true);
     try {
@@ -418,3 +346,147 @@ const Chat = () => {
 };
 
 export default Chat;
+
+
+
+// //SEND VOICE
+// async function sendVoice({ audioUrl, audioFile, duration }) {
+//   console.log(audioUrl);
+//   console.log(audioFile);
+//   console.log(duration);
+
+//   const tempId = uuidv4();
+
+//   const optimisticVoiceMessage = {
+//     id: tempId,
+//     type: "audio",
+//     metadata: { duration },
+//     dataUrl: audioUrl,
+//     user: auth,
+//     isSending: true,
+//   };
+
+//   const message = {
+//     type: "audio",
+//     user: currentChatUser.current.id,
+//     duration: duration,
+//     size: audioFile.size
+//   };
+
+//   setMessages((prev) => [...prev, optimisticVoiceMessage]);
+
+//   const formData = new FormData();
+
+//   for (const key in message) {
+//     if (message.hasOwnProperty(key)) {
+//       formData.append(key, message[key]);
+//     }
+//   }
+
+//   formData.append("file", audioFile, audioFile.name);
+
+//   try {
+//     const response = await axiosAmore.post("chat/send_message", formData, {
+//       useAuth: true,
+//     });
+//     console.log(response.data.data);
+//     // setMessages((prev) => [...prev, response.data.data]);
+
+//   } catch (err) {
+//     console.log(err);
+//   }
+
+// }
+
+
+
+// //SEND IMAGE
+// async function sendImage(index) {
+//   const tempId = uuidv4();
+
+//   const image = selectedImages[index];
+
+//   const optimisticMessage = {
+//     id: tempId,
+//     dataUrl: image.base64,
+//     type: "image",
+//     user: auth,
+//     isSending: true,
+//   };
+
+//   const message = {
+//     size: image.fileSize,
+//     width: image.dimensions.w,
+//     height: image.dimensions.h,
+//     type: "image",
+//     user: currentChatUser.current.id,
+//   };
+
+//   const formData = new FormData();
+
+//   for (const key in message) {
+//     if (message.hasOwnProperty(key)) {
+//       formData.append(key, message[key]);
+//     }
+//   }
+
+//   formData.append("file", image.file, image.file.name);
+
+//   setMessages((prev) => [...prev, optimisticMessage]);
+//   setShowPreviewImage(false);
+
+//   try {
+//     const response = await axiosAmore.post("chat/send_message", formData, {
+//       useAuth: true,
+//     });
+//     if (response.status === 200) {
+//       console.log(response);
+//       const responseMessage = {
+//         ...response.data.data,
+//         dataUrl: image.base64,
+//       };
+//       setMessages((prev) =>
+//         prev.map((msg) => (msg.id === tempId ? responseMessage : msg))
+//       );
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+
+
+
+//SEND GIFT
+// async function sendGift({ gift }) {
+//   const tempId = uuidv4();
+
+//   const optimisticGiftMessage = {
+//     id: tempId,
+//     type: "gift",
+//     user: auth,
+//     gift: gift,
+//     isSending: true,
+//   };
+
+//   const giftMessage = {
+//     gift: gift._id,
+//     user: currentChatUser.current.id,
+//   };
+
+//   setMessages((prev) => [...prev, optimisticGiftMessage]);
+//   setShowGifts(false);
+
+//   try {
+//     const response = await axiosAmore.post("chat/send_gift", giftMessage, {
+//       useAuth: true,
+//     });
+
+//     if (response.status === 200) {
+//       setMessages((prev) =>
+//         prev.map((msg) => (msg.id === tempId ? response.data.data : msg))
+//       );
+//     }
+//   } catch (e) {
+//     console.log(e);
+//   }
+// }

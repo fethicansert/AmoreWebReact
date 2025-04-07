@@ -11,8 +11,7 @@ import { colors } from "../../../utils/theme";
 import ChatVoiceRecord from "./chat_voice_record";
 
 const ChatInput = ({
-  sendVoice,
-  sendText,
+  sendMessage,
   handleImageChange,
   setShowGifts,
   showGifts,
@@ -60,7 +59,7 @@ const ChatInput = ({
             onBlur={() => setMessageTextFocused(false)}
           />
         ) : (
-          <ChatVoiceRecord setIsShowRecording={setIsShowRecording} sendVoice={sendVoice} />
+          <ChatVoiceRecord setIsShowRecording={setIsShowRecording} sendVoice={sendMessage} />
         )}
         {
           !isShowRecording &&
@@ -87,8 +86,7 @@ const ChatInput = ({
 
   function handleSendMessage() {
     if (!messageText) return;
-
-    sendText(messageText);
+    sendMessage({ text: messageText, messageType: 'text' });
     setMessageText("");
   }
 };

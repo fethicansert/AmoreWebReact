@@ -29,7 +29,7 @@ const ChatImagePreview = ({
 
         <img
           className="chat-image-preview-big-image"
-          src={selectedImages[0].base64}
+          src={selectedImages[0]?.base64}
         />
 
         <div className="chat-image-preview-row">
@@ -92,7 +92,7 @@ const ChatImagePreview = ({
             className="send-image-button"
             onClick={() => {
               selectedImages.forEach(async (_, index) => {
-                await sendImage(index);
+                await sendImage({ messageType: 'image', imageIndex: index });
               });
               setSelectedImages([]);
             }}
