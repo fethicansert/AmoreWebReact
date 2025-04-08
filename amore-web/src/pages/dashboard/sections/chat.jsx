@@ -17,8 +17,10 @@ import ChatContentHeader from "../components/chat_content_header";
 import ChatSidebarSearch from "../components/chat_sidebar_search";
 import ChatSidebarUsers from "../components/chat_sidebar_users";
 import "../../../css/dashboard/chat.css";
+import { useUserActivty } from "../../../hooks/use_user_activity";
 
 const Chat = () => {
+
   //NAVIGATION
   const location = useLocation();
 
@@ -197,8 +199,8 @@ const Chat = () => {
       messageType === "image"
         ? image.base64
         : messageType === "audio"
-        ? audioUrl
-        : null;
+          ? audioUrl
+          : null;
     //If audio get voice duration
     const metaData = messageType === "audio" ? { duration } : null;
 
@@ -227,8 +229,8 @@ const Chat = () => {
       messageType === "image"
         ? image.fileSize
         : messageType === "audio"
-        ? audioFile.size
-        : null;
+          ? audioFile.size
+          : null;
 
     //Prepare real message
     const message = {
@@ -280,8 +282,8 @@ const Chat = () => {
           messageType === "image"
             ? { ...response.data.data, dataUrl: image.base64 }
             : messageType === "audio"
-            ? { ...response.data.data, dataUrl: audioUrl }
-            : response.data.data;
+              ? { ...response.data.data, dataUrl: audioUrl }
+              : response.data.data;
 
         console.log(response);
 

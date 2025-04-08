@@ -11,6 +11,7 @@ import BasicButton from "./basic_button.jsx";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/use_auth.jsx";
 import { useNavigate } from "react-router-dom";
+import { useUserActivty } from "../hooks/use_user_activity.jsx";
 
 const UserCard = forwardRef((props, ref) => {
   const isFromHome = props?.isFromHome || false;
@@ -23,6 +24,7 @@ const UserCard = forwardRef((props, ref) => {
   const { setLimitedOfferOptions } = useBanner();
   const { t, _ } = useTranslation();
   const { auth } = useAuth();
+  const { checkUsersStatus } = useUserActivty();
 
   const navigate = useNavigate();
 
@@ -48,9 +50,8 @@ const UserCard = forwardRef((props, ref) => {
             background:
               !isOnlyPremium || isDiscover
                 ? "linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)"
-                : `linear-gradient(rgba(22,30,42,0) 20%, ${
-                    isFromHome ? "#412A78" : "rgba(230, 73, 151,.85)"
-                  }  100%)`,
+                : `linear-gradient(rgba(22,30,42,0) 20%, ${isFromHome ? "#412A78" : "rgba(230, 73, 151,.85)"
+                }  100%)`,
           }}
         ></div>
       </div>
@@ -60,7 +61,7 @@ const UserCard = forwardRef((props, ref) => {
           <FlexBox gap="0 10px">
             <span
               style={{
-                background: user?.isActive
+                background: checkUsersStatus(user.id)
                   ? colors.onlineColor
                   : colors.negative,
               }}

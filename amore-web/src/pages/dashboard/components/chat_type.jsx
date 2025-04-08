@@ -6,9 +6,9 @@ import ChatImage from "./chat_image";
 import ChatGift from "./chat_gift";
 
 const ChatType = ({ message }) => {
+
   //CONTEXT
   const { auth } = useAuth();
-
 
   //COSTANT
   const isSender = auth?.id !== message?.user?.id;

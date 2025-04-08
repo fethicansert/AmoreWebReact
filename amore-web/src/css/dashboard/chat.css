@@ -504,7 +504,8 @@
     animation: 250ms fade ease
 }
 
-.chat-image-sending {
+.chat-image-sending,
+.chat-image-lock {
     position: absolute;
     top: 0;
     right: 0;
@@ -517,6 +518,8 @@
     align-items: center;
     justify-content: center;
 }
+
+
 
 .chat-image-container {
     padding: .25rem;

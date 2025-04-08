@@ -14,6 +14,7 @@ import { DoubleHeartIcon, HeartLineIcon, UserIcon } from '../../../assets/svg/sv
 import EmptyUsersPopup from '../components/empty_users_popup';
 import { checkScrollThresold } from '../../../utils/functions';
 import '../../../css/dashboard/matches.css';
+import { useUserActivty } from '../../../hooks/use_user_activity';
 const Matches = () => {
 
     //LOCATION
@@ -33,6 +34,7 @@ const Matches = () => {
     const { auth, isPremium } = useAuth();
     const { t, _ } = useTranslation();
     const navigate = useNavigate();
+    const { setUserStatus } = useUserActivty();
 
     //CONSTANTS
     const titles = ["MATCHES", "LIKES", "VISITS"];
@@ -88,7 +90,7 @@ const Matches = () => {
                 !isUsersLoading ? <div className='discover-users' onScroll={handleScrollFetch}>
                     {
                         users.length > 0
-                            ? users.map((user, index) =>
+                            ? setUserStatus(users).map((user, index) =>
                                 <UserCard
                                     isOnlyPremium={currentIndex === 0 ? false : !isPremium}
                                     isFromHome={currentIndex === 1 && index === parseInt(location?.state?.index)}

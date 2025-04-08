@@ -25,7 +25,7 @@ const Discover = () => {
   //STATES
   const [users, setUsers] = useState([]);
   const [searchedUsers, setSearchedUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isScrollLoading, setIsScrollLoading] = useState(false);
   const [age, setAge] = useState([25, 80]);
   const [name, setName] = useState("");
@@ -51,7 +51,6 @@ const Discover = () => {
   const { auth } = useAuth();
   const { t, _ } = useTranslation();
   const navigate = useNavigate();
-  const { setUserStatus } = useUserActivty();
 
   //SIDE_EFFECTS
   useEffect(() => {
@@ -96,8 +95,8 @@ const Discover = () => {
               display: !isMobile
                 ? "flex"
                 : isMobile && !showFilter
-                ? "none"
-                : "flex",
+                  ? "none"
+                  : "flex",
             }}
           >
             <div>
@@ -190,7 +189,7 @@ const Discover = () => {
       {!isLoading ? (
         <div className="discover-users" onScroll={handleScrollFetch}>
           {searchedUsers.length > 0 ? (
-            setUserStatus(searchedUsers).map((user) => (
+            searchedUsers.map((user) => (
               <UserCard
                 isDiscover={true}
                 ref={userCardRef}
@@ -252,7 +251,7 @@ const Discover = () => {
   }
 
   async function fetchUsers(loading) {
-    loading(true);
+    loading?.(true);
 
     try {
       const headers = { Authorization: auth.token };
@@ -271,7 +270,7 @@ const Discover = () => {
       console.log(e);
       return [];
     } finally {
-      loading(false);
+      loading?.(false);
     }
   }
 
@@ -285,7 +284,8 @@ const Discover = () => {
   }
 
   async function getUsers() {
-    const fetchedUsers = await fetchUsers(setIsLoading);
+    const fetchedUsers = await fetchUsers();
+    setIsLoading(false)
     if (users) setUsers(fetchedUsers);
     if (isMobile) setShowFilter(false);
   }

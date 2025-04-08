@@ -16,7 +16,7 @@ import { useBanner } from "./hooks/use_banner";
 import LoginPopup from "../src/copmonents/login_popup";
 import ProtectedRoute from "./routes/protected_route";
 import PageNotFound from "./routes/page_not_found";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import VisitRedirect from "./routes/visit_redirect";
 import Visit from "./pages/visit/visit";
 
