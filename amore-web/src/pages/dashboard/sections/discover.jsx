@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import EmptyUsersPopup from "../components/empty_users_popup.jsx";
 import { useNavigate } from "react-router-dom";
 import { checkScrollThresold } from "../../../utils/functions.jsx";
+import { useUserActivty } from "../../../hooks/use_user_activity.jsx";
 
 const Discover = () => {
   //STATES
@@ -50,6 +51,7 @@ const Discover = () => {
   const { auth } = useAuth();
   const { t, _ } = useTranslation();
   const navigate = useNavigate();
+  const { setUserStatus } = useUserActivty();
 
   //SIDE_EFFECTS
   useEffect(() => {
@@ -188,7 +190,7 @@ const Discover = () => {
       {!isLoading ? (
         <div className="discover-users" onScroll={handleScrollFetch}>
           {searchedUsers.length > 0 ? (
-            searchedUsers.map((user) => (
+            setUserStatus(searchedUsers).map((user) => (
               <UserCard
                 isDiscover={true}
                 ref={userCardRef}

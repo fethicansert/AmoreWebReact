@@ -11,7 +11,9 @@ import { useAuth } from '../hooks/use_auth'
 import { ROUTES } from '../utils/constants'
 import { useAppData } from '../hooks/use_add_data'
 import Flag from 'react-flagkit';
-import { ArrowDownIcon, LanguageIcon } from '../assets/svg/svg_package'
+import { ArrowDownIcon, LanguageIcon } from '../assets/svg/svg_package';
+import { v4 as uuidv4 } from "uuid";
+
 
 const Header = ({
     backgroundColor,
@@ -106,7 +108,7 @@ const Header = ({
 
                         <div className={`header-language-dropbox ${showLanguageBox ? 'active' : ''}`}>
                             <ul className={`${showLanguageBox ? 'active' : ''}`}>
-                                {languageList.map(language => <li onClick={() => {
+                                {languageList.map(language => <li key={uuidv4()} onClick={() => {
                                     handleChangeLanguage(language.languageOption);
                                     selectedLanguageRef.current = language.languageText;
                                 }}>

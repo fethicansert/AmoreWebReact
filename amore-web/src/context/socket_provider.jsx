@@ -6,11 +6,14 @@ import { useAuth } from "../hooks/use_auth";
 export const SocketContext = createContext();
 
 const SocketProvider = ({ children }) => {
+  //STATES
   const [socket, setSocket] = useState();
   const [isSocketConnected, setIsSocketConnnected] = useState(false);
-
+  
+  //CONTEXT
   const { auth, isAuthenticated } = useAuth();
 
+  //SIDE-EFFECTS
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -30,12 +33,13 @@ const SocketProvider = ({ children }) => {
       []
     );
 
-    console.log(newSocket);
+
+    if(!newSocket) return;
 
     setSocket(newSocket);
 
     newSocket.on("connect", () => {
-      setIsSocketConnnected(true)
+      setIsSocketConnnected(true);
     });
 
     newSocket.on("connect_error", (error) => {
@@ -46,10 +50,6 @@ const SocketProvider = ({ children }) => {
       console.error("Socket Error:", error);
     });
 
-    // newSocket.on('onAppData', (data) => {
-    //     console.log('App Data:', data);
-    // });
-
     return () => newSocket.disconnect();
   }, [auth]);
 
@@ -58,6 +58,8 @@ const SocketProvider = ({ children }) => {
       {children}
     </SocketContext.Provider>
   );
+
+
 };
 
 export default SocketProvider;
