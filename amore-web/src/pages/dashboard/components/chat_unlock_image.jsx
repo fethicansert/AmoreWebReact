@@ -1,8 +1,8 @@
 import Lottie from "lottie-react";
 import React, { useEffect, useState } from "react";
 import amoreHeartLock from "../../../assets/lottie/amore_heart_lock.json";
+import { CrossCloseIcon } from "../../../assets/svg/svg_package";
 const ChatUnlockImage = ({ image, setShowUnlockImage }) => {
-  console.log(image);
 
   const [showAnimation, setShowAnimation] = useState(true);
 
@@ -14,6 +14,8 @@ const ChatUnlockImage = ({ image, setShowUnlockImage }) => {
     const clear = () => {
       clearTimeout(animationTimeout);
     };
+
+    return clear;
   }, []);
 
   return (
@@ -21,6 +23,12 @@ const ChatUnlockImage = ({ image, setShowUnlockImage }) => {
       className="chat-unlock-image"
       onClick={() => setShowUnlockImage(false)}
     >
+      {
+        !showAnimation && <div className="chat-unlock-image-close-button" onCanPlay={() => setShowUnlockImage(false)}>
+          <CrossCloseIcon />
+        </div>
+
+      }
       {showAnimation && (
         <Lottie animationData={amoreHeartLock} className="amore-heart-lock" />
       )}

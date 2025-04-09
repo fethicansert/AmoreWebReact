@@ -2,6 +2,7 @@ import ChatCardImage from "./chat_card_image";
 import { colors } from "../../../utils/theme";
 import { BeatLoader } from "react-spinners";
 import { getTimeFromISO } from "../../../utils/functions";
+import { ImageViewedIcon } from "../../../assets/svg/svg_package";
 
 const ChatBubble = ({ message, isSender }) => {
 
@@ -42,7 +43,13 @@ const ChatBubble = ({ message, isSender }) => {
         }}
         className="chat-bubble-wrapper"
       >
-        <p style={messageStyle}>{message?.content || message?.type}</p>
+
+        {
+          !message?.isExpired ? <p style={messageStyle}>{message?.content || message?.type}</p> : <div style={{ display: 'flex', alignItems: 'center', gap: '0 5px' }}>
+            <p style={messageStyle}>Fotoğraf görüntülendi</p>
+            <ImageViewedIcon color={colors.iconColor} />
+          </div>
+        }
 
         {message?.isSending ? (
           <BeatLoader

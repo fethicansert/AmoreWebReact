@@ -67,6 +67,7 @@ const Dashboard = () => {
         showNotificationPermission,
         setShowNotificationPermission } = useBanner();
 
+
     useEffect(() => {
         //Change Roout Color Better Visualtion on Mobile
         document.querySelector('meta[name="theme-color"]').setAttribute('content', colors.backGround2);
@@ -199,7 +200,7 @@ const Dashboard = () => {
 
                         {
                             notifications.length > 0
-                                ? notifications.map(notification => <NotificationItem key={uuidv4()} notification={notification} />)
+                                ? notifications.map(notification => <NotificationItem key={notification?._id} notification={notification} />)
                                 : <div className='notifications-empty-notifications'>
                                     <Lottie animationData={ghostLottie} className='ghost-lottie' />
                                     <div>

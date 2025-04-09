@@ -407,6 +407,19 @@ export const AmoreImageLockOpen = ({ size = '21', color = "#FFFFFF", style, clas
 );
 
 
+export const ImageViewedIcon = ({ width = '22', height = '22', color = "#FFFFFF", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6.30035 6.55029C5.93371 6.96589 5.60834 7.4026 5.3252 7.87002" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M5.23117 16.8414C4.93363 16.3241 4.67544 15.7636 4.48828 15.1733" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M10.8809 21.0322L10.8905 21.0312C11.5249 21.1839 12.1853 21.2577 12.8523 21.2558" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M10.132 4.05713C9.55037 4.24333 8.98889 4.49192 8.46484 4.80001" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.8828 3.6226C13.5499 3.62068 14.2093 3.69458 14.8447 3.84719C15.7603 4.05067 16.6347 4.40962 17.4256 4.89528C17.9016 5.17746 18.3479 5.50188 18.7539 5.86949C19.4431 6.48376 20.0362 7.20744 20.5046 8.02519C20.8127 8.5502 21.0613 9.11168 21.2494 9.70196C21.3934 10.1406 21.5028 10.5927 21.5767 11.0601C21.6506 11.5275 21.6861 11.9921 21.6842 12.4528C21.6881 13.1285 21.6103 13.7696 21.4577 14.405L21.4587 14.4146C21.2561 15.3293 20.8953 16.1951 20.4096 16.9859C20.137 17.461 19.804 17.9083 19.4364 18.3143C18.8211 19.0034 18.0907 19.6071 17.272 20.0755C16.746 20.375 16.1855 20.6322 15.6039 20.8184" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M8.30902 19.971C7.84256 19.6965 7.39721 19.373 6.99121 19.0054" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4.27651 10.4546C4.12294 11.09 4.04904 11.7494 4.05288 12.4261" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.7183 21.3768L15.6221 20.799L16.2133 18.7163" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+
+
 
 
 

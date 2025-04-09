@@ -20,6 +20,7 @@ import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
 
 const Chat = () => {
+
   //NAVIGATION
   const location = useLocation();
 
@@ -154,7 +155,7 @@ const Chat = () => {
             messages.map((message) => {
               return (
                 <ChatType
-                  key={uuidv4()}
+                  key={message?.id}
                   message={message}
                   handleUnlockMessage={handleUnlockMessage}
                 />
@@ -185,16 +186,20 @@ const Chat = () => {
           />
         )}
 
-        {showUnlockImage && <ChatUnlockImage image={unlockImagRef.current} setShowUnlockImage={setShowUnlockImage}/>}
+        {showUnlockImage && <ChatUnlockImage image={unlockImagRef.current} setShowUnlockImage={setShowUnlockImage} />}
       </div>
     </section>
   );
 
-  function handleUnlockMessage(image) {
-    console.log(image);
-    
+  function handleUnlockMessage({ image, messageId }) {
     unlockImagRef.current = image;
     setShowUnlockImage(true);
+    setMessages(prev => prev.map(message => {
+      if (message.id === messageId) {
+        return { ...message, isExpired: true }
+      }
+      return message
+    }))
   }
 
   //SEND TEXT
@@ -216,8 +221,8 @@ const Chat = () => {
       messageType === "image"
         ? image.base64
         : messageType === "audio"
-        ? audioUrl
-        : null;
+          ? audioUrl
+          : null;
     //If audio get voice duration
     const metaData = messageType === "audio" ? { duration } : null;
 
@@ -246,8 +251,8 @@ const Chat = () => {
       messageType === "image"
         ? image.fileSize
         : messageType === "audio"
-        ? audioFile.size
-        : null;
+          ? audioFile.size
+          : null;
 
     //Prepare real message
     const message = {
@@ -299,8 +304,8 @@ const Chat = () => {
           messageType === "image"
             ? { ...response.data.data, dataUrl: image.base64 }
             : messageType === "audio"
-            ? { ...response.data.data, dataUrl: audioUrl }
-            : response.data.data;
+              ? { ...response.data.data, dataUrl: audioUrl }
+              : response.data.data;
 
         console.log(response);
 

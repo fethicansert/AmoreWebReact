@@ -212,11 +212,11 @@ const UserHome = () => {
       <div className='user-home-notications'>
 
         <UserHomeNotifications path={'/dashboard/chat'} title={t('DASHBOARD.TITLES.QUICK_MESSAGES')} isLoading={isConversationsLoading} type='message'>
-          {conversations.slice(0, 4).map((message, index) => message ? <UserHomeNotificationItem index={index} key={uuidv4()} type={'message'} notification={message} /> : null)}
+          {conversations.slice(0, 4).map((message, index) => message ? <UserHomeNotificationItem index={index} key={message?.id} type={'message'} notification={message} /> : null)}
         </UserHomeNotifications>
 
         <UserHomeNotifications path={'/dashboard/matches'} title={t('DASHBOARD.TITLES.LIKES')} isLoading={isLikesLoading} type='like'>
-          {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem isBlur={!isPremium} index={index} key={uuidv4()} type={'like'} notification={like} /> : null)}
+          {likes.slice(0, 4).map((like, index) => like ? <UserHomeNotificationItem isBlur={!isPremium} index={index} key={like?.id} type={'like'} notification={like} /> : null)}
         </UserHomeNotifications>
 
         <DiscoverCTA />

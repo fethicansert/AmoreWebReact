@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { colors } from "../../../utils/theme";
 import { getTimeFromISO } from "../../../utils/functions";
-import { BeatLoader } from "react-spinners";
+import { BeatLoader, ClipLoader } from "react-spinners";
 import ChatCardImage from "./chat_card_image";
 import {
   AmoreImageLock,
@@ -10,11 +10,13 @@ import {
 import { axiosAmore } from "../../../api/axios";
 
 const ChatImage = ({ message, isSender, handleUnlockMessage }) => {
+
+
   const [isHovered, setIsHovered] = useState(false);
   const [fontSize, setFontSize] = useState("1rem"); // gereklio im
   const imageContainerRef = useRef();
+  const [isUnLocking, setIsUnLocking] = useState(false);
 
-  
   useLayoutEffect(() => {
     const containerWidth = imageContainerRef?.current?.offsetWidth ?? 0;
     const minFontSize = 0.95; // rem
@@ -42,75 +44,104 @@ const ChatImage = ({ message, isSender, handleUnlockMessage }) => {
         />
       )}
 
-      <div
-        ref={imageContainerRef}
-        className="chat-image-container"
-        style={{ background: isSender ? colors.inputColor : colors.brand1 }}
-        onMouseEnter={() => (isSender ? setIsHovered(true) : undefined)}
-        onMouseLeave={() => (isSender ? setIsHovered(false) : undefined)}
-        onClick={unlockImage}
-      >
-        <img src={message.dataUrl} />
-
-        {!message?.isSending && (
-          <span
-            className="chat-image-time"
-            style={{
-              color: isSender
-                ? "rgba(0, 0, 0, .65)"
-                : "rgba(255, 255, 255, .8)",
-            }}
+      {
+        (message.isExpired && isSender)
+          ? <div style={{ background: colors.inputColor }}>
+            <p>Fotoğraf Görüntülendi</p>
+          </div>
+          : <div
+            ref={imageContainerRef}
+            className="chat-image-container"
+            style={{ background: isSender ? colors.inputColor : colors.brand1 }}
+            onMouseEnter={() => (isSender ? setIsHovered(true) : undefined)}
+            onMouseLeave={() => (isSender ? setIsHovered(false) : undefined)}
+            onClick={unlockImage}
           >
-            {getTimeFromISO("2025-03-26T08:12:23.717Z")}
-          </span>
-        )}
+            <img src={message.dataUrl} />
 
-        {message.isSending && (
-          <div className="chat-image-sending">
-            <BeatLoader size={30} color={colors.brand1} />
-          </div>
-        )}
-
-        {isSender && (
-          <div className="chat-image-lock">
-            {isHovered ? (
-              <AmoreImageLockOpen
-                size="40%"
-                height="none"
-                style={{ aspectRatio: "1 / 1", maxWidth: "130px" }}
-              />
-            ) : (
-              <AmoreImageLock
-                size="40%"
-                style={{ aspectRatio: "1/1", maxWidth: "130px" }}
-              />
+            {!message?.isSending && (
+              <span
+                className="chat-image-time"
+                style={{
+                  color: isSender
+                    ? "rgba(0, 0, 0, .65)"
+                    : "rgba(255, 255, 255, .8)",
+                }}
+              >
+                {getTimeFromISO("2025-03-26T08:12:23.717Z")}
+              </span>
             )}
-            <p style={{ fontSize: fontSize }}>Görmek için tıkla</p>
+
+            {message.isSending && (
+              <div className="chat-image-sending">
+                <BeatLoader size={30} color={colors.brand1} />
+              </div>
+            )}
+
+            {isSender && (
+              <div className="chat-image-lock">
+                {
+                  !isUnLocking ? <>
+
+                    {isHovered ? (
+                      <AmoreImageLockOpen
+                        size="30%"
+                        height="none"
+                        style={{ aspectRatio: "1 / 1", maxWidth: "130px" }}
+                      />
+                    ) : (
+                      <AmoreImageLock
+                        size="30%"
+                        style={{ aspectRatio: "1/1", maxWidth: "130px" }}
+                      />
+                    )}
+                    <p style={{ fontSize: fontSize }}>Görmek için tıkla</p>
+                  </> : <ClipLoader size={'50px'} color={colors.whiteText} />
+                }
+              </div>
+            )}
           </div>
-        )}
-      </div>
+      }
+
+
     </div>
   );
 
   async function unlockImage() {
+
+    setIsUnLocking(true);
+
     try {
 
-      handleUnlockMessage(message?.dataUrl);
-
-      const response = await axiosAmore.post(
+      const responseUnlock = await axiosAmore.post(
         "chat/unlock",
-        {message:message.id},
+        { message: message.id },
         { useAuth: true }
       );
 
-   
-      if(response.status === 200){
-        
+      console.log(responseUnlock);
+
+
+      if (responseUnlock.status === 200) {
+        setIsUnLocking(false);
+        handleUnlockMessage({ image: message?.dataUrl, messageId: message.id });
+
+        const responseExpire = await axiosAmore.post(
+          "chat/expire",
+          { message: message.id },
+          { useAuth: true }
+        );
+
+        console.log(responseExpire);
+
       }
 
-    } catch (e) {     
-        console.log(e.response.data.response.message === 'MESSAGE_ALREADY_UNLOCKED');  
+    } catch (e) {
+      console.log(e);
+
+      console.log(e.response.data.response.message === 'MESSAGE_ALREADY_UNLOCKED');
     }
+
   }
 };
 

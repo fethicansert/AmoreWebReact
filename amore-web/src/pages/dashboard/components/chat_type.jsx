@@ -16,6 +16,10 @@ const ChatType = ({ message, handleUnlockMessage }) => {
 
   //RETURN MESSAGE - CHAT ACCORDING TO GIVEN MESSAGE
   function getMessage() {
+
+    //Expired ise Image veya Voice Dondurmeye gerek yok
+    if (message?.isExpired && (message.type === 'image' || message.type === 'audio') && isSender) return <ChatBubble message={message} isSender={isSender} />;
+
     switch (message?.type) {
       case "text":
         return <ChatBubble message={message} isSender={isSender} />;

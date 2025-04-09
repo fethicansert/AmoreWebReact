@@ -12,6 +12,7 @@ const ChatSidebarUsers = ({
   getUser
 }) => {
 
+
   const { checkUsersStatus } = useUserActivty();
 
   return (
@@ -33,7 +34,7 @@ const ChatSidebarUsers = ({
 
           return (
             <ChatCard
-              key={uuidv4()}
+              key={conversation.id}
               onClick={() => handleConversationChange(index)}
               className={`chat-card-user ${currentChatUser?.id === user.id ? "active" : ""
                 }`}
