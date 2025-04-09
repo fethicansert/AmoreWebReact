@@ -511,7 +511,6 @@
     right: 0;
     bottom: 0;
     left: 0;
-    backdrop-filter: blur(3px);
     border-radius: 12px;
     margin: .25rem;
     display: flex;
@@ -519,7 +518,20 @@
     justify-content: center;
 }
 
+.chat-image-sending {
+    backdrop-filter: blur(3px);
+}
 
+.chat-image-lock {
+    backdrop-filter: blur(7px);
+    background: rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+    color: var(--whiteText);
+    font-weight: 600;
+    cursor: pointer;
+    gap: 10px 0;
+    font-size: 100%;
+}
 
 .chat-image-container {
     padding: .25rem;

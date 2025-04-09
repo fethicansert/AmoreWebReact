@@ -1,17 +1,40 @@
-import React from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { colors } from '../../../utils/theme'
 import { getTimeFromISO } from '../../../utils/functions'
 import { BeatLoader } from 'react-spinners';
 import ChatCardImage from './chat_card_image';
+import { AmoreImageLock, AmoreImageLockOpen } from '../../../assets/svg/svg_package';
 
 const ChatImage = ({ message, isSender }) => {
+
+    const [isHovered, setIsHovered] = useState(false);
+    const [fontSize, setFontSize] = useState('1rem');
+    const imageContainerRef = useRef();
+    const fontSizeRef = useRef();
+
+    useLayoutEffect(() => {
+        const containerWidth = imageContainerRef?.current?.offsetWidth ?? 0;
+        const minFontSize = 0.95; // rem
+        const maxFontSize = 1.4; // rem
+        const maxWidth = 400;
+        const ratio = containerWidth / maxWidth;
+        const fontSize = (ratio * maxFontSize) < minFontSize ? minFontSize : (ratio * maxFontSize);
+        setFontSize(`${fontSize}rem`);
+        fontSizeRef.current = `${fontSize}rem`;
+    }, []);
 
     return (
         <div className='chat-image' style={{ alignSelf: isSender ? 'flex-start' : 'flex-end', gridTemplateColumns: isSender ? 'auto auto' : 'auto' }}>
 
             {isSender && <ChatCardImage image={message?.user?.photos?.[0]?.url} showStatus={false} radius='37px' />}
 
-            <div className='chat-image-container' style={{ background: isSender ? colors.inputColor : colors.brand1 }}>
+            <div
+                ref={imageContainerRef}
+                className='chat-image-container'
+                style={{ background: isSender ? colors.inputColor : colors.brand1 }}
+                onMouseEnter={() => isSender ? setIsHovered(true) : undefined}
+                onMouseLeave={() => isSender ? setIsHovered(false) : undefined}
+            >
 
                 <img src={message.dataUrl} />
 
@@ -24,7 +47,10 @@ const ChatImage = ({ message, isSender }) => {
                 </div>}
 
                 {isSender && <div className='chat-image-lock'>
-                    <BeatLoader size={30} color={colors.brand1} />
+                    {
+                        isHovered ? <AmoreImageLockOpen size='40%' height='none' style={{ aspectRatio: '1 / 1', maxWidth: '130px' }} /> : <AmoreImageLock size='40%' style={{ aspectRatio: '1/1', maxWidth: '130px' }} />
+                    }
+                    <p style={{ fontSize: fontSizeRef.current }}>Görmek için tıkla</p>
                 </div>}
 
             </div>

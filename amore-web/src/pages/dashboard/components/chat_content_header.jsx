@@ -5,10 +5,15 @@ import NotificationShimmer from "./notification_shimmer";
 import CurrentUserInfoBox from "../../../copmonents/current_user_info_box";
 import ChatCardImage from "./chat_card_image";
 import { useNavigate } from "react-router-dom";
+import { useUserActivty } from "../../../hooks/use_user_activity";
 
 const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
+
+  //CONTEXT
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const { checkUsersStatus } = useUserActivty();
+  const isActiveUser = checkUsersStatus(currentChatUser?.id);
 
   return (
     <div className="chat-content-header">
@@ -21,7 +26,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
             image={currentChatUser?.photos[0].url}
             showStatus={true}
             radius="53px"
-            status={true}
+            status={isActiveUser}
           />
           <FlexBox
             width={"100%"}
@@ -32,7 +37,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
             <span className="current-chat-user-name">
               {currentChatUser?.name}
             </span>
-            <span className="current-chat-user-status">Çevrim içi</span>
+            <span className="current-chat-user-status">{isActiveUser ? 'Çevrim içi' : 'Çevrim dışı'}</span>
           </FlexBox>
         </div>
       ) : (
