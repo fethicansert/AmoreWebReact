@@ -16,6 +16,7 @@ import ChatImagePreview from "../components/chat_image_preview";
 import ChatContentHeader from "../components/chat_content_header";
 import ChatSidebarSearch from "../components/chat_sidebar_search";
 import ChatSidebarUsers from "../components/chat_sidebar_users";
+import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
 
 const Chat = () => {
@@ -37,7 +38,7 @@ const Chat = () => {
   const [isMessagesLoading, setIsMessagesLoading] = useState(true);
 
   const [selectedImages, setSelectedImages] = useState([]);
-  const [showUnlockImage, setShowUnlockImage] = useState(false); 
+  const [showUnlockImage, setShowUnlockImage] = useState(false);
 
   //CONTEXT
   const { auth } = useAuth();
@@ -58,6 +59,8 @@ const Chat = () => {
   const messageContentRef = useRef();
   //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
   const isInitialLoadRef = useRef(true);
+
+  const unlockImagRef = useRef();
 
   //If user searching setUser from searched conversation if not user main conversation
   useEffect(() => {
@@ -149,7 +152,13 @@ const Chat = () => {
             <ChatBubbleShimmer />
           ) : (
             messages.map((message) => {
-              return <ChatType key={uuidv4()} message={message} />;
+              return (
+                <ChatType
+                  key={uuidv4()}
+                  message={message}
+                  handleUnlockMessage={handleUnlockMessage}
+                />
+              );
             })
           )}
         </div>
@@ -176,18 +185,17 @@ const Chat = () => {
           />
         )}
 
-        {showUnlockImage && (
-          <ChatImagePreview
-            setShowPreviewImage={setShowPreviewImage}
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-            handleImageChange={handleImageChange}
-            sendImage={sendMessage}
-          />
-        )}
+        {showUnlockImage && <ChatUnlockImage image={unlockImagRef.current} setShowUnlockImage={setShowUnlockImage}/>}
       </div>
     </section>
   );
+
+  function handleUnlockMessage(image) {
+    console.log(image);
+    
+    unlockImagRef.current = image;
+    setShowUnlockImage(true);
+  }
 
   //SEND TEXT
   async function sendMessage({

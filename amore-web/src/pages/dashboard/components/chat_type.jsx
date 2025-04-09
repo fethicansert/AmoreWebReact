@@ -5,8 +5,7 @@ import ChatAudio from "./chat_audio";
 import ChatImage from "./chat_image";
 import ChatGift from "./chat_gift";
 
-const ChatType = ({ message }) => {
-
+const ChatType = ({ message, handleUnlockMessage }) => {
   //CONTEXT
   const { auth } = useAuth();
 
@@ -23,7 +22,13 @@ const ChatType = ({ message }) => {
       case "audio":
         return <ChatAudio message={message} isSender={isSender} />;
       case "image":
-        return <ChatImage message={message} isSender={isSender} />;
+        return (
+          <ChatImage
+            message={message}
+            isSender={isSender}
+            handleUnlockMessage={handleUnlockMessage}
+          />
+        );
       case "gift":
         return <ChatGift message={message} isSender={isSender} />;
     }

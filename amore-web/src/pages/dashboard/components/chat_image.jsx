@@ -9,10 +9,11 @@ import {
 } from "../../../assets/svg/svg_package";
 import { axiosAmore } from "../../../api/axios";
 
-const ChatImage = ({ message, isSender }) => {
+const ChatImage = ({ message, isSender, handleUnlockMessage }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [fontSize, setFontSize] = useState("1rem"); // gereklio im
   const imageContainerRef = useRef();
+
   
   useLayoutEffect(() => {
     const containerWidth = imageContainerRef?.current?.offsetWidth ?? 0;
@@ -93,12 +94,19 @@ const ChatImage = ({ message, isSender }) => {
 
   async function unlockImage() {
     try {
+
+      handleUnlockMessage(message?.dataUrl);
+
       const response = await axiosAmore.post(
         "chat/unlock",
         {message:message.id},
         { useAuth: true }
       );
-      console.log(response);
+
+   
+      if(response.status === 200){
+        
+      }
 
     } catch (e) {     
         console.log(e.response.data.response.message === 'MESSAGE_ALREADY_UNLOCKED');  
