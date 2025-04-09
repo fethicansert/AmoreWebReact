@@ -18,9 +18,9 @@ import ChatSidebarSearch from "../components/chat_sidebar_search";
 import ChatSidebarUsers from "../components/chat_sidebar_users";
 import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
+import { useSocket } from "../../../hooks/use_socket";
 
 const Chat = () => {
-
   //NAVIGATION
   const location = useLocation();
 
@@ -44,11 +44,15 @@ const Chat = () => {
   //CONTEXT
   const { auth } = useAuth();
   const { conversations, isConversationsLoading } = useConversation();
+  const { socket, isSocketConnected } = useSocket();
 
   // If user type something means user in searching state
   const isSearching = search.length > 0;
 
   //REFS
+
+  const currentChatIndexRef = useRef(currentChatIndex);
+
   const currentChatUser = useRef(
     getUser({
       conversation: !isSearching
@@ -62,6 +66,39 @@ const Chat = () => {
   const isInitialLoadRef = useRef(true);
 
   const unlockImagRef = useRef();
+
+  // useEffect(() => {
+  //   currentChatIndexRef.current = currentChatIndex;
+  // }, [currentChatIndex]);
+
+  useEffect(() => {
+    if (isSocketConnected && conversations.length > 1) {
+      socket.on("onMessageWithConversation", (message) =>
+        handleNewMessage(message)
+      );
+    }
+
+    return () => {
+      if (socket) socket.off("onMessageWithConversation", handleNewMessage);
+    };
+  }, [isSocketConnected, conversations]);
+
+  const handleNewMessage = (message) => {
+    // console.log(currentChatIndexRef.current);
+    // console.log(message.conversation.id);
+    // console.log(conversations);
+
+    // console.log(conversations[currentChatIndexRef.current].id === message.conversation.id);
+    console.log(message.receiverUser.id !== auth.id);
+
+    if (
+      conversations[currentChatIndexRef.current].id ===
+        message.conversation.id &&
+      message.receiverUser.id === auth.id
+    ) {
+      setMessages((prev) => [...prev, message]);
+    }
+  };
 
   //If user searching setUser from searched conversation if not user main conversation
   useEffect(() => {
@@ -186,7 +223,12 @@ const Chat = () => {
           />
         )}
 
-        {showUnlockImage && <ChatUnlockImage image={unlockImagRef.current} setShowUnlockImage={setShowUnlockImage} />}
+        {showUnlockImage && (
+          <ChatUnlockImage
+            image={unlockImagRef.current}
+            setShowUnlockImage={setShowUnlockImage}
+          />
+        )}
       </div>
     </section>
   );
@@ -194,12 +236,14 @@ const Chat = () => {
   function handleUnlockMessage({ image, messageId }) {
     unlockImagRef.current = image;
     setShowUnlockImage(true);
-    setMessages(prev => prev.map(message => {
-      if (message.id === messageId) {
-        return { ...message, isExpired: true }
-      }
-      return message
-    }))
+    setMessages((prev) =>
+      prev.map((message) => {
+        if (message.id === messageId) {
+          return { ...message, isExpired: true };
+        }
+        return message;
+      })
+    );
   }
 
   //SEND TEXT
@@ -221,8 +265,8 @@ const Chat = () => {
       messageType === "image"
         ? image.base64
         : messageType === "audio"
-          ? audioUrl
-          : null;
+        ? audioUrl
+        : null;
     //If audio get voice duration
     const metaData = messageType === "audio" ? { duration } : null;
 
@@ -251,8 +295,8 @@ const Chat = () => {
       messageType === "image"
         ? image.fileSize
         : messageType === "audio"
-          ? audioFile.size
-          : null;
+        ? audioFile.size
+        : null;
 
     //Prepare real message
     const message = {
@@ -304,8 +348,8 @@ const Chat = () => {
           messageType === "image"
             ? { ...response.data.data, dataUrl: image.base64 }
             : messageType === "audio"
-              ? { ...response.data.data, dataUrl: audioUrl }
-              : response.data.data;
+            ? { ...response.data.data, dataUrl: audioUrl }
+            : response.data.data;
 
         console.log(response);
 

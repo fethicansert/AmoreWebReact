@@ -5,7 +5,6 @@ import { getTimeFromISO } from "../../../utils/functions";
 import { ImageViewedIcon } from "../../../assets/svg/svg_package";
 
 const ChatBubble = ({ message, isSender }) => {
-
   const messageStyle = {
     color: isSender ? colors.darkText : colors.whiteText,
     fontWeight: isSender ? 300 : 600,
@@ -43,13 +42,14 @@ const ChatBubble = ({ message, isSender }) => {
         }}
         className="chat-bubble-wrapper"
       >
-
-        {
-          !message?.isExpired ? <p style={messageStyle}>{message?.content || message?.type}</p> : <div style={{ display: 'flex', alignItems: 'center', gap: '0 5px' }}>
+        {!message?.isExpired ? (
+          <p style={messageStyle}>{message?.content || message?.type}</p>
+        ) : (
+          <div style={{ display: "flex", alignItems: "center", gap: "0 5px" }}>
             <p style={messageStyle}>Fotoğraf görüntülendi</p>
             <ImageViewedIcon color={colors.iconColor} />
           </div>
-        }
+        )}
 
         {message?.isSending ? (
           <BeatLoader

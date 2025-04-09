@@ -9,7 +9,7 @@ const SocketProvider = ({ children }) => {
   //STATES
   const [socket, setSocket] = useState();
   const [isSocketConnected, setIsSocketConnnected] = useState(false);
-  
+
   //CONTEXT
   const { auth, isAuthenticated } = useAuth();
 
@@ -33,8 +33,7 @@ const SocketProvider = ({ children }) => {
       []
     );
 
-
-    if(!newSocket) return;
+    if (!newSocket) return;
 
     setSocket(newSocket);
 
@@ -50,6 +49,7 @@ const SocketProvider = ({ children }) => {
       console.error("Socket Error:", error);
     });
 
+
     return () => newSocket.disconnect();
   }, [auth]);
 
@@ -58,8 +58,6 @@ const SocketProvider = ({ children }) => {
       {children}
     </SocketContext.Provider>
   );
-
-
 };
 
 export default SocketProvider;
