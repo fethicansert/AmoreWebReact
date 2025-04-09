@@ -78,7 +78,6 @@ const NotificationProvider = ({ children }) => {
       const response = await axiosAmore.get("notification/count", {
         useAuth: true,
       });
-
       if (response.data.response.code === 200)
         setUnReadedCount(response.data.data.status);
     } catch (e) {
