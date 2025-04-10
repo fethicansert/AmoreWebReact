@@ -3,7 +3,7 @@ import ChatCard from "./chat_card";
 import NotificationShimmer from "./notification_shimmer";
 import { v4 as uuidv4 } from "uuid";
 import { useUserActivty } from "../../../hooks/use_user_activity";
-import { useMediaQuery } from "@mantine/hooks";
+import { useMediaPredicate } from "react-media-hook";
 
 const ChatSidebarUsers = ({
   currentConversationUser,
@@ -14,7 +14,7 @@ const ChatSidebarUsers = ({
 }) => {
 
   const { checkUsersStatus } = useUserActivty();
-  const messagePlaceHolder = useMediaQuery('(max-width: 820px)');
+  const messagePlaceHolder = useMediaPredicate('(max-width: 820px)');
 
 
   return (
