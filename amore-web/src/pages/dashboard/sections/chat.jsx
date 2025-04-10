@@ -59,6 +59,12 @@ const Chat = () => {
 
   const unlockImagRef = useRef();
 
+  const messagesRef = useRef(messages);
+
+  useEffect(() => {
+    messagesRef.current = messages;
+  },[messages]) 
+
   //Fetch Messages and Set Conversation and CurrentUser if conversation length > 1
   useEffect(() => {
     if (conversations.length > 1) {
@@ -98,27 +104,33 @@ const Chat = () => {
     setSearchedConversations(arr);
   }, [search, conversations]);
 
+
+
   useEffect(() => {
     if (isSocketConnected && conversations.length > 1) {
       socket.on("onMessageWithConversation", (message) =>
         handleNewMessage(message)
       );
     }
-
     return () => {
       if (socket) socket.off("onMessageWithConversation", handleNewMessage);
     };
   }, [isSocketConnected, conversations]);
 
-  //currentChatIndexRef Kullanmak Zorundayim neden !!!
-  const handleNewMessage = (message) => {
-    console.log(message.receiverUser.id !== auth.id);
 
+  const handleNewMessage = (message) => {
+    console.log(message);
+
+    const isMessageNotDuplicate = messagesRef.current.every(msg => msg.id !== message.id);
+    
+    console.log(isMessageNotDuplicate);
+
+    
     if (
-      currentConversationRef.current.id ===
-        message.conversation.id &&
-      message.receiverUser.id === auth.id
+      (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id) || isMessageNotDuplicate
     ) {
+      console.log("added");
+      
       setMessages((prev) => [...prev, message]);
     }
   };
