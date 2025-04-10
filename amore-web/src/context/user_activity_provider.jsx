@@ -46,7 +46,7 @@ const UserActivityProvider = ({ children }) => {
   function setUserStatus(users) {
 
     //If active users empty all users isActive true
-    if (!activeUsers.length > 1)
+    if (!activeUsers.length > 0)
       return users.map((user) => ({ ...user, isActive: true }));
 
     //If active users not empty set isActive with activeUsers
@@ -58,6 +58,7 @@ const UserActivityProvider = ({ children }) => {
   }
 
   function checkUsersStatus(userId) {
+    if (!activeUsers.length > 0) return undefined;
     return activeUsers.includes(userId);
   }
 

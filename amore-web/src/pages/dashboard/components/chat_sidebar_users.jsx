@@ -3,6 +3,7 @@ import ChatCard from "./chat_card";
 import NotificationShimmer from "./notification_shimmer";
 import { v4 as uuidv4 } from "uuid";
 import { useUserActivty } from "../../../hooks/use_user_activity";
+import { useMediaQuery } from "@mantine/hooks";
 
 const ChatSidebarUsers = ({
   currentConversationUser,
@@ -12,8 +13,9 @@ const ChatSidebarUsers = ({
   getUser
 }) => {
 
-
   const { checkUsersStatus } = useUserActivty();
+  const messagePlaceHolder = useMediaQuery('(max-width: 820px)');
+
 
   return (
     <div className="chat-card-user-wrapper">
@@ -61,6 +63,7 @@ const ChatSidebarUsers = ({
 
     switch (conversation?.lastMessage.type) {
       case "text":
+        if (messagePlaceHolder) return "✉️ Mesaj";
         return conversation?.lastMessage?.content.length > 30
           ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
           : conversation?.lastMessage?.content;

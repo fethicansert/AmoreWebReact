@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { SearchIcon } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
+import { useMediaQuery } from "@mantine/hooks";
 
 const ChatSidebarSearch = ({ search, setSearch }) => {
   const [searchFocused, setSearchFocused] = useState(false);
-  const placeHolderText = searchFocused
+  const smallPlaceHolderText = useMediaQuery('(max-width: 820px)');
+
+  const placeHolderText = smallPlaceHolderText ? 'Ara' : searchFocused
     ? "Aramaya başla!"
     : "Birini mi arıyorsun?";
 
@@ -14,7 +17,7 @@ const ChatSidebarSearch = ({ search, setSearch }) => {
         color={colors.iconColor}
         width="27"
         height="27"
-        style={{ margin: "0 1rem" }}
+        className={'chat-sidebar-search-icon'}
       />
       <input
         value={search}
