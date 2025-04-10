@@ -35,7 +35,7 @@ const ChatSidebarUsers = ({
           return (
             <ChatCard
               key={conversation.id}
-              onClick={() => handleConversationChange(index)}
+              onClick={() => handleConversationChange(conversation)}
               className={`chat-card-user ${currentChatUser?.id === user.id ? "active" : ""
                 }`}
               image={user.photos[0].url}

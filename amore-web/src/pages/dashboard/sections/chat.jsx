@@ -9,9 +9,9 @@ import { useLocation } from "react-router-dom";
 import { axiosAmore } from "../../../api/axios";
 import ChatBubbleShimmer from "../components/chat_bubble_shimmer";
 import ChatType from "../components/chat_type";
-import ChatInput from "../components/chat_input";
 import { getImageDimensions } from "../../../utils/functions";
 import ChatGiftSelect from "../components/chat_gift_select";
+import ChatInput from "../components/chat_input";
 import ChatImagePreview from "../components/chat_image_preview";
 import ChatContentHeader from "../components/chat_content_header";
 import ChatSidebarSearch from "../components/chat_sidebar_search";
@@ -21,6 +21,7 @@ import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
 
 const Chat = () => {
+ 
   //NAVIGATION
   const location = useLocation();
 
@@ -28,10 +29,6 @@ const Chat = () => {
   const [searchedConversations, setSearchedConversations] = useState([]);
   const [search, setSearch] = useState("");
 
-  //User can come from another pages with state user index so I can show selected user conversation.
-  const [currentChatIndex, setCurrentChatIndex] = useState(
-    location?.state?.index || 0
-  );
   const [messages, setMessages] = useState([]);
   const [showPreviewImage, setShowPreviewImage] = useState(false);
   const [showGifts, setShowGifts] = useState(false);
@@ -46,20 +43,15 @@ const Chat = () => {
   const { conversations, isConversationsLoading } = useConversation();
   const { socket, isSocketConnected } = useSocket();
 
-  // If user type something means user in searching state
-  const isSearching = search.length > 0;
-
   //REFS
-
-  const currentChatIndexRef = useRef(currentChatIndex);
+  const currentConversationRef = useRef(
+    conversations[location?.state?.index || 0]
+  );
 
   const currentChatUser = useRef(
-    getUser({
-      conversation: !isSearching
-        ? conversations[currentChatIndex]
-        : searchedConversations[currentChatIndex],
-    })
+    getUser({ conversation: currentConversationRef.current })
   );
+
   //Use this to get height of message content so and we can know how much sroll need to scroll to bottom.
   const messageContentRef = useRef();
   //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
@@ -67,47 +59,18 @@ const Chat = () => {
 
   const unlockImagRef = useRef();
 
-  // useEffect(() => {
-  //   currentChatIndexRef.current = currentChatIndex;
-  // }, [currentChatIndex]);
-
+  //Fetch Messages and Set Conversation and CurrentUser if conversation length > 1
   useEffect(() => {
-    if (isSocketConnected && conversations.length > 1) {
-      socket.on("onMessageWithConversation", (message) =>
-        handleNewMessage(message)
-      );
+    if (conversations.length > 1) {
+      currentConversationRef.current =
+        conversations[location?.state?.index || 0];
+      currentChatUser.current = getUser({
+        conversation: currentConversationRef.current,
+      });
+
+      getMessages(currentConversationRef.current.id);
     }
-
-    return () => {
-      if (socket) socket.off("onMessageWithConversation", handleNewMessage);
-    };
-  }, [isSocketConnected, conversations]);
-
-  const handleNewMessage = (message) => {
-    // console.log(currentChatIndexRef.current);
-    // console.log(message.conversation.id);
-    // console.log(conversations);
-
-    // console.log(conversations[currentChatIndexRef.current].id === message.conversation.id);
-    console.log(message.receiverUser.id !== auth.id);
-
-    if (
-      conversations[currentChatIndexRef.current].id ===
-        message.conversation.id &&
-      message.receiverUser.id === auth.id
-    ) {
-      setMessages((prev) => [...prev, message]);
-    }
-  };
-
-  //If user searching setUser from searched conversation if not user main conversation
-  useEffect(() => {
-    currentChatUser.current = getUser({
-      conversation: !isSearching
-        ? conversations[currentChatIndex]
-        : searchedConversations[currentChatIndex],
-    });
-  }, [currentChatIndex, conversations]);
+  }, [conversations]);
 
   //If initialMessageLoading instantly go down if not smoothly scroll to show scroll animation
   useEffect(() => {
@@ -126,16 +89,6 @@ const Chat = () => {
     });
   }, [messages]);
 
-  //Fetch Messages if currentChatIndex or searched conversation changge
-  useEffect(() => {
-    if (conversations.length > 1)
-      getMessages(
-        !isSearching
-          ? conversations[currentChatIndex]?.id
-          : searchedConversations[currentChatIndex]?.id
-      );
-  }, [currentChatIndex, conversations]);
-
   //Search and set searchedConversations
   useEffect(() => {
     const arr = conversations.filter((conversation) => {
@@ -144,6 +97,31 @@ const Chat = () => {
     });
     setSearchedConversations(arr);
   }, [search, conversations]);
+
+  useEffect(() => {
+    if (isSocketConnected && conversations.length > 1) {
+      socket.on("onMessageWithConversation", (message) =>
+        handleNewMessage(message)
+      );
+    }
+
+    return () => {
+      if (socket) socket.off("onMessageWithConversation", handleNewMessage);
+    };
+  }, [isSocketConnected, conversations]);
+
+  //currentChatIndexRef Kullanmak Zorundayim neden !!!
+  const handleNewMessage = (message) => {
+    console.log(message.receiverUser.id !== auth.id);
+
+    if (
+      currentConversationRef.current.id ===
+        message.conversation.id &&
+      message.receiverUser.id === auth.id
+    ) {
+      setMessages((prev) => [...prev, message]);
+    }
+  };
 
   return (
     <section className="chat">
@@ -392,9 +370,11 @@ const Chat = () => {
   }
 
   //Change Current Conversation
-  function handleConversationChange(index) {
-    setCurrentChatIndex(index);
+  function handleConversationChange(conversation) {
     isInitialLoadRef.current = true;
+    currentConversationRef.current = conversation;
+    currentChatUser.current = getUser({ conversation: conversation });
+    getMessages(conversation.id);
   }
 
   //Used this for participants indexs changes sometimes 0 is sender sometimes 1 use id to get user

@@ -20,7 +20,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
       {!isConversationsLoading ? (
         <div
           className="current-chat-user"
-          onClick={() => navigate(`/dashboard/user/${currentChatUser.id}`)}
+          onClick={() => navigate(`/dashboard/user/${currentChatUser?.id}`)}
         >
           <ChatCardImage
             image={currentChatUser?.photos[0].url}
