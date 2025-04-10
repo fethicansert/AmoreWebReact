@@ -121,13 +121,12 @@ const Chat = () => {
   const handleNewMessage = (message) => {
     console.log(message);
 
-    const isMessageNotDuplicate = messagesRef.current.every(msg => msg.id !== message.id);
-    
-    console.log(isMessageNotDuplicate);
-
+    // const isMessageNotDuplicate = messagesRef.current.every(msg => msg.id !== message.id);
+    // console.log(isMessageNotDuplicate);
+    // (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id) || isMessageNotDuplicate
     
     if (
-      (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id) || isMessageNotDuplicate
+      (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id)
     ) {
       console.log("added");
       
