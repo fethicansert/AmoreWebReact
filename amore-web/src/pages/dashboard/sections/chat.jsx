@@ -21,7 +21,6 @@ import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
 
 const Chat = () => {
- 
   //NAVIGATION
   const location = useLocation();
 
@@ -48,7 +47,7 @@ const Chat = () => {
     conversations[location?.state?.index || 0]
   );
 
-  const currentChatUser = useRef(
+  const currentConversationUser = useRef(
     getUser({ conversation: currentConversationRef.current })
   );
 
@@ -57,20 +56,23 @@ const Chat = () => {
   //Use this check if messages is initial load state or not if initial scroll instant if not smooth behavior.
   const isInitialLoadRef = useRef(true);
 
-  const unlockImagRef = useRef();
+  const unlockedImagRef = useRef();
 
   const messagesRef = useRef(messages);
 
   useEffect(() => {
     messagesRef.current = messages;
-  },[messages]) 
+  }, [messages]);
 
   //Fetch Messages and Set Conversation and CurrentUser if conversation length > 1
   useEffect(() => {
     if (conversations.length > 1) {
+      //set current conversation
       currentConversationRef.current =
         conversations[location?.state?.index || 0];
-      currentChatUser.current = getUser({
+
+      //set current chatUsers
+      currentConversationUser.current = getUser({
         conversation: currentConversationRef.current,
       });
 
@@ -104,8 +106,7 @@ const Chat = () => {
     setSearchedConversations(arr);
   }, [search, conversations]);
 
-
-
+  //Listen socket for coming messages
   useEffect(() => {
     if (isSocketConnected && conversations.length > 1) {
       socket.on("onMessageWithConversation", (message) =>
@@ -117,21 +118,21 @@ const Chat = () => {
     };
   }, [isSocketConnected, conversations]);
 
-
+  //if message conversation id equal to currentConversation add message to messages state
   const handleNewMessage = (message) => {
     console.log(message);
 
+    if (
+      currentConversationRef.current.id === message.conversation.id &&
+      message.receiverUser.id === auth.id
+    ) {
+      setMessages((prev) => [...prev, message]);
+    }
+
+    //Same user online in 2 device how change state ???
     // const isMessageNotDuplicate = messagesRef.current.every(msg => msg.id !== message.id);
     // console.log(isMessageNotDuplicate);
     // (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id) || isMessageNotDuplicate
-    
-    if (
-      (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id)
-    ) {
-      console.log("added");
-      
-      setMessages((prev) => [...prev, message]);
-    }
   };
 
   return (
@@ -159,7 +160,7 @@ const Chat = () => {
         {/* SIDEBAR CHAT USERS */}
         <ChatSidebarUsers
           getUser={getUser}
-          currentChatUser={currentChatUser.current}
+          currentConversationUser={currentConversationUser.current}
           isConversationsLoading={isConversationsLoading}
           searchedConversations={searchedConversations}
           handleConversationChange={handleConversationChange}
@@ -170,7 +171,7 @@ const Chat = () => {
         {/*CHAT CONTENT HEADER */}
         <ChatContentHeader
           isConversationsLoading={isConversationsLoading}
-          currentChatUser={currentChatUser.current}
+          currentConversationUser={currentConversationUser.current}
         />
 
         {/* CHAT CONTENT MESSAGES */}
@@ -214,7 +215,7 @@ const Chat = () => {
 
         {showUnlockImage && (
           <ChatUnlockImage
-            image={unlockImagRef.current}
+            image={unlockedImagRef.current}
             setShowUnlockImage={setShowUnlockImage}
           />
         )}
@@ -222,8 +223,17 @@ const Chat = () => {
     </section>
   );
 
+  //Change Current Conversation
+  function handleConversationChange(conversation) {
+    isInitialLoadRef.current = true;
+    currentConversationRef.current = conversation;
+    currentConversationUser.current = getUser({ conversation: conversation });
+    getMessages(conversation.id);
+  }
+
+  //Set unlocked message url and show unlocked image than set isExpired to message
   function handleUnlockMessage({ image, messageId }) {
-    unlockImagRef.current = image;
+    unlockedImagRef.current = image;
     setShowUnlockImage(true);
     setMessages((prev) =>
       prev.map((message) => {
@@ -296,7 +306,7 @@ const Chat = () => {
       height: image?.dimensions?.h,
       duration: duration,
       gift: gift?._id,
-      user: currentChatUser.current.id,
+      user: currentConversationUser.current.id,
     };
 
     let formData = null;
@@ -378,14 +388,6 @@ const Chat = () => {
 
       e.target.value = "";
     }
-  }
-
-  //Change Current Conversation
-  function handleConversationChange(conversation) {
-    isInitialLoadRef.current = true;
-    currentConversationRef.current = conversation;
-    currentChatUser.current = getUser({ conversation: conversation });
-    getMessages(conversation.id);
   }
 
   //Used this for participants indexs changes sometimes 0 is sender sometimes 1 use id to get user

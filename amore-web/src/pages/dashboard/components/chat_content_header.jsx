@@ -7,23 +7,23 @@ import ChatCardImage from "./chat_card_image";
 import { useNavigate } from "react-router-dom";
 import { useUserActivty } from "../../../hooks/use_user_activity";
 
-const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
+const ChatContentHeader = ({ isConversationsLoading, currentConversationUser }) => {
 
   //CONTEXT
   const { auth } = useAuth();
   const navigate = useNavigate();
   const { checkUsersStatus } = useUserActivty();
-  const isActiveUser = checkUsersStatus(currentChatUser?.id);
+  const isActiveUser = checkUsersStatus(currentConversationUser?.id);
 
   return (
     <div className="chat-content-header">
       {!isConversationsLoading ? (
         <div
           className="current-chat-user"
-          onClick={() => navigate(`/dashboard/user/${currentChatUser?.id}`)}
+          onClick={() => navigate(`/dashboard/user/${currentConversationUser?.id}`)}
         >
           <ChatCardImage
-            image={currentChatUser?.photos[0].url}
+            image={currentConversationUser?.photos[0].url}
             showStatus={true}
             radius="53px"
             status={isActiveUser}
@@ -35,7 +35,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentChatUser }) => {
             gap="2.5px 0"
           >
             <span className="current-chat-user-name">
-              {currentChatUser?.name}
+              {currentConversationUser?.name}
             </span>
             <span className="current-chat-user-status">{isActiveUser ? 'Çevrim içi' : 'Çevrim dışı'}</span>
           </FlexBox>

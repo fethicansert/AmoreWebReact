@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useUserActivty } from "../../../hooks/use_user_activity";
 
 const ChatSidebarUsers = ({
-  currentChatUser,
+  currentConversationUser,
   isConversationsLoading,
   searchedConversations,
   handleConversationChange,
@@ -36,7 +36,7 @@ const ChatSidebarUsers = ({
             <ChatCard
               key={conversation.id}
               onClick={() => handleConversationChange(conversation)}
-              className={`chat-card-user ${currentChatUser?.id === user.id ? "active" : ""
+              className={`chat-card-user ${currentConversationUser?.id === user.id ? "active" : ""
                 }`}
               image={user.photos[0].url}
               title={user.name}
