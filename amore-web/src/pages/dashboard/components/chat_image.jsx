@@ -53,7 +53,7 @@ const ChatImage = ({ message, isSender, handleUnlockMessage }) => {
           style={{ background: isSender ? colors.inputColor : colors.brand1 }}
           onMouseEnter={() => (isSender ? setIsHovered(true) : undefined)}
           onMouseLeave={() => (isSender ? setIsHovered(false) : undefined)}
-          onClick={unlockImage}
+          onClick={isSender ? unlockImage : null}
         >
           <img src={message.dataUrl} />
 

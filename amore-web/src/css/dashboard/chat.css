@@ -1,10 +1,8 @@
 .chat {
     display: grid;
-    grid-template-columns: 1fr 2.2fr;
-    gap: 0 .85rem;
+    gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100%;
     overflow-y: hidden;
-    padding-left: .3rem;
     position: relative;
 }
 
@@ -27,6 +25,10 @@
     position: relative;
     overflow-y: scroll;
     flex: 1;
+}
+
+.chat-sidebar-search-icon {
+    margin-inline: .5rem;
 }
 
 .chat-sidebar-search {
@@ -73,6 +75,16 @@
     grid-template-columns: auto 1fr auto;
     gap: 0 12px;
     cursor: pointer;
+}
+
+.chat-card-text-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-block: .6rem;
 }
 
 .chat-card-image {
@@ -203,13 +215,12 @@
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid var(--borderColor1);
-    padding: 0 .5rem 0 1rem;
+    padding: .75rem 1rem .75rem 1rem;
     background-color: var(--backGround3);
 }
 
 .current-chat-user {
     display: grid;
-    grid-template-columns: auto auto;
     gap: 0 8px;
     align-items: center;
     cursor: pointer;
@@ -286,7 +297,8 @@
 }
 
 .chat-send-image-button,
-.chat-send-gift-button {
+.chat-send-gift-button,
+.chat-show-input-buttons {
     aspect-ratio: 1 / 1;
     height: 100%;
     border: 1px solid var(--borderColor1);
@@ -297,6 +309,10 @@
     cursor: pointer;
 }
 
+.chat-show-input-buttons:hover {
+    background: var(--brand1)
+}
+
 .chat-send-image-button:hover {
     background-color: var(--brand2);
 }
@@ -305,6 +321,7 @@
     background-color: var(--backGround4);
 }
 
+.chat-show-input-buttons:hover svg path,
 .chat-send-image-button:hover svg path,
 .chat-send-gift-button:hover svg path {
     stroke: var(--whiteText);
@@ -713,6 +730,7 @@
 .chat-gift-select-filter {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     padding: 0 1rem;
+    gap: 0 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -744,6 +762,7 @@
 .chat-gift-select-filter-item.active {
     border-bottom: 1px solid white;
     margin-bottom: -1px;
+    /* Margin -1 sikinti cikaritor  overflow yukari yap */
     font-weight: 600;
 }
 
@@ -875,75 +894,175 @@
     scale: 1.07;
 }
 
-.chat-sidebar-search-icon {
-    margin-inline: .5rem;
-}
+@media(max-width: 950px) {
 
-
-@media(max-width: 920px) {
-
-    .chat-content-header {
-        padding: 0 0 0 .75rem;
-    }
-
-    .chat {
-        grid-template-columns: minmax(165px, .85fr) 2.2fr;
-        gap: 0 .5rem;
+    .chat-card .chat-card-text-content,
+    .chat-card-time,
+    .chat-card-whatssapp-arrow,
+    .chat-sidebar-search {
+        display: none;
     }
 
     .chat-card {
-        grid-template-columns: auto 1fr;
-        gap: 0 9px;
+        grid-template-columns: 1fr;
+        justify-items: center;
     }
 
-    .chat-card-whatsapp {
-        padding: 1rem .5rem;
+    .chat-sidebar {
+        padding: 0 0 .5rem 0;
     }
 
-    .chat-card-user {
-        padding: 1rem .8rem;
-        position: relative;
-        transition: background-color 400ms ease;
+}
+
+@media(max-width: 600px) {
+
+    .chat-sidebar {
+        padding: 1rem 0;
     }
 
-    chat-card h3,
+    .chat-content-header {
+        padding: .5rem .5rem .5rem .25rem
+    }
+
+    .chat-sidebar-search,
+    .chat-card .chat-card-text-content {
+        display: flex;
+    }
+
+    .chat-card {
+        grid-template-columns: auto 1fr auto;
+        gap: 0 12px;
+    }
+
+    .chat-card h3,
     .current-chat-user-name {
-        font-size: .83rem;
+        font-size: .9rem;
     }
 
     .chat-card p {
-        font-size: .76rem;
+        font-size: .8rem;
     }
 
     .chat-card-time {
-        display: none;
+        display: block;
+    }
+
+    .chat-card-whatsapp {
+        background-color: rgba(48, 207, 109, 0.114);
+        padding: 1.4rem 1rem;
+        transition: background-color 400ms ease;
+        align-items: center;
     }
 
     .chat-card-whatssapp-arrow {
-        display: none;
+        align-self: center;
+        transition: transform 500ms ease;
+    }
+
+    .chat-gift-select-filter {
+        padding: 0 .5rem 0 5px;
+        gap: 0 5px;
+    }
+
+    .chat-gift-select-filter-items-wrapper {
+        display: flex;
+        overflow: scroll;
+        white-space: nowrap;
+    }
+
+    .chat-gift-select-filter-user-coin {
+        font-size: .7rem;
+        gap: 0 3px;
+    }
+
+    .chat-gift-select-coin {
+        width: 15px;
+        height: 15px;
+    }
+
+    .chat-gift-select-filter-item {
+        padding: 1rem .7rem;
+        font-size: .8rem;
+    }
+
+    .chat-gifts {
+        padding: 1.8rem .7rem;
+        gap: 0 8px;
+    }
+
+    .chat-gifts-wrapper {
+        gap: 0 35px;
+        max-width: calc(100% - (2 * 8 + 8 + .7rem));
+    }
+
+    .chat-gift-container {
+        gap: 7px 0;
+    }
+
+    .chat-gift-price {
+        gap: 0 3px;
+        font-size: .7rem;
+    }
+
+    .chat-gift-amore-icon {
+        width: 9;
+        height: 9;
+    }
+
+    .chat-gift-container img {
+        max-width: 47px;
+        min-width: 47px;
+        max-height: 47px;
+        min-height: 47px;
+    }
+
+    .chat-gifts-scroll-button {
+        min-height: 22px;
+        min-width: 22px;
+        width: 22px;
+        height: 22px;
     }
 
     .chat-content-messages {
-        padding: 1.5rem 1rem 0 1rem;
+        padding: 2rem .7rem 0 .7rem;
+    }
+
+    .chat-input-container-wrapper {
+        padding: .5rem;
+        gap: 0 5px;
+        grid-template-columns: auto 1fr;
+    }
+
+    .chat-input-container {
+        height: 47px;
+        padding: .1rem .65rem;
+    }
+
+
+
+}
+
+@media(max-width: 500px) {
+
+    .chat-content-header {
+        padding: .4rem .4rem .4rem .2rem
+    }
+
+    .chat-content-header .current-user-info-box .current-user-info-box-image,
+    .chat-content-header .current-user-info-box .current-user-info-box-user-name {
+        display: none;
     }
 }
 
-@keyframes breathe-opacity {
-    0% {
-        opacity: 1;
+@media(max-width: 350px) {
+
+    .chat-input-container {
+        height: 44px;
+        padding: .1rem .45rem;
     }
 
-    50% {
-        opacity: 0.4;
-    }
-
-    100% {
-        opacity: 1;
+    .chat-input-container-wrapper {
+        padding: .3rem;
+        gap: 0 3px;
     }
 }
-
-/* .chat-card-whatsapp {
-    background-color: rgba(48, 207, 109, 0.114);
-    padding: 1.4rem 1rem;
-    transition: background-color 400ms ease;
-} */

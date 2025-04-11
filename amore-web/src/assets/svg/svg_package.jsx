@@ -25,9 +25,9 @@ export const FemaleGenderIcon = ({ width, height, className, color }) =>
     </svg>
 
 //Image Icon
-export const ImageAddIcon = ({ width = '25', height = '25', className = 'image-add-icon', color }) => <svg className={className} width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M14.4473 27.9773H41.5527" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M28 14.2273V41.7273" stroke="#B0B0B0" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const ImageAddIcon = ({ width = '56', height = '56', className = 'image-add-icon', color = "#B0B0B0", strokeWidth = "1.5" }) => <svg className={className} width={width} height={height} viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M14.4473 27.9773H41.5527" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M28 14.2273V41.7273" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 //Color not used with this commonent
@@ -123,7 +123,7 @@ export const LogoutIcon = ({ width = '25', height = '25', color = "#4B164C", cla
     <path d="M24.6177 14.9716H19.166M22.4182 12.7815L24.6165 14.9709L22.4182 17.1603" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
-export const ArrorHeadLeft = ({ width = '21', height = '21', color = "#FFFFFF", strokeWidth = '1' }) => <svg width={width} height={height} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const ArrorHeadLeft = ({ width = '21', height = '21', color = "#FFFFFF", strokeWidth = '1', onClick }) => <svg onClick={onClick} width={width} height={height} viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.3722 16.304L7.62256 10.4707L13.3722 4.63733" strokeWidth={strokeWidth} stroke={color} strokeLinecap="round" />
 </svg>
 
@@ -131,7 +131,7 @@ export const ArrowHeadRight = ({ width = '21', height = '21', color = "#FFFFFF",
     <path d="M7.62256 4.63733L13.3722 10.4707L7.62256 16.304" strokeWidth={strokeWidth} stroke={color} strokeLinecap="round" />
 </svg>
 
-export const AmoreCoinIcon = ({ width = '24', height = '24', onClick, className = 'amore-coin-icon' }) => <svg className={className} onClick={onClick} width={width} height={height} viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const AmoreCoinIcon = ({ width = '24', height = '24', onClick, className = '' }) => <svg className={className} onClick={onClick} width={width} height={height} viewBox="0 0 23 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M11.3217 23.9381C17.5487 23.9381 22.5966 18.8901 22.5966 12.6632C22.5966 6.43629 17.5487 1.38837 11.3217 1.38837C5.0948 1.38837 0.046875 6.43629 0.046875 12.6632C0.046875 18.8901 5.0948 23.9381 11.3217 23.9381Z" fill="#E45A5A" />
     <path d="M11.3217 22.6116C17.5487 22.6116 22.5966 17.5637 22.5966 11.3368C22.5966 5.10984 17.5487 0.0619202 11.3217 0.0619202C5.0948 0.0619202 0.046875 5.10984 0.046875 11.3368C0.046875 17.5637 5.0948 22.6116 11.3217 22.6116Z" fill="#FFA5A6" />
     <path d="M11.3223 21.2852C16.4503 21.2852 20.6074 17.1281 20.6074 12C20.6074 6.87196 16.4503 2.71484 11.3223 2.71484C6.19422 2.71484 2.03711 6.87196 2.03711 12C2.03711 17.1281 6.19422 21.2852 11.3223 21.2852Z" fill="#FFD7D7" />

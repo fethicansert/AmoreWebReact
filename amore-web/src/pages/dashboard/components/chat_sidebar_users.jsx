@@ -14,8 +14,6 @@ const ChatSidebarUsers = ({
 }) => {
 
   const { checkUsersStatus } = useUserActivty();
-  const messagePlaceHolder = useMediaPredicate('(max-width: 820px)');
-
 
   return (
     <div className="chat-card-user-wrapper">
@@ -63,9 +61,8 @@ const ChatSidebarUsers = ({
 
     switch (conversation?.lastMessage.type) {
       case "text":
-        if (messagePlaceHolder) return "✉️ Mesaj";
-        return conversation?.lastMessage?.content.length > 30
-          ? `${conversation?.lastMessage?.content.slice(0, 30)}...`
+        return conversation?.lastMessage?.content.length > 20
+          ? `${conversation?.lastMessage?.content.slice(0, 20)}...`
           : conversation?.lastMessage?.content;
 
       case "image":

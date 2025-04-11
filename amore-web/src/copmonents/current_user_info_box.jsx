@@ -14,7 +14,7 @@ const CurrentUserInfoBox = ({ credits, image, name, style }) => {
             <FlexBox gap='0 18px' width={'100%'} justifyContent='center'>
 
                 <FlexBox gap='0 8px' >
-                    <AmoreCoinIcon style={{ cursor: 'pointer' }} onClick={() => {
+                    <AmoreCoinIcon className='amore-coin-icon' style={{ cursor: 'pointer' }} onClick={() => {
                         setLimitedOfferOptions({ show: true, type: 'coin' });
                     }} />
                     <span style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '600' }}>{credits}</span>
@@ -22,9 +22,9 @@ const CurrentUserInfoBox = ({ credits, image, name, style }) => {
 
                 <img className='current-user-info-box-image' src={image || userAvatar} style={{ borderRadius: '12px' }} width={40} height={40} />
 
-                <FlexBox gap='0 2px' >
-                    <span className='current-user-info-box-user-name' style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '300' }} >{name}</span>
-                </FlexBox>
+
+                <span className='current-user-info-box-user-name' style={{ color: colors.darkText, fontSize: '.85rem', fontWeight: '300' }} >{name}</span>
+
 
             </FlexBox>
         </div>

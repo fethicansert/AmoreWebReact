@@ -52,9 +52,9 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
   return (
     <div className="chat-voice-recording">
-      <span className="chat-voice-recording-loading-text">
+      {/* <span className="chat-voice-recording-loading-text">
         {recordingStatus !== "pause" ? "Ses Kaydediliyor..." : "Duraklatıldı"}
-      </span>
+      </span> */}
 
       <div className="chat-voice-recording-container">
         <div

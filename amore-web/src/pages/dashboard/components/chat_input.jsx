@@ -1,6 +1,7 @@
 import React, { startTransition, useState } from "react";
 import {
   CrossCloseIcon,
+  ImageAddIcon,
   MicrophoneIcon,
   PauseIcon,
   SendGiftIcon,
@@ -11,6 +12,7 @@ import { colors } from "../../../utils/theme";
 import ChatVoiceRecord from "./chat_voice_record";
 
 const ChatInput = ({
+  oneScreenChat,
   sendMessage,
   handleImageChange,
   setShowGifts,
@@ -19,28 +21,45 @@ const ChatInput = ({
   const [messageText, setMessageText] = useState("");
   const [messageTextFocused, setMessageTextFocused] = useState(false);
   const [isShowRecording, setIsShowRecording] = useState(false);
+  const [showButtons, setShowButtons] = useState(false);
 
   return (
     <div className="chat-input-container-wrapper">
-      <div className="chat-send-image-button">
-        <input
-          onChange={handleImageChange}
-          className="chat-image-input"
-          type="file"
-          accept="image/*"
-        />
-        <SendImageIcon />
-      </div>
 
-      <div
-        className="chat-send-gift-button"
-        style={showGifts ? { background: colors.backGround4 } : {}}
-        onClick={() => setShowGifts((prev) => !prev)}
-      >
-        <SendGiftIcon
-          color={showGifts ? colors.backGround3 : colors.iconColor}
-        />
-      </div>
+      {
+        !oneScreenChat ? <>
+          <div className="chat-send-image-button">
+            <input
+              onChange={handleImageChange}
+              className="chat-image-input"
+              type="file"
+              accept="image/*"
+            />
+            <SendImageIcon />
+          </div>
+
+          <div
+            className="chat-send-gift-button"
+            style={showGifts ? { background: colors.backGround4 } : {}}
+            onClick={() => setShowGifts((prev) => !prev)}
+          >
+            <SendGiftIcon
+              color={showGifts ? colors.backGround3 : colors.iconColor}
+            />
+          </div>
+        </> : <div
+          className="chat-show-input-buttons"
+          onClick={() => setShowButtons((prev) => !prev)}
+        >
+          <ImageAddIcon
+            strokeWidth="3"
+            width="25"
+            height="25"
+            className=""
+            color={colors.brand1}
+          />
+        </div>
+      }
 
       <div
         className="chat-input-container"

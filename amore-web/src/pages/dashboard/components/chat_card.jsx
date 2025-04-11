@@ -12,10 +12,10 @@ const ChatCard = ({ image, title, text, icon, time, className, onClick = null, s
 
             <ChatCardImage image={image} showStatus={showStatus} status={status} />
 
-            <FlexBox width={'100%'} height={'100%'} flexDirection='column' alignItems='flex-start' justifyContent='space-between' style={{ paddingBlock: '.60rem' }}>
+            <div className='chat-card-text-content' >
                 <h3>{title}</h3>
                 <p>{text}</p>
-            </FlexBox>
+            </div>
 
 
             {icon && icon}

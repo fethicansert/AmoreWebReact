@@ -5,9 +5,9 @@ import { useMediaPredicate } from "react-media-hook";
 
 const ChatSidebarSearch = ({ search, setSearch }) => {
   const [searchFocused, setSearchFocused] = useState(false);
-  const smallPlaceHolderText = useMediaPredicate('(max-width: 820px)');
 
-  const placeHolderText = smallPlaceHolderText ? 'Ara' : searchFocused
+
+  const placeHolderText = searchFocused
     ? "Aramaya başla!"
     : "Birini mi arıyorsun?";
 

@@ -19,6 +19,8 @@ import ChatSidebarUsers from "../components/chat_sidebar_users";
 import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
+import { useMediaPredicate } from "react-media-hook";
+import { useFetch } from "@mantine/hooks";
 
 const Chat = () => {
   //NAVIGATION
@@ -36,6 +38,8 @@ const Chat = () => {
 
   const [selectedImages, setSelectedImages] = useState([]);
   const [showUnlockImage, setShowUnlockImage] = useState(false);
+
+  const [hideChatContent, setHideChatContent] = useState(true);
 
   //CONTEXT
   const { auth } = useAuth();
@@ -58,11 +62,9 @@ const Chat = () => {
 
   const unlockedImagRef = useRef();
 
-  const messagesRef = useRef(messages);
+  const onlyUserImage = useMediaPredicate('(max-width:950px)');
 
-  useEffect(() => {
-    messagesRef.current = messages;
-  }, [messages]);
+  const oneScreenChat = useMediaPredicate('(max-width:600px)');
 
   //Fetch Messages and Set Conversation and CurrentUser if conversation length > 1
   useEffect(() => {
@@ -83,18 +85,22 @@ const Chat = () => {
   //If initialMessageLoading instantly go down if not smoothly scroll to show scroll animation
   useEffect(() => {
     //INSTANT SCROLL
-    if (isInitialLoadRef.current && messages.length > 0) {
+
+    if ((isInitialLoadRef.current && messages.length > 0)) {
+
       isInitialLoadRef.current = false;
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
         behavior: "instant",
       });
+    } else {
+      //SMOOTH SCROLL
+      messageContentRef.current.scroll({
+        top: messageContentRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
-    //SMOOTH SCROLL
-    messageContentRef.current.scroll({
-      top: messageContentRef.current.scrollHeight,
-      behavior: "smooth",
-    });
+
   }, [messages]);
 
   //Search and set searchedConversations
@@ -120,7 +126,7 @@ const Chat = () => {
 
   //if message conversation id equal to currentConversation add message to messages state
   const handleNewMessage = (message) => {
-    console.log(message);
+    // console.log(message);
 
     if (
       currentConversationRef.current.id === message.conversation.id &&
@@ -129,102 +135,106 @@ const Chat = () => {
       setMessages((prev) => [...prev, message]);
     }
 
-    //Same user online in 2 device how change state ???
-    // const isMessageNotDuplicate = messagesRef.current.every(msg => msg.id !== message.id);
-    // console.log(isMessageNotDuplicate);
-    // (currentConversationRef.current.id === message.conversation.id && message.receiverUser.id === auth.id) || isMessageNotDuplicate
   };
 
   return (
-    <section className="chat">
-      <div className="chat-sidebar">
-        {/* SIDEBAR SEARCH */}
-        <ChatSidebarSearch search={search} setSearch={setSearch} />
+    <section className="chat" style={{ gridTemplateColumns: oneScreenChat ? '1fr' : onlyUserImage ? 'auto 2.2fr' : '1fr 2.2fr' }}>
+      {
 
-        {/* WHATSAPP SUPPORT */}
-        <ChatCard
-          image={whatsAppIcon}
-          title={"WhatsApp Destek"}
-          text={"Destek için hemen yaz."}
-          className={"chat-card-whatsapp"}
-          icon={
-            <ArrowHeadRight
-              className="chat-card-whatssapp-arrow"
-              color={"#000000"}
-              width="35px"
-              height="35px"
+        (hideChatContent || !oneScreenChat) && <div className="chat-sidebar" >
+          {/* SIDEBAR SEARCH */}
+          <ChatSidebarSearch search={search} setSearch={setSearch} />
+
+          {/* WHATSAPP SUPPORT */}
+          <ChatCard
+            image={whatsAppIcon}
+            title={"WhatsApp Destek"}
+            text={"Destek için hemen yaz."}
+            className={"chat-card-whatsapp"}
+            icon={
+              <ArrowHeadRight
+                className="chat-card-whatssapp-arrow"
+                color={"#000000"}
+                width="35px"
+                height="35px"
+              />
+            }
+          />
+
+          {/* SIDEBAR CHAT USERS */}
+          <ChatSidebarUsers
+            getUser={getUser}
+            currentConversationUser={currentConversationUser.current}
+            isConversationsLoading={isConversationsLoading}
+            searchedConversations={searchedConversations}
+            handleConversationChange={handleConversationChange}
+          />
+        </div>
+      }
+
+      {
+        <div className="chat-content" style={{ display: (!hideChatContent || !oneScreenChat) ? 'grid' : 'none' }}>
+
+          <ChatContentHeader
+            setHideChatContent={setHideChatContent}
+            showBackButton={oneScreenChat}
+            isConversationsLoading={isConversationsLoading}
+            currentConversationUser={currentConversationUser.current}
+          />
+
+
+          <div className="chat-content-messages" ref={messageContentRef}>
+            {isMessagesLoading ? (
+              <ChatBubbleShimmer />
+            ) : (
+              messages.map((message) => {
+                return (
+                  <ChatType
+                    key={message?.id}
+                    message={message}
+                    handleUnlockMessage={handleUnlockMessage}
+                  />
+                );
+              })
+            )}
+          </div>
+
+          <ChatInput
+            oneScreenChat={oneScreenChat}
+            sendMessage={sendMessage}
+            handleImageChange={handleImageChange}
+            setShowGifts={setShowGifts}
+            showGifts={showGifts}
+          />
+
+          {showGifts && <ChatGiftSelect sendGift={sendMessage} />}
+
+          {showPreviewImage && (
+            <ChatImagePreview
+              setShowPreviewImage={setShowPreviewImage}
+              selectedImages={selectedImages}
+              setSelectedImages={setSelectedImages}
+              handleImageChange={handleImageChange}
+              sendImage={sendMessage}
             />
-          }
-        />
+          )}
 
-        {/* SIDEBAR CHAT USERS */}
-        <ChatSidebarUsers
-          getUser={getUser}
-          currentConversationUser={currentConversationUser.current}
-          isConversationsLoading={isConversationsLoading}
-          searchedConversations={searchedConversations}
-          handleConversationChange={handleConversationChange}
-        />
-      </div>
-
-      <div className="chat-content">
-        {/*CHAT CONTENT HEADER */}
-        <ChatContentHeader
-          isConversationsLoading={isConversationsLoading}
-          currentConversationUser={currentConversationUser.current}
-        />
-
-        {/* CHAT CONTENT MESSAGES */}
-        <div className="chat-content-messages" ref={messageContentRef}>
-          {isMessagesLoading ? (
-            <ChatBubbleShimmer />
-          ) : (
-            messages.map((message) => {
-              return (
-                <ChatType
-                  key={message?.id}
-                  message={message}
-                  handleUnlockMessage={handleUnlockMessage}
-                />
-              );
-            })
+          {showUnlockImage && (
+            <ChatUnlockImage
+              image={unlockedImagRef.current}
+              setShowUnlockImage={setShowUnlockImage}
+            />
           )}
         </div>
-
-        {/* CHAT CONTENT INPUTS */}
-        <ChatInput
-          sendMessage={sendMessage}
-          handleImageChange={handleImageChange}
-          setShowGifts={setShowGifts}
-          showGifts={showGifts}
-        />
-
-        {/* CHAT GIFT SELECTION */}
-        {showGifts && <ChatGiftSelect sendGift={sendMessage} />}
-
-        {/* SHOW PREVIEW OF IMAGES SELECTED TO SEND */}
-        {showPreviewImage && (
-          <ChatImagePreview
-            setShowPreviewImage={setShowPreviewImage}
-            selectedImages={selectedImages}
-            setSelectedImages={setSelectedImages}
-            handleImageChange={handleImageChange}
-            sendImage={sendMessage}
-          />
-        )}
-
-        {showUnlockImage && (
-          <ChatUnlockImage
-            image={unlockedImagRef.current}
-            setShowUnlockImage={setShowUnlockImage}
-          />
-        )}
-      </div>
+      }
     </section>
   );
 
   //Change Current Conversation
   function handleConversationChange(conversation) {
+    if (oneScreenChat) {
+      setHideChatContent(false);
+    }
     isInitialLoadRef.current = true;
     currentConversationRef.current = conversation;
     currentConversationUser.current = getUser({ conversation: conversation });
@@ -264,8 +274,8 @@ const Chat = () => {
       messageType === "image"
         ? image.base64
         : messageType === "audio"
-        ? audioUrl
-        : null;
+          ? audioUrl
+          : null;
     //If audio get voice duration
     const metaData = messageType === "audio" ? { duration } : null;
 
@@ -294,8 +304,8 @@ const Chat = () => {
       messageType === "image"
         ? image.fileSize
         : messageType === "audio"
-        ? audioFile.size
-        : null;
+          ? audioFile.size
+          : null;
 
     //Prepare real message
     const message = {
@@ -347,8 +357,8 @@ const Chat = () => {
           messageType === "image"
             ? { ...response.data.data, dataUrl: image.base64 }
             : messageType === "audio"
-            ? { ...response.data.data, dataUrl: audioUrl }
-            : response.data.data;
+              ? { ...response.data.data, dataUrl: audioUrl }
+              : response.data.data;
 
         console.log(response);
 

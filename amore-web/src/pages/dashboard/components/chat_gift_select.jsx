@@ -66,7 +66,7 @@ const ChatGiftSelect = ({ sendGift }) => {
         </div>
 
         <div className="chat-gift-select-filter-user-coin">
-          <AmoreCoinIcon width="20" height="20" />
+          <AmoreCoinIcon className="amore-coin-icon chat-gift-select-coin" width="20" height="20" />
           <span>{auth?.credits}</span>
         </div>
       </div>
@@ -88,7 +88,7 @@ const ChatGiftSelect = ({ sendGift }) => {
             >
               <img src={gift.url} draggable="false" />
               <div className="chat-gift-price">
-                <AmoreHeartIcon width="11" height="11" /> {gift.price}
+                <AmoreHeartIcon width="11" height="11" className="chat-gift-amore-icon" /> {gift.price}
               </div>
             </div>
           ))}
