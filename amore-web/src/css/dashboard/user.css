@@ -1,0 +1,116 @@
+.user-profile {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.user-profile-top-banner {
+    top: 0;
+    position: absolute;
+    width: 95%;
+    height: 70px;
+    background: var(--brand2);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0 0 12px 12px;
+}
+
+.user-profile-grid {
+    margin: 0 auto;
+    width: 95%;
+    padding: 0 2em;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 0 15px;
+    overflow: hidden;
+}
+
+.user-profile-left-col,
+.user-profile-right-col {
+    width: 100%;
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.user-profile-left-col {
+    height: calc(100% - 30px);
+    transform: translateY(30px);
+    padding-bottom: 30px;
+    overflow: scroll;
+}
+
+.user-profile-right-col {
+    background: white;
+    height: calc(100% - (70px + 15px));
+    transform: translateY(70px);
+    margin-top: 15px;
+    display: grid;
+    border: 1px solid var(--borderColor1);
+    overflow: scroll;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile-navigation {
+    width: 100%;
+    border-radius: 12px;
+    background: white;
+    border: 1px solid var(--borderColor1);
+    margin-bottom: 15px;
+}
+
+.user-profile-navigation-item {
+    display: flex;
+    gap: 0 10px;
+    padding: 1.5rem;
+    font-weight: 600;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    cursor: pointer;
+    color: var(--darkText);
+    text-decoration: none;
+    font-size: .9rem;
+}
+
+
+
+.user-profile-navigation-item.active,
+.user-profile-navigation-item:hover {
+    color: var(--brand1);
+}
+
+.user-profile-navigation-item.active svg path,
+.user-profile-navigation-item:hover svg path {
+    stroke: var(--brand1);
+}
+
+.user-profile-navigation-item::after {
+    content: '';
+    width: 78%;
+    height: 1px;
+    background: var(--borderColor1);
+    position: absolute;
+    top: 100%;
+}
+
+.user-profile-navigation-item::before {
+    content: '';
+    height: 40%;
+    border-radius: 12px;
+    width: 3px;
+    background: var(--brand1);
+    position: absolute;
+    left: -1px;
+    display: none;
+}
+
+.user-profile-navigation-item.active::before {
+    display: block;
+}
+
+.user-profile-navigation-item:hover::before {
+    display: block;
+}

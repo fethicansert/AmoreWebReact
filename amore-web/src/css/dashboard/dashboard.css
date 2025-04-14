@@ -5,7 +5,7 @@
     gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100vh;
     min-height: 720px;
-    padding: clamp(.5rem, 1.1vw, 1.3rem);
+    padding: 15px;
     color: var(--darkText);
 }
 
@@ -21,12 +21,9 @@
     align-items: center;
     justify-content: space-between;
     position: relative;
-
     cursor: pointer;
     transition: border-radius ease 30ms 220ms;
-
-
-    max-height: 800px;
+    max-height: 720px;
     z-index: 3;
 }
 

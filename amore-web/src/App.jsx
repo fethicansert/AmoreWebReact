@@ -19,6 +19,12 @@ import PageNotFound from "./routes/page_not_found";
 import { ToastContainer } from "react-toastify";
 import VisitRedirect from "./routes/visit_redirect";
 import Visit from "./pages/visit/visit";
+import UserProfile from '../src/pages/dashboard/sections/user_profile.jsx'
+import UserSettings from "./pages/dashboard/sections/user_settings.jsx";
+import UserLanguage from "./pages/dashboard/sections/user_language.jsx";
+import UserBlockedUsers from "./pages/dashboard/sections/user_blocked_users.jsx";
+import UserSupport from "./pages/dashboard/sections/user_support.jsx";
+import UserInfluencer from "./pages/dashboard/sections/user_influencer.jsx";
 
 function App() {
   const {
@@ -36,10 +42,15 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route element={<VisitRedirect />}>
-          <Route path="user/:userId" element={<Visit />} />
+
+          <Route path="user/:userId" element={<Visit />}
+
+          />
 
           <Route element={<ProtectedRoute />}>
+
             <Route path="/dashboard" element={<Dashboard />}>
+
               <Route index path="user-swipe" element={<UserHome />} />
 
               <Route path="discover" element={<Discover />} />
@@ -54,7 +65,17 @@ function App() {
 
               <Route path="payment" element={<Payment />} />
 
-              <Route path="user-profile" element={<User />} />
+              <Route path="user-profile" element={<User />} >
+
+                <Route index element={<UserProfile />} />
+
+                <Route path="language" element={<UserLanguage />} />
+                <Route path="settings" element={<UserSettings />} />
+                <Route path="blocked-users" element={<UserBlockedUsers />} />
+                <Route path="support" element={<UserSupport />} />
+                <Route path="influencer" element={<UserInfluencer />} />
+
+              </Route>
 
               <Route path="user/:userId" element={<Visit />} />
             </Route>

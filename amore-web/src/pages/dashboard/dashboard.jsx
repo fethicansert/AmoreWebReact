@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import FlexBox from '../../copmonents/flex_box';
 import amoreLogo from '../../assets/icons/amore_icon.png'
 import { v4 as uuidv4 } from 'uuid';
@@ -57,6 +57,8 @@ const Dashboard = () => {
     const { t, _ } = useTranslation();
     const { auth } = useAuth();
     const { language } = useAppData();
+    const location = useLocation();
+    const isUserProfilePage = location.pathname.includes('user-profile');
 
     const {
         setShowLocationBanner,
@@ -96,7 +98,7 @@ const Dashboard = () => {
 
     //UI
     return (
-        <div className='layout'>
+        <div className='layout' style={{ padding: isUserProfilePage ? '0 15px 15px 15px' : '15px' }}>
 
             {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
@@ -116,11 +118,15 @@ const Dashboard = () => {
 
             {showOverlay && <div className='layout-overlay'></div>}
 
-            <div className={`layout-header ${showNotification ? 'notifications-active' : ''} `} onMouseEnter={() => setShowOverlay(true)} onMouseLeave={() => {
-                setShowOverlay(false);
-                setHoverPosition(currentposition * 61);
-                setShowNotification(false);
-            }}>
+            <div
+                style={{ marginTop: isUserProfilePage ? '15px' : '' }}
+                className={`layout-header ${showNotification ? 'notifications-active' : ''} `}
+                onMouseEnter={() => setShowOverlay(true)}
+                onMouseLeave={() => {
+                    setShowOverlay(false);
+                    setHoverPosition(currentposition * 61);
+                    setShowNotification(false);
+                }}>
 
                 <FlexBox flexDirection='column' gap='15px 0'>
 
