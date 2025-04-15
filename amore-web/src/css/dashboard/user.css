@@ -2,6 +2,8 @@
     position: relative;
     width: 100%;
     overflow: hidden;
+    max-width: 1500px;
+    margin: 0 auto;
 }
 
 .user-profile-top-banner {
@@ -145,7 +147,15 @@
 .profile-user-photos-wrapper {
     margin-top: 2rem;
     display: flex;
-    gap: 0 15px;
+    gap:  15px;
     justify-content: center;
     flex-wrap: wrap;
+}
+
+.user-profile-input::placeholder{
+    color: var(--fadedText);
+}
+
+.user-profile-input-date{
+    text-align: center;
 }

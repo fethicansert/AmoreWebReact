@@ -20,7 +20,7 @@ import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
 import { useMediaPredicate } from "react-media-hook";
-import { useFetch } from "@mantine/hooks";
+
 
 const Chat = () => {
   //NAVIGATION
