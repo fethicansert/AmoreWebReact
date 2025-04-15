@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 import OtpRegister from './sections/otp_register';
 import VerifyOtp from './sections/verify_otp';
 import { BeatLoader } from 'react-spinners'
-import { createOtp, login, isAdult, scrollPage, changeRootThemeColor, base64ToBlob } from '../../utils/functions';
+import { createOtp, login, isAdult, scrollPage, changeRootThemeColor } from '../../utils/functions';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/use_auth';
 import { useAppData } from '../../hooks/use_add_data';
@@ -108,6 +108,7 @@ const Register = () => {
                             icon={amoreIcon}
                             iconWidth={35}
                             languageIconColor={colors.brand1}
+                            languageButtonColor={colors.brand2}
                         />
 
                         <div className='register-wrapper'>

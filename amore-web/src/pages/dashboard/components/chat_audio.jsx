@@ -49,7 +49,6 @@ const ChatAudio = ({ message, isSender }) => {
   }, []);
 
   const togglePlay = () => {
-    // const audio = audioRef.current;
     if (isPlaying) {
       audioRef.current.pause();
     } else {

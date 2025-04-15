@@ -3,6 +3,7 @@ import amoreLike from '../assets/lottie/amore_like.json';
 import amoreSuperLike from '../assets/lottie/amore_superlike.json';
 import amoreDissLike from '../assets/lottie/amore_dislike.json'
 import Lottie from "lottie-react";
+import { AUDIO_CODECS, AUDIO_TYPES } from "./constants";
 
 //Return Swipe Popup Animation according to given parameter type
 export function getSwipePopupAnimation(type) {
@@ -298,3 +299,27 @@ export function getImageDimensions(file) {
         i.src = file
     })
 }
+
+export const testType = (mimeType) => {
+    if (MediaRecorder.isTypeSupported(mimeType)) return true;
+    else false;
+};
+
+export const setAudioType = () => {
+
+    for (let i = 0; i < AUDIO_TYPES.length; ++i) {
+        const audioType = AUDIO_TYPES[i];
+        for (let j = 0; j < AUDIO_CODECS.length; ++j) {
+            const audioCodec = AUDIO_CODECS[j];
+            const type = `audio/${audioType};codecs=${audioCodec}`;
+            if (testType(type)) {
+                return type;
+            };
+
+        }
+    }
+
+    return audioType;
+}
+
+

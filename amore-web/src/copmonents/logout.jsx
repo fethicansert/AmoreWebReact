@@ -4,16 +4,18 @@ import BasicButton from './basic_button'
 import { colors } from '../utils/theme'
 import { useAuth } from '../hooks/use_auth'
 import { useTranslation } from 'react-i18next'
-import { replace, useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { userFcmToken } from '../api/services/user_servives'
 import { useAppData } from '../hooks/use_add_data'
+import { useBanner } from '../hooks/use_banner'
 
-const Logout = ({ closeLogout }) => {
+const Logout = () => {
 
     const { setAuth } = useAuth();
     const { t, _ } = useTranslation();
     const { language } = useAppData();
     const navigate = useNavigate();
+    const { setShowLogout } = useBanner()
 
     return (
         <div className='logout'>
@@ -36,7 +38,7 @@ const Logout = ({ closeLogout }) => {
                     </BasicButton>
 
                     <BasicButton
-                        onClick={closeLogout}
+                        onClick={() => setShowLogout(false)}
                         borderRadius={10}
                         width={'50%'}
                         height={'45px'}
@@ -55,6 +57,7 @@ const Logout = ({ closeLogout }) => {
         const token = localStorage.getItem('fcmToken');
         const deleteResponse = await userFcmToken({ type: 'delete', token: token, language: language });
         localStorage.clear('fcmToken');
+        setShowLogout(false);
         navigate('/');
         setTimeout(() => { setAuth({}); }, 0)
     }

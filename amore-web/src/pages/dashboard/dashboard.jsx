@@ -46,7 +46,7 @@ const Dashboard = () => {
     const [showOverlay, setShowOverlay] = useState(false);
     const [currentposition, setCurrentPosition] = useState(0);
     const [hoverPosition, setHoverPosition] = useState(0);
-    const [showLogout, setShowLogout] = useState(false);
+
     const [showNotification, setShowNotification] = useState();
     const { unReadedCount, notifications, isUnReadedLoading, readAllNotifications } = useNotification();
 
@@ -61,6 +61,7 @@ const Dashboard = () => {
     const isUserProfilePage = location.pathname.includes('user-profile');
 
     const {
+        setShowLogout,
         setShowLocationBanner,
         setShowLocationSetting,
         showLocationSetting,
@@ -99,8 +100,6 @@ const Dashboard = () => {
     //UI
     return (
         <div className='layout' style={{ padding: isUserProfilePage ? '0 15px 15px 15px' : '15px' }}>
-
-            {showLogout && <Logout closeLogout={() => setShowLogout(false)} />}
 
             {showLocationSetting && <PermissionPopup
                 onClick={() => setShowLocationSetting(false)}

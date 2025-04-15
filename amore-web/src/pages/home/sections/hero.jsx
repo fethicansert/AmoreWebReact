@@ -42,6 +42,7 @@ const Hero = () => {
                     textColor={colors.whiteText}
                     menuIconColor={colors.backGround2}
                     languageIconColor={colors.whiteText}
+                    languageButtonColor={'#4D3185'}
                 />
 
                 <div className='hero-container'>

@@ -15,6 +15,16 @@ import { ArrowDownIcon, LanguageIcon } from '../assets/svg/svg_package';
 import { v4 as uuidv4 } from "uuid";
 
 
+const languageList = [
+    { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
+    { flag: 'GB', languageOption: 'en', languageText: 'English' },
+    { flag: 'FR', languageOption: 'fr', languageText: 'Fraçais' },
+    { flag: 'IT', languageOption: 'it', languageText: 'Italiano' },
+    { flag: 'DE', languageOption: 'de', languageText: 'Deutsch' },
+    { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
+    { flag: 'GB', languageOption: 'en', languageText: 'English' },
+]
+
 const Header = ({
     backgroundColor,
     title,
@@ -25,17 +35,7 @@ const Header = ({
     menuIconColor,
     hasShadow,
     hasBorder,
-    languageIconColor }) => {
-
-    const languageList = [
-        { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
-        { flag: 'GB', languageOption: 'en', languageText: 'English' },
-        { flag: 'FR', languageOption: 'fr', languageText: 'Fraçais' },
-        { flag: 'IT', languageOption: 'it', languageText: 'Italiano' },
-        { flag: 'DE', languageOption: 'de', languageText: 'Deutsch' },
-        { flag: 'TR', languageOption: 'tr', languageText: 'Türkçe' },
-        { flag: 'GB', languageOption: 'en', languageText: 'English' },
-    ]
+    languageButtonColor }) => {
 
     //STATES
     const hideButtons = useMediaPredicate("(min-width: 700px)");
@@ -94,19 +94,23 @@ const Header = ({
                         {t(`HEADER.${Object.keys(auth).length > 0 ? 'CONTINUE_BUTTON' : 'LOGIN_BUTTON'}`)}
                     </BasicButton>
 
-                    <button className={`header-language-dropbox-button ${showLanguageBox ? 'active' : ''}`}>
+                    <button
+                        style={{ background: languageButtonColor }}
+                        className={`header-language-dropbox-button ${showLanguageBox ? 'active' : ''}`}>
                         <FlexBox
                             width={'100%'}
                             style={{ cursor: 'pointer', padding: '0 .7rem' }}
                             alignItems='center'
                             justifyContent='space-evenly'
                             onClick={() => setShowLanguageBox(prev => !prev)}>
-                            <LanguageIcon color={languageIconColor} width={24} height={24} />
-                            <span style={{ color: languageIconColor, fontSize: 13.5 }}>{selectedLanguageRef.current}</span>
+                            <LanguageIcon color={colors.whiteText} width={24} height={24} />
+                            <span style={{ color: colors.whiteText, fontSize: 13.5 }}>{selectedLanguageRef.current}</span>
                             <ArrowDownIcon color={colors.whiteText} className={`header-language-dropbox-arrow ${showLanguageBox ? 'active' : ''}`} strokeWidth={1.5} width='18px' height='18px' />
                         </FlexBox>
 
-                        <div className={`header-language-dropbox ${showLanguageBox ? 'active' : ''}`}>
+                        <div
+                            style={{ background: languageButtonColor, scrollbarColor: `${colors.whiteText} ${languageButtonColor}` }}
+                            className={`header-language-dropbox ${showLanguageBox ? 'active' : ''}`}>
                             <ul className={`${showLanguageBox ? 'active' : ''}`}>
                                 {languageList.map(language => <li key={uuidv4()} onClick={() => {
                                     handleChangeLanguage(language.languageOption);

@@ -41,3 +41,10 @@ export const FCM = {
     APP_ID: "1:506440072102:web:6b2e528789ca1da114ed67",
     MEASUREMENT_ID: "G-B0XSLDY017"
 };
+
+
+export const VIDEO_TYPES = ['webm', 'mp4', 'x-matroska', 'ogg'];
+export const VIDEO_CODECS = ['vp9', 'vp9.0', 'vp8', 'vp8.0', 'avc1', 'av1', 'h265', 'h.265', 'h264', 'h.264', 'mpeg', 'theora'];
+
+export const AUDIO_TYPES = ['webm', 'mp3', 'mp4', 'x-matroska', 'ogg', 'wav'];
+export const AUDIO_CODECS = ['opus', 'vorbis', 'aac', 'mpeg', 'mp4a', 'pcm'];

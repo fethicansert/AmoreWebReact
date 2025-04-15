@@ -9,10 +9,12 @@ import { AppleLogo, CloseIcon, GoogleLogo } from '../assets/svg/svg_package';
 import { useNavigate } from 'react-router-dom';
 import { LINKS } from '../utils/constants';
 import { useTranslation } from 'react-i18next';
-const LoginPopup = ({ setShowLogin }) => {
+import { useBanner } from '../hooks/use_banner';
+const LoginPopup = () => {
 
     const navigate = useNavigate();
     const { t, _ } = useTranslation();
+    const { setShowLogin } = useBanner();
 
     return (
         <div className='login-popup'>

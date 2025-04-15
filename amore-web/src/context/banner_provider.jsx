@@ -8,6 +8,7 @@ const BannerProvider = ({ children }) => {
     type: "coin",
   });
   const [showLogin, setShowLogin] = useState(false);
+  const [showLogout, setShowLogout] = useState(false);
 
   //Bunlar ayri bir contexte alinabilir popUpContext
   const [showLocationBanner, setShowLocationBanner] = useState(false);
@@ -32,6 +33,8 @@ const BannerProvider = ({ children }) => {
         setShowNotificationBanner,
         showNotificationPermission,
         setShowNotificationPermission,
+        showLogout,
+        setShowLogout
       }}
     >
       {children}

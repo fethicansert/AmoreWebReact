@@ -10,13 +10,15 @@ import BasicButton from './basic_button';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/use_auth';
 import { useTranslation } from 'react-i18next';
+import { useBanner } from '../hooks/use_banner';
 
 
-const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
+const LimitedOffer = () => {
 
     const navigate = useNavigate();
     const { setAuth } = useAuth();
     const { t, _ } = useTranslation();
+    const { limitedOfferOptions, setLimitedOfferOptions } = useBanner();
 
 
     return (
@@ -60,7 +62,7 @@ const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
                 </FlexBox>
 
                 <BasicButton onClick={handleClick} width={'100%'} height={'55px'} borderRadius={'12px'} backgroundColor={colors.brand1} color={colors.whiteText}>
-                    {limititedOfferOptions.type === 'coin' ? t('LIMITED_OFFER.NAVIGATE_MARKET') : t('LIMITED_OFFER.NAVIGATE_SUBSCRIPTIONS')}
+                    {limitedOfferOptions.type === 'coin' ? t('LIMITED_OFFER.NAVIGATE_MARKET') : t('LIMITED_OFFER.NAVIGATE_SUBSCRIPTIONS')}
                 </BasicButton>
 
             </div>
@@ -69,7 +71,7 @@ const LimitedOffer = ({ setLimitedOfferOptions, limititedOfferOptions }) => {
     );
 
     function handleClick() {
-        navigate(`dashboard/${limititedOfferOptions.type === 'coin' ? 'market' : 'premium-subscription'}`);
+        navigate(`dashboard/${limitedOfferOptions.type === 'coin' ? 'market' : 'premium-subscription'}`);
         setLimitedOfferOptions(prev => ({ ...prev, show: false }));
         setAuth(prev => ({ ...prev, premiumSubscription: !prev.premiumSubscription }));
     }

@@ -360,9 +360,9 @@ input[type=number] {
 }
 
 .register-user-photo {
-    width: clamp(95px, 10vw, 105px);
-    height: clamp(92px, 9.9vw, 102px);
-    border-radius: 12px;
+    width: clamp(95px, 10vw, 113px);
+    height: clamp(92px, 9.9vw, 110px);
+    border-radius: 16px;
     position: relative;
 
     &:active {

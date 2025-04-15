@@ -117,6 +117,8 @@ body {
   background: var(--backGround2);
 }
 
+.input-container {}
+
 /* Registerde bir scroll cikiyor neden ? */
 .user-profile-left-col::-webkit-scrollbar,
 .user-profile-right-col::-webkit-scrollbar,
@@ -180,11 +182,11 @@ body {
   transform: rotateX(180deg)
 }
 
+/* #4d3185; */
 .header-language-dropbox-button {
   width: 155px;
   height: 48px;
   position: relative;
-  background-color: #4d3185;
   border-radius: 84px;
   border: none;
   color: var(--whiteText);
@@ -205,14 +207,12 @@ body {
   transform: translateX(-50%);
   padding: 0 1rem 1rem 1rem;
   border-radius: 0 0 15px 15px;
-  background-color: var(--backGround4);
   width: 100%;
   scale: 1 0;
   transition: scale 150ms ease;
   transform-origin: top;
   max-height: 300px;
   overflow-y: scroll;
-  scrollbar-color: var(--whiteText) #4d3185;
 
   &::-webkit-scrollbar {
     display: none;
@@ -383,6 +383,8 @@ header a {
 
 .fixed-navbar {
   position: absolute;
+  width: 100%;
+  height: calc(80vh - 90px);
   padding: .7rem;
   top: 110%;
   right: 1%;
@@ -391,7 +393,7 @@ header a {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  z-index: 9999;
+  z-index: 99;
   transition: transform 450ms ease;
   box-shadow: var(--lowShadow)
 }

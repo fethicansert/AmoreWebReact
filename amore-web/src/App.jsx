@@ -25,6 +25,7 @@ import UserLanguage from "./pages/dashboard/sections/user_language.jsx";
 import UserBlockedUsers from "./pages/dashboard/sections/user_blocked_users.jsx";
 import UserSupport from "./pages/dashboard/sections/user_support.jsx";
 import UserInfluencer from "./pages/dashboard/sections/user_influencer.jsx";
+import Logout from "./copmonents/logout.jsx";
 
 function App() {
   const {
@@ -32,6 +33,7 @@ function App() {
     setLimitedOfferOptions,
     showLogin,
     setShowLogin,
+    showLogout,
   } = useBanner();
 
   return (
@@ -87,15 +89,13 @@ function App() {
       </Routes>
 
       {/* Limittied Offer Popup */}
-      {limitedOfferOptions.show && (
-        <LimitedOffer
-          setLimitedOfferOptions={setLimitedOfferOptions}
-          limititedOfferOptions={limitedOfferOptions}
-        />
-      )}
+      {limitedOfferOptions.show && <LimitedOffer />}
 
       {/* Login Popup */}
       {showLogin && <LoginPopup setShowLogin={setShowLogin} />}
+
+      {/* Logout Popup */}
+      {showLogout && <Logout />}
 
       {/* Push Foreground Notifications */}
       <ToastContainer limit={2} />

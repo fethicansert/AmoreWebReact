@@ -7,8 +7,9 @@ import {
 } from "../../../assets/svg/svg_package";
 import { LiveAudioVisualizer, AudioVisualizer } from "react-audio-visualize";
 import { colors } from "../../../utils/theme";
+import { setAudioType } from "../../../utils/functions";
 
-const mimeType = "audio/webm";
+const mimeType = setAudioType();
 
 const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const [permission, setPermission] = useState(false);
@@ -52,9 +53,9 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
   return (
     <div className="chat-voice-recording">
-      {/* <span className="chat-voice-recording-loading-text">
+      <span className="chat-voice-recording-loading-text">
         {recordingStatus !== "pause" ? "Ses Kaydediliyor..." : "Duraklatıldı"}
-      </span> */}
+      </span>
 
       <div className="chat-voice-recording-container">
         <div
