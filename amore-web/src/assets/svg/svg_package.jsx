@@ -441,6 +441,10 @@ export const StarIcon = ({ width = '24', height = '24', color = "#FFFFFF", style
 </svg>
 
 
+export const PenIcon = ({ width = '20', height = '20', color = "#B0B0B0", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.3701 7.21924L17.8662 11.258" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M9.07852 20.1672L10.7451 19.6824C11.6408 19.4214 12.4212 18.8638 12.9571 18.1014L19.3459 9.24227C20.1107 8.19295 19.88 6.72353 18.8307 5.95869L17.0972 4.69491C16.048 3.93137 14.5773 4.16229 13.8136 5.21015L7.3547 14.1685C6.8618 14.8705 6.60136 15.7088 6.60854 16.567L6.62456 18.3428C6.63666 19.6136 7.85855 20.5218 9.07852 20.1672Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
 
 
 

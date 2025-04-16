@@ -54,6 +54,7 @@
     padding: 1rem 1.5rem;
 }
 
+
 .user-profile-navigation {
     width: 100%;
     border-radius: 12px;
@@ -147,15 +148,23 @@
 .profile-user-photos-wrapper {
     margin-top: 2rem;
     display: flex;
-    gap:  15px;
+    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.user-profile-input::placeholder{
+.user-profile-input::placeholder {
     color: var(--fadedText);
 }
 
-.user-profile-input-date{
+.user-profile-input-date {
     text-align: center;
+}
+
+.user-profile-textarea {
+    border: none;
+}
+
+.user-profile-textarea:focus {
+    outline: none;
 }

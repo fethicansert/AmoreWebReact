@@ -2,18 +2,16 @@ import { useTranslation } from "react-i18next";
 import { colors } from "../../../utils/theme";
 
 
-const HobbieCheckBox = ({ interest, isActive = false, addHobbie }) => {
+const HobbieCheckBox = ({ interest, isActive = false, onClick, checkboxStyle, isSelectable = true }) => {
 
     const { t, i18n } = useTranslation();
 
-    const handleClick = () =>
-        !isActive ? addHobbie(prev => [...prev, interest._id])
-            : addHobbie(prev => prev.filter((hobbie) => hobbie !== interest._id));
-
     return <div
-        onClick={handleClick}
+        onClick={onClick}
         className='hobbie-check-box'
         style={{
+            ...checkboxStyle,
+            cursor: isSelectable ? 'pointer' : 'default',
             backgroundColor: isActive ? colors.brand1 : colors.backGround3,
             border: !isActive ? `1px solid ${colors.borderColor1}` : '1px solid transparent',
             color: isActive ? colors.whiteText : colors.darkText

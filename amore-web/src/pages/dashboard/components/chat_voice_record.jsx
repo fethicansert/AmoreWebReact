@@ -8,6 +8,8 @@ import {
 import { LiveAudioVisualizer, AudioVisualizer } from "react-audio-visualize";
 import { colors } from "../../../utils/theme";
 import { setAudioType } from "../../../utils/functions";
+import WavesurferPlayer from '@wavesurfer/react'
+
 
 const mimeType = setAudioType();
 
@@ -24,6 +26,23 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const counterIntetvalRef = useRef();
   const totalDurationCounterRef = useRef();
   const voicePlayerRef = useRef();
+
+  const [wavesurfer, setWavesurfer] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const [url, setUrl] = useState('');
+
+  const onReady = (ws) => {
+    setWavesurfer(ws)
+    setIsPlaying(false)
+  }
+
+
+  const onPlayPause = () => {
+    wavesurfer && wavesurfer.playPause()
+  }
+
+
 
   useEffect(() => {
     getMicrophonePermission();
@@ -96,7 +115,26 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 <PlayIcon width="17px" height="17px" />
               </div>
 
-              <AudioVisualizer
+              <WavesurferPlayer
+                mediaControls={false}
+                hideScrollbar={true}
+                minPxPerSec={100}
+                barHeight={5.5}
+                height={34}
+                width={120}
+                barWidth={2}
+                barGap={3}
+                waveColor={colors.fadedText}
+                cursorColor={colors.brand2}
+                cursorWidth={2}
+                progressColor={colors.brand2}
+                url={url}
+                onReady={onReady}
+                onPlay={() => setIsPlaying(true)}
+                onPause={() => setIsPlaying(false)}
+              />
+
+              {/* <AudioVisualizer
                 ref={visualizerRef}
                 blob={audioChunks.current[0]}
                 width={120}
@@ -104,7 +142,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 barWidth={2}
                 gap={3}
                 barColor={colors.brand2}
-              />
+              /> */}
               <span className="chat-voice-record-time">
                 {formatTime(totalDuration)}
               </span>
@@ -160,14 +198,15 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   }
 
   function playAudio() {
-    const { audioUrl } = processAudioChucks({ chunks: audioChunks.current });
-    voicePlayerRef.current = new Audio(audioUrl);
-    voicePlayerRef.current.play();
-    playCounter();
+    onPlayPause();
+    // const { audioUrl } = processAudioChucks({ chunks: audioChunks.current });
+    // voicePlayerRef.current = new Audio(audioUrl);
+    // voicePlayerRef.current.play();
+    // playCounter();
   }
 
   function resumeRecording() {
-    //Stop player if playing the record
+    //Stop player if playing the recordew
     if (voicePlayerRef.current) {
       voicePlayerRef.current.pause();
       voicePlayerRef.current.currentTime = 0;
@@ -180,6 +219,8 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
 
   function pauseRecording() {
     mediaRecorder.current.pause();
+    const { audioUrl } = processAudioChucks({ chunks: audioChunks.current });
+    setUrl(audioUrl)
     setRecordingStatus("pause");
     setTotalDuration(time);
     stopCounter({ counterRef: counterIntetvalRef });

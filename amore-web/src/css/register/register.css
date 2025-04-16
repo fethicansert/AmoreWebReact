@@ -186,6 +186,7 @@
 
 .register-name-input {
     border: none;
+    height: 100%;
     width: 100%;
     color: var(--darkText);
     font-size: 1rem;
@@ -277,13 +278,11 @@ input[type=number] {
 .hobbie-check-box {
     width: fit-content;
     padding: 0 clamp(.75rem, 1.9vw, 1rem);
-    height: 45px;
     display: flex;
     gap: 0 4px;
     align-items: center;
     border-radius: 15px;
     font-size: clamp(.8rem, 2vw, .85rem);
-    cursor: pointer;
 }
 
 .hobbie-check-box span:nth-last-child(2) {
@@ -370,7 +369,6 @@ input[type=number] {
     }
 }
 
-
 .register-user-photo-close-icon,
 .photo-close-icon {
     position: absolute;
@@ -399,66 +397,6 @@ input[type=number] {
     height: 100%;
     display: block;
     object-fit: cover;
-}
-
-.register-location-dropdown {
-    border: 1px solid var(--borderColor1);
-    margin: 1rem auto .5rem auto;
-    justify-content: space-between;
-    padding: 0 1rem;
-    position: relative;
-
-    cursor: pointer;
-
-    background-color: var(--backGround3);
-}
-
-.register-location-dropdown.active {
-    border: .7px solid var(--brand1);
-    /* background: red; */
-}
-
-.arrow-down-icon {
-    cursor: pointer;
-
-    stroke: var(--darkText);
-
-    &:active {
-        stroke: var(--brand1);
-    }
-}
-
-.register-location-dropdown-list {
-    width: 100%;
-    max-height: 240px;
-    background: white;
-    position: absolute;
-    left: 0%;
-    top: calc(100% + 10px);
-    border: .7px solid var(--brand1);
-    border-radius: 12px 0 0 0;
-    scale: 1 0;
-    transform-origin: top;
-    z-index: 999;
-    overflow: scroll;
-    user-select: none;
-    scrollbar-color: var(--brand1) rgba(216, 216, 216, 0.263);
-}
-
-.register-location-dropdown-list.active {
-    scale: 1 1;
-    transition: scale 200ms ease;
-    visibility: visible;
-}
-
-.register-location-item {
-
-    padding: .9rem;
-
-    &:active {
-        background: #E64997;
-        color: white;
-    }
 }
 
 .register-verify {

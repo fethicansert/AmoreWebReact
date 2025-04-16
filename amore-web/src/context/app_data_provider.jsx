@@ -31,7 +31,7 @@ const AppDataProvider = ({ children }) => {
   // newSocket.on('onAppData', (data) => {
   //     console.log('App Data:', data);
   // });
-  
+
   //SIDE-EFFECTS
 
   //Fetcth Amore App data
@@ -99,8 +99,8 @@ const AppDataProvider = ({ children }) => {
   function getUserInterests(interestIds) {
     return appData.interests
       ? appData.interests.filter((interest) => {
-          return interestIds?.includes(interest._id);
-        })
+        return interestIds?.includes(interest._id);
+      })
       : [];
   }
 };

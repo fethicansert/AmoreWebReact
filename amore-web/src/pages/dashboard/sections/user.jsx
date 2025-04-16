@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import '../../../css/dashboard/user.css'
 import { Outlet } from 'react-router-dom';
 import UserProfileNavigation from '../components/user_profile_navigation'
@@ -9,8 +9,9 @@ const headers = ['Profil Bilgileri', 'Dil Değiştir', 'Ayarlar', 'Engellenmiş 
 
 const User = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const userRightColumnRef = useRef();
     return (
-        <section className='user-profile'>
+        <section className='user-profile' >
 
             <div className='user-profile-top-banner'>
             </div>
@@ -21,17 +22,21 @@ const User = () => {
                     <PremiumBox />
                 </div>
 
-                <div className='user-profile-right-col'>
+                <div className='user-profile-right-col' ref={userRightColumnRef}>
                     <UserProfileHeader title={headers[currentIndex]} />
-                    <Outlet />
+                    <Outlet context={{ userRightColumnRef }} />
                 </div>
 
             </div>
 
 
-
         </section>
     )
+
+    function showCountryList() {
+        setShowCountry(prev => !prev);
+
+    }
 }
 
 export default User

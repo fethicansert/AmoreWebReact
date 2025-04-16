@@ -4,6 +4,7 @@ import { colors } from '../../../utils/theme'
 import { NavLink } from 'react-router-dom'
 import { useBanner } from '../../../hooks/use_banner'
 
+
 const routeItems = [
     {
         icon: <UserIcon className='' width={21} height={21} color={colors.darkText} />,
@@ -30,11 +31,6 @@ const routeItems = [
         path: 'support',
         name: 'Destek Sistemi'
     },
-    {
-        icon: <StarIcon className='' width={21} height={21} color={colors.darkText} />,
-        path: 'influencer',
-        name: 'Influencer'
-    },
 
     {
         icon: <LogoutIcon className='' width={21} height={21} color={colors.darkText} />,
@@ -53,6 +49,7 @@ const UserProfileNavigation = ({ setCurrentIndex }) => {
         <nav className='user-profile-navigation'>
 
             {routeItems.map((route, index) => route?.type !== 'button' ? <NavLink
+
                 onClick={() => setCurrentIndex(index)}
                 className={({ isActive }) =>
                     isActive ? "user-profile-navigation-item active" : "user-profile-navigation-item"
@@ -63,6 +60,7 @@ const UserProfileNavigation = ({ setCurrentIndex }) => {
                 {route.icon}
                 <span>{route.name}</span>
             </NavLink> : <div
+                key={index}
                 onClick={() => setShowLogout(true)}
                 className='user-profile-navigation-item'>
                 {route.icon}

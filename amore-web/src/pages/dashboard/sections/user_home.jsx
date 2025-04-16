@@ -4,7 +4,6 @@ import { useMediaPredicate } from 'react-media-hook';
 import { axiosAmore } from '../../../api/axios';
 import UserHomeNotificationItem from '../components/user_home_notification_item.jsx';
 import UserHomeNotifications from '../components/user_home_notifications.jsx';
-import { v4 as uuidv4 } from 'uuid';
 import SwipeBottomBar from '../components/swipe_bottom_bar';
 import SwipeItem from '../components/swipe_item.jsx';
 import { useConversation } from '../../../hooks/use_conversation';

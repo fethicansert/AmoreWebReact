@@ -117,20 +117,81 @@ body {
   background: var(--backGround2);
 }
 
+.dropdown {
+  width: 100%;
+  height: clamp(50px, 11.2vw, 58px);
+  background-color: var(--backGround3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 5px;
+  border: 1px solid var(--borderColor1);
+  border-radius: 12.5px;
+  padding: 0 1rem;
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown.active {
+  border: .7px solid var(--brand1);
+}
+
+.arrow-down-icon {
+  cursor: pointer;
+
+  stroke: var(--darkText);
+
+  &:active {
+    stroke: var(--brand1);
+  }
+}
+
+.dropdown-list {
+  width: 100%;
+  max-height: 240px;
+  background: white;
+  position: absolute;
+  left: 0%;
+  top: calc(100% + 10px);
+  border: .7px solid var(--brand1);
+  border-radius: 12px 0 0 0;
+  scale: 1 0;
+  transform-origin: top;
+  z-index: 999;
+  overflow: scroll;
+  user-select: none;
+  scrollbar-color: var(--brand1) rgba(216, 216, 216, 0.263);
+}
+
+.dropdown-list.active {
+  scale: 1 1;
+  transition: scale 200ms ease;
+  visibility: visible;
+}
+
+.dropdown-item {
+  padding: .9rem;
+}
+
+.dropdown-item:active,
+.dropdown-item:hover {
+  background: #E64997;
+  color: white;
+}
+
 .input-container {
   /* background: red; */
 }
-.input-container-input{
+
+.input-container-input {
   width: 100%;
   height: 100%;
   border: none;
 }
 
-.input-container-input:focus{
+.input-container-input:focus {
   outline: none;
 }
-
-
 
 /* Registerde bir scroll cikiyor neden ? */
 .user-profile-left-col::-webkit-scrollbar,
