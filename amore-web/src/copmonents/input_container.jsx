@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { colors } from "../utils/theme";
 
 const InputContainer = ({
     containerStyle,
@@ -15,7 +16,12 @@ const InputContainer = ({
     borderRadius = "12px",
     border,
     padding = "0 .6rem",
+    focusBorder
 }) => {
+
+    const [focus, setFocus] = useState(false);
+    const [hover, setHover] = useState(false);
+
     return (
         <div
             style={{
@@ -31,10 +37,14 @@ const InputContainer = ({
                 {title}
             </h3>
             <div
+                onMouseLeave={() => setHover(false)}
+                onMouseEnter={() => setHover(true)}
+                onFocus={() => setFocus(true)}
+                onBlur={() => setFocus(false)}
                 className="input-container"
                 style={{
                     padding: padding,
-                    border: border,
+                    border: (focus || hover) ? `1px solid ${colors.brand1}` : border,
                     display: leading ? "grid" : "block",
                     gridTemplateColumns: leading ? "auto 1fr" : "1fr",
                     gap: "0 .3rem",

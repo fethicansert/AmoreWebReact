@@ -25,7 +25,7 @@ const UserHomeNotifications = ({ title, path, children, isLoading, type }) => {
         </FlexBox>
 
         {isLoading ? <>
-            {Array(4).fill().map((_, i) => <NotificationShimmer key={uuidv4()} />)}
+            {Array(4).fill().map((_, i) => <NotificationShimmer key={i} />)}
         </> : children.length !== 0 ? children : <span style={{ color: colors.lowFadedText, fontWeight: '600', fontSize: '.8rem' }}>
             {type === 'message' ? t('DASHBOARD.TITLES.EMPTY_MESSAGE') : t('DASHBOARD.TITLES.EMPTY_LIKES')}
         </span>}

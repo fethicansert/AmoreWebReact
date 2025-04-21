@@ -8,7 +8,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 const UserHomeNotificationItem = ({ notification, type, index, isBlur = false }) => {
 
-    console.log(notification);
 
     const { auth } = useAuth();
     const { t, _ } = useTranslation();

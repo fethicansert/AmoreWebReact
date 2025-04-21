@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import RegisterUserPhoto from "../../register/comps/register_user_photo";
 import { useAuth } from "../../../hooks/use_auth";
 import InputContainer from "../../../copmonents/input_container";
@@ -10,40 +10,47 @@ import Flag from "react-flagkit";
 import FlexBox from "../../../copmonents/flex_box";
 import { useOutletContext } from "react-router-dom";
 import HobbieCheckBox from "../../register/comps/hobbie_checkbox";
-
+import CustomTextArea from "../../../copmonents/custom_textarea";
+import UserProfileDate from "../components/user_profile_date";
 
 const UserProfile = () => {
 
     //CONTEXT
     const { userRightColumnRef } = useOutletContext();
     const { auth } = useAuth();
-    const { appData: { locations, interests } } = useAppData();
+    const { appData: { locations, interests, }, getUserInterests } = useAppData();
 
-    const { getUserInterests } = useAppData();
 
-    const [name, setName] = useState('');
+    const [showDatePicker, setShowDatePicker] = useState(false);
+
+
+    const [name, setName] = useState(auth.name);
     const [job, setJob] = useState('');
     const [school, setSchool] = useState('');
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
     const [bio, setBio] = useState('');
+    const [userImages, setUserImages] = useState(auth?.photos || []);
+    const [selectedInterests, setSelectedInterests] = useState(getUserInterests(auth?.interests?.map(interest => interest.id)));
+    const [selectedDate, setSelectedDate] = useState(new Date(auth.birthday));
+    //Burada refresh attiktan sonra gelecek datalar icin duzenleme yap locations cekilmeden onceki durum nasil olacak belirle!!!
+    const userCountry = locations?.length > 0 ? { ...locations?.find(location => location?.id === auth.country.id), state: auth.country.state.name, stateId: auth.country.state.id } : {};
+    const [location, setLocation] = useState({ country: userCountry.name, countryCode: userCountry?.countryCode, states: userCountry?.states || [], state: locations[0]?.states[0].name, stateId: undefined })
+
     const [showCountry, setShowCountry] = useState(false);
     const [showStates, setShowStates] = useState(false);
     const [showInterests, setShowInterests] = useState(false);
-    const [selectedInterests, setSelectedInterests] = useState(getUserInterests(auth?.interests?.map(interest => interest.id)));
-
-    const [location, setLocation] = useState({ country: locations[0]?.name, countryCode: locations[0]?.countryCode, states: locations[0]?.states, state: locations[0]?.states[0].name, stateId: undefined })
+    const [warnings, setWarnings] = useState({
+        interestWarning: ''
+    });
 
 
     //Locations can empty if locations change and has data setLocation with new data
     useEffect(() => {
         if (locations?.length > 0) {
             setLocation({
-                country: locations?.[0]?.name,
-                countryCode: locations?.[0]?.countryCode,
-                states: locations?.[0]?.states,
-                state: locations?.[0]?.states[0]?.name,
+                country: userCountry?.name,
+                countryCode: userCountry?.countryCode,
+                states: userCountry.states,
+                state: userCountry.state,
             });
         }
     }, [locations])
@@ -55,25 +62,19 @@ const UserProfile = () => {
     }, [interests])
 
 
-    //REFS
-    const textareaRef = useRef();
-
     return (
         <div className="profile" >
+
             {/* //USER PHOTOS */}
             <div className="profile-user-photos">
 
                 <div className="profile-user-profile-photo">
-                    <RegisterUserPhoto img={auth?.photos[0].url} />
+                    <RegisterUserPhoto handleImageChange={handleImageChange} handleDeleteImage={handleDeleteImage} img={auth?.photos[0].url} />
                     <p>{auth.name}</p>
                 </div>
 
                 <div className="profile-user-photos-wrapper">
-                    <RegisterUserPhoto img={auth?.photos?.[1]?.url} />
-                    <RegisterUserPhoto img={auth?.photos?.[2]?.url} />
-                    <RegisterUserPhoto img={auth?.photos?.[3]?.url} />
-                    <RegisterUserPhoto img={auth?.photos?.[4]?.url} />
-                    <RegisterUserPhoto img={auth?.photos?.[5]?.url} />
+                    {Array(5).fill(5).map((_, index) => <RegisterUserPhoto key={index} handleDeleteImage={handleDeleteImage} handleImageChange={handleImageChange} index={index + 1} img={userImages?.[index + 1]?.url} />)}
                 </div>
             </div>
 
@@ -92,7 +93,7 @@ const UserProfile = () => {
                     setValue={setName}
                     containerStyle={{ flex: "1", minWidth: "250px" }}
                     width="100%"
-                    height="50px"
+                    height="53px"
                     inputClass={"user-profile-input"}
                     title={"İsim"}
                     titleStyle={{ marginLeft: ".5rem" }}
@@ -104,75 +105,19 @@ const UserProfile = () => {
                             className=""
                         />
                     }
-                    placeholder={auth?.name || "Isim"}
+                    placeholder={"Isim"}
                     border={`1px solid ${colors.borderColor1}`}
                 />
 
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "10px 0",
-                        flex: "1",
-                        justifyContent: "flex-end",
-                        minWidth: "250px",
-                    }}
-                >
-                    <h3 style={{ fontSize: ".9rem", fontWeight: "600" }}>Doğum Günü</h3>
-                    <div
-                        style={{
-                            display: "flex",
-                            gap: "15px",
-                        }}
-                    >
-                        <InputContainer
-                            value={day}
-                            setValue={setDay}
-                            containerStyle={{ flex: "1" }}
-                            height="50px"
-                            width="100%"
-                            inputClass={"user-profile-input user-profile-input-date"}
-                            placeholder="MM"
-                            border={`1px solid ${colors.borderColor1}`}
-                        />
-                        <InputContainer
-                            value={month}
-                            setValue={setDay}
-                            containerStyle={{ flex: "1" }}
-                            height="52px"
-                            width="100%"
-                            inputClass={"user-profile-input user-profile-input-date"}
-                            placeholder="DD"
-                            border={`1px solid ${colors.borderColor1}`}
-                        />
-                        <InputContainer
-                            value={year}
-                            setValue={setDay}
-                            containerStyle={{ flex: "1" }}
-                            height="50px"
-                            width="100%"
-                            inputClass={"user-profile-input user-profile-input-date"}
-                            titleStyle={{ marginLeft: ".5rem" }}
-                            placeholder="YYYY"
-                            border={`1px solid ${colors.borderColor1}`}
-                        />
-                    </div>
-                </div>
+                <UserProfileDate handleShowDatePicker={handleShowDatePicker} showDatePicker={showDatePicker} setShowDatePicker={setShowDatePicker} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+
             </div>
 
             {/* //TEXT AREA */}
-            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '2rem', gap: '10px 0' }}>
-                <h3 style={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}>Biyografi</h3>
-                <div onClick={() => textareaRef.current.focus()}
-                    style={{ height: '120px', border: `1px solid ${colors.borderColor1}`, display: 'flex', flexDirection: 'column', padding: '.6rem', borderRadius: '12px', position: 'relative' }}>
-                    {<div style={{ position: 'absolute', display: 'flex', gap: '0 5px', alignItems: 'center', color: colors.fadedText, fontSize: '.9rem' }}>
-                        <PenIcon />
-                        {!bio && (auth.bio || 'Kendinizden Bahsedin')}
-                    </div>}
-                    <textarea value={bio} ref={textareaRef} onChange={(e) => setBio(e.target.value)} className="user-profile-textarea" style={{ width: '100%', resize: 'none', flex: '1', textIndent: '25px', lineHeight: '18px' }} />
-                </div>
-            </div>
+            <CustomTextArea icon={<PenIcon />} title={"Biyografi"} value={bio} onChange={setBio} placeholder={'Kendinizden Bahsedin'} />
 
+
+            {/* //DROP DOWNS */}
             <div
                 style={{
                     width: "100%",
@@ -182,41 +127,43 @@ const UserProfile = () => {
                     marginBlock: '2.5rem 0'
                 }}>
 
-                {locations?.length > 0 && <DropdownList
-                    title={'Ülke'}
-                    titleStyle={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}
-                    wrapperStyle={{ marginBlock: '0', flex: '1' }}
-                    dropdownStyle={{ height: '52px' }}
-                    onDropDown={showCountryList}
-                    showDropdown={showCountry}
-                    selectedItem={location.country}
-                    icon={<Flag country={location.countryCode} />}
-                >
-                    {locations.map((location, index) => <FlexBox
-                        onClick={() => handleCountry(index)}
-                        key={index}
-                        className='dropdown-item'
-                        gap='0 10px'
-                        width={'100%'}>
-                        <Flag country={location?.countryCode} />
-                        {location?.name}
-                    </FlexBox>)}
-                </DropdownList>}
+                {locations.length > 0 && <>
 
+                    <DropdownList
+                        title={'Ülke'}
+                        titleStyle={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}
+                        textStyle={{ fontSize: ".9rem" }}
+                        wrapperStyle={{ marginBlock: '0', flex: '1' }}
+                        dropdownStyle={{ height: '53px' }}
+                        onDropDown={showCountryList}
+                        showDropdown={showCountry}
+                        selectedItem={location.country}
+                        icon={<Flag country={location.countryCode} />}
+                    >
+                        {locations.map((location, index) => <FlexBox
+                            onClick={() => handleSelectCountry(index)}
+                            key={index}
+                            className='dropdown-item'
+                            gap='0 10px'
+                            width={'100%'}>
+                            <Flag country={location?.countryCode} />
+                            {location?.name}
+                        </FlexBox>)}
+                    </DropdownList>
 
-                {
-                    location?.states?.length > 0 && <DropdownList
+                    <DropdownList
                         title={'Şehir'}
                         titleStyle={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}
+                        textStyle={{ fontSize: ".9rem" }}
                         wrapperStyle={{ marginBlock: '0', flex: '1' }}
-                        dropdownStyle={{ height: '52px' }}
+                        dropdownStyle={{ height: '53px' }}
                         onDropDown={showStateList}
                         showDropdown={showStates}
                         selectedItem={location.state || "Şehir Bulunmuyor"}
                         icon={<LocationIcon width='24' height='24' color={colors.darkText} />}
                     >
                         {location.states.map((state, index) => <FlexBox
-                            onClick={() => handleState(index)}
+                            onClick={() => handleSelectState(index)}
                             key={index}
                             className='dropdown-item'
                             gap='0 10px'
@@ -225,7 +172,7 @@ const UserProfile = () => {
                         </FlexBox>)}
                     </DropdownList>
 
-                }
+                </>}
 
             </div>
 
@@ -245,7 +192,7 @@ const UserProfile = () => {
                     setValue={setJob}
                     containerStyle={{ flex: "1", minWidth: "250px" }}
                     width="100%"
-                    height="50px"
+                    height="53px"
                     inputClass={"user-profile-input"}
                     title={"Meslek"}
                     titleStyle={{ marginLeft: ".5rem" }}
@@ -266,7 +213,7 @@ const UserProfile = () => {
                     setValue={setSchool}
                     containerStyle={{ flex: "1", minWidth: "250px" }}
                     width="100%"
-                    height="50px"
+                    height="53px"
                     inputClass={"user-profile-input"}
                     title={"Okul"}
                     titleStyle={{ marginLeft: ".5rem" }}
@@ -284,7 +231,7 @@ const UserProfile = () => {
 
             </div>
 
-            <div style={{ marginTop: '2.5rem' }} className="user-profile-interests">
+            <div style={{ marginTop: '2.5rem', position: 'relative' }} className="user-profile-interests">
 
                 <FlexBox onClick={handleEditInterest} width={'100%'} justifyContent="space-between" style={{ marginBottom: '10px', cursor: 'pointer' }}>
                     <h3 style={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}>İlgi alanlarınız</h3>
@@ -313,20 +260,67 @@ const UserProfile = () => {
                                 isActive={selectedInterests.some(selectedInterest => selectedInterest._id === interest._id)} />)
                     }
                 </div>
+                {warnings.interestWarning && <p style={{ color: colors.negative, fontSize: '.85em', position: 'absolute', left: '0', top: '100%', margin: '.7rem .5rem' }}>{warnings.interestWarning}</p>}
             </div>
         </div>
     );
 
+    function handleShowDatePicker() {
+        setShowDatePicker(prev => !prev);
+        userRightColumnRef.current.scroll({
+            top: 300,
+            behavior: "smooth",
+        });
+    }
+
+    function handleImageChange(e, index) {
+        console.log(index);
+
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            let file = e.target.files[0];
+            reader.onloadend = function () {
+                setUserImages(function (prev) {
+                    return [...prev, { index: index, url: reader.result }];
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function handleDeleteImage(index) {
+        const deletedImages = userImages.filter(function (img, id) {
+            if (id === index) {
+                return undefined;
+            }
+            return img;
+        });
+
+        setUserImages(deletedImages);
+    }
+
+
     function handleEditInterest() {
-        setShowInterests(prev => !prev);
+        if (selectedInterests.length < 3) {
+            setWarnings(prev => ({ ...prev, interestWarning: 'En az 3 ilgi alanı seçilmelisin !' }))
+        } else {
+            setShowInterests(prev => !prev);
+            setWarnings(prev => ({ ...prev, interestWarning: '' }))
+        }
     }
 
     function handleInterestClick(interest) {
-        !selectedInterests.some(selectedInterest => selectedInterest._id === interest._id) ? setSelectedInterests(prev => [...prev, interest])
-            : setSelectedInterests(prev => prev.filter((selectedInterest) => selectedInterest._id !== interest._id));
+
+        setWarnings(prev => ({ ...prev, interestWarning: '' }));
+
+        !selectedInterests.some(selectedInterest => selectedInterest._id === interest._id) ?
+            selectedInterests.length > 4 ?
+                setWarnings(prev => ({ ...prev, interestWarning: 'En fazla 5 ilgi alanı seçebilirsin !' })) :
+                setSelectedInterests(prev => [...prev, interest]) :
+            setSelectedInterests(prev => prev.filter((selectedInterest) => selectedInterest._id !== interest._id));
     }
 
-    function handleCountry(index) {
+    function handleSelectCountry(index) {
         setLocation({
             country: locations[index].name,
             countryCode: locations[index].countryCode,
@@ -337,7 +331,7 @@ const UserProfile = () => {
         });
     }
 
-    function handleState(index) {
+    function handleSelectState(index) {
         setLocation((prev) => ({
             ...prev,
             state: location.states[index].name,
@@ -348,6 +342,7 @@ const UserProfile = () => {
     //200ms bekliyoruz dropdown height doğru almak için.
     //Bekleme yapmsak ilk anda bir dropdow height olmadığı için scroll olmayakcaktır.
     function showStateList() {
+        if (!location.states.length > 0) return
         setShowStates(prev => !prev);
         setTimeout(() => {
             userRightColumnRef.current.scroll({
@@ -368,6 +363,10 @@ const UserProfile = () => {
             });
         }, 200)
     }
+
+
 };
 
 export default UserProfile;
+
+

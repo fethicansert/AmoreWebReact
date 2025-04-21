@@ -125,25 +125,15 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 0 5px;
-  border: 1px solid var(--borderColor1);
   border-radius: 12.5px;
   padding: 0 1rem;
   position: relative;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-.dropdown.active {
-  border: .7px solid var(--brand1);
-}
-
-.arrow-down-icon {
-  cursor: pointer;
-
-  stroke: var(--darkText);
-
-  &:active {
-    stroke: var(--brand1);
-  }
+.dropdown-arrow {
+  transition: transform 200ms ease;
 }
 
 .dropdown-list {
@@ -153,7 +143,7 @@ body {
   position: absolute;
   left: 0%;
   top: calc(100% + 10px);
-  border: .7px solid var(--brand1);
+  border: 1px solid var(--brand1);
   border-radius: 12px 0 0 0;
   scale: 1 0;
   transform-origin: top;
@@ -179,18 +169,25 @@ body {
   color: white;
 }
 
-.input-container {
-  /* background: red; */
-}
+.input-container {}
 
 .input-container-input {
   width: 100%;
   height: 100%;
   border: none;
+  font-size: .85rem;
 }
 
 .input-container-input:focus {
   outline: none;
+}
+
+.custom-textarea:focus {
+  outline: none;
+}
+
+.custom-textarea {
+  border: none;
 }
 
 /* Registerde bir scroll cikiyor neden ? */

@@ -33,7 +33,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentConversationUser, sh
 
           <ChatCardImage
             onClick={() => navigate(`/dashboard/user/${currentConversationUser?.id}`)}
-            image={currentConversationUser?.photos[0].url}
+            image={currentConversationUser?.photos[0].url || '/icons/amore_notification.png'}
             showStatus={true}
             radius={mobileSize ? "53px" : "45px"}
             status={isActiveUser}
@@ -56,12 +56,7 @@ const ChatContentHeader = ({ isConversationsLoading, currentConversationUser, sh
         <NotificationShimmer marginBlock="0" width="200px" showIcon={false} />
       )}
       {
-        <CurrentUserInfoBox
-          style={{ width: "fit-content", border: "none", padding: 0 }}
-          credits={auth.credits}
-          image={auth.photos?.[0].url}
-          name={auth.name}
-        />
+        <CurrentUserInfoBox style={{ width: "fit-content", border: "none", padding: 0 }} />
       }
     </div>
   );

@@ -1,5 +1,5 @@
 import React from 'react'
-import { BlockedUsers, LanguageIcon, LogoutIcon, SettingsIcon, StarIcon, SupportIcon, UserIcon } from '../../../assets/svg/svg_package'
+import { BlockedUserIcon, LanguageIcon, LogoutIcon, SettingsIcon, SupportIcon, UserIcon } from '../../../assets/svg/svg_package'
 import { colors } from '../../../utils/theme'
 import { NavLink } from 'react-router-dom'
 import { useBanner } from '../../../hooks/use_banner'
@@ -22,7 +22,7 @@ const routeItems = [
         name: 'Ayarlar'
     },
     {
-        icon: <BlockedUsers className='' width={21} height={21} color={colors.darkText} />,
+        icon: <BlockedUserIcon className='' width={21} height={21} color={colors.darkText} />,
         path: 'blocked-users',
         name: 'Engellenmiş Kullanıcılar'
     },

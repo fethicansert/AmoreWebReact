@@ -71,11 +71,8 @@ const Discover = () => {
       <div className="discover-users-side-bar">
         <div className="discover-users-filter">
           <div className="discover-users-filter-header">
-            <CurrentUserInfoBox
-              credits={auth?.credits}
-              name={auth?.name}
-              image={auth?.photos?.[0].url}
-            />
+
+            <CurrentUserInfoBox />
 
             <BasicButton
               onClick={() => setShowFilter((prev) => !prev)}

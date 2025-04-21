@@ -30,7 +30,6 @@ import Logout from "./copmonents/logout.jsx";
 function App() {
   const {
     limitedOfferOptions,
-    setLimitedOfferOptions,
     showLogin,
     setShowLogin,
     showLogout,

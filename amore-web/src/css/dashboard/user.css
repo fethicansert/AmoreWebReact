@@ -31,7 +31,6 @@
 .user-profile-left-col,
 .user-profile-right-col {
     width: 100%;
-    border-radius: 12px;
     z-index: 1;
 }
 
@@ -40,20 +39,18 @@
     transform: translateY(30px);
     padding-bottom: 30px;
     overflow: scroll;
+    border-radius: 12px;
 }
 
 .user-profile-right-col {
-    background: white;
     height: calc(100% - (70px + 15px));
     transform: translateY(70px);
     margin-top: 15px;
-    border: 1px solid var(--borderColor1);
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    padding: 1rem 1.5rem;
+    border-radius: 12px;
 }
-
 
 .user-profile-navigation {
     width: 100%;
@@ -115,25 +112,37 @@
     display: block;
 }
 
+.user-right-col-content-wrapper {
+    background: var(--backGround3);
+    padding: 1.5rem 2rem 2.5rem 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--borderColor1);
+}
+
 .profile {
-    padding: 1rem;
+    padding-top: 3rem;
 }
 
 .user-profile-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid var(--borderColor1);
+    position: relative;
     padding-bottom: 1rem;
+}
+
+.user-profile-header:after {
+    content: '';
+    background: var(--borderColor1);
+    height: 1px;
+    width: 100%;
+    position: absolute;
+    top: 100%;
 }
 
 .user-profile-header h3 {
     font-size: .95rem;
     font-weight: 600;
-}
-
-.profile-user-photos {
-    margin-top: 2rem;
 }
 
 .profile-user-profile-photo {
@@ -155,16 +164,74 @@
 
 .user-profile-input::placeholder {
     color: var(--fadedText);
+    font-size: .85rem;
 }
 
-.user-profile-input-date {
+.user-profile-buttons {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: end;
+    gap: 0 15px;
+}
+
+.user-profile-date-wrapper {
+    width: 100%;
+    position: absolute;
+    top: 65px;
+    border: 1.2px solid #e64997d1;
+    padding: .5rem .8rem;
+
+    background: var(--backGround3);
+
+    z-index: 999;
+    border-radius: 12px;
+
+    animation: fade 100ms ease;
+    transform-origin: top right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile #register-date {
+    --rdp-selected-border: 1.2px solid var(--brand1);
+    --rdp-day_button-height: clamp(32px, 7.5vw, 52px);
+    --rdp-day_button-width: clamp(32px, 7vw, 52px);
+    font-size: 1rem;
+    color: var(--brand1);
+}
+
+.user-delete-button {
+    transition: scale 250ms ease;
+    color: var(--negative);
+}
+
+.user-delete-button:hover {
+    background: var(--negative);
+    color: var(--whiteText)
+}
+
+.user-delete-button:hover svg path {
+    stroke: var(--whiteText);
+}
+
+.unblock-popup {
+    width: 70%;
+    max-width: 300px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px 0;
+    background: var(--backGround3);
+    padding: 1rem;
+    justify-items: center;
+    border-radius: 16px;
+    border: 1px solid var(--borderColor1);
+    animation: fade 250ms ease;
+}
+
+.unblock-popup p {
     text-align: center;
-}
-
-.user-profile-textarea {
-    border: none;
-}
-
-.user-profile-textarea:focus {
-    outline: none;
+    color: var(--lowFadedText);
+    font-weight: 300;
+    font-size: .95rem;
 }

@@ -3,6 +3,7 @@ import React from 'react'
 const BasicButton = ({
     className = '',
     style,
+    disabled = false,
     children,
     fontSize,
     backgroundColor,
@@ -17,6 +18,7 @@ const BasicButton = ({
 
     return (
         <button
+            disabled={disabled}
             type={type}
             onClick={onClick}
             className={`basic-button ${className}`}

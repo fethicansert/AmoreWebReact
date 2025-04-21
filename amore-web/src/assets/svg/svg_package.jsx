@@ -32,7 +32,7 @@ export const ImageAddIcon = ({ width = '56', height = '56', className = 'image-a
 </svg>
 
 //Color not used with this commonent
-export const ArrowDownIcon = ({ width = '17', height = '17', className = 'arrow-down-icon', color = '#18181C', strokeWidth = 1 }) => <svg width={width} height={height} className={className} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const ArrowDownIcon = ({ width = '17', height = '17', className = 'arrow-down-icon', color = '#18181C', strokeWidth = 1, style }) => <svg style={style} width={width} height={height} className={className} viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M13.2277 6.4364L8.62803 11.1031L4.02832 6.4364" strokeLinecap="round" strokeLinejoin="round" stroke={color} strokeWidth={strokeWidth} />
 </svg>
 
@@ -423,12 +423,12 @@ export const SettingsIcon = ({ width = '24', height = '24', color = "#FFFFFF", s
     <path fillRule="evenodd" clipRule="evenodd" d="M20.1232 8.00025C19.4495 6.80799 17.9579 6.40004 16.7922 7.08852C15.7782 7.68613 14.511 6.93838 14.511 5.74218C14.511 4.36619 13.4187 3.25 12.0722 3.25C10.7257 3.25 9.63334 4.36619 9.63334 5.74218C9.63334 6.93838 8.3661 7.68613 7.35306 7.08852C6.18635 6.40004 4.69484 6.80799 4.02111 8.00025C3.34833 9.1925 3.74755 10.7167 4.91427 11.4041C5.92729 12.0027 5.92729 13.4973 4.91427 14.0959C3.74755 14.7843 3.34833 16.3085 4.02111 17.4998C4.69484 18.692 6.18635 19.1 7.3521 18.4125C8.36513 17.8139 9.63334 18.5616 9.63334 19.7578C9.63334 21.1338 10.7257 22.25 12.0722 22.25C13.4187 22.25 14.511 21.1338 14.511 19.7578C14.511 18.5616 15.7782 17.8139 16.7922 18.4125C17.9579 19.1 19.4495 18.692 20.1232 17.4998C20.7969 16.3085 20.3967 14.7843 19.231 14.0959C18.218 13.4973 18.217 12.0027 19.231 11.4041C20.3967 10.7167 20.7969 9.1925 20.1232 8.00025Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
-export const BlockedUsers = ({ width = '24', height = '24', color = "#FFFFFF", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5.94971 5.82412C7.55117 4.19934 9.77597 3.1875 12.2213 3.1875C17.1216 3.1875 21.0917 7.2154 21.0917 12.187C21.0917 14.668 20.0944 16.9252 18.4929 18.55" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M16.0658 20.3027C14.9053 20.867 13.5916 21.188 12.2202 21.188C10.3311 21.188 8.58579 20.5848 7.14735 19.5633C4.84584 17.9385 3.34985 15.2435 3.34985 12.1885C3.34985 10.7972 3.66632 9.46431 4.22251 8.28707V8.27734" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M20.3321 20.4189L4.10645 3.95703" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M13.5349 13.5194C14.6569 12.994 15.4432 11.846 15.4432 10.5131C15.4432 8.69369 13.9857 7.21484 12.1924 7.21484C10.8786 7.21484 9.74702 8.01264 9.23877 9.16069" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M7.14795 19.5617C7.34933 17.9758 8.73983 16.2148 12.1921 16.2148" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const BlockedUserIcon = ({ width = '24', height = '24', color = "#FFFFFF", strokeWidth = '1.5', style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5.94971 5.82412C7.55117 4.19934 9.77597 3.1875 12.2213 3.1875C17.1216 3.1875 21.0917 7.2154 21.0917 12.187C21.0917 14.668 20.0944 16.9252 18.4929 18.55" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M16.0658 20.3027C14.9053 20.867 13.5916 21.188 12.2202 21.188C10.3311 21.188 8.58579 20.5848 7.14735 19.5633C4.84584 17.9385 3.34985 15.2435 3.34985 12.1885C3.34985 10.7972 3.66632 9.46431 4.22251 8.28707V8.27734" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M20.3321 20.4189L4.10645 3.95703" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M13.5349 13.5194C14.6569 12.994 15.4432 11.846 15.4432 10.5131C15.4432 8.69369 13.9857 7.21484 12.1924 7.21484C10.8786 7.21484 9.74702 8.01264 9.23877 9.16069" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.14795 19.5617C7.34933 17.9758 8.73983 16.2148 12.1921 16.2148" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 export const SupportIcon = ({ width = '24', height = '24', color = "#FFFFFF", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -441,12 +441,47 @@ export const StarIcon = ({ width = '24', height = '24', color = "#FFFFFF", style
 </svg>
 
 
-export const PenIcon = ({ width = '20', height = '20', color = "#B0B0B0", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const PenIcon = ({ width = '20', height = '20', color = "#B0B0B0", style, className = '', onClick }) => <svg style={style} width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M12.3701 7.21924L17.8662 11.258" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M9.07852 20.1672L10.7451 19.6824C11.6408 19.4214 12.4212 18.8638 12.9571 18.1014L19.3459 9.24227C20.1107 8.19295 19.88 6.72353 18.8307 5.95869L17.0972 4.69491C16.048 3.93137 14.5773 4.16229 13.8136 5.21015L7.3547 14.1685C6.8618 14.8705 6.60136 15.7088 6.60854 16.567L6.62456 18.3428C6.63666 19.6136 7.85855 20.5218 9.07852 20.1672Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 
+export const VibrationIcon = ({ width = '22', height = '22', color = '#18181C', style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path fillRule="evenodd" clipRule="evenodd" d="M17.2075 17.7567L17.1744 7.54057C17.1688 5.74334 15.785 4.29057 14.0844 4.2964L9.73583 4.31197C8.03522 4.31781 6.66057 5.78031 6.66701 7.57852L6.70016 17.7946C6.70569 19.5919 8.08954 21.0437 9.79015 21.0378L14.1379 21.0223C15.8394 21.0164 17.2131 19.5539 17.2075 17.7567Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M3.68889 8.41357L4.43468 9.56859L3.4274 11.1138L4.42915 12.6668L3.42188 14.2179L4.42362 15.7738L3.71375 16.8626" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M20.1862 8.41357L19.4404 9.56859L20.4477 11.1138L19.4459 12.6668L20.4532 14.2179L19.4515 15.7738L20.1614 16.8626" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M11.9521 17.5996V17.5514M11.9522 17.2983C11.8213 17.2983 11.7153 17.4103 11.7153 17.548C11.7153 17.6863 11.8213 17.7983 11.9522 17.7983C12.0829 17.7983 12.1889 17.6863 12.1889 17.548C12.1889 17.4103 12.0829 17.2983 11.9522 17.2983Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
 
 
+export const PrivacyPolicyIcon = ({ width = '22', height = '22', color = '#18181C', style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13.5823 3.93607C14.132 3.93607 14.6586 4.16284 15.0395 4.56578L18.777 8.51538C19.1377 8.89691 19.3392 9.40594 19.3392 9.9354V18.0993C19.3536 20.1559 17.7592 21.8523 15.7349 21.936L7.9232 21.935C5.87985 21.8893 4.26051 20.1724 4.30561 18.0993V7.5927C4.35357 5.55367 6.00073 3.92731 8.01147 3.93607H13.5823Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M11.8242 16.9968V16.9868" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M11.8184 10.9673V14.1189" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14.0576 3.99854V6.89115C14.0566 8.30241 15.1828 9.44895 16.5749 9.45187H19.2744" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
 
+
+export const TermsOfServiceIcon = ({ width = '22', height = '22', color = '#18181C', style, className = '', onClick }) => <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12.5517 18.0598H13.8242C14.7324 18.0598 15.466 17.3973 15.466 16.4759C15.466 15.7092 14.9558 15.0973 14.2232 14.9104C13.175 14.6439 12.1298 14.4347 11.0365 14.4619C9.30363 14.5038 8.09149 15.4845 6.71729 16.4165" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.5526 18.0886C13.1961 17.9932 13.8511 18.0896 14.5012 18.074C16.0078 18.038 17.1893 16.745 18.3362 15.8693C18.9221 15.4208 19.743 15.4802 20.2609 16.0085C20.8362 16.5942 20.8362 17.5437 20.2609 18.1295C19.0228 19.3923 17.9277 20.5628 16.2485 21.2253C13.9182 22.1447 11.7557 21.6982 9.39569 21.2253C8.48275 21.0414 7.64174 21.0307 6.71729 21.0307" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4.58203 21.935H5.53621C6.26503 21.935 6.71767 21.4135 6.71767 20.675V16.3523C6.71767 15.6138 6.26503 15.0923 5.53621 15.0923H4.58203" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M19.7606 11.8946V9.62285C19.7606 9.12082 19.5698 8.63921 19.2274 8.27728L15.6849 4.53344C15.3234 4.15205 14.8247 3.93606 14.303 3.93606H9.02392C7.1175 3.92828 5.55628 5.4694 5.51025 7.40262V11.8946" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14.7563 3.99463V6.73636C14.7563 8.07511 15.8237 9.1609 17.1422 9.16382H19.7018" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+export const AppVersionIcon = ({ width = '22', height = '22', color = "#18181C", style, className = '', onClic }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10.1049 3.66748H9.10466C7.13484 3.66748 5.53809 5.28748 5.53809 7.28597L5.53905 18.05C5.53905 20.0475 7.13581 21.6675 9.10561 21.6675H14.5413C16.5111 21.6675 18.1079 20.0475 18.1069 18.049V12.685" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14.4358 8.06885H12.6616V9.74333" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18.1091 3.66748V5.46748H16.335" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.7236 5.32418C13.2204 4.44169 14.1515 3.85693 15.2247 3.85693C17.1494 3.85693 18.1075 5.47693 18.1075 5.47693" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.7184 8.24012C17.2208 9.11288 16.2895 9.69764 15.225 9.69764C13.6369 9.69764 12.6616 8.07764 12.6616 8.07764" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M12.2173 17.9981V17.9499M12.2173 17.6968C12.0811 17.6968 11.9707 17.8088 11.9707 17.9466C11.9707 18.0848 12.0811 18.1968 12.2173 18.1968C12.3536 18.1968 12.464 18.0848 12.464 17.9466C12.464 17.8088 12.3536 17.6968 12.2173 17.6968Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>
+
+export const DeleteAccountIcon = ({ width = '25', height = '25', color = "#18181C", style, className = '', onClic }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.9513 15.626C8.62434 15.626 5.78662 16.1363 5.78662 18.179C5.78662 20.2217 8.60814 20.7501 11.9513 20.7501" stroke="#D10B0B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M18.5134 16.1047L15.1403 19.5268M18.5483 19.5618L15.1079 16.0713" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path fillRule="evenodd" clipRule="evenodd" d="M15.8878 8.74651C15.8878 10.9527 14.125 12.7421 11.9495 12.7421C9.77502 12.7421 8.01221 10.9527 8.01221 8.74651C8.01221 6.54032 9.77502 4.75098 11.9495 4.75098C14.125 4.75098 15.8878 6.54032 15.8878 8.74651Z" stroke="#D10B0B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+</svg>

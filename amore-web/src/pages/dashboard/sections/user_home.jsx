@@ -102,12 +102,7 @@ const UserHome = () => {
 
         <div className='user-home-filters' >
 
-          <CurrentUserInfoBox
-            image={auth.photos?.[0].url}
-            credits={auth.credits}
-            name={auth.name}
-            style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }}
-          />
+          <CurrentUserInfoBox style={{ borderBottom: `1px solid ${colors.borderColor1}`, paddingBottom: '.8rem' }} />
 
           <div className={`user-home-filters-options-wrapper ${showFilter ? 'active' : ''}`}>
 
@@ -169,7 +164,6 @@ const UserHome = () => {
       </div>
       }
 
-      {/* Swipe Section */}
 
       <div className='swipe-container' ref={swipeContainer} style={{ borderRadius: showLocationBanner ? '0' : '0 0 12px 12px' }}>
 
@@ -192,7 +186,7 @@ const UserHome = () => {
                   icon={<LocationIcon color={colors.whiteText} width='20px' height='20px' />}
                 />
 
-                {<SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading || swipeList.length === 0} />}
+                {<SwipeItem user={swipeList[currentIndex]} loading={isSwipeListLoading || swipeList.length === 0} isUserBlocked={false} />}
 
                 {(!isSwipeListLoading && swipeList.length !== 0) && <SwipeBottomBar onMessage={null} onSwipe={handleSwipe} />}
 

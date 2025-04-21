@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getUserData } from '../../api/services/user_servives';
 import Header from '../../copmonents/header';
 import { colors } from '../../utils/theme';
@@ -24,6 +24,10 @@ import likeSound from '../../sounds/like_sound.mp3'
 import UsersMatchPopup from '../dashboard/components/users_match_popup.jsx';
 import { useMediaPredicate } from 'react-media-hook';
 import { useLikes } from '../../hooks/use_likes.jsx';
+import { BlockedUserIcon } from '../../assets/svg/svg_package.jsx';
+import { BeatLoader } from 'react-spinners';
+import BasicButton from '../../copmonents/basic_button.jsx';
+import UserBlockPopup from '../dashboard/components/user_block_popup.jsx';
 
 const Visit = () => {
 
@@ -35,6 +39,8 @@ const Visit = () => {
     const [isUserLoading, setIsUserLoading] = useState();
     const [popAnimation, setPopupAnimation] = useState();
     const [showUserMatchesPopup, setShowUserMatchesPopup] = useState();
+    const [isUserBlocked, setIsUserBlocked] = useState(false);
+
 
     //CONTEXT
     const { conversations, isConversationsLoading } = useConversation();
@@ -56,6 +62,7 @@ const Visit = () => {
 
     return (
         <div className='visit' style={{ padding: !isAuthenticated ? '1rem' : '', height: !isAuthenticated ? '100vh' : '100%' }}>
+
 
             {!isAuthenticated && <Header
                 hasShadow={true}
@@ -80,9 +87,8 @@ const Visit = () => {
                 {
                     !hideLeftCol && <div className='visit-grid-container-left-column' >
                         {isAuthenticated && <>
-                            <CurrentUserInfoBox credits={auth.credits} name={auth.name} style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '1rem', borderRadius: '12px' }} />
+                            <CurrentUserInfoBox style={{ marginBottom: '.85rem', background: colors.backGround3, border: `1px solid ${colors.borderColor1}`, padding: '1rem', borderRadius: '12px' }} />
                             <PremiumBox />
-
                             <DiscoverCTA style={{ marginTop: '.85rem' }} />
                         </>}
                     </div>
@@ -90,9 +96,9 @@ const Visit = () => {
 
                 <div className='visit-user-container' >
 
-                    <SwipeItem user={user} loading={isUserLoading} />
+                    <SwipeItem user={user} loading={isUserLoading} showBlockButton={true} isUserBlocked={isUserBlocked} setIsUserBlocked={setIsUserBlocked} />
 
-                    <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={handleSwipe} />
+                    {!isUserBlocked && <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={handleSwipe} />}
 
                     {popAnimation && <div className='like-popup' >
                         {popAnimation.icon}
@@ -117,7 +123,7 @@ const Visit = () => {
                 </div>}
 
             </div>
-        </div>
+        </div >
     );
 
 
@@ -159,6 +165,8 @@ const Visit = () => {
         setIsUserLoading(true);
         try {
             const response = await getUserData({ userId: id });
+            console.log(response);
+
             setUser(response.data.data)
 
         } catch (err) {

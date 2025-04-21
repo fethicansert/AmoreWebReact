@@ -25,8 +25,11 @@ const AppDataProvider = ({ children }) => {
     locations: [],
     ip: {},
     data: {},
-    gifts: {},
+    gifts: [],
   });
+
+  console.log(appData.gifts);
+
 
   // newSocket.on('onAppData', (data) => {
   //     console.log('App Data:', data);
@@ -62,6 +65,8 @@ const AppDataProvider = ({ children }) => {
       {children}
     </AppDataContext.Provider>
   );
+
+
 
   async function fetchAppData() {
     setIsDataLoading(true);

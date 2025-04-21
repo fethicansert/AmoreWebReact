@@ -50,6 +50,7 @@ const Register = () => {
 
     const imagesRef = useRef([]);
 
+
     const [selectedDate, setSelectedDate] = useState();
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [smsCode, setSmsCode] = useState({
@@ -359,10 +360,6 @@ const Register = () => {
         selectedHobbies.forEach((hobby, index) => {
             formData.append(`interests[${index}]`, hobby);
         });
-
-        console.log(imagesRef.current);
-
-        console.log(userImages);
 
 
         imagesRef.current.forEach((file) => {
