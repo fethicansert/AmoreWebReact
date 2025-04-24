@@ -2,8 +2,9 @@ import React from 'react'
 import { colors } from '../../../utils/theme'
 import { BlockedUserIcon } from '../../../assets/svg/svg_package'
 import BasicButton from '../../../copmonents/basic_button'
+import { ClipLoader } from 'react-spinners'
 
-const BlockedUser = ({ user, onClick }) => {
+const BlockedUser = ({ user, onClick, loading }) => {
     return (
         <div
             style={{
@@ -21,17 +22,27 @@ const BlockedUser = ({ user, onClick }) => {
                 maxWidth: '330px',
                 textAlign: 'center'
             }}>
-            <BlockedUserIcon color={colors.iconColor} width='55px' height='55px' />
 
-            <h3 style={{ fontSize: '1.15rem', fontWeight: '600', marginTop: '.6rem' }}>Engellenen Kullanıcı</h3>
+            {loading 
+                ? <>
+                    <ClipLoader color={colors.brand1} />
+                    <p style={{fontSize:'.95rem',color:colors.lowFadedText, fontWeight:300,marginTop:'.75rem'}}>{user?.name} kullanıcısının engeli kaldırılıyor... </p>
+                </>
+                :<>
+                    <BlockedUserIcon color={colors.iconColor} width='55px' height='55px' />
 
-            <p style={{ fontWeight: 300, color: colors.lowFadedText, fontSize: '.95rem', marginTop: '.2rem' }}>
-                {user?.name} kullanıcısını engellediniz, engeli kaldırarak erişim sağlayabilirsiniz.
-            </p>
+                    <h3 style={{ fontSize: '1.15rem', fontWeight: '600', marginTop: '.6rem' }}>Engellenen Kullanıcı</h3>
 
-            <BasicButton onClick={onClick} height={'50px'} width={'145px'} backgroundColor={colors.brand1} borderRadius={'12px'} style={{ marginTop: '.7rem' }}>
-                Engeli Kaldır
-            </BasicButton>
+                    <p style={{ fontWeight: 300, color: colors.lowFadedText, fontSize: '.95rem', marginTop: '.2rem' }}>
+                        {user?.name} kullanıcısını engellediniz, engeli kaldırarak erişim sağlayabilirsiniz.
+                    </p>
+
+                    <BasicButton onClick={onClick} height={'50px'} width={'145px'} backgroundColor={colors.brand1} borderRadius={'12px'} style={{ marginTop: '.7rem' }}>
+                        Engeli Kaldır
+                    </BasicButton>
+                </>     
+            }
+        
         </div>
     )
 }

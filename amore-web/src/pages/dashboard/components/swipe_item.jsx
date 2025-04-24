@@ -69,9 +69,9 @@ const SwipeItem = ({ user, loading, showBlockButton, isUserBlocked = false, setI
 
             {
                 isUserBlocked
-                    ? <BlockedUser user={user} onClick={() => unblockUser(user?.id)} />
+                    ? <BlockedUser loading={isBlocking} user={user} onClick={() => handleBlock({userId:user.id,operation:'unblock'})} />
                     : <>
-                        {showBlockPopup && <UserBlockPopup isBlock={true} user={user} loading={isBlocking} onClose={() => setShowBlockPopup(false)} onYes={() => blockUser(user.id)} overflowColor='rgba(0, 0, 0, 0.3)' />}
+                        {showBlockPopup && <UserBlockPopup isBlock={true} user={user} loading={isBlocking} onClose={() => setShowBlockPopup(false)} onYes={() => handleBlock({userId:user.id,operation:'block'})} overflowColor='rgba(0, 0, 0, 0.3)' />}
 
                         {(showGalery) && <SwipeSlide closeGalery={closeGalery} galeryPhotoIndex={galeryPhotoIndex} galeryPhotos={galeryPhotos} />}
 
@@ -199,37 +199,20 @@ const SwipeItem = ({ user, loading, showBlockButton, isUserBlocked = false, setI
     );
 
 
-    async function unblockUser(userId) {
+    async function handleBlock({userId, operation}) {
         setIsBlocking(true);
 
         try {
-            const response = await axiosAmore.post('user/unblock', { userId }, { useAuth: true })
-            if (response?.data?.data?.status) setIsUserBlocked(false);
+            const response = await axiosAmore.post(`user/${operation}`, { userId }, { useAuth: true })
+            if (response?.data?.data?.status) setIsUserBlocked(operation === 'block' ? true : false);
 
         } catch (e) {
             console.log(e);
         } finally {
             setIsBlocking(false);
-            setShowBlockPopup(false);
+            operation === 'block' && setShowBlockPopup(false);
         }
     }
-
-    async function blockUser(userId) {
-        setIsBlocking(true);
-
-        try {
-            const response = await axiosAmore.post('user/block', { userId }, { useAuth: true })
-            if (response?.data?.data?.status) setIsUserBlocked(true);
-
-        } catch (e) {
-            console.log(e);
-        } finally {
-            setIsBlocking(false);
-            setShowBlockPopup(false);
-        }
-    }
-
-
 
     //FUNCTIONS
     function handleSocialButtonClick() {

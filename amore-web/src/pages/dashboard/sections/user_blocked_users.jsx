@@ -32,7 +32,7 @@ const UserBlockedUsers = () => {
                             trealing={<CrossCloseIcon color={colors.brand1} width='22px' height='22px' />}
                             leading={<img src={blockedUser.photos[0].url} width={35} height={35} style={{ borderRadius: '50%', objectFit: 'cover', marginRight: '.2rem' }} />}
                             text={blockedUser.name}
-                        />) : <p>Engellenmiş Kullanıcı Bulunmuyor</p>
+                        />) : <p style={{fontSize:'.95rem'}}>Engellenmiş kullanıcı bulunmuyor.</p>
             }
 
             {showPopup && <UserBlockPopup user={blockedUserRef.current} onClose={() => setShowPopup(false)} loading={isUnBlocking} onYes={() => unBlockUser(blockedUserRef.current.id)} />}

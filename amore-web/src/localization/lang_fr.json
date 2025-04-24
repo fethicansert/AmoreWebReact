@@ -1,0 +1,366 @@
+{
+    "translation": {
+      "ERRORS": {
+        "UNEXPECTED_ERROR": {
+          "TITLE": "Une erreur inattendue s'est produite !",
+          "SUB_TITLE": "Veuillez réessayer plus tard."
+        }
+      },
+      "PREMIUM_SUBSCRIPTION": {
+        "PREMIUM_FEATURE_TITLE_1": "Voir qui vous aime",
+        "PREMIUM_FEATURE_TEXT_1": "Passez à Premium pour voir vos correspondances. Découvrez qui est intéressé par vous instantanément !",
+        "BE_PREMIUM": "Devenir Premium",
+        "PREMIUM_SUBSCRIPTION_BOX_TITLE": "Obtenez Premium Maintenant",
+        "SUBSCRIPTION": "Abonnement",
+        "TITLE": "Abonnement Premium",
+        "MONTHLY_SUBSCRIPTION": "Abonnement Mensuel",
+        "WEEKLY_SUBSCRIPTION": "Abonnement Hebdomadaire",
+        "MONTHLY_TOTAL": "Total pour le Mois"
+      },
+      "DATE": {
+        "MONTH": "Mois",
+        "WEEK": "Semaine"
+      },
+      "BUTTONS": {
+        "SEND_MESSAGE_BUTTON": "Envoyer un Message",
+        "PAY_BUTTON": "Effectuer le Paiement"
+      },
+      "USER_CARD": {
+        "ONLY_PREMIUM_USERS": "Membres Premium Uniquement"
+      },
+      "LIMITED_OFFER": {
+        "TITLE": "Offre Limitée",
+        "SUB_TITLE": "Sélectionnez un pack de jetons pour gagner des bonus et débloquer de nouvelles fonctionnalités !",
+        "BONUSES": {
+          "TITLE": "Bonus que vous recevrez",
+          "PREMIUM_ACCOUNT": "Compte Premium",
+          "MORE_MATCHES": "Plus de Correspondances",
+          "FEATURED": "Profil Mis en Avant",
+          "MORE_LIKE": "Obtenez Plus de Likes"
+        },
+        "JETONS": {
+          "JETON": "Jeton",
+          "TITLE": "Sélectionnez un pack de jetons à débloquer",
+          "TIME": "Par semaine"
+        },
+        "NAVIGATE_MARKET": "Voir Tous les Jetons",
+        "NAVIGATE_SUBSCRIPTIONS": "Voir Tous les Abonnements"
+      },
+      "LOGIN_POPUP": {
+        "TITLE": "Commencez Maintenant !",
+        "SUB_TITLE": "Inscrivez-vous pour envoyer votre message",
+        "TEXT": "Si vous cherchez l'amour, inscrivez-vous",
+        "BUTTON_TEXT": "Continuer avec le Téléphone"
+      },
+      "LOGOUT": {
+        "TITLE": "Déconnexion",
+        "TEXT": "Si vous vous déconnectez, votre compte sera fermé dans le navigateur. Êtes-vous sûr de vouloir vous déconnecter ?",
+        "LOGOUT_BUTTON": "Déconnexion",
+        "CLOSE_BUTTON": "Fermer"
+      },
+      "FILTER": {
+        "NAME": "Nom",
+        "NAME_PLACEHOLDER": "Commencez à rechercher un utilisateur !",
+        "GENDER": "Genre",
+        "AGE": "Âge",
+        "DISTANCE": "Distance",
+        "USER_STATUS": "Statut de l'Utilisateur",
+        "FILTER_BUTTON": "Filtrer",
+        "HIDE_BUTTON": "Masquer",
+        "RESET_BUTTON": "Réinitialiser",
+        "APPLY_FILTER_BUTTON": "Appliquer le Filtre"
+      },
+      "ROUTE_NAMES": {
+        "MAIN_PAGE": "Accueil",
+        "NOTIFICATIONS": "Notifications",
+        "DISCOVER": "Découvrir",
+        "MATCHES": "Correspondances",
+        "MESSAGES": "Messages",
+        "MARKET": "Acheter des Jetons",
+        "PREMIUM_SUBSCRIPTION": "Devenir Premium",
+        "PROFILE": "Profil",
+        "VISITS": "Visites",
+        "LIKES": "Likes"
+      },
+      "NOTIFICATION": {
+        "QUICK_NOTIFICATIONS": {
+          "TITLE": "{{user}}",
+          "TEXT": "{{message}}",
+          "LIKE": "<span>{{user}}</span> vous a aimé!",
+          "CALL": "{{user}} vous a appelé 📞",
+          "VIDEO_CALL_REQUEST": "{{user}} a fait un appel vidéo 🎥",
+          "AUDIO": "{{user}} a envoyé un message vocal 🎵",
+          "IMAGE": "{{user}} a envoyé une photo 📷",
+          "GIFT": "{{user}} a envoyé un cadeau 🎁"
+        },
+        "MESSAGE": {
+          "TITLE": "{{user}}",
+          "DESCRIPTION": "{{message}}"
+        },
+        "VISIT": {
+          "TITLE": "{{user}} a visité votre profil 👀",
+          "DESCRIPTION": "Votre profil a attiré l'attention de quelqu'un ! Consultez votre profil maintenant pour rencontrer votre visiteur."
+        },
+        "VISIT_FREE": {
+          "TITLE": "Quelqu'un a visité votre profil 👀",
+          "DESCRIPTION": "Votre profil a attiré l'attention de quelqu'un ! Consultez votre profil maintenant pour rencontrer votre visiteur."
+        },
+        "LIKE": {
+          "TITLE": "{{user}} vous a aimé 😍",
+          "DESCRIPTION": "Bonne nouvelle ! Vous avez peut-être trouvé votre âme sœur. Cliquez maintenant pour voir qui vous a aimé !"
+        },
+        "LIKE_FREE": {
+          "TITLE": "Quelqu'un vous a aimé 😍",
+          "DESCRIPTION": "Bonne nouvelle ! Vous avez peut-être trouvé votre âme sœur. Cliquez maintenant pour voir qui vous a aimé !"
+        },
+        "SUPERLIKE": {
+          "TITLE": "Quelqu'un de spécial vous a super aimé ! Cliquez maintenant pour découvrir cette personne spéciale.",
+          "DESCRIPTION": "{{user}} vous a super aimé 🌟"
+        },
+        "GIFT": {
+          "TITLE": "Cadeau",
+          "DESCRIPTION": "{{user}} vous a envoyé un cadeau."
+        },
+        "CONSUMABLE": {
+          "TITLE": "Jetons Chargés",
+          "DESCRIPTION": "Les jetons ont été chargés avec succès."
+        },
+        "SUPPORT_ANSWER": {
+          "TITLE": "Système de Support",
+          "DESCRIPTION": "Votre demande de support a reçu une réponse. ✅"
+        },
+        "SUPPORT_REQUEST": {
+          "TITLE": "Demande de Support",
+          "DESCRIPTION": "Votre demande de support a reçu une réponse. ✅"
+        },
+        "GIFT_CREDIT": {
+          "TITLE": "Jetons Offerts",
+          "DESCRIPTION": "{{user}} vous a offert {{jetonQuantity}} jetons."
+        },
+        "MATCH": {
+          "TITLE": "Vous avez matché avec {{user}} 💖",
+          "DESCRIPTION": "Bonne nouvelle ! Vous avez matché avec {{user}}. Cliquez maintenant pour commencer à discuter avec cette personne spéciale !"
+        },
+        "CALL_ADMIN_REQUEST_STARTED": {
+          "TITLE": "Nouvelle Demande d'Appel",
+          "DESCRIPTION": "Une nouvelle demande d'appel a été reçue de {{user}}."
+        },
+        "CALL_ADMIN_REQUEST_MISSED": {
+          "TITLE": "Demande d'Appel Manquée",
+          "DESCRIPTION": "La demande d'appel de {{user}} a été manquée."
+        },
+        "AUDIO_CALL_MISSED": {
+          "TITLE": "Appel Vocal Manqué",
+          "DESCRIPTION": "Vous avez manqué une demande d'appel vocal de {{user}}."
+        },
+        "VIDEO_CALL_MISSED": {
+          "TITLE": "Appel Vidéo Manqué",
+          "DESCRIPTION": "Vous avez manqué une demande d'appel vidéo de {{user}}."
+        }
+      },
+      "HOME": {
+        "HERO": {
+          "TITLE": "Un goût que vous n'oublierez pas",
+          "SUB_TITLE": "Discutez et Flirtez",
+          "BOX_LEFT": {
+            "TEXT": "Seulement des vraies personnes ici",
+            "SUB_TEXT": "Aucun faux profil sur Amore."
+          },
+          "BOX_RIGHT": {
+            "TEXT": "Rencontrez, Parlez, Connectez-vous",
+            "SUB_TEXT": "La porte d'entrée vers l'amour"
+          }
+        },
+        "INFO": {
+          "TITLE": "Plus de 40 000 <pink>utilisateurs</pink>",
+          "SUB_TITLE": "Beaucoup <pink>Plus</pink> Que du Rencontre",
+          "TEXT": "Amore n'est pas seulement une application de rencontre ; c'est une plateforme unique où vous pouvez créer des connexions significatives, engager des conversations authentiques et former des liens réels. Découvrez de nouvelles amitiés, trouvez votre amour et vivez des expériences qui ajoutent de la valeur à votre vie !",
+          "INFO_BUTTON": "Inscrivez-vous Maintenant"
+        },
+        "INFO_IMAGES": {
+          "TITLE": "Discutez avec des personnes complètement réelles"
+        },
+        "INTRODUCTION": {
+          "TITLE": "Nous sommes Différents des Autres Applications de Rencontre",
+          "SUB_TITLE": "Parce que",
+          "TEXT": "Amore ne se concentre pas seulement sur les correspondances ; il vise à construire des relations significatives et durables. Avec son design convivial, son environnement sécurisé et sa communauté accueillante, tout est prêt ici pour que vous trouviez l'amour et l'amitié que vous recherchez !"
+        },
+        "FOOTER": {
+          "TEXT": "Notre application",
+          "SUB_TEXT": "vous attend pour être téléchargée maintenant !",
+          "APPLE_BUTTON": "Télécharger sur",
+          "GOOGLE_BUTTON": "Disponible sur"
+        }
+      },
+      "HEADER": {
+        "REGISTER_BUTTON": "S'inscrire",
+        "LOGIN_BUTTON": "Commencez Maintenant !",
+        "CONTINUE_BUTTON": "Continuez !",
+        "AMORE_LINK_1": "À propos d'Amore",
+        "AMORE_LINK_2": "Qu'est-ce qu'Amore ?"
+      },
+      "REGISTER": {
+        "PHONE": {
+          "TITLE": "Entrez votre numéro de téléphone",
+          "INFO": "Nous vous enverrons un mot de passe à usage unique.",
+          "ERROR_TEXT": "Veuillez entrer votre numéro de téléphone !",
+          "INVALID_PHONE_ERROR": "Le numéro de téléphone que vous avez entré est invalide.",
+          "WAIT_NEW_CODE_ERROR": "Vous pouvez demander un nouveau code après {{otpCooldown}} secondes."
+        },
+        "VERIFY": {
+          "TITLE": "Entrez le code de vérification",
+          "INFO": "Nous avons envoyé un code à 4 chiffres sur votre téléphone. Veuillez l'entrer ci-dessous pour vérifier.",
+          "ERROR_TEXT": "Veuillez entrer le code de vérification.",
+          "SEND_AGAIN_BUTTON": "Envoyer à nouveau"
+        },
+        "USERNAME": {
+          "TITLE": "Quel est votre nom ?",
+          "INFO": "Votre pseudo pourrait être génial, mais nous avons besoin de votre vrai nom pour vous identifier correctement.",
+          "INPUT_PLACEHOLDER": "Entrez votre nom",
+          "ERROR_TEXT": "Vous devez entrer votre nom pour continuer !",
+          "SUB_ERROR_TEXT": "Votre nom doit contenir au moins trois lettres !"
+        },
+        "BIRTH_DATE": {
+          "TITLE": "Quelle est votre date de naissance ?",
+          "INFO": "Nous avons besoin de connaître votre date de naissance.",
+          "DAY_PLACEHOLDER": "JJ",
+          "MONTH_PLACEHOLDER": "MM",
+          "YEAR_PLACEHOLDER": "AAAA",
+          "ERROR_TEXT": "Veuillez entrer votre date de naissance dans les champs !",
+          "SUB_ERROR_TEXT": "Veuillez entrer une date valide !"
+        },
+        "GENDER": {
+          "TITLE": "Quel est votre genre ?",
+          "MALE": "Homme",
+          "FEMALE": "Femme",
+          "INFO": "Vous pouvez mettre à jour cette information à tout moment plus tard."
+        },
+        "INTERESTS": {
+          "TITLE": "Quels sont vos centres d'intérêt ?",
+          "INFO": "Partager vos centres d'intérêt nous aide à vous faire correspondre avec des personnes qui partagent les mêmes passions.",
+          "ERROR_TEXT": "Vous devez sélectionner au moins trois hobbies !",
+          "INTEREST_ITEMS": {
+            "INTEREST_NATURE": "Nature",
+            "INTEREST_ARCHITECTURE": "Architecture",
+            "INTEREST_ANIMALS": "Animaux",
+            "INTEREST_GYM_FITNESS": "Gym et Fitness",
+            "INTEREST_FASHION": "Mode",
+            "INTEREST_LANGUAGE": "Langue",
+            "INTEREST_BOOK": "Livres",
+            "INTEREST_FOOTBALL": "Football",
+            "INTEREST_DANCING": "Danse",
+            "INTEREST_GAMING": "Jeux",
+            "INTEREST_PAINTING": "Peinture",
+            "INTEREST_PHOTOGRAPHY": "Photographie",
+            "INTEREST_MUSIC": "Musique",
+            "INTEREST_WRITING": "Écriture",
+            "INTEREST_PEOPLE": "Personnes",
+            "INTEREST_MOVIE": "Films"
+          }
+        },
+        "PHOTO": {
+          "TITLE": "Téléchargez une photo",
+          "SUB_TITLE": "Photo de profil",
+          "INFO": "Téléchargez une photo claire pour compléter votre profil et aider les autres à mieux vous connaître.",
+          "ERROR_TEXT": "Veuillez ajouter une photo !"
+        },
+        "LOCATION": {
+          "TITLE": "Où habitez-vous ?",
+          "STATE_PLACEHOLDER": "Sélectionnez une ville",
+          "INFO": "Aidez-nous à vous fournir la meilleure expérience en sélectionnant votre pays et votre ville.",
+          "ERROR_TEXT": "Veuillez sélectionner votre localisation !"
+        },
+        "CONTINUE_BUTTON": "Continuer",
+        "COMPLETE_BUTTON": "Terminer",
+        "SEND_BUTTON": "Envoyer",
+        "VERIFY_BUTTON": "Vérifier",
+        "SEND_AGAIN_BUTTON": "Envoyer à nouveau"
+      },
+      "STATUS": {
+        "ONLINE": "En ligne",
+        "OFFLINE": "Hors ligne"
+      },
+      "GENDER": {
+        "FEMALE": "Femme",
+        "MALE": "Homme"
+      },
+      "PURCHASE": {
+        "JETON": "Jeton",
+        "DISCOUNT": "Réduction",
+        "NO_DISCOUNT": "Pas de Réduction",
+        "LIMITED_TIME": "Temps Limité",
+        "SPECIAL_OFFER": "Exclusif pour Vous",
+        "WEEKLY": "Hebdomadaire",
+        "MONTHLY": "Mensuel"
+      },
+      "DASHBOARD": {
+        "TITLES": {
+          "QUICK_MESSAGES": "Messages Rapides",
+          "EMPTY_MESSAGES": "La boîte de messages est vide.",
+          "LIKES": "Likes",
+          "EMPTY_LIKES": "Vous n'avez pas encore reçu de likes.",
+          "SEE_ALL": "Voir Tout",
+          "EMPTY_NOTIFICATIONS_TITLE": "Je me sens si seul ici",
+          "EMPTY_NOTIFICATIONS_SUB_TITLE": "Commencez à interagir et aidez-moi.",
+          "FILTER_CHANGE_TITLE": "Aucun utilisateur trouvé avec les critères recherchés !",
+          "FILTER_CHANGE_SUB_TITLE": "Vous devriez essayer de modifier les options de filtre."
+        },
+        "MARKET": {
+          "PREMIUM_SUBSCRIPTION_HEADER": {
+            "TITLE": "Adhésion Premium",
+            "SUB_TITLE": "Profitez des avantages d'être membre premium.",
+            "BUTTON_TEXT": "Commencez Maintenant"
+          },
+          "FOOTER_TEXT": "Plus de réductions sur les packs plus importants ! Plus vous achetez de jetons, plus vous obtenez de réduction."
+        },
+        "PREMIUM_SUBSCRIPTION": {
+          "TITLE": "Monde Premium",
+          "SUB_TITLE": "Bienvenue",
+          "FOOTER_TEXT": "Quelle option premium vous convient le mieux ?",
+          "CHOOSE_PLAN_BUTTON": "Choisir un plan"
+        },
+        "SWIPE": {
+          "SEND_MESSAGE_BUTTON": "Envoyer un Message",
+          "USERINFO": {
+            "BIO_TITLE": "Qui suis-je ?",
+            "NO_BIO_TEXT": "Cet utilisateur n'a pas de biographie.",
+            "INTEREST_TITLE": "Mes Centres d'Intérêt",
+            "NO_INTEREST_TEXT": "Les centres d'intérêt de cet utilisateur n'ont pas encore été ajoutés.",
+            "SOCIAL_PLATFORM_TITLE": "Mes Plateformes Sociales",
+            "NO_JOB_TITLE": "Aucune Information sur le Travail",
+            "NO_SCOOL_TITLE": "Aucune Information sur l'École",
+            "AGE": "{{age}} Ans"
+          }
+        },
+        "PAYMENT": {
+          "CARD_USER_NAME_TITLE": "Nom sur la Carte",
+          "CARD_USER_NAME_SUB_TITLE": "Entrez le nom sur la carte",
+          "CARD_USER_NAME_PLACEHOLDER": "Nom du titulaire de la carte",
+          "CARD_NUMBER_TITLE": "Numéro de Carte",
+          "CARD_NUMBER_SUB_TITLE": "Entrez le numéro de carte à 16 chiffres",
+          "CARD_NUMBER_PLACEHOLDER": "Numéro de Carte",
+          "CARD_CVV_TITLE": "Numéro CVV",
+          "CARD_CVV_SUB_TITLE": "Entrez le numéro à 3 chiffres",
+          "CARD_CVV_PLACEHOLDER": "CVV",
+          "CARD_EXPIRATION_DATE_TITLE": "Date d'Expiration",
+          "CARD_EXPIRATION_DATE_SUB_TITLE": "Entrez la date d'expiration",
+          "CARD_EXPIRATION_DATE_YEAR_PLACEHOLDER": "AA",
+          "CARD_EXPIRATION_DATE_MONTH_PLACEHOLDER": "MM",
+          "CHECKOUT": {
+            "NAME_SURNAME_PLACEHOLDER": "Nom Complet",
+            "TITLE": "Informations de Paiement",
+            "TOTAL": "Montant Total"
+          }
+        },
+        "PROFILE": {
+          "ROUTE_NAMES": {
+            "USER_PROFILE": "Profil",
+            "LANGUAGE": "Langue",
+            "SETTINGS": "Paramètres",
+            "BLOCKED_USERS": "Utilisateurs Bloqués",
+            "SUPPORT": "Système de Support"
+          }
+        }
+      }
+    }
+  }

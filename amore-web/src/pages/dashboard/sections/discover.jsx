@@ -19,7 +19,6 @@ import { useTranslation } from "react-i18next";
 import EmptyUsersPopup from "../components/empty_users_popup.jsx";
 import { useNavigate } from "react-router-dom";
 import { checkScrollThresold } from "../../../utils/functions.jsx";
-import { useUserActivty } from "../../../hooks/use_user_activity.jsx";
 
 const Discover = () => {
   //STATES
@@ -183,7 +182,13 @@ const Discover = () => {
         {!isMobile && <PremiumBox />}
       </div>
 
-      {!isLoading ? (
+      {isLoading ?  <AmoreLoading
+          className="discover-loading"
+          containerWidth={"100%"}
+          containerHeight={"100%"}
+          amoreWidth={"70%"}
+          amoreMaxWidth={"200px"}
+        /> : (
         <div className="discover-users" onScroll={handleScrollFetch}>
           {searchedUsers.length > 0 ? (
             searchedUsers.map((user) => (
@@ -212,16 +217,7 @@ const Discover = () => {
               onClick={() => navigate("/dashboard/user-profile")}
             />
           )}
-        </div>
-      ) : (
-        <AmoreLoading
-          className="discover-loading"
-          containerWidth={"100%"}
-          containerHeight={"100%"}
-          amoreWidth={"70%"}
-          amoreMaxWidth={"200px"}
-        />
-      )}
+        </div>)}
     </section>
   );
 

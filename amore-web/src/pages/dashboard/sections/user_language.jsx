@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CustomRadioBox from '../../../copmonents/custom_radibox'
 import Flag from 'react-flagkit'
 import { colors } from '../../../utils/theme';
@@ -16,19 +16,25 @@ const languages = [
 ];
 
 const UserLanguage = () => {
-    const { auth } = useAuth();
-    const [selectedLanguage, setSelectedLanguage] = useState(auth.language);
-    const { setLanguage } = useAppData();
+    const { auth } = useAuth();    
+    const { language, setLanguage } = useAppData();
+    const languageRef = useRef(language);
+
+    useEffect(() => {
+        const clean = () => {
+            
+        }
+    })
 
     return (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '15px', marginTop: '2rem' }}>
 
-            {languages.map((language, index) => <CustomRadioBox
+            {languages.map((radioLanguage, index) => <CustomRadioBox
                 key={index}
-                onClick={() => handleChangeLanguage(language.value)}
-                isSelected={language.value === selectedLanguage}
-                leading={<Flag country={language.country} />}
-                text={language.text}
+                onClick={() => handleChangeLanguage(radioLanguage.value)}
+                isSelected={radioLanguage.value === language}
+                leading={<Flag country={radioLanguage.country} />}
+                text={radioLanguage.text}
                 width={'100%'}
                 height={'53px'}
                 selectColor={colors.brand1}
@@ -37,9 +43,11 @@ const UserLanguage = () => {
     )
 
     function handleChangeLanguage(language) {
-        setSelectedLanguage(language);
+
         setLanguage(language)
     }
+
+
 }
 
 export default UserLanguage

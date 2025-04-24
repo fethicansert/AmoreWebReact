@@ -26,6 +26,8 @@ import UserBlockedUsers from "./pages/dashboard/sections/user_blocked_users.jsx"
 import UserSupport from "./pages/dashboard/sections/user_support.jsx";
 import UserInfluencer from "./pages/dashboard/sections/user_influencer.jsx";
 import Logout from "./copmonents/logout.jsx";
+import UserSupportOld from "./pages/dashboard/sections/user_support_old.jsx";
+import UserSupportNew from "./pages/dashboard/sections/user_support_new.jsx";
 
 function App() {
   const {
@@ -71,9 +73,19 @@ function App() {
                 <Route index element={<UserProfile />} />
 
                 <Route path="language" element={<UserLanguage />} />
+
                 <Route path="settings" element={<UserSettings />} />
+
                 <Route path="blocked-users" element={<UserBlockedUsers />} />
-                <Route path="support" element={<UserSupport />} />
+
+                <Route path="support" element={<UserSupport />}>
+
+                  <Route index element={<UserSupportNew />}/>
+
+                  <Route path='old' element={<UserSupportOld />}/>
+
+                </Route>
+
                 <Route path="influencer" element={<UserInfluencer />} />
 
               </Route>

@@ -116,6 +116,16 @@ body {
   overflow-x: hidden;
   background: var(--backGround2);
 }
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-text{
+  color: var(--negative);
+  font-size: .9rem;
+}
 
 .dropdown {
   width: 100%;

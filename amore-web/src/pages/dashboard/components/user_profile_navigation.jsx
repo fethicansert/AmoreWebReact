@@ -3,33 +3,29 @@ import { BlockedUserIcon, LanguageIcon, LogoutIcon, SettingsIcon, SupportIcon, U
 import { colors } from '../../../utils/theme'
 import { NavLink } from 'react-router-dom'
 import { useBanner } from '../../../hooks/use_banner'
+import { useTranslation } from 'react-i18next'
 
 
 const routeItems = [
     {
         icon: <UserIcon className='' width={21} height={21} color={colors.darkText} />,
         path: '',
-        name: 'Profil'
     },
     {
         icon: <LanguageIcon width={21} height={21} color={colors.darkText} />,
         path: 'language',
-        name: 'Dil'
     },
     {
         icon: <SettingsIcon className='' width={21} height={21} color={colors.darkText} />,
         path: 'settings',
-        name: 'Ayarlar'
     },
     {
         icon: <BlockedUserIcon className='' width={21} height={21} color={colors.darkText} />,
         path: 'blocked-users',
-        name: 'Engellenmiş Kullanıcılar'
     },
     {
         icon: <SupportIcon className='' width={21} height={21} color={colors.darkText} />,
         path: 'support',
-        name: 'Destek Sistemi'
     },
 
     {
@@ -41,16 +37,15 @@ const routeItems = [
 ]
 
 
-const UserProfileNavigation = ({ setCurrentIndex }) => {
+const UserProfileNavigation = () => {
 
     const { setShowLogout } = useBanner();
-
+    const { t, _ } = useTranslation();
+ 
     return (
         <nav className='user-profile-navigation'>
 
             {routeItems.map((route, index) => route?.type !== 'button' ? <NavLink
-
-                onClick={() => setCurrentIndex(index)}
                 className={({ isActive }) =>
                     isActive ? "user-profile-navigation-item active" : "user-profile-navigation-item"
                 }
@@ -58,7 +53,7 @@ const UserProfileNavigation = ({ setCurrentIndex }) => {
                 to={route.path}
                 key={index}>
                 {route.icon}
-                <span>{route.name}</span>
+                <span>{t(`DASHBOARD.PROFILE.ROUTE_NAMES.${!route.path ? 'USER_PROFILE' : route.path.replace('-','_').toUpperCase()}`)}</span>
             </NavLink> : <div
                 key={index}
                 onClick={() => setShowLogout(true)}

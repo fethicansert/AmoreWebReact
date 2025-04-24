@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { getUserData } from '../../api/services/user_servives';
 import Header from '../../copmonents/header';
 import { colors } from '../../utils/theme';
@@ -13,7 +13,6 @@ import UserHomeNotifications from '../dashboard/components/user_home_notificatio
 import UserHomeNotificationItem from '../dashboard/components/user_home_notification_item';
 import { useConversation } from '../../hooks/use_conversation';
 import { useTranslation } from 'react-i18next';
-
 import { v4 as uuidv4 } from 'uuid';
 import { axiosAmore } from '../../api/axios';
 import CurrentUserInfoBox from '../../copmonents/current_user_info_box';
@@ -24,10 +23,6 @@ import likeSound from '../../sounds/like_sound.mp3'
 import UsersMatchPopup from '../dashboard/components/users_match_popup.jsx';
 import { useMediaPredicate } from 'react-media-hook';
 import { useLikes } from '../../hooks/use_likes.jsx';
-import { BlockedUserIcon } from '../../assets/svg/svg_package.jsx';
-import { BeatLoader } from 'react-spinners';
-import BasicButton from '../../copmonents/basic_button.jsx';
-import UserBlockPopup from '../dashboard/components/user_block_popup.jsx';
 
 const Visit = () => {
 
@@ -51,6 +46,7 @@ const Visit = () => {
 
     //REFS
     const likeSoundRef = useRef(new Audio(likeSound));
+    const visitContainerRef = useRef();
 
     //MEDIA QUERY
     const hideLeftCol = useMediaPredicate("(max-width: 1190px)");
@@ -62,7 +58,6 @@ const Visit = () => {
 
     return (
         <div className='visit' style={{ padding: !isAuthenticated ? '1rem' : '', height: !isAuthenticated ? '100vh' : '100%' }}>
-
 
             {!isAuthenticated && <Header
                 hasShadow={true}
@@ -94,13 +89,19 @@ const Visit = () => {
                     </div>
                 }
 
-                <div className='visit-user-container' >
+                <div className='visit-user-container' ref={visitContainerRef}>
 
-                    <SwipeItem user={user} loading={isUserLoading} showBlockButton={true} isUserBlocked={isUserBlocked} setIsUserBlocked={setIsUserBlocked} />
+                    <SwipeItem 
+                        user={user} 
+                        loading={isUserLoading} 
+                        showBlockButton={true} 
+                        isUserBlocked={isUserBlocked} 
+                        setIsUserBlocked={setIsUserBlocked} 
+                    />
 
                     {!isUserBlocked && <SwipeBottomBar onMessage={() => !isAuthenticated ? setShowLogin(true) : null} onSwipe={handleSwipe} />}
 
-                    {popAnimation && <div className='like-popup' >
+                    {popAnimation && <div className='like-popup' style={{ marginTop: `${visitContainerRef?.current?.scrollTop}px` }}>
                         {popAnimation.icon}
                     </div>}
 

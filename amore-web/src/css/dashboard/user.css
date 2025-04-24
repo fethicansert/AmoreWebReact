@@ -114,7 +114,7 @@
 
 .user-right-col-content-wrapper {
     background: var(--backGround3);
-    padding: 1.5rem 2rem 2.5rem 2rem;
+    padding: 1.5rem 2rem 1.5rem 2rem;
     border-radius: 12px;
     border: 1px solid var(--borderColor1);
 }
@@ -168,7 +168,7 @@
 }
 
 .user-profile-buttons {
-    margin-top: 1rem;
+    margin-top: 15px;
     display: flex;
     justify-content: end;
     gap: 0 15px;
@@ -234,4 +234,114 @@
     color: var(--lowFadedText);
     font-weight: 300;
     font-size: .95rem;
+}
+
+.dashed-border{
+    position: relative;
+    gap: 0 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    border-radius: 12px;
+    height: 53px;
+    background-image: repeating-linear-gradient(46deg, #ebe9e1, #ebe9e1 14px, transparent 14px, transparent 24px, #ebe9e1 24px), repeating-linear-gradient(136deg, #ebe9e1, #ebe9e1 14px, transparent 14px, transparent 24px, #ebe9e1 24px), repeating-linear-gradient(226deg, #ebe9e1, #ebe9e1 14px, transparent 14px, transparent 24px, #ebe9e1 24px), repeating-linear-gradient(316deg, #ebe9e1, #ebe9e1 14px, transparent 14px, transparent 24px, #ebe9e1 24px);
+background-size: 1px 100%, 100% 1px, 1px 100% , 100% 1px;
+background-position: 0 0, 0 0, 100% 0, 0 100%;
+background-repeat: no-repeat;
+
+}
+
+.dashed-border:hover{
+    background-image: repeating-linear-gradient(46deg, #e64997, #e64997 14px, transparent 14px, transparent 24px, #e64997 24px), repeating-linear-gradient(136deg, #e64997, #e64997 14px, transparent 14px, transparent 24px, #e64997 24px), repeating-linear-gradient(226deg, #e64997, #e64997 14px, transparent 14px, transparent 24px, #e64997 24px), repeating-linear-gradient(316deg, #e64997, #e64997 14px, transparent 14px, transparent 24px, #e64997 24px);
+background-size: 1px 100%, 100% 1px, 1px 100% , 100% 1px;
+background-position: 0 0, 0 0, 100% 0, 0 100%;
+background-repeat: no-repeat;
+animation: borderAnimation 0.8s infinite linear;
+}
+
+.user-support a{
+    color: var(--fadedText);
+    text-decoration: none;
+    font-size: .95rem;
+}
+
+.user-support a.active{
+    font-weight: 600;
+    color: var(--brand1);
+}
+
+.user-ticket-wrapper{
+    margin-bottom: 15px;
+}
+
+.user-ticket{
+    border: 1px solid var(--borderColor1);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.user-ticket-header{
+    height: 53px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.user-ticket-header{
+    padding: 0 1.5rem;
+}
+
+.user-ticket-header h4{
+    font-weight: 600;
+    font-size: .95rem;
+}
+
+.user-ticket-time{
+    font-size: .8rem;
+    color: var(--lowFadedText);
+}
+
+.user-ticket-header-group{
+    align-items: center;
+    display: flex;
+    gap: 0 10px;
+}
+
+.user-ticket-content-message{
+    padding: 1.5rem;
+    position: relative;
+}
+
+.user-ticket-content-message::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
+    height: 1px;
+    background: var(--borderColor1);;
+}
+
+.user-ticket-content-message p {
+    color: var(--lowFadedText);
+    font-weight: 300;
+    font-size: .9rem;
+}
+
+.user-ticket-content-message h4{
+    color: var(--brand1);
+    font-size: .95rem;
+    font-weight: 600;
+}
+
+/* ANIMATION */
+@keyframes borderAnimation {
+    from { background-position: 0 0, -34.55px 0, 100% -34.55px, 0 100%; }
+    to { background-position: 0 -34.55px, 0 0, 100% 0, -34.55px 100%; }
 }

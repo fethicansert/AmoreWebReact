@@ -327,22 +327,6 @@ const Register = () => {
         const birthday = new Date(selectedDate);
         const deviveType = "ios";
 
-        const body = {
-            otpId: otpId.current,
-            otpCode: otpCode,
-            name: username,
-            phone: `+${phone}`,
-            isoCode: userLocation.countryCode,
-            country: userLocation.countryId,
-            city: userLocation.stateId,
-            birthday: birthday,
-            deviceType: deviveType,
-            language: language,
-            interests: selectedHobbies,
-            gender: gender,
-            files: userImages,
-        };
-
         const formData = new FormData();
 
         formData.append('otpId', otpId.current);
@@ -357,15 +341,10 @@ const Register = () => {
         formData.append('language', language);
         formData.append('gender', gender);
 
-        selectedHobbies.forEach((hobby, index) => {
-            formData.append(`interests[${index}]`, hobby);
-        });
+        selectedHobbies.forEach((hobby, index) => formData.append(`interests[${index}]`, hobby));
 
-
-        imagesRef.current.forEach((file) => {
-            const fileName = file.name.split('/').pop()
-            formData.append(`files`, file, fileName);
-        });
+        //set images in files with image file and file.name
+        imagesRef.current.forEach((file) => formData.append(`files`, file, file.name));
 
         try {
             const response = await axiosAmore.post('user/register', formData);
@@ -385,15 +364,8 @@ const Register = () => {
     }
 
     //Delete uploaded image
-    function handleDeleteImage(index) {
-        const updateImages = userImages.filter(function (img, id) {
-            if (id === index) {
-                return undefined;
-            }
-            return img;
-        });
-
-        setUserImages(updateImages);
+    function handleDeleteImage(imageIndex) {
+        setUserImages(prev => prev.filter((img,index) => imageIndex === index ? undefined : img));
     }
 
     //Work when user upload image reads file-image and setStates

@@ -323,7 +323,7 @@ export const LanguageIcon = ({ width = '25', height = '25', color = '#FFFFFF' })
 </svg>
 
 
-export const SendMessageIcon = ({ width = '22', height = '22', color = "#E64997", strokeWidth = '1', style, className = '', onClick }) => <svg onClick={onClick} width={width} height={height} className={className} style={style} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+export const SendMessageIcon = ({ width = '22', height = '22', color = '#E64997', strokeWidth = '1', style, className = '', onClick}) => <svg onClick={onClick} width={width} height={height} className={className} style={style} viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M5.97643 4.57899L15.5343 1.39302C19.8236 -0.036719 22.1539 2.30491 20.7354 6.59413L17.5495 16.152C15.4105 22.5802 11.8981 22.5802 9.75907 16.152L8.8134 13.315L5.97643 12.3694C-0.451779 10.2304 -0.451779 6.72923 5.97643 4.57899Z" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
     <path d="M9.02734 12.8307L13.0576 8.78917" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" />
 </svg>
@@ -384,8 +384,6 @@ export const AmoreImageLock = ({ size, color = "#FFFFFF", style, className = '',
         />
     </svg>
 );
-
-
 
 export const AmoreImageLockOpen = ({ size = '21', color = "#FFFFFF", style, className = '', onClick }) => (
     <svg
@@ -468,7 +466,7 @@ export const TermsOfServiceIcon = ({ width = '22', height = '22', color = '#1818
     <path d="M12.5526 18.0886C13.1961 17.9932 13.8511 18.0896 14.5012 18.074C16.0078 18.038 17.1893 16.745 18.3362 15.8693C18.9221 15.4208 19.743 15.4802 20.2609 16.0085C20.8362 16.5942 20.8362 17.5437 20.2609 18.1295C19.0228 19.3923 17.9277 20.5628 16.2485 21.2253C13.9182 22.1447 11.7557 21.6982 9.39569 21.2253C8.48275 21.0414 7.64174 21.0307 6.71729 21.0307" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M4.58203 21.935H5.53621C6.26503 21.935 6.71767 21.4135 6.71767 20.675V16.3523C6.71767 15.6138 6.26503 15.0923 5.53621 15.0923H4.58203" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M19.7606 11.8946V9.62285C19.7606 9.12082 19.5698 8.63921 19.2274 8.27728L15.6849 4.53344C15.3234 4.15205 14.8247 3.93606 14.303 3.93606H9.02392C7.1175 3.92828 5.55628 5.4694 5.51025 7.40262V11.8946" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M14.7563 3.99463V6.73636C14.7563 8.07511 15.8237 9.1609 17.1422 9.16382H19.7018" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M14.7563 3.99463V6.73636C14.7563 8.07511 15.8237 9.1609 17.1422 9.16382H19.7018" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
 export const AppVersionIcon = ({ width = '22', height = '22', color = "#18181C", style, className = '', onClic }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -476,12 +474,39 @@ export const AppVersionIcon = ({ width = '22', height = '22', color = "#18181C",
     <path d="M14.4358 8.06885H12.6616V9.74333" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M18.1091 3.66748V5.46748H16.335" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M12.7236 5.32418C13.2204 4.44169 14.1515 3.85693 15.2247 3.85693C17.1494 3.85693 18.1075 5.47693 18.1075 5.47693" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M17.7184 8.24012C17.2208 9.11288 16.2895 9.69764 15.225 9.69764C13.6369 9.69764 12.6616 8.07764 12.6616 8.07764" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M17.7184 8.24012C17.2208 9.11288 16.2895 9.69764 15.225 9.69764C13.6369 9.69764 12.6616 8.07764 12.6616 8.07764" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M12.2173 17.9981V17.9499M12.2173 17.6968C12.0811 17.6968 11.9707 17.8088 11.9707 17.9466C11.9707 18.0848 12.0811 18.1968 12.2173 18.1968C12.3536 18.1968 12.464 18.0848 12.464 17.9466C12.464 17.8088 12.3536 17.6968 12.2173 17.6968Z" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
 
-export const DeleteAccountIcon = ({ width = '25', height = '25', color = "#18181C", style, className = '', onClic }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M11.9513 15.626C8.62434 15.626 5.78662 16.1363 5.78662 18.179C5.78662 20.2217 8.60814 20.7501 11.9513 20.7501" stroke="#D10B0B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+export const DeleteAccountIcon = ({ width = '25', height = '25', color = "#18181C", style, className = '', onClick }) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.9513 15.626C8.62434 15.626 5.78662 16.1363 5.78662 18.179C5.78662 20.2217 8.60814 20.7501 11.9513 20.7501" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M18.5134 16.1047L15.1403 19.5268M18.5483 19.5618L15.1079 16.0713" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     <path fillRule="evenodd" clipRule="evenodd" d="M15.8878 8.74651C15.8878 10.9527 14.125 12.7421 11.9495 12.7421C9.77502 12.7421 8.01221 10.9527 8.01221 8.74651C8.01221 6.54032 9.77502 4.75098 11.9495 4.75098C14.125 4.75098 15.8878 6.54032 15.8878 8.74651Z" stroke="#D10B0B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
 </svg>
+
+
+export const UploadImageIcon = ({width = '25', height = '25', color = "#18181C", style, className = '', onClick}) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M18.0894 3.0625V9.1545" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M15.7158 5.48081L18.0889 3.0625L20.4629 5.48081" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M3.77832 15.6427L7.67076 12.7758C9.11243 11.7131 11.0826 11.8104 12.4178 13.0006L20.0013 19.9033" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M21.5144 15.5445C20.6875 14.7738 19.4002 13.5457 17.6507 14.5013C16.7472 14.9976 15.9501 15.5153 15.5078 15.817" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M21.5138 11.0201V16.0426C21.5138 18.9874 19.6971 21.0641 16.7955 21.0641H8.48213C5.57959 21.0641 3.77246 18.9874 3.77246 16.0426V8.09574C3.77246 5.15095 5.58918 3.07422 8.48213 3.07422H11.9899" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+
+export const HeadphoneIcon = ({width = '25', height = '25', color = "#18181C", style, className = '', onClick}) => <svg width={width} height={height} viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fillRule="evenodd" clipRule="evenodd" d="M5.80786 18.2547C6.3031 19.1129 7.40062 19.4077 8.25878 18.9115C9.115 18.4162 9.40884 17.3207 8.91456 16.4625L7.40743 13.852C6.91316 12.9948 5.81662 12.701 4.95943 13.1943L4.74829 13.3159C4.21024 13.6263 3.9378 14.2655 4.1217 14.859C4.44959 15.9167 5.00905 17.055 5.80786 18.2547Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M18.8203 18.2547C18.325 19.1129 17.2275 19.4077 16.3694 18.9115C15.5131 18.4162 15.2193 17.3207 15.7136 16.4625L17.2207 13.852C17.715 12.9948 18.8115 12.701 19.6687 13.1943L19.8799 13.3159C20.4179 13.6263 20.6903 14.2655 20.5064 14.859C20.1786 15.9167 19.6191 17.055 18.8203 18.2547Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M11.6748 21.7551C13.971 21.7551 15.5988 22.226 17.2441 19.1504" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M20.1446 15.818C20.6155 14.7584 20.8801 13.5811 20.8801 12.3454C20.8801 7.61477 17.0398 3.78125 12.3092 3.78125C7.58545 3.78125 3.74512 7.61477 3.74512 12.3454C3.74512 13.4196 3.94361 14.449 4.30458 15.3918" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+
+
+export const SearchImageIcon = ({width = '24', height = '24', color = "#18181C", strokeWidth = '1.5', style, className = '', onClick}) => <svg width={width} height={height} viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M20.9956 15.7561L17.0464 12.8891C15.5837 11.8264 13.5848 11.9237 12.2301 13.1139L4.53613 20.0167" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M3 15.6578C3.83888 14.8871 5.1449 13.6589 6.91998 14.6146C7.83672 15.1109 8.64544 15.6287 9.09407 15.9303" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M3 13.0867V16.1591C3 19.1039 4.84321 21.1807 7.78806 21.1807H16.2217C19.1665 21.1807 21 19.1039 21 16.1591V8.21207C21 5.26721 19.1568 3.19141 16.2217 3.19141H12.8982" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+<path fillRule="evenodd" clipRule="evenodd" d="M6.06261 3.19141C7.754 3.19141 9.12522 4.56263 9.12522 6.25402C9.12522 7.94541 7.754 9.31663 6.06261 9.31663C4.37122 9.31663 3 7.94541 3 6.25402C3 4.56263 4.37122 3.19141 6.06261 3.19141Z" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M8.14746 8.49609L9.68898 10.0347" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+

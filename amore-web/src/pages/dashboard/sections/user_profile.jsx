@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import RegisterUserPhoto from "../../register/comps/register_user_photo";
+import React, { useEffect, useMemo, useState } from "react";
 import { useAuth } from "../../../hooks/use_auth";
 import InputContainer from "../../../copmonents/input_container";
 import { JobIcon, LocationIcon, PenIcon, SchollIcon, UserIcon } from "../../../assets/svg/svg_package";
@@ -12,17 +11,17 @@ import { useOutletContext } from "react-router-dom";
 import HobbieCheckBox from "../../register/comps/hobbie_checkbox";
 import CustomTextArea from "../../../copmonents/custom_textarea";
 import UserProfileDate from "../components/user_profile_date";
+import RegisterUserPhoto from "../../register/comps/register_user_photo";
 
 const UserProfile = () => {
+
 
     //CONTEXT
     const { userRightColumnRef } = useOutletContext();
     const { auth } = useAuth();
     const { appData: { locations, interests, }, getUserInterests } = useAppData();
 
-
     const [showDatePicker, setShowDatePicker] = useState(false);
-
 
     const [name, setName] = useState(auth.name);
     const [job, setJob] = useState('');
@@ -31,6 +30,7 @@ const UserProfile = () => {
     const [userImages, setUserImages] = useState(auth?.photos || []);
     const [selectedInterests, setSelectedInterests] = useState(getUserInterests(auth?.interests?.map(interest => interest.id)));
     const [selectedDate, setSelectedDate] = useState(new Date(auth.birthday));
+     
     //Burada refresh attiktan sonra gelecek datalar icin duzenleme yap locations cekilmeden onceki durum nasil olacak belirle!!!
     const userCountry = locations?.length > 0 ? { ...locations?.find(location => location?.id === auth.country.id), state: auth.country.state.name, stateId: auth.country.state.id } : {};
     const [location, setLocation] = useState({ country: userCountry.name, countryCode: userCountry?.countryCode, states: userCountry?.states || [], state: locations[0]?.states[0].name, stateId: undefined })
@@ -41,6 +41,29 @@ const UserProfile = () => {
     const [warnings, setWarnings] = useState({
         interestWarning: ''
     });
+
+    // const renderedCountries = useMemo(() => locations.map((location, index) => (
+    //     <FlexBox
+    //       onClick={() => handleSelectCountry(index)}
+    //       key={index}
+    //       className='dropdown-item'
+    //       gap='0 10px'
+    //       width={'100%'}>
+    //       <Flag country={location?.countryCode} />
+    //       {location?.name}
+    //     </FlexBox>
+    //   )), [locations]);
+
+    //   const renderedStates = useMemo(() => location.states?.map((state, index) => (
+    //     <FlexBox
+    //       onClick={() => handleSelectState(index)}
+    //       key={index}
+    //       className='dropdown-item'
+    //       gap='0 10px'
+    //       width={'100%'}>
+    //       {state.name}
+    //     </FlexBox>
+    //   )), [location.states]);
 
 
     //Locations can empty if locations change and has data setLocation with new data
@@ -114,7 +137,7 @@ const UserProfile = () => {
             </div>
 
             {/* //TEXT AREA */}
-            <CustomTextArea icon={<PenIcon />} title={"Biyografi"} value={bio} onChange={setBio} placeholder={'Kendinizden Bahsedin'} />
+            <CustomTextArea icon={<PenIcon />} title={"Biyografi"} value={bio} onChange={setBio} placeholder={'Kendinizden Bahsedin'} containerStyle={{marginTop:'2rem'}}/>
 
 
             {/* //DROP DOWNS */}
@@ -127,7 +150,7 @@ const UserProfile = () => {
                     marginBlock: '2.5rem 0'
                 }}>
 
-                {locations.length > 0 && <>
+                {/* {locations.length > 0 && <>
 
                     <DropdownList
                         title={'Ülke'}
@@ -172,7 +195,7 @@ const UserProfile = () => {
                         </FlexBox>)}
                     </DropdownList>
 
-                </>}
+                </>} */}
 
             </div>
 
@@ -231,7 +254,7 @@ const UserProfile = () => {
 
             </div>
 
-            <div style={{ marginTop: '2.5rem', position: 'relative' }} className="user-profile-interests">
+            <div style={{ marginTop: '2.5rem' }} className="user-profile-interests">
 
                 <FlexBox onClick={handleEditInterest} width={'100%'} justifyContent="space-between" style={{ marginBottom: '10px', cursor: 'pointer' }}>
                     <h3 style={{ fontSize: ".9rem", fontWeight: "600", marginLeft: '.5rem' }}>İlgi alanlarınız</h3>
@@ -260,7 +283,7 @@ const UserProfile = () => {
                                 isActive={selectedInterests.some(selectedInterest => selectedInterest._id === interest._id)} />)
                     }
                 </div>
-                {warnings.interestWarning && <p style={{ color: colors.negative, fontSize: '.85em', position: 'absolute', left: '0', top: '100%', margin: '.7rem .5rem' }}>{warnings.interestWarning}</p>}
+                {warnings.interestWarning && <p className="error-text" style={{margin: '1rem 0 0 .5rem' }}>{warnings.interestWarning}</p>}
             </div>
         </div>
     );
@@ -302,7 +325,7 @@ const UserProfile = () => {
 
     function handleEditInterest() {
         if (selectedInterests.length < 3) {
-            setWarnings(prev => ({ ...prev, interestWarning: 'En az 3 ilgi alanı seçilmelisin !' }))
+            setWarnings(prev => ({ ...prev, interestWarning: 'En az 3 ilgi alanı seçmelisin!' }))
         } else {
             setShowInterests(prev => !prev);
             setWarnings(prev => ({ ...prev, interestWarning: '' }))
@@ -315,7 +338,7 @@ const UserProfile = () => {
 
         !selectedInterests.some(selectedInterest => selectedInterest._id === interest._id) ?
             selectedInterests.length > 4 ?
-                setWarnings(prev => ({ ...prev, interestWarning: 'En fazla 5 ilgi alanı seçebilirsin !' })) :
+                setWarnings(prev => ({ ...prev, interestWarning: 'En fazla 5 ilgi alanı seçebilirsin!' })) :
                 setSelectedInterests(prev => [...prev, interest]) :
             setSelectedInterests(prev => prev.filter((selectedInterest) => selectedInterest._id !== interest._id));
     }

@@ -1,6 +1,6 @@
 .discover {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 280px 1fr;
     gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100%;
     width: 100%;
@@ -19,9 +19,7 @@
 }
 
 .discover-users-side-bar {
-    width: 22vw;
-    max-width: 270px;
-    min-width: 250px;
+    width: 100%;
     overflow-y: scroll;
 }
 

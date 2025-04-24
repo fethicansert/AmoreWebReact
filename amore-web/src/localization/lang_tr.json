@@ -1,0 +1,389 @@
+{
+    "translation": {
+          "ERRORS": {
+            "PENDING_SUPPORT_REQUEST":"Bekleyen destek talebiniz var. Yeni bir soru sorabilmek icin lütfen bekleyiniz.",
+            "UNEXPECTED_ERROR": {
+              "TITLE": "Beklenmedik bir hata oluştu !",
+              "SUB_TITLE": "Lütfen birazdan tekrar dene."
+            }
+          },
+          "PREMIUM_SUBSCRIPTION": {
+            "PREMIUM_FEATURE_TITLE_1": "Seni Beğenenleri Gör",
+            "PREMIUM_FEATURE_TEXT_1": "Premium’a geçerek kimlerle eşleştiğini gör. Sana ilgi duyanları hemen keşfet!",
+            "BE_PREMIUM": "Premium Ol",
+            "PREMIUM_SUBSCRIPTION_BOX_TITLE": "Hemen Premium Ol",
+            "SUBSCRIPTION": "Abonelik",
+            "TITLE": "Premium Üyelik",
+            "MONTHLY_SUBSCRIPTION": "Aylık Abonelik",
+            "WEEKLY_SUBSCRIPTION": "Haftalık Abonelik",
+            "MONTHLY_TOTAL": "Ay için toplam"
+          },
+          "DATE": {
+            "MONTH": "Ay",
+            "WEEK": "Hafta"
+          },
+          "BUTTONS": {
+            "SEND_MESSAGE_BUTTON": "Mesaj Gönder",
+            "PAY_BUTTON": "Ödeme Yap",
+            "OKAY_BUTTON": "Tamam"
+          },
+          "USER_CARD": {
+            "ONLY_PREMIUM_USERS": "Sadece Premim Üyeler"
+          },
+          "LIMITED_OFFER": {
+            "TITLE": "Sınırlı Teklif",
+            "SUB_TITLE": "Jeton paketini seçerek bonus kazanın ve yeni bölümlerin kilidini açın!",
+            "BONUSES": {
+              "TITLE": "Alacağınız Bonuslar",
+              "PREMIUM_ACCOUNT": "Premim Hesap",
+              "MORE_MATCHES": "Daha fazla Eşleşme",
+              "FEATURED": "Öne Çıkarma",
+              "MORE_LIKE": "Daha fazla Beğeni"
+            },
+            "JETONS": {
+              "JETON": "Jeton",
+              "TITLE": "Kilidi açmak için bir jeton paketi seçin",
+              "TIME": "Başına haftalık"
+            },
+            "NAVIGATE_MARKET": "Tüm Jetonları Gör",
+            "NAVIGATE_SUBSCRIPTIONS": "Tüm Abonelikleri Gör"
+          },
+          "LOGIN_POPUP": {
+            "TITLE": "Hemen Başla !",
+            "SUB_TITLE": "Mesajını göndermek için kayıt ol",
+            "TEXT": "Aşk peşindeysen, kayıt ol",
+            "BUTTON_TEXT": "Telefonla Devam Et"
+          },
+          "LOGOUT": {
+            "TITLE": "Çıkış Yap",
+            "TEXT": "Çıkış yapmak istersen hesabın tarayıcıda kapatılacak, çıkış yapmak istediğinden emin misin?",
+            "LOGOUT_BUTTON": "Çıkış Yap",
+            "CLOSE_BUTTON": "Kapat"
+          },
+          "FILTER": {
+            "NAME": "İsim",
+            "NAME_PLACEHOLDER": "Kullanıcı aramaya başla !",
+            "GENDER": "Cinsiyet",
+            "AGE": "Yaş",
+            "DISTANCE": "Mesafe",
+            "USER_STATUS": "Kullanıcı Durumu",
+            "FILTER_BUTTON": "Filtrele",
+            "HIDE_BUTTON": "Sakla",
+            "RESET_BUTTON": "Sıfırla",
+            "APPLY_FILTER_BUTTON": "Filtreyi Uygula"
+          },
+          "ROUTE_NAMES": {
+            "MAIN_PAGE": "Ana Sayfa",
+            "NOTIFICATIONS": "Bildirimler",
+            "DISCOVER": "Keşfet",
+            "MATCHES": "Eşleşmeler",
+            "MESSAGES": "Mesajlar",
+            "MARKET": "Jeton Al",
+            "PREMIUM_SUBSCRIPTION": "Premium Ol",
+            "PROFILE": "Profil",
+            "VISITS": "Ziyaretler",
+            "LIKES": "Beğeniler"
+          },
+          "NOTIFICATION": {
+            "QUICK_NOTIFICATIONS": {
+              "TITLE": "{{user}}",
+              "TEXT": "{{message}}",
+              "LIKE": "<span>{{user}}</span> seni beğendi!",
+              "CALL": "{{user}} seni aradı 📞",
+              "CALL_REQUEST": "{{user}} seni aradı 📞",
+              "VIDEO_CALL_REQUEST": "{{user}} seni görüntülü aradı 🎥",
+              "AUDIO": "{{user}} bir ses kaydı gönderdi 🎵",
+              "IMAGE": "{{user}} bir fotoğraf gönderdi 📷",
+              "GIFT": "{{user}} bir gift gönderdi 🎁"
+            },
+            "MESSAGE": {
+              "TITLE": "{{user}}",
+              "DESCRIPTION": "{{message}}"
+            },
+            "VISIT": {
+              "TITLE": "{{user}} profilini ziyaret etti 👀",
+              "DESCRIPTION": "Profilin birinin dikkatini çekti! Ziyaretçinle tanışmak için hemen profilini kontrol et."
+            },
+            "VISIT_FREE": {
+              "TITLE": "Biri profilini ziyaret etti 👀",
+              "DESCRIPTION": "Profilin birinin dikkatini çekti! Ziyaretçinle tanışmak için hemen profilini kontrol et."
+            },
+            "LIKE": {
+              "TITLE": "{{user}} seni beğendi 😍",
+              "DESCRIPTION": "Harika haber! Belki de ruh eşini buldun. Seni beğenen kişiyi görmek için hemen tıkla!"
+            },
+            "LIKE_FREE": {
+              "TITLE": "Biri seni beğendi 😍",
+              "DESCRIPTION": "Harika haber! Belki de ruh eşini buldun. Seni beğenen kişiyi görmek için hemen tıkla!"
+            },
+            "SUPERLIKE": {
+              "TITLE": "Özel biri seni süper beğendi! Bu özel kişiyi keşfetmek için hemen tıkla.",
+              "DESCRIPTION": "{{user}} seni süper beğendi 🌟"
+            },
+            "GIFT": {
+              "TITLE": "Hediye",
+              "DESCRIPTION": "{{user}} sana bir hediye gönderdi."
+            },
+            "CONSUMABLE": {
+              "TITLE": "Jeton Yüklendi",
+              "DESCRIPTION": "Jetonlar başarıyla yüklendi."
+            },
+            "SUPPORT_ANSWER": {
+              "TITLE": "Destek Sistemi",
+              "DESCRIPTION": "Destek talebin yanıtlandı. ✅"
+            },
+            "SUPPORT_REQUEST": {
+              "TITLE": "Destek Talebi",
+              "DESCRIPTION": "Destek talebin yanıtlandı. ✅"
+            },
+            "GIFT_CREDIT": {
+              "TITLE": "Hediye Jetonlar",
+              "DESCRIPTION": "{{user}} sana {{jetonQuantity}} jeton hediye etti."
+            },
+            "MATCH": {
+              "TITLE": "{{user}} ile eşleştiniz 💖",
+              "DESCRIPTION": "Harika haber! {{user}} ile eşleştiniz. Bu özel kişiyle sohbet etmeye başlamak için hemen tıklayın!"
+            },
+            "CALL_ADMIN_REQUEST_STARTED": {
+              "TITLE": "Yeni Çağrı Talebi",
+              "DESCRIPTION": "{{user}} tarafından yeni bir çağrı talebi alındı."
+            },
+            "CALL_ADMIN_REQUEST_MISSED": {
+              "TITLE": "Kaçırılan Çağrı Talebi",
+              "DESCRIPTION": "{{user}} tarafından yapılan çağrı talebi kaçırıldı."
+            },
+            "AUDIO_CALL_MISSED": {
+              "TITLE": "Kaçırılan Sesli Arama",
+              "DESCRIPTION": "{{user}} tarafından gelen sesli arama talebini kaçırdınız."
+            },
+            "VIDEO_CALL_MISSED": {
+              "TITLE": "Kaçırılan Görüntülü Arama",
+              "DESCRIPTION": "{{user}} tarafından gelen görüntülü arama talebini kaçırdınız."
+            }
+          },
+          "HOME": {
+            "HERO": {
+              "TITLE": "Tadı Damağında Kalacak",
+              "SUB_TITLE": "Sohbet Et ve Flörtleş",
+              "BOX_LEFT": {
+                "TEXT": "Sadece gerçek insanlar",
+                "SUB_TEXT": "Amore’da sahte profillere yer yok."
+              },
+              "BOX_RIGHT": {
+                "TEXT": "Tanış, Konuş, Görüş",
+                "SUB_TEXT": "Aşka açılan kapı"
+              }
+            },
+            "INFO": {
+              "TITLE": "40.000’dan fazla <pink>kullanıcı</pink>",
+              "SUB_TITLE": "Dating’den <pink>Çooooook</pink> Daha Fazlası",
+              "TEXT": "Amore, sadece bir dating uygulaması değil; anlamlı ilişkiler, samimi sohbetler ve gerçek bağlar kurabileceğiniz özel bir platform. Yeni arkadaşlıklar keşfedin, sevginizi bulun ve hayatınıza değer katacak deneyimlere adım atın!",
+              "INFO_BUTTON": "Hemen Kaydol"
+            },
+            "INFO_IMAGES": {
+              "TITLE": "Tamamen gerçek insanlarla sohbet et"
+            },
+            "INTRODUCTION": {
+              "TITLE": "Diğer Dating’lerden Farklıyız",
+              "SUB_TITLE": "Çünkü",
+              "TEXT": "Amore, sadece eşleşmeleri değil, anlamlı ve uzun soluklu ilişkiler kurmayı hedefler. Kullanıcı dostu tasarımı, güvenli ortamı ve samimi topluluğu ile burada aradığınız sevgi ve dostluğu bulmanız için her şey hazır!"
+            },
+            "FOOTER": {
+              "TEXT": "Uygulamamızı",
+              "SUB_TEXT": "Indirmediniz mi !",
+              "APPLE_BUTTON": "Uygulama İndirin",
+              "GOOGLE_BUTTON": "Şimdi Katıl"
+            }
+          },
+          "HEADER": {
+            "LOGIN_BUTTON": " Hemen Başla !",
+            "CONTINUE_BUTTON": "Devam Et !",
+            "AMORE_LINK_1": "Amore Hakkında",
+            "AMORE_LINK_2": "Amore Nedir ?"
+          },
+          "REGISTER": {
+            "PHONE": {
+              "TITLE": "Telefon Numaranı Gir",
+              "INFO": "Sana tek seferlik şifre göndereceğiz.",
+              "ERROR_TEXT": "Lütfen telefon numarını gir !",
+              "INVALID_PHONE_ERROR": "Girdiğiniz telefon numarası geçersiz",
+              "WAIT_NEW_CODE_ERROR": "Yeni bir kod almak için {{otpCooldown}} saniye beklemeniz gerekiyor."
+            },
+            "VERIFY": {
+              "TITLE": "Doğrulama Kodunu Girin",
+              "INFO": "Telefonunuza 4 haneli bir kod gönderdik. Lütfen doğrulamak için aşağıya girin.",
+              "ERROR_TEXT": "Lütfen doğrulama kodunu girin.",
+              "SEND_AGAIN_BUTTON": "Tekrar Gönder"
+            },
+            "USERNAME": {
+              "TITLE": "İsmin ne ?",
+              "INFO": "Takma adın gerçekten harika olabilir, ancak seni doğru şekilde tanımlayabilmemiz için gerçek adına ihtiyacımız var.",
+              "INPUT_PLACEHOLDER": "İsım Yazın",
+              "ERROR_TEXT": "Devam etmek icin ismini yazmalısın !",
+              "SUB_ERROR_TEXT": "İsmin en az üç harf içermelidir !'"
+            },
+            "BIRTH_DATE": {
+              "TITLE": "Doğum tarihin ne ?",
+              "INFO": "Doğum tarihinizi öğrenmemiz gerekiyor",
+              "DAY_PLACEHOLDER": "GG",
+              "MONTH_PLACEHOLDER": "AA",
+              "YEAR_PLACEHOLDER": "YYYY",
+              "ERROR_TEXT": "Lütfen boşluklara doğum tarihini gir !",
+              "SUB_ERROR_TEXT": "Lütfen geçerli bir tarih gir !"
+            },
+            "GENDER": {
+              "TITLE": "Cinsiyetiniz Nedir ?",
+              "INFO": "Bu bilgileri daha sonra dilediğiniz zaman güncelleyebilirsiniz."
+            },
+            "INTERESTS": {
+              "TITLE": "İlgi Alanlarınız Nedir ?",
+              "INFO": "İlgi alanlarınızı paylaşarak sizinle aynı ilgi alanlarına sahip kişilerle eşleşmemizi sağlayabilirsiniz.",
+              "ERROR_TEXT": "En az üç hobi seçmelisin !",
+              "INTEREST_ITEMS": {
+                "INTEREST_NATURE": "Doğa",
+                "INTEREST_ARCHITECTURE": "Mimar",
+                "INTEREST_ANIMALS": "Hayvanlar",
+                "INTEREST_GYM_FITNESS": "Spor ve Fitness",
+                "INTEREST_FASHION": "Moda",
+                "INTEREST_LANGUAGE": "Dil",
+                "INTEREST_BOOK": "Kitap",
+                "INTEREST_FOOTBALL": "Futbol",
+                "INTEREST_DANCING": "Dans",
+                "INTEREST_GAMING": "Oyun",
+                "INTEREST_PAINTING": "Resim",
+                "INTEREST_PHOTOGRAPHY": "Fotoğrafçılık",
+                "INTEREST_MUSIC": "Müzik",
+                "INTEREST_WRITING": "Yazı",
+                "INTEREST_PEOPLE": "İnsanlar",
+                "INTEREST_MOVIE": "Filmler"
+              }
+            },
+            "PHOTO": {
+              "TITLE": "Fotoğraf Yükle",
+              "SUB_TITLE": "Profil Fotoğrafı",
+              "INFO": "Profilini tamamlamak ve diğer kullanıcıların seni daha iyi tanıyabilmesi için net bir fotoğraf yükle.",
+              "ERROR_TEXT": "Lütfen fotoğraf ekleyiniz !"
+            },
+            "LOCATION": {
+              "TITLE": "Nerde Yaşıyorsun ?",
+              "STATE_PLACEHOLDER": "Şehir Seç",
+              "INFO": "Bulunduğunuz ülke ve şehri seçerek size en uygun deneyimi sunmamıza yardımcı olun.",
+              "ERROR_TEXT": "Lütfen konumunuzu şeçin !"
+            },
+            "CONTINUE_BUTTON": "Devam Et",
+            "COMPLETE_BUTTON": "Tamamla",
+            "SEND_BUTTON": "Gönder",
+            "SEND_AGAIN_BUTTON": "Tekrar Gönder",
+            "VERIFY_BUTTON": "Doğrula"
+          },
+          "GIFTS": {
+            "CATEGORIE_TITLES": {
+              "ALL": "Tüm İçerikler",
+              "SPECIAL": "Özel",
+              "FLOWERS": "Çiçekler",
+              "ROMANCE": "Romantizm",
+              "DRINKS": "İçecekler",
+              "HEARTS": "Kalpler",
+              "CELEBRATION": "Kutlama"
+            }
+          },
+          "STATUS": {
+            "TITLE": "Kullanıc Durumu",
+            "ONLINE": "Çevrim içi",
+            "OFFLINE": "Çevrim dışı"
+          },
+          "GENDER": {
+            "TITLE": "Cinsiyet",
+            "FEMALE": "Kadın",
+            "MALE": "Erkek"
+          },
+          "PURCHASE": {
+            "JETON": "Jeton",
+            "DISCOUNT": "İndirim",
+            "NO_DISCOUNT": "İndirim Yok",
+            "LIMITED_TIME": "Sınırlı Süre",
+            "SPECIAL_OFFER": "Size Özel",
+            "WEEKLY": "Haftalık",
+            "MONTHLY": "Aylık"
+          },
+          "PERMISSION": {
+            "LOCATION_BANNER_TEXT": "Daha iyi bir deneyim için konum iznini aktif edin",
+            "LOCATION_POPUP_TITLE": "Konum Aç",
+            "LOCATION_POPUP_TEXT": "En iyi eşleşmeleri sana gösterebilmemiz için ayarlara giderek konum erişimini açmalı ve ardından sayfayı yenilemelisin.",
+            "NOTIFICATION_BANNER_TEXT": "Daha iyi bir deneyim için bildirimlerinizi açın",
+            "NOTIFICATION_POPUP_TITLE": "Bildirimleri Aç",
+            "NOTIFICATION_POPUP_TEXT": "Yeni eşleşmeler ve mesajları kaçırmamak için ayarlardan bildirimleri açmalı ve ardından sayfayı yenilemelisin."
+          },
+          "DASHBOARD": {
+            "TITLES": {
+              "NOTIFICATIONS_TITLE": "Bildirimler",
+              "QUICK_MESSAGES": "Hızlı Mesajlar",
+              "EMPTY_MESSAGE": "Mesaj kutunuz boş.",
+              "LIKES": "Beğeniler",
+              "EMPTY_LIKES": "Henüz beğeni almadın.",
+              "SEE_ALL": "Tümünü Gör",
+              "EMPTY_NOTIFICATIONS_TITLE": "Burda Çok Yalnızım !",
+              "EMPTY_NOTIFICATIONS_SUB_TITLE": "Etkilişeme geçip bana yardımcı ol.",
+              "FILTER_CHANGE_TITLE": "Aranan Niteliklerde Kullanıcı Bulunamiyor !",
+              "FILTER_CHANGE_SUB_TITLE": "Filtre seçeneklerini değiştirmeyi denemelisin."
+            },
+            "SWIPE": {
+              "SEND_MESSAGE_BUTTON": "Mesaj Gönder",
+              "USERINFO": {
+                "BIO_TITLE": "Ben Kimim?",
+                "NO_BIO_TEXT": "Bu kullanıcının biyografisi yok.",
+                "INTEREST_TITLE": "İlgi Alanlarım",
+                "NO_INTEREST_TEXT": "Bu kullanıcının ilgi alanları henüz eklenemdi.",
+                "SOCIAL_PLATFORM_TITLE": "Sosyal Platformlarım",
+                "NO_JOB_TITLE": "Meslek Bilgisi Yok",
+                "NO_SCOOL_TITLE": "Okul Bilgisi Yok",
+                "AGE": "{{age}} Yaşında"
+              }
+            },
+            "PREMIUM_SUBSCRIPTION": {
+              "TITLE": "Premium Dünyasına",
+              "SUB_TITLE": "Hoş Geldin",
+              "FOOTER_TEXT": "Hangi premium seçenek sana daha uygun?",
+              "CHOOSE_PLAN_BUTTON": "Planı seç"
+            },
+            "MARKET": {
+              "PREMIUM_SUBSCRIPTION_HEADER": {
+                "TITLE": "Premium Üyelik",
+                "SUB_TITLE": "Premium üye olarak avantajların tadını çıkar.",
+                "BUTTON_TEXT": "Hemen Başla"
+              },
+              "FOOTER_TEXT": "Daha büyük paketlerde daha fazla indirim! Satın aldığınız jeton miktarı arttıkça, daha fazla indirim kazanırsınız."
+            },
+            "PAYMENT": {
+              "CARD_USER_NAME_TITLE": "Kart Üzerindeki İsin",
+              "CARD_USER_NAME_SUB_TITLE": "Kart üzerindeki ismi yazın",
+              "CARD_USER_NAME_PLACEHOLDER": "Kart Sahibi",
+              "CARD_NUMBER_TITLE": "Kart Numarası",
+              "CARD_NUMBER_SUB_TITLE": "Kart üzerindeki 16 haneli kart numarasını girin",
+              "CARD_NUMBER_PLACEHOLDER": "Kart Numarası",
+              "CARD_CVV_TITLE": "CVV Numarası",
+              "CARD_CVV_SUB_TITLE": "3 haneli numarayı girin",
+              "CARD_CVV_PLACEHOLDER": "CVV",
+              "CARD_EXPIRATION_DATE_TITLE": "Son kullanma tarihi",
+              "CARD_EXPIRATION_DATE_SUB_TITLE": "Son kullanma tarihini girin",
+              "CARD_EXPIRATION_DATE_YEAR_PLACEHOLDER": "YY",
+              "CARD_EXPIRATION_DATE_MONTH_PLACEHOLDER": "MM",
+              "CHECKOUT": {
+                "NAME_SURNAME_PLACEHOLDER": "Adı Soyadı",
+                "TITLE": "Alışveriş Bilgileri",
+                "TOTAL": "Sonuç Tutar"
+              }
+            },
+            "PROFILE":{
+              "ROUTE_NAMES":{
+                "USER_PROFILE":"Profil",
+                "LANGUAGE":"Dil",
+                "SETTINGS":"Ayarlar",
+                "BLOCKED_USERS":"Engellenmiş Kullanıcılar",
+                "SUPPORT":"Destek Sistemi"
+              }
+            }
+          }
+        }
+      
+}
