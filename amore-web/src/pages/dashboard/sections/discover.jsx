@@ -70,7 +70,6 @@ const Discover = () => {
       <div className="discover-users-side-bar">
         <div className="discover-users-filter">
           <div className="discover-users-filter-header">
-
             <CurrentUserInfoBox />
 
             <BasicButton
@@ -91,8 +90,8 @@ const Discover = () => {
               display: !isMobile
                 ? "flex"
                 : isMobile && !showFilter
-                  ? "none"
-                  : "flex",
+                ? "none"
+                : "flex",
             }}
           >
             <div>
@@ -182,13 +181,15 @@ const Discover = () => {
         {!isMobile && <PremiumBox />}
       </div>
 
-      {isLoading ?  <AmoreLoading
+      {isLoading ? (
+        <AmoreLoading
           className="discover-loading"
           containerWidth={"100%"}
           containerHeight={"100%"}
           amoreWidth={"70%"}
           amoreMaxWidth={"200px"}
-        /> : (
+        />
+      ) : (
         <div className="discover-users" onScroll={handleScrollFetch}>
           {searchedUsers.length > 0 ? (
             searchedUsers.map((user) => (
@@ -217,7 +218,8 @@ const Discover = () => {
               onClick={() => navigate("/dashboard/user-profile")}
             />
           )}
-        </div>)}
+        </div>
+      )}
     </section>
   );
 
@@ -278,7 +280,7 @@ const Discover = () => {
 
   async function getUsers() {
     const fetchedUsers = await fetchUsers();
-    setIsLoading(false)
+    setIsLoading(false);
     if (users) setUsers(fetchedUsers);
     if (isMobile) setShowFilter(false);
   }

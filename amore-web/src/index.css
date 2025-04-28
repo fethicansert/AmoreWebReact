@@ -116,6 +116,19 @@ body {
   overflow-x: hidden;
   background: var(--backGround2);
 }
+
+.user-report-popup{
+  display: grid;
+  padding: 1.1rem 1.4rem;
+  background-color: var(--backGround3);
+  border: 1px solid var(--borderColor1);
+  border-radius: 24px;
+  justify-items: center;
+  text-align: center;
+  width: 290px;
+  animation: fade 200ms ease;
+}
+
 .center{
   display: flex;
   align-items: center;
@@ -142,10 +155,6 @@ body {
   margin-top: 10px;
 }
 
-.dropdown-arrow {
-  transition: transform 200ms ease;
-}
-
 .dropdown-list {
   width: 100%;
   max-height: 240px;
@@ -155,18 +164,10 @@ body {
   top: calc(100% + 10px);
   border: 1px solid var(--brand1);
   border-radius: 12px 0 0 0;
-  scale: 1 0;
-  transform-origin: top;
   z-index: 999;
   overflow: scroll;
   user-select: none;
   scrollbar-color: var(--brand1) rgba(216, 216, 216, 0.263);
-}
-
-.dropdown-list.active {
-  scale: 1 1;
-  transition: scale 200ms ease;
-  visibility: visible;
 }
 
 .dropdown-item {
@@ -179,7 +180,7 @@ body {
   color: white;
 }
 
-.input-container {}
+/* .input-container {} */
 
 .input-container-input {
   width: 100%;

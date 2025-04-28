@@ -31,7 +31,6 @@
 .user-profile-left-col,
 .user-profile-right-col {
     width: 100%;
-    z-index: 1;
 }
 
 .user-profile-left-col {
@@ -39,17 +38,17 @@
     transform: translateY(30px);
     padding-bottom: 30px;
     overflow: scroll;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
 }
 
 .user-profile-right-col {
     height: calc(100% - (70px + 15px));
-    transform: translateY(70px);
-    margin-top: 15px;
+    margin-top: 85px;
     overflow: scroll;
     display: flex;
     flex-direction: column;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
+    padding-bottom: 1rem;
 }
 
 .user-profile-navigation {
@@ -112,15 +111,19 @@
     display: block;
 }
 
-.user-right-col-content-wrapper {
-    background: var(--backGround3);
+.user-right-col-content-wrapper {  
+    border-radius: 12px;
+}
+
+.profile, .language, .user-settings, .blocked-users, .user-support {
     padding: 1.5rem 2rem 1.5rem 2rem;
     border-radius: 12px;
     border: 1px solid var(--borderColor1);
+    background: var(--backGround3);
 }
 
-.profile {
-    padding-top: 3rem;
+.profile-user-photos{
+    margin-top: 3rem;
 }
 
 .user-profile-header {
@@ -217,7 +220,7 @@
 
 .unblock-popup {
     width: 70%;
-    max-width: 300px;
+    max-width: 280px;
     display: grid;
     grid-template-columns: 1fr;
     gap: 12px 0;
@@ -268,7 +271,6 @@ animation: borderAnimation 0.8s infinite linear;
 }
 
 .user-support a.active{
-    font-weight: 600;
     color: var(--brand1);
 }
 
@@ -298,11 +300,11 @@ animation: borderAnimation 0.8s infinite linear;
 
 .user-ticket-header h4{
     font-weight: 600;
-    font-size: .95rem;
+    font-size: .9rem;
 }
 
 .user-ticket-time{
-    font-size: .8rem;
+    font-size: .75rem;
     color: var(--lowFadedText);
 }
 

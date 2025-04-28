@@ -8,8 +8,7 @@ import {
 import { LiveAudioVisualizer, AudioVisualizer } from "react-audio-visualize";
 import { colors } from "../../../utils/theme";
 import { setAudioType } from "../../../utils/functions";
-import WavesurferPlayer from '@wavesurfer/react'
-
+import WavesurferPlayer from "@wavesurfer/react";
 
 const mimeType = setAudioType();
 
@@ -30,19 +29,16 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const [wavesurfer, setWavesurfer] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [url, setUrl] = useState('');
+  const [url, setUrl] = useState("");
 
   const onReady = (ws) => {
-    setWavesurfer(ws)
-    setIsPlaying(false)
-  }
-
+    setWavesurfer(ws);
+    setIsPlaying(false);
+  };
 
   const onPlayPause = () => {
-    wavesurfer && wavesurfer.playPause()
-  }
-
-
+    wavesurfer && wavesurfer.playPause();
+  };
 
   useEffect(() => {
     getMicrophonePermission();
@@ -127,7 +123,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
                 waveColor={colors.fadedText}
                 cursorColor={colors.brand2}
                 cursorWidth={2}
-                progressColor={colors.brand2}
+                progressColor={colors.backGround4}
                 url={url}
                 onReady={onReady}
                 onPlay={() => setIsPlaying(true)}
@@ -220,7 +216,7 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   function pauseRecording() {
     mediaRecorder.current.pause();
     const { audioUrl } = processAudioChucks({ chunks: audioChunks.current });
-    setUrl(audioUrl)
+    setUrl(audioUrl);
     setRecordingStatus("pause");
     setTotalDuration(time);
     stopCounter({ counterRef: counterIntetvalRef });

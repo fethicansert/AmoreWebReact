@@ -60,8 +60,6 @@
     position: absolute;
     height: calc(100% + 2px);
     background-color: var(--backGround3);
-    width: max-content;
-
     border-color: var(--borderColor1);
     border-width: 1px;
     border-style: solid;
@@ -78,6 +76,7 @@
     /* Check for z-index all places no I have no control   */
     z-index: 99;
 }
+
 
 .layout-header-title {
     color: var(--brand1);
@@ -104,18 +103,13 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-
     font-size: .8rem;
     font-weight: 600;
 }
 
 .layout-link-box span {
     opacity: 0;
-}
-
-.layout-header-navigation a {
-    position: relative;
-    margin: 1rem 0;
+    width: max-content;
 }
 
 .logout-icon:hover path {
@@ -155,38 +149,18 @@
     color: var(--whiteText);
 }
 
-.layout-header a {
-    stroke: var(--darkText);
+.layout-header-navigation a {
     position: relative;
+    padding: .5rem 0;
+    margin: .5rem 0;
 }
 
-.layout-header a:hover {
+.layout-header-navigation a:hover svg path{
     stroke: var(--brand1);
 }
 
-.layout-header-navigation a::before {
-    position: absolute;
-    content: '';
-    height: 29px;
-    width: 3.5px;
-    background: var(--brand1);
-    top: 42%;
-    transform: translateY(-50%);
-    left: -21px;
-    border-radius: 4px;
-    display: none;
-}
-
-.layout-header-navigation a.active::before {
-    display: block;
-}
-
-.layout-header a.active {
+.layout-header-navigation a.active svg path{
     stroke: var(--brand1);
-}
-
-.layout-header-icon path {
-    stroke: inherit;
 }
 
 .layout-header-navigation-postion {
@@ -213,9 +187,20 @@
     border-radius: 0 12px 12px 0;
     border: 1px solid var(--borderColor1);
     background-color: var(--backGround3);
-    display: none;
     overflow: hidden;
     padding: 0 .6rem;
+    scale: 0 1;
+    transition: scale 250ms ease;
+    transform-origin: left;
+}
+
+.notifications.active {
+    scale: 1 1;
+    transform-origin: left;
+}
+
+.notifications.active .notifications-wrapper{
+    opacity: 1;
 }
 
 .notification-item-eye-icon,
@@ -237,7 +222,7 @@
 
 .notification-header-container {
     position: relative;
-    background-color: var(--backGround2);
+    background-color: var(--backGround3);
 }
 
 .notifications-wrapper {
@@ -245,17 +230,14 @@
     height: calc(100% - 49px);
     padding-inline: .5rem;
     position: relative;
-    transition: transform 800ms ease;
     padding-inline: .4rem;
+    opacity: 0;
+    transition: opacity 150ms ease 150ms,transform 800ms ease;
 }
 
 .notifications h3 {
     font-size: .88rem;
     font-weight: 600;
-}
-
-.notifications.active {
-    display: block;
 }
 
 .layout-header.notifications-active {

@@ -1,53 +1,88 @@
-import React, { useEffect, useRef, useState } from 'react'
-import CustomRadioBox from '../../../copmonents/custom_radibox'
-import Flag from 'react-flagkit'
-import { colors } from '../../../utils/theme';
-import { useAuth } from '../../../hooks/use_auth';
-import { useAppData } from '../../../hooks/use_add_data';
+import React, { useEffect, useRef, useState } from "react";
+import CustomRadioBox from "../../../copmonents/custom_radibox";
+import Flag from "react-flagkit";
+import { colors } from "../../../utils/theme";
+import { useAuth } from "../../../hooks/use_auth";
+import { useAppData } from "../../../hooks/use_add_data";
+import UserProfileHeader from "../components/user_profile_header";
+import { axiosAmore } from "../../../api/axios";
+import FixedOverflow from "../../../copmonents/fixed_overflow";
+import { ClipLoader, ClockLoader } from "react-spinners";
+import SimpleLoading from "../components/simple_loading";
 
 const languages = [
-    { country: 'GB', text: 'English', value: 'en' },
-    { country: 'TR', text: 'Türkçe', value: 'tr' },
-    { country: 'FR', text: 'Français', value: 'fr' },
-    { country: 'DE', text: 'Deutsch', value: 'de' },
-    { country: 'IT', text: 'Italiano', value: 'it' },
-    { country: 'AE', text: 'Arapça', value: 'ar' },
-    { country: 'ES', text: 'Chinese', value: 'zh' }
+  { country: "GB", text: "English", value: "en" },
+  { country: "DE", text: "Deutsch", value: "de" },
+  { country: "ES", text: "Spanish", value: "es" },
+  { country: "FR", text: "Français", value: "fr" },
+  { country: "TR", text: "Türkçe", value: "tr" },
+  { country: "RU", text: "Русский", value: "ru" },
+  { country: "IT", text: "Italiano", value: "it" },
+  { country: "NL", text: "Nederlands", value: "nl" },
 ];
 
 const UserLanguage = () => {
-    const { auth } = useAuth();    
-    const { language, setLanguage } = useAppData();
-    const languageRef = useRef(language);
+  //CONTEXT
+  const { auth, setAuth } = useAuth();
+  const { language, setLanguage } = useAppData();
 
-    useEffect(() => {
-        const clean = () => {
-            
-        }
-    })
+  //STATE
+  const [loading, setLoading] = useState();
 
-    return (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '15px', marginTop: '2rem' }}>
+  return (
+    <div className="language">
+      <UserProfileHeader />
 
-            {languages.map((radioLanguage, index) => <CustomRadioBox
-                key={index}
-                onClick={() => handleChangeLanguage(radioLanguage.value)}
-                isSelected={radioLanguage.value === language}
-                leading={<Flag country={radioLanguage.country} />}
-                text={radioLanguage.text}
-                width={'100%'}
-                height={'53px'}
-                selectColor={colors.brand1}
-                selectRadius={'12px'} />)}
-        </div>
-    )
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+          gap: "15px",
+          marginTop: "2rem",
+        }}
+      >
+        {languages.map((radioLanguage, index) => (
+          <CustomRadioBox
+            key={index}
+            onClick={() => handleChangeLanguage(radioLanguage.value)}
+            isSelected={radioLanguage.value === language}
+            leading={<Flag country={radioLanguage.country} />}
+            text={radioLanguage.text}
+            width={"100%"}
+            height={"53px"}
+            selectColor={colors.brand1}
+            selectRadius={"12px"}
+          />
+        ))}
+      </div>
 
-    function handleChangeLanguage(language) {
+      {loading && (
+        <FixedOverflow>
+          <SimpleLoading text={"Dil Değitiriliyor lütfen bekliyin."} />
+        </FixedOverflow>
+      )}
+    </div>
+  );
 
-        setLanguage(language)
+  async function handleChangeLanguage(language) {
+    setLoading(true);
+    try {
+      const response = await axiosAmore.post(
+        "user/change_language",
+        { language },
+        { useAuth: true }
+      );
+
+      if (response?.data?.data?.status) {
+        setAuth((prev) => ({ ...prev, language }));
+        setLanguage(language);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoading(false);
     }
+  }
+};
 
-
-}
-
-export default UserLanguage
+export default UserLanguage;

@@ -13,7 +13,7 @@ const NotificationProvider = ({ children }) => {
   const [isNotificationsLoading, setIsNotificationsLoadings] = useState([]);
 
   //CONTEXT
-  const { auth, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { socket, isSocketConnected } = useSocket();
 
   //REF
@@ -23,7 +23,7 @@ const NotificationProvider = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated)
       fetchNotificationsData({ showUnReadedCountLoading: true });
-  }, [auth]);
+  }, [isAuthenticated]);
 
   //Listen socket if refresh notification fetch notitifications with out showing loading
   useEffect(() => {
