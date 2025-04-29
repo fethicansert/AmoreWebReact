@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { axiosAmore } from "../../../api/axios";
 import { useAuth } from "../../../hooks/use_auth";
 import "../../../css/dashboard/discover.css";
-import { v4 as uuidv4 } from "uuid";
 import "react-slideshow-image/dist/styles.css";
 import AmoreLoading from "../../../copmonents/amore_loading.jsx";
 import CurrentUserInfoBox from "../../../copmonents/current_user_info_box.jsx";
@@ -150,9 +149,9 @@ const Discover = () => {
                 </span>
 
                 <div className="discover-user-filter-radio-wrapper">
-                  {userStatus.map((status) => (
+                  {userStatus.map((status, index) => (
                     <CustomRadio
-                      key={uuidv4()}
+                      key={index}
                       text={t(`STATUS.${status.name}`)}
                       value={status.value}
                       onClick={() => setSelectedUserStatus(status.value)}
@@ -196,7 +195,7 @@ const Discover = () => {
               <UserCard
                 isDiscover={true}
                 ref={userCardRef}
-                key={uuidv4()}
+                key={user?.id}
                 user={user}
               />
             ))

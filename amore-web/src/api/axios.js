@@ -3,6 +3,7 @@ import { APP_INFO } from '../utils/constants';
 
 
 const baseURL = 'https://devapi.servicelabs.tech';
+// const realURL = 'http://192.168.22.66:3169/';
 
 
 //Axios Instance Headers
@@ -12,6 +13,7 @@ const headers = {
 
 //Create Axios Instance
 export const axiosAmore = axios.create({
+    // baseURL: realURL,
     baseURL: baseURL,
     headers
 });

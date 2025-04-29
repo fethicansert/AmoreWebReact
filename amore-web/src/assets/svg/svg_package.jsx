@@ -2518,6 +2518,7 @@ export const AppVersionIcon = ({
 export const DeleteAccountIcon = ({
   width = "25",
   height = "25",
+  strokeWidth = "1.5",
   color = "#18181C",
   style,
   className = "",
@@ -2533,14 +2534,14 @@ export const DeleteAccountIcon = ({
     <path
       d="M11.9513 15.626C8.62434 15.626 5.78662 16.1363 5.78662 18.179C5.78662 20.2217 8.60814 20.7501 11.9513 20.7501"
       stroke={color}
-      strokeWidth="1.5"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M18.5134 16.1047L15.1403 19.5268M18.5483 19.5618L15.1079 16.0713"
       stroke={color}
-      strokeWidth="1.5"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -2548,8 +2549,8 @@ export const DeleteAccountIcon = ({
       fillRule="evenodd"
       clipRule="evenodd"
       d="M15.8878 8.74651C15.8878 10.9527 14.125 12.7421 11.9495 12.7421C9.77502 12.7421 8.01221 10.9527 8.01221 8.74651C8.01221 6.54032 9.77502 4.75098 11.9495 4.75098C14.125 4.75098 15.8878 6.54032 15.8878 8.74651Z"
-      stroke="#D10B0B"
-      strokeWidth="1.5"
+      stroke={color}
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

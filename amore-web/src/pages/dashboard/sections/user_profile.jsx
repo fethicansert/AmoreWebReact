@@ -425,8 +425,6 @@ const UserProfile = () => {
       };
     });
 
-    console.log(photoMap);
-
     formData.append("photoMap", JSON.stringify(photoMap));
 
     userImages.forEach((image) => {
@@ -438,6 +436,8 @@ const UserProfile = () => {
     });
 
     formData.append("name", name);
+
+    formData.append("isWeb", 1);
 
     try {
       const response = await axiosAmore.post("/user/edit_profile/", formData, {

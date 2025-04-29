@@ -13,23 +13,25 @@ import LikeProvider from "./context/like_provider.jsx";
 import UserActivityProvider from "./context/user_activity_provider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    <AuthProvider>
-      <SocketProvider>
-        <AppDataProvider>
-          <UserActivityProvider>
-            <ConversationProvider>
-              <LikeProvider>
-                <NotificationProvider>
-                  <BannerProvider>
-                    <App />
-                  </BannerProvider>
-                </NotificationProvider>
-              </LikeProvider>
-            </ConversationProvider>
-          </UserActivityProvider>
-        </AppDataProvider>
-      </SocketProvider>
-    </AuthProvider>
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <SocketProvider>
+          <AppDataProvider>
+            <UserActivityProvider>
+              <ConversationProvider>
+                <LikeProvider>
+                  <NotificationProvider>
+                    <BannerProvider>
+                      <App />
+                    </BannerProvider>
+                  </NotificationProvider>
+                </LikeProvider>
+              </ConversationProvider>
+            </UserActivityProvider>
+          </AppDataProvider>
+        </SocketProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  </StrictMode>
 );

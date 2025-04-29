@@ -27,7 +27,6 @@ import {
 } from "../../../utils/functions";
 import { useBanner } from "../../../hooks/use_banner.jsx";
 import PermissionBanner from "../../../copmonents/permission_banner.jsx";
-import { useNavigate } from "react-router-dom";
 import DiscoverCTA from "../../../copmonents/discover_cta.jsx";
 import "../../../css/dashboard/user_home.css";
 import UsersMatchPopup from "../components/users_match_popup.jsx";
@@ -61,7 +60,6 @@ const UserHome = () => {
     setShowLocationSetting,
     setLimitedOfferOptions,
   } = useBanner();
-  const navigate = useNavigate();
 
   //REFS
   const distanceRef = useRef(200);
@@ -96,7 +94,11 @@ const UserHome = () => {
       gender: filterdGender,
       age: age,
     });
-    return () => setShowLocationBanner(false);
+
+    const clean = () => {
+      setShowLocationBanner(false);
+    };
+    return clean;
   }, []);
 
   //Try fetch swipe list if user half of the list or swipelist not empty or is not fetchind data at the moment

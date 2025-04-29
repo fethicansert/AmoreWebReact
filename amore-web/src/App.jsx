@@ -19,7 +19,7 @@ import PageNotFound from "./routes/page_not_found";
 import { ToastContainer } from "react-toastify";
 import VisitRedirect from "./routes/visit_redirect";
 import Visit from "./pages/visit/visit";
-import UserProfile from '../src/pages/dashboard/sections/user_profile.jsx'
+import UserProfile from "../src/pages/dashboard/sections/user_profile.jsx";
 import UserSettings from "./pages/dashboard/sections/user_settings.jsx";
 import UserLanguage from "./pages/dashboard/sections/user_language.jsx";
 import UserBlockedUsers from "./pages/dashboard/sections/user_blocked_users.jsx";
@@ -30,12 +30,8 @@ import UserSupportOld from "./pages/dashboard/sections/user_support_old.jsx";
 import UserSupportNew from "./pages/dashboard/sections/user_support_new.jsx";
 
 function App() {
-  const {
-    limitedOfferOptions,
-    showLogin,
-    setShowLogin,
-    showLogout,
-  } = useBanner();
+  const { limitedOfferOptions, showLogin, setShowLogin, showLogout } =
+    useBanner();
 
   return (
     <>
@@ -45,15 +41,10 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route element={<VisitRedirect />}>
-
-          <Route path="user/:userId" element={<Visit />}
-
-          />
+          <Route path="user/:userId" element={<Visit />} />
 
           <Route element={<ProtectedRoute />}>
-
             <Route path="/dashboard" element={<Dashboard />}>
-
               <Route index path="user-swipe" element={<UserHome />} />
 
               <Route path="discover" element={<Discover />} />
@@ -68,8 +59,7 @@ function App() {
 
               <Route path="payment" element={<Payment />} />
 
-              <Route path="user-profile" element={<User />} >
-
+              <Route path="user-profile" element={<User />}>
                 <Route index element={<UserProfile />} />
 
                 <Route path="language" element={<UserLanguage />} />
@@ -79,15 +69,12 @@ function App() {
                 <Route path="blocked-users" element={<UserBlockedUsers />} />
 
                 <Route path="support" element={<UserSupport />}>
+                  <Route index element={<UserSupportNew />} />
 
-                  <Route index element={<UserSupportNew />}/>
-
-                  <Route path='old' element={<UserSupportOld />}/>
-
+                  <Route path="old" element={<UserSupportOld />} />
                 </Route>
 
                 <Route path="influencer" element={<UserInfluencer />} />
-
               </Route>
 
               <Route path="user/:userId" element={<Visit />} />

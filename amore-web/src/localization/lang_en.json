@@ -28,6 +28,11 @@
       "SENDING": "Your report is being submitted, please wait."
     },
     "ERRORS": {
+      "DELETE_ACCOUNT": {
+        "OTP_WAIT_FOR_NEW_CODE": "You need to wait {{time}} seconds before starting a new deletion process."
+      },
+      "PENDING_SUPPORT_REQUEST": "You have a pending support request. Please wait before submitting a new query.",
+      "OTP_ALREADY_VERIFIED": "This verification code has already been used.",
       "UNEXPECTED_ERROR": {
         "TITLE": "An unexpected error occurred!",
         "SUB_TITLE": "Please try again later."
@@ -102,14 +107,14 @@
       "APPLY_FILTER_BUTTON": "Apply Filter"
     },
     "ROUTE_NAMES": {
-      "MAIN_PAGE": "Home",
+      "USER_SWIPE": "Home",
       "NOTIFICATIONS": "Notifications",
       "DISCOVER": "Discover",
       "MATCHES": "Matches",
-      "MESSAGES": "Messages",
+      "CHAT": "Messages",
       "MARKET": "Buy Tokens",
       "PREMIUM_SUBSCRIPTION": "Go Premium",
-      "PROFILE": "Profile",
+      "USER_PROFILE": "Profile",
       "VISITS": "Visits",
       "LIKES": "Likes"
     },

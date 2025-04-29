@@ -30,6 +30,7 @@ import UserBlockPopup from "./user_block_popup";
 import { axiosAmore } from "../../../api/axios";
 import BlockedUser from "./blocked_user";
 import UserReportPopup from "./user_report_popup";
+import { useUserActivty } from "../../../hooks/use_user_activity";
 
 const SwipeItem = ({
   user,
@@ -38,6 +39,8 @@ const SwipeItem = ({
   isUserBlocked = false,
   setIsUserBlocked,
 }) => {
+  console.log(user);
+
   //USER VARIABLES
   const userProfilPhoto = user?.photos[0]?.url;
   const userPhotos = user?.photos.slice(1);
@@ -60,6 +63,7 @@ const SwipeItem = ({
   const { t, _ } = useTranslation();
   const { setLimitedOfferOptions, setShowLogin } = useBanner();
   const { getUserInterests } = useAppData();
+  const { checkUsersStatus } = useUserActivty();
 
   //USER INTERESTS
   const interests = getUserInterests(
@@ -137,7 +141,11 @@ const SwipeItem = ({
               />
             ) : (
               <>
-                <SwipeItemOverlayTag usernmae={user?.name} userAge={userAge} />
+                <SwipeItemOverlayTag
+                  usernmae={user?.name}
+                  userAge={userAge}
+                  userStatus={checkUsersStatus(user?.id)}
+                />
                 <img src={userProfilPhoto} />
               </>
             )}
@@ -156,9 +164,9 @@ const SwipeItem = ({
                 </div>
 
                 <div className="swipe-item-user-properties">
-                  {userProperties.map((propertie) => (
+                  {userProperties.map((propertie, index) => (
                     <UserPropertie
-                      key={uuidv4()}
+                      key={index}
                       value={propertie?.value}
                       icon={propertie?.icon}
                     />
@@ -201,7 +209,6 @@ const SwipeItem = ({
           {userPhotos?.length > 0 && !loading && (
             <SwipeImageWrapper
               onClick={() => handleShowGalery(1)}
-              key={uuidv4()}
               loading={loading}
               image={userPhotos[0].url}
             />
@@ -215,9 +222,9 @@ const SwipeItem = ({
                 <h4>{t("DASHBOARD.SWIPE.USERINFO.INTEREST_TITLE")}</h4>
                 {interests?.length > 0 ? (
                   <div className="swipe-item-user-properties">
-                    {interests.map((propertie) => (
+                    {interests.map((propertie, index) => (
                       <UserPropertie
-                        key={uuidv4()}
+                        key={index}
                         value={t(
                           `REGISTER.INTERESTS.INTEREST_ITEMS.${propertie.name}`
                         )}
@@ -243,7 +250,7 @@ const SwipeItem = ({
                 <SwipeImageWrapper
                   style={{ marginBlock: "1rem" }}
                   onClick={() => handleShowGalery(index + 2)}
-                  key={uuidv4()}
+                  key={index}
                   loading={loading}
                   image={userPhoto.url}
                 />

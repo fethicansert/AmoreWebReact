@@ -6,28 +6,39 @@ import {
   AppVersionIcon,
   ArrowHeadRight,
   CrossCloseIcon,
+  DeleteAccountIcon,
   PrivacyPolicyIcon,
   TermsOfServiceIcon,
   VibrationIcon,
 } from "../../../assets/svg/svg_package";
 import UserDeleteButton from "../components/user_delete_button";
 import UserProfileHeader from "../components/user_profile_header";
-import BasicButton from "../../../copmonents/basic_button";
 import FixedOverflow from "../../../copmonents/fixed_overflow";
 import { ClipLoader } from "react-spinners";
 import { axiosAmore } from "../../../api/axios";
-import VerifyOtp from "../../register/sections/verify_otp";
+
+import DeleteAccountPopup from "../components/delete_account_popup";
+import { createOtp } from "../../../utils/functions";
+import { useAuth } from "../../../hooks/use_auth";
+import SimplePopup from "../../../copmonents/simple_popup";
+import SimpleLoading from "../components/simple_loading";
+import { useTranslation } from "react-i18next";
 
 const UserSettings = () => {
+  //STATES
   const [text, setText] = useState(false);
   const [textLoading, setTextLoading] = useState(false);
   const [showOverflow, setShowOverflow] = useState(false);
-  const [smsCode, setSmsCode] = useState({
-    digit1: "",
-    digit2: "",
-    digit3: "",
-    digit4: "",
-  });
+  const [otpLoading, setOtpLoading] = useState(false);
+  const [showVerifyDelete, setShowVerifyDelete] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [otpId, setOtpId] = useState("");
+  const [error, setError] = useState("");
+
+  //CONTEXT
+  const { auth } = useAuth();
+  const { t } = useTranslation();
+  console.log(otpId);
 
   return (
     <>
@@ -98,27 +109,48 @@ const UserSettings = () => {
           }
         />
 
-        <UserDeleteButton onClick={() => setShowOverflow(true)} />
+        <UserDeleteButton
+          onClick={() => {
+            setShowOverflow(true);
+            setShowVerifyDelete(true);
+          }}
+        />
+
+        {error && (
+          <p className="error-text" style={{ marginTop: "1rem" }}>
+            {error}
+          </p>
+        )}
       </div>
+
       {showOverflow && (
         <FixedOverflow blur={"2px"}>
-          <div
-            style={{
-              width: "400px",
-              backgroundColor: colors.backGround3,
-              padding: "1rem",
-              borderRadius: "12px",
-            }}
-          >
-            <VerifyOtp smsCode={smsCode} setSmsCode={setSmsCode} />
-          </div>
+          {otpLoading && (
+            <SimpleLoading
+              text={"4 haneli kodunuz cep telofunuza gönderiliyor"}
+            />
+          )}
+
+          {showDeletePopup && <DeleteAccountPopup otpId={otpId} />}
+
+          {showVerifyDelete && (
+            <SimplePopup
+              onYes={onVerifyConfirm}
+              onNo={() => {
+                setShowOverflow(false);
+                setShowVerifyDelete(false);
+              }}
+              icon={<DeleteAccountIcon width="30" height="30" />}
+              title={"Hesap Sil"}
+              text={`${auth?.name} adlı hesabını silmek istediğine emin misin ?`}
+            />
+          )}
 
           {textLoading && (
             <div>
               <ClipLoader color={colors.brand1} size={50} />
             </div>
           )}
-
           {text && (
             <div
               style={{
@@ -170,6 +202,37 @@ const UserSettings = () => {
       )}
     </>
   );
+
+  async function onVerifyConfirm() {
+    setOtpLoading(true);
+    setShowVerifyDelete(false);
+
+    const body = {
+      phone: auth?.phone,
+    };
+
+    try {
+      const response = await axiosAmore.post("/otp/create", body);
+      console.log(response);
+      setOtpId(response.data.data.oneTimePasswordId);
+      setShowDeletePopup(true);
+    } catch (e) {
+      setShowOverflow(false);
+      const response = e?.response?.data?.response;
+      // HANDLE ERROR HERE
+      if (response) {
+        setError(
+          t(`ERRORS.DELETE_ACCOUNT.${response.message}`, {
+            time: response?.code,
+          })
+        );
+      } else {
+        setError(t("ERRORS.UNEXPECTED_ERROR.TITLE"));
+      }
+    } finally {
+      setOtpLoading(false);
+    }
+  }
 
   async function fetchText(url) {
     setShowOverflow(true);

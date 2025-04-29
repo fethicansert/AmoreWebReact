@@ -28,6 +28,8 @@
       "SENDING": "Şikayetiniz iletiliyor, lütfen bekleyin."
     },
     "ERRORS": {
+      "OTP_WAIT_FOR_NEW_CODE": "Yeni bir silme işlemi başlatmak için {{süre}} saniye beklemelisiniz.",
+      "OTP_ALREADY_VERIFIED": "Bu kod zaten doğrulanmışfıt",
       "PENDING_SUPPORT_REQUEST": "Bekleyen destek talebiniz var. Yeni bir soru sorabilmek icin lütfen bekleyiniz.",
       "UNEXPECTED_ERROR": {
         "TITLE": "Beklenmedik bir hata oluştu !",
@@ -103,14 +105,14 @@
       "APPLY_FILTER_BUTTON": "Filtreyi Uygula"
     },
     "ROUTE_NAMES": {
-      "MAIN_PAGE": "Ana Sayfa",
+      "USER_SWIPE": "Ana Sayfa",
       "NOTIFICATIONS": "Bildirimler",
       "DISCOVER": "Keşfet",
       "MATCHES": "Eşleşmeler",
-      "MESSAGES": "Mesajlar",
+      "CHAT": "Mesajlar",
       "MARKET": "Jeton Al",
       "PREMIUM_SUBSCRIPTION": "Premium Ol",
-      "PROFILE": "Profil",
+      "USER_PROFILE": "Profil",
       "VISITS": "Ziyaretler",
       "LIKES": "Beğeniler"
     },

@@ -50,8 +50,9 @@ const UserCard = forwardRef((props, ref) => {
             background:
               !isOnlyPremium || isDiscover
                 ? "linear-gradient(rgba(22,30,42,0) 0%, rgba(22,30,42,.75) 100%)"
-                : `linear-gradient(rgba(22,30,42,0) 20%, ${isFromHome ? "#412A78" : "rgba(230, 73, 151,.85)"
-                }  100%)`,
+                : `linear-gradient(rgba(22,30,42,0) 20%, ${
+                    isFromHome ? "#412A78" : "rgba(230, 73, 151,.85)"
+                  }  100%)`,
           }}
         ></div>
       </div>
@@ -61,6 +62,7 @@ const UserCard = forwardRef((props, ref) => {
           <FlexBox gap="0 10px">
             <span
               style={{
+                minWidth: "8px",
                 background: checkUsersStatus(user.id)
                   ? colors.onlineColor
                   : colors.negative,

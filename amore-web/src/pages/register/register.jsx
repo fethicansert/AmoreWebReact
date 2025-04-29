@@ -311,9 +311,8 @@ const Register = () => {
 
     const body = {
       id: otpId.current,
-      smsCode: `${
-        smsCode.digit1 + smsCode.digit2 + smsCode.digit3 + smsCode.digit4
-      }`,
+      smsCode:
+        smsCode.digit1 + smsCode.digit2 + smsCode.digit3 + smsCode.digit4,
     };
 
     try {

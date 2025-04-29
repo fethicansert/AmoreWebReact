@@ -5,7 +5,6 @@
     gap: 0 clamp(.4rem, .8vw, .8rem);
     height: 100vh;
     min-height: 720px;
-    padding: 15px;
     color: var(--darkText);
 }
 
@@ -47,11 +46,13 @@
     transition: scale 500ms ease;
 }
 
-.layout-header:hover .layout-link-box span,
+.layout-header:hover .layout-link-box a,
+.layout-header:hover .layout-link-box span, 
 .layout-header:hover .layout-header-title {
     opacity: 1;
     transition: opacity 250ms ease 250ms;
 }
+
 
 .layout-header-active-part {
     scale: 0 1;
@@ -73,9 +74,11 @@
     padding: 1.5rem 2.5rem 1.5rem 1.5rem;
 
     display: flex;
+
     /* Check for z-index all places no I have no control   */
     z-index: 99;
 }
+
 
 
 .layout-header-title {
@@ -99,17 +102,27 @@
 
 .layout-link-box {
     height: 61px;
+    padding: 10px 0;
     border-bottom: 1px solid var(--borderColor1);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    font-size: .8rem;
-    font-weight: 600;
 }
 
+.layout-link-box a,
 .layout-link-box span {
+    height: 100%;
+    width: 100%;
+    font-size: .8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
     opacity: 0;
     width: max-content;
+    text-decoration: none;
+    color: var(--darkText);
+    cursor: pointer;
+}
+
+.layout-link-box a.active{
+    color: var(--brand1);
 }
 
 .logout-icon:hover path {
@@ -120,6 +133,9 @@
     position: relative;
 }
 
+.notification-button.active svg path{
+    stroke: var(--brand1);
+} 
 .notification-button svg {
     stroke: var(--darkText);
     position: relative;
@@ -155,9 +171,6 @@
     margin: .5rem 0;
 }
 
-.layout-header-navigation a:hover svg path{
-    stroke: var(--brand1);
-}
 
 .layout-header-navigation a.active svg path{
     stroke: var(--brand1);
@@ -230,9 +243,9 @@
     height: calc(100% - 49px);
     padding-inline: .5rem;
     position: relative;
-    padding-inline: .4rem;
+    padding: 0 .4rem 1rem .4rem;
     opacity: 0;
-    transition: opacity 150ms ease 150ms,transform 800ms ease;
+    transition: opacity 150ms ease 50ms, transform 800ms ease;
 }
 
 .notifications h3 {
@@ -285,8 +298,6 @@
     .notifications {
         width: 355px;
     }
-
-
 
 }
 

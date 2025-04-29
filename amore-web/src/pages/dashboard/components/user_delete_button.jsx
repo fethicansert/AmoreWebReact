@@ -3,8 +3,6 @@ import { DeleteAccountIcon } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
 
 const UserDeleteButton = ({ onClick }) => {
-  console.log(onClick);
-
   return (
     <div
       onClick={onClick}

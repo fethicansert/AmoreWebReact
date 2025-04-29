@@ -19,7 +19,6 @@ import {
   TrashIcon,
 } from "../../assets/svg/svg_package";
 import LayoutLinkIcon from "./components/layout_link_icon";
-import Logout from "../../copmonents/logout";
 import { colors } from "../../utils/theme";
 import LayoutLinkBox from "./components/layout_link_box";
 import { useNotification } from "../../hooks/use_notification";
@@ -45,18 +44,7 @@ import { useAuth } from "../../hooks/use_auth";
 import { userFcmToken } from "../../api/services/user_servives";
 import { useAppData } from "../../hooks/use_add_data";
 
-const linkTitles = [
-  "MAIN_PAGE",
-  "NOTIFICATIONS",
-  "DISCOVER",
-  "MATCHES",
-  "MESSAGES",
-  "MARKET",
-  "PREMIUM_SUBSCRIPTION",
-  "PROFILE",
-];
-
-const routes = [
+const ROUTE_LIST = [
   { path: ROUTES.USER_SWIPE, icon: <HomeIcon /> },
   { path: null, icon: <NotificationIcon /> },
   { path: ROUTES.DISCOVER, icon: <DiscoverIcon /> },
@@ -76,7 +64,7 @@ const Dashboard = () => {
   const [currentposition, setCurrentPosition] = useState(0);
   const [hoverPosition, setHoverPosition] = useState(0);
 
-  const [showNotification, setShowNotification] = useState();
+  const [showNotification, setShowNotification] = useState(false);
   const {
     unReadedCount,
     notifications,
@@ -117,8 +105,6 @@ const Dashboard = () => {
     requestPermission();
 
     onMessage(messaging, (payload) => {
-      // console.log(payload);
-
       toast(<PushNotification payload={payload} />, {
         toastId: payload.messageId,
         style: { padding: "10px 8px" },
@@ -162,7 +148,13 @@ const Dashboard = () => {
         />
       )}
 
-      {showOverlay && <div className="layout-overlay"></div>}
+      {
+        <div
+          style={{ visibility: showOverlay ? "visible" : "hidden" }}
+          className="layout-overlay"
+          onMouseEnter={() => setShowOverlay(false)}
+        ></div>
+      }
 
       <div
         style={{ marginTop: isUserProfilePage ? "15px" : "" }}
@@ -171,9 +163,9 @@ const Dashboard = () => {
         } `}
         onMouseEnter={() => setShowOverlay(true)}
         onMouseLeave={() => {
-          setShowOverlay(false);
           setHoverPosition(currentposition * 61);
           setShowNotification(false);
+          setShowOverlay(false);
         }}
       >
         <FlexBox flexDirection="column" gap="15px 0">
@@ -188,11 +180,11 @@ const Dashboard = () => {
               className="layout-header-navigation-postion"
             ></span>
 
-            {routes.map((route, index) =>
+            {ROUTE_LIST.map((route, index) =>
               route.path ? (
                 <LayoutLinkIcon
                   state={route?.state}
-                  key={uuidv4()}
+                  key={index}
                   path={route.path}
                   icon={route.icon}
                   onClik={() => setCurrentPosition(index)}
@@ -200,9 +192,9 @@ const Dashboard = () => {
                 />
               ) : (
                 <div
-                  key={uuidv4()}
+                  key={index}
                   onMouseEnter={() => setHoverPosition(index * 61)}
-                  onClick={() => onNotificationButtonClick(index)}
+                  onClick={onNotificationButtonClick}
                   className={`notification-button center ${
                     showNotification ? "active" : ""
                   }`}
@@ -235,21 +227,31 @@ const Dashboard = () => {
 
         <div
           className="layout-header-active-part"
-          onMouseLeave={() => setHoverPosition(currentposition * 61)}
+          onMouseLeave={() => {
+            setHoverPosition(currentposition * 61);
+            setShowOverlay(false);
+          }}
         >
           <FlexBox flexDirection="column" gap="15px 0">
             <h2 className="layout-header-title">Amore</h2>
 
-            <FlexBox>
-              <nav className="layout-header-active-part-navigation">
-                {linkTitles.map((title) => (
-                  <LayoutLinkBox
-                    key={uuidv4()}
-                    title={t(`ROUTE_NAMES.${title}`)}
-                  />
-                ))}
-              </nav>
-            </FlexBox>
+            <nav className="layout-header-active-part-navigation">
+              {ROUTE_LIST.map((route, index) => (
+                <LayoutLinkBox
+                  showNotification={setShowNotification}
+                  key={index}
+                  path={route.path}
+                  title={t(
+                    `ROUTE_NAMES.${
+                      route?.path?.replace("-", "_").toUpperCase() ||
+                      "NOTIFICATIONS"
+                    }`
+                  )}
+                  onClick={() => setCurrentPosition(index)}
+                  onHover={() => setHoverPosition(index * 61)}
+                />
+              ))}
+            </nav>
           </FlexBox>
         </div>
 
@@ -320,8 +322,7 @@ const Dashboard = () => {
   //FUNCTIONS
 
   //Show Notifications and handle notification permissions for fist openning of Show Notifications
-  function onNotificationButtonClick(index) {
-    setCurrentPosition(index);
+  function onNotificationButtonClick() {
     setShowNotification((prev) => !prev);
 
     if (!showNotification) {

@@ -5,6 +5,7 @@ import FlexBox from "../../../copmonents/flex_box";
 import { colors } from "../../../utils/theme";
 import { BsArrowRepeat } from "react-icons/bs";
 import { useTranslation } from "react-i18next";
+import OtpInput from "../comps/phone_input";
 
 const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
   //STATE && HOOKS
@@ -12,6 +13,9 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
   const [success, setSuccess] = useState(false);
   const { t } = useTranslation();
   const interval = useRef();
+  const digit2Ref = useRef();
+  const digit3Ref = useRef();
+  const digit4Ref = useRef();
 
   //IF iterval still working clear interval on Unmounted State!
   useEffect(() => {
@@ -23,32 +27,38 @@ const VerifyOtp = ({ smsCode, setSmsCode, phone }) => {
   return (
     <div className="register-verify">
       <div className="verify-container">
-        <OtpIpnut
-          autoFocus={smsCode.digit1 === ""}
+        <OtpInput
+          autoFocus={true}
           value={smsCode.digit1}
           setValue={setSmsCode}
-          digit={"digit1"}
+          digit="digit1"
+          nextRef={digit2Ref}
         />
 
-        <OtpIpnut
-          isFocused={smsCode.digit1 !== ""}
+        <OtpInput
           value={smsCode.digit2}
           setValue={setSmsCode}
-          digit={"digit2"}
+          digit="digit2"
+          nextRef={digit3Ref}
+          autoFocus={false}
+          ref={digit2Ref}
         />
 
-        <OtpIpnut
-          isFocused={smsCode.digit2 !== ""}
+        <OtpInput
           value={smsCode.digit3}
           setValue={setSmsCode}
-          digit={"digit3"}
+          digit="digit3"
+          nextRef={digit4Ref}
+          autoFocus={false}
+          ref={digit3Ref}
         />
 
-        <OtpIpnut
-          isFocused={smsCode.digit3 !== ""}
+        <OtpInput
           value={smsCode.digit4}
           setValue={setSmsCode}
-          digit={"digit4"}
+          digit="digit4"
+          autoFocus={false}
+          ref={digit4Ref}
         />
       </div>
 

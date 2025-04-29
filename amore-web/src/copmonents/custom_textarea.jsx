@@ -8,6 +8,7 @@ const CustomTextArea = ({
   onChange,
   placeholder = "Placeholder Text",
   title,
+  titleStyle,
   containerStyle,
 }) => {
   const [focus, setFocus] = useState(false);
@@ -27,7 +28,14 @@ const CustomTextArea = ({
         ...containerStyle,
       }}
     >
-      <h3 style={{ fontSize: ".9rem", fontWeight: "600", marginLeft: ".5rem" }}>
+      <h3
+        style={{
+          fontSize: ".9rem",
+          fontWeight: "600",
+          marginLeft: ".5rem",
+          ...titleStyle,
+        }}
+      >
         {title}
       </h3>
       <div

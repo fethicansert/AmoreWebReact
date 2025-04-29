@@ -59,7 +59,7 @@
   --fadedIcon: #B0B0B0;
 
   /* Basic Colors */
-  --onlineColor: #1CE761;
+  --onlineColor:   ;
   --blue: #497BE6;
   --negative: #D10B0B;
   --negativeBlack: #343434;
@@ -67,7 +67,6 @@
   /* Boder Colors */
   --borderColor1: #EBE9E1;
   --borderColor2: #252241;
-
 
   /* Spray Colors */
   --sprayBlue: #5E9BEB;
@@ -1182,7 +1181,21 @@ header a {
   }
 }
 
+
+
 /* ANIMATIONS */
+@keyframes breathing {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
