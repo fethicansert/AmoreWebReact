@@ -23,6 +23,7 @@ import { useAuth } from "../../../hooks/use_auth";
 import SimplePopup from "../../../copmonents/simple_popup";
 import SimpleLoading from "../components/simple_loading";
 import { useTranslation } from "react-i18next";
+import { useLocalStorage } from "../../../hooks/use_localstorage";
 
 const UserSettings = () => {
   //STATES
@@ -34,11 +35,14 @@ const UserSettings = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [otpId, setOtpId] = useState("");
   const [error, setError] = useState("");
+  const [notificationOptions, setNotificationOptions] = useLocalStorage(
+    "notificationOptions",
+    {}
+  );
 
   //CONTEXT
   const { auth } = useAuth();
   const { t } = useTranslation();
-  console.log(otpId);
 
   return (
     <>
@@ -54,16 +58,28 @@ const UserSettings = () => {
           }}
         >
           <CustomRadioKey
+            onToogle={() =>
+              setNotificationOptions((prev) => ({
+                ...prev,
+                show: !prev?.show,
+              }))
+            }
             height={"53px"}
-            isActive={true}
+            isActive={notificationOptions?.show}
             leading={<VibrationIcon />}
             text={"Bildirim"}
             activeColor={colors.brand1}
             notActiveColor={colors.fadedText}
           />
           <CustomRadioKey
+            onToogle={() =>
+              setNotificationOptions((prev) => ({
+                ...prev,
+                sound: !prev?.sound,
+              }))
+            }
             height={"53px"}
-            isActive={false}
+            isActive={notificationOptions?.sound}
             leading={<VibrationIcon />}
             activeColor={colors.brand1}
             text={"Bildirim Sesi"}

@@ -6,13 +6,13 @@ import { useAuth } from "../hooks/use_auth";
 export const LikeContext = createContext();
 
 const LikeProvider = ({ children }) => {
-  const { auth, isAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [likes, setLikes] = useState([]);
   const [isLikesLoading, setIsLikesLoading] = useState(true);
 
   useEffect(() => {
     if (isAuthenticated) getLikes();
-  }, [auth]);
+  }, [isAuthenticated]);
 
   return (
     <LikeContext.Provider value={{ likes, isLikesLoading }}>

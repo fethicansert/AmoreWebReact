@@ -1,50 +1,64 @@
-import React, { createContext, useEffect, useState } from 'react'
-import { useAuth } from '../hooks/use_auth';
-import { axiosAmore } from '../api/axios';
-import { useUserActivty } from '../hooks/use_user_activity';
-
+import React, { createContext, useEffect, useState } from "react";
+import { useAuth } from "../hooks/use_auth";
+import { axiosAmore } from "../api/axios";
+import { useMemo } from "react";
 export const ConversationContext = createContext();
 
 const ConversationProvider = ({ children }) => {
+  //STATES
+  const [conversations, setConversations] = useState([]);
+  // const [sortedConversations, setSortedConversations] = useState([]);
+  const [isConversationsLoading, setIsConversationsLoading] = useState(true);
+  const isConversationNotEmpty = conversations.length > 0;
 
-    //STATES
-    const [conversations, setConversations] = useState([]);
-    const [isConversationsLoading, setIsConversationsLoading] = useState(true);
+  const sortedConversations = useMemo(() => {
+    return [...conversations].sort(
+      (a, b) =>
+        new Date(b?.updatedDate || b.updatedDate) -
+        new Date(a?.updatedDate || a.updatedDate)
+    );
+  }, [conversations]);
 
-    //CONTEXT
-    const { auth, isAuthenticated } = useAuth();
-    const { activeUsers } = useUserActivty();
+  //CONTEXT
+  const { auth, isAuthenticated } = useAuth();
 
-    //SIDE-EFFECTS
-    useEffect(() => {
-        if (isAuthenticated) getMessages();
-    }, [auth]);
+  console.log(sortedConversations);
 
-    return (
-        <ConversationContext.Provider value={{ conversations, isConversationsLoading }}>
-            {children}
-        </ConversationContext.Provider>
-    )
+  //SIDE-EFFECTS
+  useEffect(() => {
+    if (isAuthenticated) getMessages();
+  }, [isAuthenticated]);
 
-    async function getMessages() {
-        setIsConversationsLoading(true);
-        try {
-            const response = await axiosAmore.get('/chat/conversations?page=1', {
-                headers: { Authorization: auth.token }
-            });
+  return (
+    <ConversationContext.Provider
+      value={{
+        sortedConversations,
+        conversations,
+        setConversations,
+        isConversationsLoading,
+        isConversationNotEmpty,
+      }}
+    >
+      {children}
+    </ConversationContext.Provider>
+  );
 
-            if (response?.data.response.code === 200) {
-                console.log(response.data.data);
+  async function getMessages() {
+    setIsConversationsLoading(true);
+    try {
+      const response = await axiosAmore.get("/chat/conversations?page=1", {
+        headers: { Authorization: auth.token },
+      });
 
-                setConversations(response.data.data);
-            }
-
-        }
-        catch (e) { console.log(e); }
-        finally { setIsConversationsLoading(false); }
+      if (response?.data.response.code === 200) {
+        setConversations(response.data.data);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setIsConversationsLoading(false);
     }
+  }
+};
 
-
-}
-
-export default ConversationProvider
+export default ConversationProvider;

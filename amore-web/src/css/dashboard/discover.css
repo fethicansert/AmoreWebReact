@@ -71,6 +71,13 @@
     cursor: pointer;
 }
 
+.discover-user-box.loading{
+    background: var(--backGround1);
+}
+.discover-user-box.loading:hover{
+    box-shadow: none;
+}
+
 .discover-user-box:hover {
     box-shadow: 1.5px 1.5px 3px var(--brand2);
 }
@@ -182,7 +189,7 @@
     /* Firefox */
 }
 
-@media (max-width: 575px) {
+@media (max-width: 630px) {
 
     .discover-users-side-bar {
         overflow-y: visible;
@@ -195,11 +202,6 @@
     .discover-users-filter-header-btn {
         display: block;
 
-    }
-
-    .discover-users-filter-header {
-        padding-bottom: .7rem;
-        gap: 10px 0;
     }
 
     .discover {
@@ -248,4 +250,15 @@
         height: calc(300px * 1.65);
     }
 
+}
+
+@media (max-width: 500px) {
+    .discover-user-box {
+        max-width: none;
+        height: calc(300px * 1.95);
+    }
+
+    .discover-users-filter-header {
+        gap: 10px 0;
+    }
 }

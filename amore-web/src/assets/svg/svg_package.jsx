@@ -542,6 +542,7 @@ export const ChatBubbleIcon = ({
   height = "25",
   color = "#4B164C",
   className = "",
+  strokeWidth = "2",
 }) => (
   <svg
     className={className}
@@ -556,28 +557,28 @@ export const ChatBubbleIcon = ({
       clipRule="evenodd"
       d="M22.0715 23.167C18.5571 26.7329 13.3532 27.5033 9.09463 25.5052C8.46595 25.2484 7.95053 25.0408 7.46053 25.0408C6.0957 25.049 4.39689 26.3917 3.51397 25.497C2.63105 24.6011 3.95543 22.8762 3.95543 21.4831C3.95543 20.9859 3.75897 20.4723 3.50588 19.8333C1.53549 15.5134 2.29591 10.232 5.81026 6.66723C10.2965 2.11399 17.5852 2.11399 22.0715 6.66605C26.5658 11.2263 26.5577 18.6149 22.0715 23.167Z"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M18.47 15.4007H18.4803"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M13.8599 15.4007H13.8702"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M9.24976 15.4007H9.26011"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -2752,6 +2753,49 @@ export const ReportIcon = ({
       d="M20.4082 27.8032H20.4249"
       stroke={color}
       strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const MissedCallIcon = ({
+  width = "20px",
+  height = "20px",
+  color = "#18181C",
+  strokeWidth = "3",
+  style,
+  className = "",
+  onClick,
+}) => (
+  <svg
+    className={className}
+    width={width}
+    height={height}
+    viewBox="0 0 25 25"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M12.6972 15.2643C8.24941 15.2643 10.3176 18.6555 7.48621 18.6564C4.75651 18.6573 3.69901 19.1676 3.69901 15.7089C3.74221 15.3183 3.02311 11.847 12.6972 11.8461C22.3713 11.8443 21.6567 15.3156 21.699 15.7062C21.699 19.1739 20.6415 18.6537 17.9109 18.6537C15.0804 18.6537 17.1441 15.2643 12.6972 15.2643Z"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M9.0423 7.77205L9.0369 5.36365L11.4453 5.36905"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M16.3668 5.77179L12.9045 9.23409L9.02909 5.35779"
+      stroke={color}
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />

@@ -1,7 +1,7 @@
 import { useMediaPredicate } from "react-media-hook";
 import { NavLink } from "react-router-dom";
 
-const LayoutLinkBox = ({ title, path, showNotification, onClick, onHover }) => {
+const LayoutLinkBox = ({ title, path, buttonClick, onClick, onHover }) => {
   const isMobile = useMediaPredicate("(max-width:575px)");
   return (
     <div
@@ -12,7 +12,7 @@ const LayoutLinkBox = ({ title, path, showNotification, onClick, onHover }) => {
       {path ? (
         <NavLink to={path}>{title}</NavLink>
       ) : (
-        <span onClick={() => showNotification(true)}>{title}</span>
+        <span onClick={buttonClick}>{title}</span>
       )}
     </div>
   );

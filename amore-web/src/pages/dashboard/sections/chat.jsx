@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useConversation } from "../../../hooks/use_conversation";
-import { ArrowHeadRight } from "../../../assets/svg/svg_package";
+import {
+  ArrowHeadRight,
+  ChatBubbleIcon,
+} from "../../../assets/svg/svg_package";
 import ChatCard from "../components/chat_card";
 import whatsAppIcon from "../../../assets/icons/whatsapp_icon.png";
 import { useAuth } from "../../../hooks/use_auth";
@@ -21,14 +24,9 @@ import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
 import { useMediaPredicate } from "react-media-hook";
 
-
 const Chat = () => {
   //NAVIGATION
   const location = useLocation();
-
-  //STATES
-  const [searchedConversations, setSearchedConversations] = useState([]);
-  const [search, setSearch] = useState("");
 
   const [messages, setMessages] = useState([]);
   const [showPreviewImage, setShowPreviewImage] = useState(false);
@@ -43,12 +41,17 @@ const Chat = () => {
 
   //CONTEXT
   const { auth } = useAuth();
-  const { conversations, isConversationsLoading } = useConversation();
+  const {
+    sortedConversations,
+    setConversations,
+    isConversationsLoading,
+    isConversationNotEmpty,
+  } = useConversation();
   const { socket, isSocketConnected } = useSocket();
 
   //REFS
   const currentConversationRef = useRef(
-    conversations[location?.state?.index || 0]
+    sortedConversations[location?.state?.index || 0]
   );
 
   const currentConversationUser = useRef(
@@ -62,16 +65,16 @@ const Chat = () => {
 
   const unlockedImagRef = useRef();
 
-  const onlyUserImage = useMediaPredicate('(max-width:950px)');
+  const onlyUserImage = useMediaPredicate("(max-width:950px)");
 
-  const oneScreenChat = useMediaPredicate('(max-width:600px)');
+  const oneScreenChat = useMediaPredicate("(max-width:600px)");
 
   //Fetch Messages and Set Conversation and CurrentUser if conversation length > 1
   useEffect(() => {
-    if (conversations.length > 1) {
+    if (isConversationNotEmpty) {
       //set current conversation
       currentConversationRef.current =
-        conversations[location?.state?.index || 0];
+        sortedConversations[location?.state?.index || 0];
 
       //set current chatUsers
       currentConversationUser.current = getUser({
@@ -80,14 +83,13 @@ const Chat = () => {
 
       getMessages(currentConversationRef.current.id);
     }
-  }, [conversations]);
+  }, [isConversationNotEmpty]);
 
   //If initialMessageLoading instantly go down if not smoothly scroll to show scroll animation
   useEffect(() => {
     //INSTANT SCROLL
 
-    if ((isInitialLoadRef.current && messages.length > 0)) {
-
+    if (isInitialLoadRef.current && messages.length > 0) {
       isInitialLoadRef.current = false;
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
@@ -100,33 +102,30 @@ const Chat = () => {
         behavior: "smooth",
       });
     }
-
   }, [messages]);
-
-  //Search and set searchedConversations
-  useEffect(() => {
-    const arr = conversations.filter((conversation) => {
-      const user = getUser({ conversation: conversation });
-      return user.name.toLowerCase().includes(search.toLowerCase());
-    });
-    setSearchedConversations(arr);
-  }, [search, conversations]);
 
   //Listen socket for coming messages
   useEffect(() => {
-    if (isSocketConnected && conversations.length > 1) {
-      socket.on("onMessageWithConversation", (message) =>
-        handleNewMessage(message)
-      );
+    if (isSocketConnected && isConversationNotEmpty) {
+      socket.on("onMessageWithConversation", (message) => {
+        handleNewMessage(message);
+      });
     }
     return () => {
       if (socket) socket.off("onMessageWithConversation", handleNewMessage);
     };
-  }, [isSocketConnected, conversations]);
+  }, [isSocketConnected, isConversationNotEmpty]);
 
   //if message conversation id equal to currentConversation add message to messages state
   const handleNewMessage = (message) => {
-    // console.log(message);
+    setConversations((prev) =>
+      prev.map((conversation) => {
+        if (message.conversation.id === conversation.id) {
+          return message.conversation;
+        }
+        return conversation;
+      })
+    );
 
     if (
       currentConversationRef.current.id === message.conversation.id &&
@@ -134,17 +133,21 @@ const Chat = () => {
     ) {
       setMessages((prev) => [...prev, message]);
     }
-
   };
 
   return (
-    <section className="chat" style={{ gridTemplateColumns: oneScreenChat ? '1fr' : onlyUserImage ? 'auto 2.2fr' : '1fr 2.2fr' }}>
-      {
-
-        (hideChatContent || !oneScreenChat) && <div className="chat-sidebar" >
-          {/* SIDEBAR SEARCH */}
-          <ChatSidebarSearch search={search} setSearch={setSearch} />
-
+    <section
+      className="chat"
+      style={{
+        gridTemplateColumns: oneScreenChat
+          ? "1fr"
+          : onlyUserImage
+          ? "auto 2.2fr"
+          : "1fr 2.2fr",
+      }}
+    >
+      {(hideChatContent || !oneScreenChat) && (
+        <div className="chat-sidebar">
           {/* WHATSAPP SUPPORT */}
           <ChatCard
             image={whatsAppIcon}
@@ -166,15 +169,19 @@ const Chat = () => {
             getUser={getUser}
             currentConversationUser={currentConversationUser.current}
             isConversationsLoading={isConversationsLoading}
-            searchedConversations={searchedConversations}
+            convesations={sortedConversations}
             handleConversationChange={handleConversationChange}
           />
         </div>
-      }
+      )}
 
       {
-        <div className="chat-content" style={{ display: (!hideChatContent || !oneScreenChat) ? 'grid' : 'none' }}>
-
+        <div
+          className="chat-content"
+          style={{
+            display: !hideChatContent || !oneScreenChat ? "grid" : "none",
+          }}
+        >
           <ChatContentHeader
             setHideChatContent={setHideChatContent}
             showBackButton={oneScreenChat}
@@ -182,11 +189,10 @@ const Chat = () => {
             currentConversationUser={currentConversationUser.current}
           />
 
-
           <div className="chat-content-messages" ref={messageContentRef}>
             {isMessagesLoading ? (
               <ChatBubbleShimmer />
-            ) : (
+            ) : messages.length > 0 ? (
               messages.map((message) => {
                 return (
                   <ChatType
@@ -196,6 +202,16 @@ const Chat = () => {
                   />
                 );
               })
+            ) : (
+              <div className="chat-empty-messages">
+                <div className="chat-empty-messages-spray"></div>
+                <ChatBubbleIcon width="45" height="45" strokeWidth="1.7" />
+                <h4>Seçili Mesja Yok</h4>
+                <p>
+                  Mesajlarınıza buradan erişebilirsiniz. Sohbet başlatmak için
+                  birini seçin veya mesaj yazın.
+                </p>
+              </div>
             )}
           </div>
 
@@ -274,8 +290,8 @@ const Chat = () => {
       messageType === "image"
         ? image.base64
         : messageType === "audio"
-          ? audioUrl
-          : null;
+        ? audioUrl
+        : null;
     //If audio get voice duration
     const metaData = messageType === "audio" ? { duration } : null;
 
@@ -304,8 +320,8 @@ const Chat = () => {
       messageType === "image"
         ? image.fileSize
         : messageType === "audio"
-          ? audioFile.size
-          : null;
+        ? audioFile.size
+        : null;
 
     //Prepare real message
     const message = {
@@ -357,10 +373,8 @@ const Chat = () => {
           messageType === "image"
             ? { ...response.data.data, dataUrl: image.base64 }
             : messageType === "audio"
-              ? { ...response.data.data, dataUrl: audioUrl }
-              : response.data.data;
-
-        console.log(response);
+            ? { ...response.data.data, dataUrl: audioUrl }
+            : response.data.data;
 
         //Exchange optimistic message with real message !!!
         setMessages((prev) =>

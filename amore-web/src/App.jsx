@@ -96,7 +96,7 @@ function App() {
       {showLogout && <Logout />}
 
       {/* Push Foreground Notifications */}
-      <ToastContainer limit={2} />
+      <ToastContainer limit={3} />
     </>
   );
 }

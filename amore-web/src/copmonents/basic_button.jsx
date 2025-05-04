@@ -1,31 +1,42 @@
-import React from 'react'
+import React from "react";
 
 const BasicButton = ({
-    className = '',
-    style,
-    disabled = false,
-    children,
-    fontSize,
-    backgroundColor,
-    color = '#FFFFFF',
-    borderRadius,
-    width,
-    height,
-    gap,
-    onClick,
-    type = 'button',
-    margin = '' }) => {
+  className = "",
+  style,
+  disabled = false,
+  children,
+  fontSize,
+  backgroundColor,
+  color = "#FFFFFF",
+  borderRadius,
+  width,
+  height,
+  gap,
+  onClick,
+  type = "button",
+  margin = "",
+}) => {
+  return (
+    <button
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+      className={`basic-button ${className}`}
+      style={{
+        width,
+        height,
+        backgroundColor,
+        color,
+        borderRadius,
+        gap: gap,
+        fontSize,
+        margin,
+        ...style,
+      }}
+    >
+      {children}
+    </button>
+  );
+};
 
-    return (
-        <button
-            disabled={disabled}
-            type={type}
-            onClick={onClick}
-            className={`basic-button ${className}`}
-            style={{ width, height, backgroundColor, color, borderRadius, gap: gap, fontSize, margin, ...style }}>
-            {children}
-        </button>
-    )
-}
-
-export default BasicButton
+export default BasicButton;

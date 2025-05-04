@@ -1,4 +1,3 @@
-import { forwardRef } from "react";
 import { calculateAge } from "../utils/functions";
 import { useBanner } from "../hooks/use_banner.jsx";
 import { colors } from "../utils/theme.js";
@@ -12,12 +11,17 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../hooks/use_auth.jsx";
 import { useNavigate } from "react-router-dom";
 import { useUserActivty } from "../hooks/use_user_activity.jsx";
+import { axiosAmore } from "../api/axios.js";
+import { useState } from "react";
+import { useConversation } from "../hooks/use_conversation.jsx";
+import { BeatLoader } from "react-spinners";
 
-const UserCard = forwardRef((props, ref) => {
-  const isFromHome = props?.isFromHome || false;
-  const isDiscover = props?.isDiscover || false;
-  const isOnlyPremium = props?.isOnlyPremium || false;
-  const user = props?.user;
+const UserCard = ({
+  user,
+  isFromHome = false,
+  isDiscover = false,
+  isOnlyPremium = false,
+}) => {
   const age = calculateAge(user?.birthday);
 
   //CONTEXT
@@ -25,6 +29,9 @@ const UserCard = forwardRef((props, ref) => {
   const { t, _ } = useTranslation();
   const { auth } = useAuth();
   const { checkUsersStatus } = useUserActivty();
+  const { setConversations } = useConversation();
+
+  const [sendingMessage, setSendingMessage] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,14 +40,17 @@ const UserCard = forwardRef((props, ref) => {
       className="discover-user-box"
       onClick={() =>
         isOnlyPremium
-          ? setLimitedOfferOptions({ show: true, type: "premium-subscription" })
+          ? setLimitedOfferOptions({
+              show: true,
+              type: "premium-subscription",
+            })
           : navigate(`/dashboard/user/${user.id}`)
       }
     >
-      <div className="discover-user-image-container" ref={ref}>
+      <div className="discover-user-image-container">
         <img
           style={{
-            filter: `blur(${!isOnlyPremium || isDiscover ? "0" : "35px"})`,
+            filter: `blur(${!isOnlyPremium || isDiscover ? "0" : "24px"})`,
           }}
           src={user?.photos?.[0].url}
         ></img>
@@ -70,7 +80,7 @@ const UserCard = forwardRef((props, ref) => {
               className="online-circle"
             ></span>
             {isFromHome ? (
-              t("STATUS.ONLINE")
+              t(`STATUS.${checkUsersStatus(user.id) ? "ONLINE" : "OFFLINE"}`)
             ) : (
               <p className="discover-user-info-text-bold">
                 {user.name}, {age ? age : "00"}
@@ -88,6 +98,7 @@ const UserCard = forwardRef((props, ref) => {
 
           {!isFromHome && (
             <BasicButton
+              onClick={(e) => handleSendMessage(e, user.id)}
               className="discover-user-button"
               width={"100%"}
               height={"45px"}
@@ -95,7 +106,11 @@ const UserCard = forwardRef((props, ref) => {
               backgroundColor={colors.backGround3}
               borderRadius={"12px"}
             >
-              {t("BUTTONS.SEND_MESSAGE_BUTTON")}
+              {sendingMessage ? (
+                <BeatLoader size={8} color={colors.brand2} />
+              ) : (
+                t("BUTTONS.SEND_MESSAGE_BUTTON")
+              )}
             </BasicButton>
           )}
         </div>
@@ -112,6 +127,43 @@ const UserCard = forwardRef((props, ref) => {
       )}
     </div>
   );
-});
+
+  async function handleSendMessage(e, userId) {
+    e.stopPropagation();
+
+    setSendingMessage(true);
+    try {
+      const response = await axiosAmore.get(
+        `chat/conversation?user=${userId}`,
+        {
+          useAuth: true,
+        }
+      );
+      console.log(response);
+
+      setConversations((prev) => {
+        if (
+          prev.every(
+            (conversation) => conversation.id !== response.data.data.id
+          )
+        )
+          return [
+            ...prev,
+            {
+              ...response.data.data,
+              updatedDate: new Date().toISOString(),
+            },
+          ];
+        return prev;
+      });
+
+      navigate("/dashboard/chat", { state: { userId: userId } });
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setSendingMessage(false);
+    }
+  }
+};
 
 export default UserCard;

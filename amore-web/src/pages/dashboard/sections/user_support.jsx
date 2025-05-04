@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import FlexBox from "../../../copmonents/flex_box";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import UserProfileHeader from "../components/user_profile_header";
 import BasicButton from "../../../copmonents/basic_button";
 import { colors } from "../../../utils/theme";
 import { axiosAmore } from "../../../api/axios";
 import { useTranslation } from "react-i18next";
+import { BeatLoader } from "react-spinners";
 
 const UserSupport = () => {
   const [error, setError] = useState("");
@@ -18,6 +19,7 @@ const UserSupport = () => {
   });
 
   const { t, _ } = useTranslation();
+  const navigate = useNavigate();
 
   const location = useLocation().pathname.split("/").slice(-1).pop();
 
@@ -62,7 +64,11 @@ const UserSupport = () => {
             backgroundColor={colors.brand1}
             borderRadius={"12px"}
           >
-            Soruyu Gönder
+            {submitting ? (
+              <BeatLoader color={colors.backGround3} size={8} />
+            ) : (
+              "Soruyu Gönder"
+            )}
           </BasicButton>
         </div>
       )}
@@ -93,7 +99,10 @@ const UserSupport = () => {
       const response = await axiosAmore.post("/user/v2/support", formData, {
         useAuth: true,
       });
-      console.log(response);
+      setTitle("");
+      setQuestion("");
+      setQuestionImage("");
+      navigate("old");
     } catch (e) {
       const message = e.response.data.response.message;
       if (message) return setError(t(`ERRORS.${message}`));

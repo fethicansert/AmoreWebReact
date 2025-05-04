@@ -21,16 +21,17 @@ const NotificationProvider = ({ children }) => {
 
   //SIDE-EFFECTS
   useEffect(() => {
-    if (isAuthenticated)
-      fetchNotificationsData({ showUnReadedCountLoading: true });
+    if (isAuthenticated) getUnReadedCount({ showLoading: true });
+    // getNotificationList({ reset: false });
   }, [isAuthenticated]);
 
   //Listen socket if refresh notification fetch notitifications with out showing loading
   useEffect(() => {
     if (isSocketConnected) {
-      socket.on("refreshNotifications", () =>
-        fetchNotificationsData({ showUnReadedCountLoading: false })
-      );
+      socket.on("refreshNotifications", () => {
+        getUnReadedCount({ showLoading: false });
+        getNotificationList({ reset: true });
+      });
     }
   }, [isSocketConnected]);
 
@@ -42,6 +43,7 @@ const NotificationProvider = ({ children }) => {
         notifications,
         isNotificationsLoading,
         readAllNotifications,
+        getNotificationList,
       }}
     >
       {children}
@@ -66,11 +68,6 @@ const NotificationProvider = ({ children }) => {
     }
   }
 
-  function fetchNotificationsData({ showUnReadedCountLoading }) {
-    getUnReadedCount({ showLoading: showUnReadedCountLoading });
-    getNotificationList();
-  }
-
   async function getUnReadedCount({ showLoading = true }) {
     showLoading && setIsUnReadedLoading(true);
 
@@ -87,7 +84,7 @@ const NotificationProvider = ({ children }) => {
     }
   }
 
-  async function getNotificationList() {
+  async function getNotificationList({ reset = false }) {
     setIsNotificationsLoadings(true);
 
     try {
@@ -96,8 +93,14 @@ const NotificationProvider = ({ children }) => {
         { useAuth: true }
       );
 
-      if (response.data.response.code === 200)
-        setNotifications(response.data.data);
+      if (reset) notficationPage.current = 0;
+
+      if (response.data.response.code === 200) {
+        setNotifications((prev) =>
+          reset ? response.data.data : [...prev, ...response.data.data]
+        );
+        notficationPage.current = notficationPage.current + 1;
+      }
     } catch (e) {
       console.log(e);
     } finally {

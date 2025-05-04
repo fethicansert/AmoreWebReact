@@ -25,29 +25,47 @@ const ChatInput = ({
 
   return (
     <div className="chat-input-container-wrapper">
+      <div
+        style={{
+          animation: oneScreenChat ? "fade 150ms ease" : "none",
+          position: oneScreenChat ? "absolute" : "static",
+          display: oneScreenChat && !showButtons ? "none" : "grid",
+          gridTemplateColumns: oneScreenChat ? "auto" : "auto auto",
+          height: oneScreenChat ? "102px" : "100%",
+          gap: oneScreenChat ? "8px" : "0 8px",
+          bottom: oneScreenChat ? "100%" : "unset",
+          left: oneScreenChat ? "8px" : "unset",
+        }}
+      >
+        <div className="chat-send-image-button">
+          <input
+            onChange={(e) => {
+              handleImageChange(e);
+              setShowButtons(false);
+            }}
+            className="chat-image-input"
+            type="file"
+            accept="image/*"
+          />
+          <SendImageIcon />
+        </div>
 
-      {
-        !oneScreenChat ? <>
-          <div className="chat-send-image-button">
-            <input
-              onChange={handleImageChange}
-              className="chat-image-input"
-              type="file"
-              accept="image/*"
-            />
-            <SendImageIcon />
-          </div>
+        <div
+          className="chat-send-gift-button"
+          style={showGifts ? { background: colors.backGround4 } : {}}
+          onClick={() => {
+            setShowButtons(false);
+            setShowGifts((prev) => !prev);
+          }}
+        >
+          <SendGiftIcon
+            color={showGifts ? colors.backGround3 : colors.iconColor}
+          />
+        </div>
+      </div>
 
-          <div
-            className="chat-send-gift-button"
-            style={showGifts ? { background: colors.backGround4 } : {}}
-            onClick={() => setShowGifts((prev) => !prev)}
-          >
-            <SendGiftIcon
-              color={showGifts ? colors.backGround3 : colors.iconColor}
-            />
-          </div>
-        </> : <div
+      {oneScreenChat && (
+        <div
           className="chat-show-input-buttons"
           onClick={() => setShowButtons((prev) => !prev)}
         >
@@ -59,7 +77,7 @@ const ChatInput = ({
             color={colors.brand1}
           />
         </div>
-      }
+      )}
 
       <div
         className="chat-input-container"
@@ -78,23 +96,24 @@ const ChatInput = ({
             onBlur={() => setMessageTextFocused(false)}
           />
         ) : (
-          <ChatVoiceRecord setIsShowRecording={setIsShowRecording} sendVoice={sendMessage} />
+          <ChatVoiceRecord
+            setIsShowRecording={setIsShowRecording}
+            sendVoice={sendMessage}
+          />
         )}
-        {
-          !isShowRecording &&
-          (
-            messageTextFocused || messageText ? (
-              <SendMessageIcon
-                onClick={() => handleSendMessage()}
-                className="chat-input-icon chat-send-message-icon"
-              />
-            ) : (
-              <MicrophoneIcon
-                className="chat-input-icon"
-                color={colors.brand1}
-                onClick={handleVoiceRecording}
-              />
-            ))}
+        {!isShowRecording &&
+          (messageTextFocused || messageText ? (
+            <SendMessageIcon
+              onClick={() => handleSendMessage()}
+              className="chat-input-icon chat-send-message-icon"
+            />
+          ) : (
+            <MicrophoneIcon
+              className="chat-input-icon"
+              color={colors.brand1}
+              onClick={handleVoiceRecording}
+            />
+          ))}
       </div>
     </div>
   );
@@ -105,7 +124,7 @@ const ChatInput = ({
 
   function handleSendMessage() {
     if (!messageText) return;
-    sendMessage({ text: messageText, messageType: 'text' });
+    sendMessage({ text: messageText, messageType: "text" });
     setMessageText("");
   }
 };

@@ -95,7 +95,6 @@
     margin: 10px auto 0 auto;
 }
 
-
 .market-items-wrapper {
     margin-top: 10px;
     width: 100%;
@@ -121,7 +120,6 @@
     border-radius: 50%;
     filter: blur(42px)
 }
-
 
 .market-item-coin-row {
     display: flex;

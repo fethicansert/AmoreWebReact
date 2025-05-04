@@ -31,6 +31,8 @@ import DiscoverCTA from "../../../copmonents/discover_cta.jsx";
 import "../../../css/dashboard/user_home.css";
 import UsersMatchPopup from "../components/users_match_popup.jsx";
 import { useLikes } from "../../../hooks/use_likes.jsx";
+import SimpleLoading from "../components/simple_loading.jsx";
+import FixedOverflow from "../../../copmonents/fixed_overflow.jsx";
 
 const UserHome = () => {
   //STATS
@@ -43,6 +45,7 @@ const UserHome = () => {
   const [showFilter, setShowFilter] = useState(true);
   const [swipeError, setSwipeError] = useState(false);
   const [showUserMatchesPopup, setShowUserMatchesPopup] = useState(false);
+  const [showPopupLoading, setShowPopupLoading] = useState(false);
 
   //FILTER STATES
   const [filterdGender, setFilterGender] = useState("female");
@@ -51,8 +54,9 @@ const UserHome = () => {
 
   //CONTEXT
   const { likes, isLikesLoading } = useLikes();
-  const { conversations, isConversationsLoading } = useConversation();
-  const { auth, isPremium } = useAuth();
+  const { conversations, isConversationsLoading, sortedConversations } =
+    useConversation();
+  const { auth, setAuth, isPremium } = useAuth();
   const { t, _ } = useTranslation();
   const {
     showLocationBanner,
@@ -120,6 +124,14 @@ const UserHome = () => {
 
   return (
     <section className="user-home">
+      {showPopupLoading && (
+        <FixedOverflow>
+          <SimpleLoading
+            text={"Mesafe türü değiştiriliyor lütfen bekleyiniz."}
+          />
+        </FixedOverflow>
+      )}
+
       {/* Premium Box */}
       {!hidePremium && (
         <div className="user-home-sidebar-container">
@@ -144,6 +156,12 @@ const UserHome = () => {
               />
 
               <FilterSlider
+                onDropDownItemClick={changeDistanceType}
+                dropDownItems={[
+                  { name: "Kilometre", value: "km" },
+                  { name: "Mil", value: "mi" },
+                ]}
+                hasDropDown={true}
                 step={3}
                 min={1}
                 max={1500}
@@ -359,6 +377,28 @@ const UserHome = () => {
   );
 
   //FUNCTIONS
+
+  async function changeDistanceType(type) {
+    if (type === auth.distanceType) return;
+    setShowPopupLoading(true);
+
+    const body = {
+      distanceType: type,
+    };
+
+    try {
+      const response = await axiosAmore.post("user/edit_distance_type", body, {
+        useAuth: true,
+      });
+      if (response?.data?.data?.status)
+        setAuth((prev) => ({ ...prev, distanceType: type }));
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setShowPopupLoading(false);
+    }
+  }
+
   function handleLocationBanner(e) {
     //SVG VE PATH ise iconlara tikaldim
     //Fonksiyonun calismasina gerek yok

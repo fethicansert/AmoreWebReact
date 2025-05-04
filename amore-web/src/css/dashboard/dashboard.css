@@ -1,8 +1,8 @@
 .layout {
     background: var(--backGround2);
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0 clamp(.4rem, .8vw, .8rem);
+    grid-template-columns: auto 1fr;    
+    gap: 0 clamp(.3rem, .8vw, .8rem);
     height: 100vh;
     min-height: 720px;
     color: var(--darkText);
@@ -53,7 +53,6 @@
     transition: opacity 250ms ease 250ms;
 }
 
-
 .layout-header-active-part {
     scale: 0 1;
     top: -1px;
@@ -78,8 +77,6 @@
     /* Check for z-index all places no I have no control   */
     z-index: 99;
 }
-
-
 
 .layout-header-title {
     color: var(--brand1);
@@ -131,6 +128,8 @@
 
 .notification-button {
     position: relative;
+    height: 45px;
+    margin-block: 8px;
 }
 
 .notification-button.active svg path{
@@ -150,7 +149,7 @@
     position: absolute;
     z-index: 1;
     left: 12px;
-    top: -8px;
+    top: 0px;
 }
 
 .unreaded-notification-count {
@@ -190,6 +189,7 @@
     transition: transform 200ms ease;
 }
 
+
 .notifications {
     position: absolute;
     top: -1px;
@@ -202,36 +202,30 @@
     background-color: var(--backGround3);
     overflow: hidden;
     padding: 0 .6rem;
-    scale: 0 1;
-    transition: scale 250ms ease;
     transform-origin: left;
+    animation: notificationOpenning 250ms ease forwards
 }
 
-.notifications.active {
-    scale: 1 1;
-    transform-origin: left;
+@keyframes notificationOpenning {
+    0%{
+        scale: 0 1;
+    }
+
+    100%{
+        scale: 1 1;
+    }
 }
 
-.notifications.active .notifications-wrapper{
-    opacity: 1;
+@keyframes wrapperOpenning {
+    0%{
+        opacity: 0;
+    }
+
+    100%{
+        opacity: 1;
+    }
 }
 
-.notification-item-eye-icon,
-.notification-item-heart-icon {
-    width: 30px;
-    height: 30px;
-    padding: .235rem;
-    border-radius: 50%;
-}
-
-.notification-item-eye-icon {
-    background: var(--blue);
-}
-
-.notification-item-heart-icon {
-    background: var(--brand2);
-    padding: .3rem;
-}
 
 .notification-header-container {
     position: relative;
@@ -245,7 +239,8 @@
     position: relative;
     padding: 0 .4rem 1rem .4rem;
     opacity: 0;
-    transition: opacity 150ms ease 50ms, transform 800ms ease;
+    transition:  transform 800ms ease;
+    animation: wrapperOpenning 0ms ease 200ms forwards; 
 }
 
 .notifications h3 {
@@ -293,21 +288,55 @@
     color: var(--lowFadedText);
 }
 
+.mobile-header-navigation{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:var(--backGround2);
+    z-index: 999;
+   display: flex;
+   flex-direction: column;
+   transform-origin: left;
+   animation: notificationOpenning 250ms ease forwards
+}
+
+.mobile-navigation-item{
+    padding: 1.2rem 1rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0 10px;
+    /* border-bottom: 1px solid var(--borderColor1); */
+    text-decoration: none;
+    color: var(--darkText);
+}
+
 @media (max-width: 650px) {
 
     .notifications {
         width: 355px;
     }
-
 }
 
+@media (max-width: 500px) {
 
-@media (max-width: 499px) {
+    .layout{
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+
+
+    .layout-link-box a,
+    .layout-link-box span {
+        opacity: 1;
+    }
 
     .layout-header.notifications-active {
         border-radius: 12px;
     }
-
+    
     .layout-header:hover {
         transition: none;
         border-radius: 12px;
@@ -326,7 +355,6 @@
 
     .permission-banner p {
         font-size: .68rem;
-
     }
 
     .notification-item-eye-icon,
@@ -361,20 +389,26 @@
     }
 
     .notifications {
-        width: 255px;
-        left: calc(100% + 5px);
-        border-radius: var(--spacing3);
+        width: 80%;
+        top: clamp(0.3rem, 0.8vw, 0.8rem);;
+        left: 0;
+        border-radius: 0 var(--spacing3) var(--spacing3) 0;
         padding: 0rem .25rem .5rem .25rem;
     }
 
     .notifications .notification-layout-image-avatar {
+        width: 55px;
+        height: 55px;
+    }
+
+    .notifications .notification-icon-time-flex{
         display: none;
     }
 
     .notifications .notification-layout {
-        height: 90px;
-        grid-template-columns: 1fr auto;
-        gap: 5px;
+        padding-block: 1rem;
+        grid-template-columns: auto 1fr;
+        gap: 8px;
     }
 
     .notifications .notification-layout .notification-layout-content {
@@ -391,12 +425,4 @@
 
 }
 
-@media (max-width: 335px) {
 
-    .notifications {
-        width: 230px;
-        left: calc(100% + 5px);
-        padding: 0rem .1rem .5rem .1rem;
-    }
-
-}

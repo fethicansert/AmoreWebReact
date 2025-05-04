@@ -73,13 +73,11 @@
     font-size: .85rem;
 }
 
-.user-profile-navigation-item.active,
-.user-profile-navigation-item:hover {
+.user-profile-navigation-item.active {
     color: var(--brand1);
 }
 
-.user-profile-navigation-item.active svg path,
-.user-profile-navigation-item:hover svg path {
+.user-profile-navigation-item.active svg path{
     stroke: var(--brand1);
 }
 

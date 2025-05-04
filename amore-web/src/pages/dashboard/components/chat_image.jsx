@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { colors } from "../../../utils/theme";
 import { getTimeFromISO } from "../../../utils/functions";
 import { BeatLoader, ClipLoader } from "react-spinners";

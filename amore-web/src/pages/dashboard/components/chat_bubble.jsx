@@ -46,7 +46,7 @@ const ChatBubble = ({ message, isSender }) => {
           <p style={messageStyle}>{message?.content || message?.type}</p>
         ) : (
           <div style={{ display: "flex", alignItems: "center", gap: "0 5px" }}>
-            <p style={messageStyle}>Fotoğraf görüntülendi</p>
+            <p style={messageStyle}>Fotoğraf görüntülendi.</p>
             <ImageViewedIcon color={colors.iconColor} />
           </div>
         )}

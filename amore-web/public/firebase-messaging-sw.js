@@ -26,8 +26,6 @@ if (messaging) {
 
         const extraData = payload?.data?.extraData ? JSON.parse(payload.data.extraData) : undefined;
 
-        console.log(extraData);
-
         // Customize notification here
         const notificationTitle = payload.notification.title;
         const notificationOptions = {

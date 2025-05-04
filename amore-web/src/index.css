@@ -59,7 +59,7 @@
   --fadedIcon: #B0B0B0;
 
   /* Basic Colors */
-  --onlineColor:   ;
+  --onlineColor:  #1CE761 ;
   --blue: #497BE6;
   --negative: #D10B0B;
   --negativeBlack: #343434;
@@ -114,6 +114,26 @@ body {
   font-weight: 400;
   overflow-x: hidden;
   background: var(--backGround2);
+}
+
+/* //ALONE STYLES */
+.filter-dropdown-item{
+  cursor: pointer;
+  padding: .6rem .8rem;
+  border-top:1px solid var(--borderColor1);
+}
+.filter-dropdown-item:hover{
+  background: var(--brand1);
+  color: var(--whiteText);
+}
+
+.filter-dropdown-item:first-child{
+  border-radius: 12px 0 0 0;
+  border-top:none;
+}
+
+.filter-dropdown-item:last-child{
+  border-radius:0 0 12px 12px;
 }
 
 .user-report-popup{
@@ -462,21 +482,55 @@ header a {
   font-size: 15px;
 }
 
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 .fixed-navbar {
   position: absolute;
-  width: 100%;
-  height: calc(80vh - 90px);
-  padding: .7rem;
+  width: 150px;
+  /* height: calc(80vh - 90px); */
+  padding: 1rem;
   top: 110%;
-  right: 1%;
+  right: 4px;
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
   border-radius: 10px;
   align-items: start;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 15px 0;
   z-index: 99;
-  transition: transform 450ms ease;
+  scale:1 0;
+  transform-origin: top;
+  transition: scale 100ms ease;
   box-shadow: var(--lowShadow)
+}
+
+
+.fixed-navbar.active{
+  scale:1 1;
+  transition: scale 200ms ease;
+}
+
+.fixed-navbar-button,
+.fixed-navbar a{
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.fixed-navbar.active  .fixed-navbar-button,
+.fixed-navbar.active .fixed-navbar-link{
+  opacity: 1;
+  transition: opacity 200ms 100ms ease;
+
 }
 
 /* PREMIUM OFFER */
@@ -693,6 +747,7 @@ header a {
   padding: 1rem .65rem;
   background-color: var(--lowWhiteText);
   border-radius: var(--spacing3);
+
 }
 
 .bonus-items-grid {
@@ -863,8 +918,8 @@ header a {
 
 /* Notification Layout */
 .notification-layout {
+  padding-block: 1.175rem;
   width: 100%;
-  height: 100px;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -928,8 +983,7 @@ header a {
 }
 
 .notification-time {
-  font-weight: 300;
-  font-size: .7rem;
+  font-size: .6rem;
   color: var(--fadedText);
 }
 
@@ -1168,9 +1222,15 @@ header a {
   .slide-container {
     width: 95%;
   }
+
+.limited-offer{
+  width: 95%;
+}
+
 }
 
 @media (min-width: 500px) {
+
 
   .blur-button,
   .basic-button {

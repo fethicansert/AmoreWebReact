@@ -19,7 +19,9 @@ const SwipeItemOverlayTag = ({ usernmae, userAge, userStatus }) => {
             }}
             className="online-circle"
           ></span>
-          <span className="swipe-item-user-status">{t("STATUS.ONLINE")}</span>
+          <span className="swipe-item-user-status">
+            {t(`STATUS.${userStatus ? "ONLINE" : "OFFLINE"}`)}
+          </span>
         </FlexBox>
         <span className="swipe-item-user-info">
           {usernmae}, {userAge}

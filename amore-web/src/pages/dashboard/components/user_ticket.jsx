@@ -3,7 +3,6 @@ import {
   ArrowDownIcon,
   CrossCloseIcon,
   HeadphoneIcon,
-  SearchImageIcon,
 } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
 import BasicButton from "../../../copmonents/basic_button";
@@ -104,7 +103,7 @@ const UserTicket = ({ ticket, setTickets }) => {
             ))}
 
             {ticket?.messages.length === 1 && (
-              <TicketMessage message={placeHolderTicket} />
+              <TicketMessage message={placeHolderTicket} hideTime={true} />
             )}
           </div>
         )}

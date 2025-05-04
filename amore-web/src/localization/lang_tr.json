@@ -1,5 +1,14 @@
 {
   "translation": {
+    "INPUTS": {
+      "NAME": "İsim",
+      "BIRTH_DATE": "Doğum Günü",
+      "BIO": "Biyografi",
+      "COUNTRY": "Ülke",
+      "JOB": "Meslek",
+      "SCHOOL": "Okul",
+      "INTEREST": "İlgi alanlarınız"
+    },
     "PLACEHOLDERS": {
       "SHORT_DESCRIPTION": "Kısa Açıklama"
     },

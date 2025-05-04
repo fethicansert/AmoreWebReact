@@ -10,8 +10,12 @@ import { ArrorHeadLeft } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
 import { useMediaPredicate } from "react-media-hook";
 
-const ChatContentHeader = ({ isConversationsLoading, currentConversationUser, showBackButton, setHideChatContent }) => {
-
+const ChatContentHeader = ({
+  isConversationsLoading,
+  currentConversationUser,
+  showBackButton,
+  setHideChatContent,
+}) => {
   //CONTEXT
   const { auth } = useAuth();
   const navigate = useNavigate();
@@ -19,44 +23,61 @@ const ChatContentHeader = ({ isConversationsLoading, currentConversationUser, sh
   const isActiveUser = checkUsersStatus(currentConversationUser?.id);
 
   //Mobile saklama yapmak gerekecek belki sadece coin gosterin !!!!
-  const mobileSize = useMediaPredicate('(min-width:500px)');
+  const mobileSize = useMediaPredicate("(max-width:500px)");
 
   return (
     <div className="chat-content-header">
-
       {!isConversationsLoading ? (
         <div
-          style={{ gridTemplateColumns: showBackButton ? 'auto auto auto' : 'auto auto' }}
+          style={{
+            gridTemplateColumns: showBackButton
+              ? "auto auto auto"
+              : "auto auto",
+          }}
           className="current-chat-user"
         >
-          {showBackButton && <ArrorHeadLeft strokeWidth="2" color={colors.brand1} onClick={() => setHideChatContent(true)} />}
+          {showBackButton && (
+            <ArrorHeadLeft
+              strokeWidth="2"
+              color={colors.brand1}
+              onClick={() => setHideChatContent(true)}
+            />
+          )}
 
           <ChatCardImage
-            onClick={() => navigate(`/dashboard/user/${currentConversationUser?.id}`)}
-            image={currentConversationUser?.photos[0].url || '/icons/amore_notification.png'}
+            onClick={() =>
+              navigate(`/dashboard/user/${currentConversationUser?.id}`)
+            }
+            image={
+              currentConversationUser?.photos[0].url ||
+              "/icons/amore_notification.png"
+            }
             showStatus={true}
-            radius={mobileSize ? "53px" : "45px"}
+            radius={mobileSize ? "42px" : "53px"}
             status={isActiveUser}
           />
-          {
-            mobileSize && <FlexBox
-              width={"100%"}
-              flexDirection="column"
-              alignItems="flex-start"
-              gap="2.5px 0"
-            >
-              <span className="current-chat-user-name">
-                {currentConversationUser?.name}
-              </span>
-              <span className="current-chat-user-status">{isActiveUser ? 'Çevrim içi' : 'Çevrim dışı'}</span>
-            </FlexBox>
-          }
+
+          <FlexBox
+            width={"100%"}
+            flexDirection="column"
+            alignItems="flex-start"
+            gap="2.5px 0"
+          >
+            <span className="current-chat-user-name">
+              {currentConversationUser?.name}
+            </span>
+            <span className="current-chat-user-status">
+              {isActiveUser ? "Çevrim içi" : "Çevrim dışı"}
+            </span>
+          </FlexBox>
         </div>
       ) : (
         <NotificationShimmer marginBlock="0" width="200px" showIcon={false} />
       )}
       {
-        <CurrentUserInfoBox style={{ width: "fit-content", border: "none", padding: 0 }} />
+        <CurrentUserInfoBox
+          style={{ width: "fit-content", border: "none", padding: 0 }}
+        />
       }
     </div>
   );

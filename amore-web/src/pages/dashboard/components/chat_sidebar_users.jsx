@@ -1,18 +1,15 @@
 import React from "react";
 import ChatCard from "./chat_card";
 import NotificationShimmer from "./notification_shimmer";
-import { v4 as uuidv4 } from "uuid";
 import { useUserActivty } from "../../../hooks/use_user_activity";
-import { useMediaPredicate } from "react-media-hook";
 
 const ChatSidebarUsers = ({
   currentConversationUser,
   isConversationsLoading,
-  searchedConversations,
+  convesations,
   handleConversationChange,
-  getUser
+  getUser,
 }) => {
-
   const { checkUsersStatus } = useUserActivty();
 
   return (
@@ -21,23 +18,24 @@ const ChatSidebarUsers = ({
         <div style={{ padding: "0 1rem" }}>
           {Array(10)
             .fill()
-            .map((_, i) => (
-              <NotificationShimmer key={uuidv4()} marginBlock="27px" />
+            .map((_, index) => (
+              <NotificationShimmer key={index} marginBlock="27px" />
             ))}
         </div>
-      ) : searchedConversations.length > 0 ? (
-        searchedConversations.map((conversation, index) => {
+      ) : convesations.length > 0 ? (
+        convesations.map((conversation) => {
           const user = getUser({ conversation: conversation });
           const text = getLastMessage({ conversation: conversation });
-          const time = conversation?.createdDate;
+          const time = conversation?.updatedDate;
           const isActive = checkUsersStatus(user.id);
 
           return (
             <ChatCard
               key={conversation.id}
               onClick={() => handleConversationChange(conversation)}
-              className={`chat-card-user ${currentConversationUser?.id === user.id ? "active" : ""
-                }`}
+              className={`chat-card-user ${
+                currentConversationUser?.id === user.id ? "active" : ""
+              }`}
               image={user.photos[0].url}
               title={user.name}
               text={text}
@@ -54,7 +52,6 @@ const ChatSidebarUsers = ({
       )}
     </div>
   );
-
 
   function getLastMessage({ conversation }) {
     if (!conversation?.lastMessage) return "Hadi ilk adımı sen at!";

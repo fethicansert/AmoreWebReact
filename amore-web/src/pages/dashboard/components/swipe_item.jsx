@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import AmoreLoading from "../../../copmonents/amore_loading";
 import { colors } from "../../../utils/theme";
 import { calculateAge } from "../../../utils/functions";
@@ -17,7 +17,6 @@ import {
 import UserPropertie from "./user_propertie";
 import SwipeImageWrapper from "./swipe_image_wrapper";
 import SwipeInfoShimmer from "./swipe_info_shimmer";
-import { v4 as uuidv4 } from "uuid";
 import { useTranslation } from "react-i18next";
 import { useBanner } from "../../../hooks/use_banner";
 import { useAppData } from "../../../hooks/use_add_data";
@@ -39,8 +38,6 @@ const SwipeItem = ({
   isUserBlocked = false,
   setIsUserBlocked,
 }) => {
-  console.log(user);
-
   //USER VARIABLES
   const userProfilPhoto = user?.photos[0]?.url;
   const userPhotos = user?.photos.slice(1);

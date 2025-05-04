@@ -15,9 +15,44 @@ import {
   UserIcon,
 } from "../../../assets/svg/svg_package";
 import EmptyUsersPopup from "../components/empty_users_popup";
-import { checkScrollThresold } from "../../../utils/functions";
 import "../../../css/dashboard/matches.css";
-import { useUserActivty } from "../../../hooks/use_user_activity";
+import { useMediaPredicate } from "react-media-hook";
+
+const emptyUserPopupContent = [
+  {
+    title: "Eşleşme Yok!",
+    text: "Üzgünüz, şu an eşleşme bulunmamaktadır. Eşleşmek için sağa kaydırmayı deneyin.",
+    icon: (
+      <DoubleHeartIcon
+        className=""
+        width="55px"
+        height="55px"
+        strokeWidth={1.3}
+      />
+    ),
+  },
+  {
+    title: "Henüz Beğeni Almadın!",
+    text: "Şu an seni beğenen kimse yok. Daha fazla kişiyle etkileşim kurmak için aktif olmaya devam et!",
+    icon: (
+      <HeartLineIcon
+        className=""
+        color={colors.darkText}
+        width="50px"
+        height="50px"
+        strokeWidth={1.3}
+      />
+    ),
+  },
+  {
+    title: "Ziyaretçin Bulunamadı!",
+    text: "Profilini henüz kimse ziyaret etmemiş. Daha fazla görünür olmak için profilini güncelleyebilir veya keşfetmeye başlayabilirsin!",
+    icon: (
+      <UserIcon className="" width="42px" height="42px" strokeWidth={1.3} />
+    ),
+  },
+];
+
 const Matches = () => {
   //LOCATION
   const location = useLocation();
@@ -26,59 +61,34 @@ const Matches = () => {
   const [users, setUsers] = useState([]);
   const [isUsersLoading, setIsUsersLoading] = useState(true);
 
-  //REFS
-  const userCardRef = useRef();
+  const [isScrollLoading, setIsScrollLoading] = useState(false);
+
   const currentPage = useRef(1);
-  const isScrollLoading = useRef(false);
   const stopFetchRef = useRef(false);
 
   //CONTEXT
   const { auth, isPremium } = useAuth();
   const { t, _ } = useTranslation();
   const navigate = useNavigate();
-  const { setUserStatus } = useUserActivty();
 
-  //CONSTANTS
-  const titles = ["MATCHES", "LIKES", "VISITS"];
+  const showableUserCount = getShowableUserCount();
 
-  const emptyUserPopupContent = [
-    {
-      title: "Eşleşme Yok!",
-      text: "Üzgünüz, şu an eşleşme bulunmamaktadır. Eşleşmek için sağa kaydırmayı deneyin.",
-      icon: (
-        <DoubleHeartIcon
-          className=""
-          width="60px"
-          height="60px"
-          strokeWidth={1.3}
-        />
-      ),
-    },
-    {
-      title: "Henüz Beğeni Almadın!",
-      text: "Şu an seni beğenen kimse yok. Daha fazla kişiyle etkileşim kurmak için aktif olmaya devam et!",
-      icon: (
-        <HeartLineIcon
-          className=""
-          color={colors.darkText}
-          width="57px"
-          height="57px"
-          strokeWidth={1.3}
-        />
-      ),
-    },
-    {
-      title: "Ziyaretçin Bulunamadı!",
-      text: "Profilini henüz kimse ziyaret etmemiş. Daha fazla görünür olmak için profilini güncelleyebilir veya keşfetmeye başlayabilirsin!",
-      icon: (
-        <UserIcon className="" width="50px" height="50px" strokeWidth={1.3} />
-      ),
-    },
-  ];
+  //MEDIA
+  const isMobile = useMediaPredicate("(max-width:500px)");
+
+  //REFs
+  const discoverRef = useRef();
+
   //SIDE_EFFECTS
   useEffect(() => {
+    setUsers([]);
     currentPage.current = 1;
-    fetchData({ index: currentIndex });
+    stopFetchRef.current = false;
+    fetchData({ index: currentIndex, loading: setIsUsersLoading });
+    discoverRef.current.scroll({
+      top: 0,
+      behavior: "instant",
+    });
   }, [currentIndex]);
 
   return (
@@ -90,7 +100,7 @@ const Matches = () => {
           width={"100%"}
           alignItems="center"
         >
-          {titles.map((title, index) => (
+          {["MATCHES", "LIKES", "VISITS"].map((title, index) => (
             <CustomRadio
               className={"matches-custom-radio"}
               key={index}
@@ -105,51 +115,70 @@ const Matches = () => {
           ))}
         </FlexBox>
 
-        <CurrentUserInfoBox
+        {/* <CurrentUserInfoBox
           credits={auth.credits}
           name={auth.name}
           image={auth.photos?.[0].url}
-        />
+        /> */}
       </div>
 
-      {!isUsersLoading ? (
-        <div className="discover-users" onScroll={handleScrollFetch}>
-          {users.length > 0 ? (
-            setUserStatus(users).map((user, index) => (
+      <div
+        className="discover-users"
+        onScroll={handleScrollFetch}
+        ref={discoverRef}
+      >
+        {isUsersLoading ? (
+          Array(20)
+            .fill()
+            .map((_, i) => (
+              <div key={i} className="discover-user-box loading">
+                <AmoreLoading amoreWidth={"32%"} style={{ opacity: ".6" }} />
+              </div>
+            ))
+        ) : users.length > 0 ? (
+          <>
+            {users.map((user, index) => (
               <UserCard
                 isOnlyPremium={currentIndex === 0 ? false : !isPremium}
                 isFromHome={
-                  currentIndex === 1 &&
-                  index === parseInt(location?.state?.index)
+                  index < showableUserCount && currentIndex !== 0 && !isPremium
                 }
-                ref={userCardRef}
-                key={user?.id}
+                key={index}
                 user={user}
               />
-            ))
-          ) : (
-            <EmptyUsersPopup
-              icon={emptyUserPopupContent[currentIndex].icon}
-              title={emptyUserPopupContent[currentIndex].title}
-              text={emptyUserPopupContent[currentIndex].text}
-              buttonText={"Kaydırmaya Başla"}
-              onClick={() => navigate("/dashboard/user-swipe")}
-            />
-          )}
-        </div>
-      ) : (
-        <AmoreLoading
-          className="discover-loading"
-          containerWidth={"100%"}
-          containerHeight={"90%"}
-          amoreWidth={"70%"}
-          amoreMaxWidth={"200px"}
-        />
-      )}
+            ))}
+
+            {isScrollLoading &&
+              Array(10)
+                .fill()
+                .map((_, i) => (
+                  <div key={i} className="discover-user-box loading">
+                    <AmoreLoading
+                      amoreWidth={"32%"}
+                      style={{ opacity: ".6" }}
+                    />
+                  </div>
+                ))}
+          </>
+        ) : (
+          <EmptyUsersPopup
+            icon={emptyUserPopupContent[currentIndex].icon}
+            title={emptyUserPopupContent[currentIndex].title}
+            text={emptyUserPopupContent[currentIndex].text}
+            buttonText={"Kaydırmaya Başla"}
+            onClick={() => navigate("/dashboard/user-swipe")}
+          />
+        )}
+      </div>
     </section>
   );
 
   //FUNCTIONS
+  function getShowableUserCount() {
+    if (users.length >= 20) return 5;
+    else if (users.length >= 10) return 2;
+    else if (users.length >= 5) return 1;
+  }
 
   //if users come from another page with params so chanhe index according to param
   function getCurrentIndex() {
@@ -166,9 +195,9 @@ const Matches = () => {
   }
 
   //Fetch User with given index
-  async function fetchData({ index }) {
+  async function fetchData({ index, loading }) {
     //If dowloading on scroll not need to show loading animation
-    !isScrollLoading.current && setIsUsersLoading(true);
+    loading(true);
 
     //get fetch URL
     const link = getUrl(index);
@@ -184,23 +213,19 @@ const Matches = () => {
         //get fetched users
         const fetchedUsers = response.data.data;
 
-        //filter participants and set users
-        const filteredUsers = isScrollLoading.current
-          ? [...users, ...filterUserData(response.data.data)]
-          : filterUserData(response.data.data);
-        setUsers(filteredUsers);
+        console.log(fetchedUsers.length);
+
+        setUsers((prev) => [...prev, ...filterUserData(response.data.data)]);
 
         //Incresae page count to get next page on next fetch
         currentPage.current = currentPage.current + 1;
 
-        //IF fetched users length smaller than 20 no need to fetch again beacuse max fetch users = 20
         if (fetchedUsers.length < 20) stopFetchRef.current = true;
-        isScrollLoading.current = false;
       }
     } catch (e) {
       console.log(e);
     } finally {
-      setIsUsersLoading(false);
+      loading(false);
     }
   }
 
@@ -226,31 +251,16 @@ const Matches = () => {
 
   async function handleScrollFetch(e) {
     //Stop fetch when users are fetching or users length smaller than 20
-    if (isScrollLoading.current || stopFetchRef.current) return;
+    if (isScrollLoading || stopFetchRef.current) return;
 
-    //if users scrolls the page ang get specific point we determine fetch users from behind !
-    const columnCount = getBoxColumnCount(window.innerWidth);
-    const isFecthUser = checkScrollThresold({
-      e: e,
-      card: userCardRef,
-      rowLength: users.length,
-      columnCount: columnCount,
-      thresholdPercentage: 0.9,
-    });
-    if (isFecthUser) {
-      isScrollLoading.current = true;
-      fetchData({ index: currentIndex });
+    const scrollDiv = e.target;
+    const isBottom =
+      scrollDiv.scrollTop + scrollDiv.clientHeight >=
+      scrollDiv.scrollHeight - 50;
+
+    if (isBottom) {
+      fetchData({ index: currentIndex, loading: setIsScrollLoading });
     }
-  }
-
-  //Get column count acordinh to windwow width
-  function getBoxColumnCount(width) {
-    if (width < 584) return 1;
-    else if (width >= 1649) return 6;
-    else if (width >= 1376) return 5;
-    else if (width >= 1105) return 4;
-    else if (width >= 839) return 3;
-    else if (width >= 584) return 2;
   }
 };
 

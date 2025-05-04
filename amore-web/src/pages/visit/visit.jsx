@@ -200,6 +200,8 @@ const Visit = () => {
   );
 
   async function handleSwipe(type) {
+    console.log(type);
+
     if (!isAuthenticated) return setShowLogin(true);
     if (type === "superlike" && !isPremium)
       return setLimitedOfferOptions({
@@ -224,7 +226,8 @@ const Visit = () => {
         useAuth: true,
       });
       if (response.status === 200) {
-        if (!response.data.data.isMatch) {
+        const isMatch = response?.data?.data?.isMatch;
+        if (isMatch) {
           setShowUserMatchesPopup(true);
           setPopupAnimation(null);
         }
@@ -242,8 +245,6 @@ const Visit = () => {
     setIsUserLoading(true);
     try {
       const response = await getUserData({ userId: id });
-      console.log(response);
-
       setUser(response.data.data);
     } catch (err) {
       console.log(err);

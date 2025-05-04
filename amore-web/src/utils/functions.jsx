@@ -306,25 +306,10 @@ export function base64ToBlob({ base64String, mimeType }) {
   return blob; // Blob nesnesi oluştur
 }
 
-export function checkScrollThresold({
-  e,
-  card,
-  rowLength,
-  columnCount,
-  thresholdPercentage,
-}) {
-  const totalScroll = e.target.scrollTop + e.target.offsetHeight;
-  const cardHeight = card.current.offsetHeight;
-  const threshold =
-    ((cardHeight * rowLength) / columnCount) * thresholdPercentage;
-  if (totalScroll > threshold) return true;
-  return false;
-}
-
 export function getTimeFromISO(isoString) {
   const date = new Date(isoString);
-  const hours = date.getUTCHours().toString().padStart(2, "0");
-  const minutes = date.getUTCMinutes().toString().padStart(2, "0");
+  const hours = date.getHours().toString().padStart(2, "0");
+  const minutes = date.getMinutes().toString().padStart(2, "0");
   return `${hours}:${minutes}`;
 }
 
