@@ -17,13 +17,12 @@ const ChatContentHeader = ({
   setHideChatContent,
 }) => {
   //CONTEXT
-  const { auth } = useAuth();
   const navigate = useNavigate();
   const { checkUsersStatus } = useUserActivty();
   const isActiveUser = checkUsersStatus(currentConversationUser?.id);
 
   //Mobile saklama yapmak gerekecek belki sadece coin gosterin !!!!
-  const mobileSize = useMediaPredicate("(max-width:500px)");
+  const isMobile = useMediaPredicate("(max-width:500px)");
 
   return (
     <div className="chat-content-header">
@@ -53,7 +52,7 @@ const ChatContentHeader = ({
               "/icons/amore_notification.png"
             }
             showStatus={true}
-            radius={mobileSize ? "42px" : "53px"}
+            radius={isMobile ? "42px" : "53px"}
             status={isActiveUser}
           />
 
@@ -74,11 +73,11 @@ const ChatContentHeader = ({
       ) : (
         <NotificationShimmer marginBlock="0" width="200px" showIcon={false} />
       )}
-      {
+      {!isMobile && (
         <CurrentUserInfoBox
           style={{ width: "fit-content", border: "none", padding: 0 }}
         />
-      }
+      )}
     </div>
   );
 };

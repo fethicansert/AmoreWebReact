@@ -198,7 +198,11 @@ const Dashboard = () => {
           }}
         >
           {showNotification && (
-            <HeaderNotifications readAllNotifications={readAllNotifications} />
+            <HeaderNotifications
+              readAllNotifications={readAllNotifications}
+              showBackButton={true}
+              onBackBottunClick={() => setShowNotification(false)}
+            />
           )}
 
           {showMobileNavigation && (
@@ -270,7 +274,9 @@ const Dashboard = () => {
                 {unReadedCount < 99 ? unReadedCount : 99}{" "}
               </div>
             )}
-            <NotificationIcon />
+            <NotificationIcon
+              color={showNotification ? colors.brand1 : colors.iconColor}
+            />
           </div>
         </div>
       )}
@@ -338,10 +344,20 @@ const Dashboard = () => {
             </nav>
           </FlexBox>
 
-          <LogoutIcon
-            className="logout-icon"
+          <div
             onClick={() => setShowLogout(true)}
-          />
+            style={{
+              marginTop: "auto",
+              fontSize: ".8rem",
+              fontWeight: 600,
+              display: "flex",
+              alignItems: "flex-end",
+              borderTop: `1px solid ${colors.borderColor1}`,
+              height: "40px",
+            }}
+          >
+            <LogoutIcon onClick={() => setShowLogout(true)} />
+          </div>
 
           <div
             className="layout-header-active-part"
@@ -371,6 +387,22 @@ const Dashboard = () => {
                 ))}
               </nav>
             </FlexBox>
+
+            <div
+              onClick={() => setShowLogout(true)}
+              style={{
+                marginTop: "auto",
+                fontSize: ".8rem",
+                fontWeight: 600,
+                display: "flex-end",
+                alignItems: "end",
+                borderTop: `1px solid ${colors.borderColor1}`,
+                height: "40px",
+                paddingBottom: "3px",
+              }}
+            >
+              Çıkış Yap
+            </div>
           </div>
           {showNotification && (
             <HeaderNotifications readAllNotifications={readAllNotifications} />

@@ -156,6 +156,7 @@
     height: 100%;
     border: none;
     border-radius: 12px;
+    font-size: 1rem;
 }
 
 .discover-user-filter-input:focus {
@@ -260,5 +261,20 @@
 
     .discover-users-filter-header {
         gap: 10px 0;
+    }
+
+    .discover-users-filter-selection{
+        transform-origin: top;
+        animation: filterOpenning 150ms ease;
+    }
+}
+
+@keyframes filterOpenning {
+    0%{
+        scale: 1 0;
+    }
+
+    100%{
+        scale: 1 1;
     }
 }

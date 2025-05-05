@@ -37,6 +37,14 @@
       "SENDING": "Şikayetiniz iletiliyor, lütfen bekleyin."
     },
     "ERRORS": {
+      "DAILY_MESSAGE_DIFFERENT_USER_LIMIT_REACHED": {
+        "TITLE": "Günlük Yeni Konuşma Limiti Aşıldı",
+        "SUB_TITLE": "Günlük yeni konuşma başlatma limitinizi aştınız. Hemen Premium üye olun ve sınırsız yeni konuşma başlatın."
+      },
+      "USER_BLOCKED_YOU": {
+        "TITLE": "Engellendiniz",
+        "SUB_TITLE": "Bu kullanıcı sizi engellediği için mesaj gönderemezsiniz."
+      },
       "OTP_WAIT_FOR_NEW_CODE": "Yeni bir silme işlemi başlatmak için {{süre}} saniye beklemelisiniz.",
       "OTP_ALREADY_VERIFIED": "Bu kod zaten doğrulanmışfıt",
       "PENDING_SUPPORT_REQUEST": "Bekleyen destek talebiniz var. Yeni bir soru sorabilmek icin lütfen bekleyiniz.",

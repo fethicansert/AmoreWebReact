@@ -73,6 +73,7 @@
     padding: 1.5rem 2.5rem 1.5rem 1.5rem;
 
     display: flex;
+    flex-direction: column;
 
     /* Check for z-index all places no I have no control   */
     z-index: 99;
@@ -120,10 +121,6 @@
 
 .layout-link-box a.active{
     color: var(--brand1);
-}
-
-.logout-icon:hover path {
-    stroke: var(--brand1)
 }
 
 .notification-button {
@@ -389,7 +386,7 @@
     }
 
     .notifications {
-        width: 80%;
+        width: 100%;
         top: clamp(0.3rem, 0.8vw, 0.8rem);;
         left: 0;
         border-radius: 0 var(--spacing3) var(--spacing3) 0;
@@ -401,13 +398,10 @@
         height: 55px;
     }
 
-    .notifications .notification-icon-time-flex{
-        display: none;
-    }
-
-    .notifications .notification-layout {
+  
+  .notifications .notification-layout {
         padding-block: 1rem;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: auto 1fr auto;
         gap: 8px;
     }
 
@@ -426,3 +420,13 @@
 }
 
 
+@media (max-width: 350px) {
+    .notifications .notification-icon-time-flex{
+        display: none;
+    }
+
+    .notifications .notification-layout {
+        grid-template-columns: auto 1fr;
+    }
+
+}

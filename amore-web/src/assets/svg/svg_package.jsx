@@ -701,10 +701,12 @@ export const LogoutIcon = ({
   color = "#4B164C",
   className = "",
   onClick,
+  style,
 }) => (
   <svg
     onClick={onClick}
     className={className}
+    style={style}
     width={width}
     height={height}
     viewBox="0 0 29 29"

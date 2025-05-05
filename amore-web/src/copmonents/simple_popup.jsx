@@ -7,10 +7,12 @@ const SimplePopup = ({
   icon,
   title,
   text,
+  onOk,
   onYes,
   onNo,
   textStyle,
   titleStyle,
+  containerStyle,
 }) => {
   return (
     <div
@@ -25,6 +27,7 @@ const SimplePopup = ({
         maxWidth: "250px",
         borderRadius: "12px",
         textAlign: "center",
+        ...containerStyle,
       }}
     >
       {icon}

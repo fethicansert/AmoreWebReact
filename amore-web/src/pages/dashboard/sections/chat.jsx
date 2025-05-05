@@ -3,12 +3,13 @@ import { useConversation } from "../../../hooks/use_conversation";
 import {
   ArrowHeadRight,
   ChatBubbleIcon,
+  ReportIcon,
 } from "../../../assets/svg/svg_package";
 import ChatCard from "../components/chat_card";
 import whatsAppIcon from "../../../assets/icons/whatsapp_icon.png";
 import { useAuth } from "../../../hooks/use_auth";
 import { v4 as uuidv4 } from "uuid";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { axiosAmore } from "../../../api/axios";
 import ChatBubbleShimmer from "../components/chat_bubble_shimmer";
 import ChatType from "../components/chat_type";
@@ -17,12 +18,14 @@ import ChatGiftSelect from "../components/chat_gift_select";
 import ChatInput from "../components/chat_input";
 import ChatImagePreview from "../components/chat_image_preview";
 import ChatContentHeader from "../components/chat_content_header";
-import ChatSidebarSearch from "../components/chat_sidebar_search";
 import ChatSidebarUsers from "../components/chat_sidebar_users";
 import ChatUnlockImage from "../components/chat_unlock_image";
 import "../../../css/dashboard/chat.css";
 import { useSocket } from "../../../hooks/use_socket";
 import { useMediaPredicate } from "react-media-hook";
+import FixedOverflow from "../../../copmonents/fixed_overflow";
+import SimpleOkPopup from "../components/simple_ok_popup";
+import { useTranslation } from "react-i18next";
 
 const Chat = () => {
   //NAVIGATION
@@ -39,6 +42,10 @@ const Chat = () => {
 
   const [hideChatContent, setHideChatContent] = useState(true);
 
+  const [error, setError] = useState({});
+
+  const navigate = useNavigate();
+
   //CONTEXT
   const { auth } = useAuth();
   const {
@@ -48,6 +55,7 @@ const Chat = () => {
     isConversationNotEmpty,
   } = useConversation();
   const { socket, isSocketConnected } = useSocket();
+  const { t } = useTranslation();
 
   //REFS
   const currentConversationRef = useRef(
@@ -89,7 +97,12 @@ const Chat = () => {
   useEffect(() => {
     //INSTANT SCROLL
 
-    if (isInitialLoadRef.current && messages.length > 0) {
+    if (isMessagesLoading) {
+      messageContentRef.current.scroll({
+        top: messageContentRef.current.scrollHeight,
+        behavior: "instant",
+      });
+    } else if (isInitialLoadRef.current && messages.length > 0) {
       isInitialLoadRef.current = false;
       messageContentRef.current.scroll({
         top: messageContentRef.current.scrollHeight,
@@ -146,6 +159,19 @@ const Chat = () => {
           : "1fr 2.2fr",
       }}
     >
+      {error?.message && (
+        <FixedOverflow>
+          <SimpleOkPopup
+            containerStyle={{ padding: "1rem" }}
+            onClick={error.buttonOptions.onClick}
+            buttonText={error.buttonOptions.text}
+            title={t(`ERRORS.${error.message}.TITLE`)}
+            text={t(`ERRORS.${error.message}.SUB_TITLE`)}
+            icon={<ReportIcon width="50" height="50" strokeWidth="2.1" />}
+          />
+        </FixedOverflow>
+      )}
+
       {(hideChatContent || !oneScreenChat) && (
         <div className="chat-sidebar">
           {/* WHATSAPP SUPPORT */}
@@ -248,10 +274,12 @@ const Chat = () => {
 
   //Change Current Conversation
   function handleConversationChange(conversation) {
+    isInitialLoadRef.current = true;
+
     if (oneScreenChat) {
       setHideChatContent(false);
     }
-    isInitialLoadRef.current = true;
+
     currentConversationRef.current = conversation;
     currentConversationUser.current = getUser({ conversation: conversation });
     getMessages(conversation.id);
@@ -381,8 +409,33 @@ const Chat = () => {
           prev.map((msg) => (msg.id === tempId ? responseMessage : msg))
         );
       }
-    } catch (err) {
-      console.log(err);
+    } catch (e) {
+      const message = e?.response?.data?.response?.message;
+      if (message) {
+        setError({
+          message: message,
+          buttonOptions: getErrorButtonOptions(message),
+        });
+        setMessages((prev) => prev.filter((msg) => msg.id !== tempId));
+      } else {
+        console.log(e);
+      }
+    }
+  }
+
+  function getErrorButtonOptions(message) {
+    switch (message) {
+      case "DAILY_MESSAGE_DIFFERENT_USER_LIMIT_REACHED":
+        return {
+          text: "Premium ol",
+          onClick: () => navigate("/dashboard/premium-subscription"),
+        };
+
+      case "USER_BLOCKED_YOU":
+        return { text: "Tamam", onClick: () => setError({}) };
+
+      default:
+        return { text: "Tamam", onClick: () => setError({}) };
     }
   }
 

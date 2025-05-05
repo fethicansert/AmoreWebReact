@@ -12,6 +12,10 @@ const ChatAudio = ({ message, isSender }) => {
   const currentTimeRef = useRef(0);
   const durationRef = useRef(message?.metadata?.duration ?? 0);
 
+  fetch(`https://cors.albsoftware.tech/${message.dataUrl}`)
+    .then((res) => res.blob())
+    .then((data) => console.log(data));
+
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;

@@ -14,7 +14,7 @@ import {
   HeartLineIcon,
   UserIcon,
 } from "../../../assets/svg/svg_package";
-import EmptyUsersPopup from "../components/empty_users_popup";
+import EmptyUsersPopup from "../components/simple_ok_popup";
 import "../../../css/dashboard/matches.css";
 import { useMediaPredicate } from "react-media-hook";
 

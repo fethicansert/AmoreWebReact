@@ -15,7 +15,7 @@ import FilterSlider from "../../../copmonents/filter_slider.jsx";
 import CustomRadio from "../../../copmonents/custom_radio.jsx";
 import PremiumBox from "../../../copmonents/premium_box.jsx";
 import { useTranslation } from "react-i18next";
-import SimplePopup from "../components/empty_users_popup.jsx";
+import SimpleOkPopup from "../components/simple_ok_popup.jsx";
 import { useNavigate } from "react-router-dom";
 
 const Discover = () => {
@@ -213,7 +213,7 @@ const Discover = () => {
                 ))}
           </>
         ) : (
-          <SimplePopup
+          <SimpleOkPopup
             icon={
               <DiscoverIcon
                 className=""

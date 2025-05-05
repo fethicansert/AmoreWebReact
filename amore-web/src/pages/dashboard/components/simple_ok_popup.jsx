@@ -2,9 +2,16 @@ import React from "react";
 import BasicButton from "../../../copmonents/basic_button";
 import { colors } from "../../../utils/theme";
 
-const SimplePopup = ({ icon, title, text, onClick, buttonText }) => {
+const SimpleOkPopup = ({
+  icon,
+  title,
+  text,
+  onClick,
+  buttonText,
+  containerStyle,
+}) => {
   return (
-    <div className="empty-matches">
+    <div className="simple_ok_popup" style={containerStyle}>
       {icon}
       <h3>{title}</h3>
       <p>{text}</p>
@@ -22,4 +29,4 @@ const SimplePopup = ({ icon, title, text, onClick, buttonText }) => {
   );
 };
 
-export default SimplePopup;
+export default SimpleOkPopup;

@@ -6,10 +6,12 @@ import { colors } from "../../../utils/theme";
 import MarkeItem from "../components/market_item";
 import { useTranslation } from "react-i18next";
 import { useBanner } from "../../../hooks/use_banner";
+import { useNavigate } from "react-router-dom";
 
 const Market = () => {
   const { t, _ } = useTranslation();
-  const { setLimitedOfferOptions } = useBanner();
+
+  const navigate = useNavigate();
 
   return (
     <section className="market">
@@ -26,12 +28,7 @@ const Market = () => {
           </FlexBox>
 
           <BasicButton
-            onClick={() =>
-              setLimitedOfferOptions({
-                show: true,
-                type: "premium-subscription",
-              })
-            }
+            onClick={() => navigate("/dashboard/premium-subscription")}
             className="market-header-button"
           >
             {t("DASHBOARD.MARKET.PREMIUM_SUBSCRIPTION_HEADER.BUTTON_TEXT")}

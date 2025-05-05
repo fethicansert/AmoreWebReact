@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ArrowLeftIcon,
   NotificationConfirmIcon,
   NotificationIcon,
   TrashIcon,
@@ -14,7 +15,11 @@ import { axiosAmore } from "../../../api/axios";
 import { handlePushPermission } from "../../../utils/functions";
 import NotificationShimmer from "./notification_shimmer";
 
-const HeaderNotifications = ({ readAllNotifications }) => {
+const HeaderNotifications = ({
+  readAllNotifications,
+  showBackButton,
+  onBackBottunClick,
+}) => {
   const [notifications, setNotifications] = useState([]);
 
   console.log(notifications);
@@ -55,7 +60,11 @@ const HeaderNotifications = ({ readAllNotifications }) => {
           justifyContent="space-between"
           className="notifications-header"
         >
-          <h3>{t("DASHBOARD.TITLES.NOTIFICATIONS_TITLE")}</h3>
+          <FlexBox gap="0 14px" onClick={onBackBottunClick}>
+            {showBackButton && <ArrowLeftIcon color={colors.brand1} />}
+            <h3>{t("DASHBOARD.TITLES.NOTIFICATIONS_TITLE")}</h3>
+          </FlexBox>
+
           <FlexBox gap="0 14px">
             <NotificationConfirmIcon
               width="25"

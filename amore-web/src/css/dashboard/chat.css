@@ -913,8 +913,6 @@
 
 @media(max-width: 600px) {
 
-  
-
     .chat-sidebar {
         padding-bottom: 1rem;
     }
@@ -1031,8 +1029,8 @@
     }
 
     .chat-input-container {
-        height: 47px;
-        padding: .1rem .15rem;
+        height: 48px;
+        padding: .1rem .5rem;
     }
 
     .chat-send-image-button svg path,
@@ -1051,19 +1049,25 @@
 
 @media(max-width: 500px) {
     
-    .current-chat-user{
-        gap: 5px;
-    }
     .chat-image-container {
-        max-width: 220px;
+        max-width: 280px;
     }
   
     .chat-bubble-shimmer {
         width: 90%;
-    }
+    }   
 
-    .chat-card-user:hover{
-        background: var(--backGround3);
+    .chat-card-user:hover,
+    .chat-card-user.active{
+        background:var(--backGround3)
+    }
+    
+    .chat-card-user{
+        transition: none
+    }
+    
+    .chat-card-user:active{
+        background-color: rgba(221, 136, 207, .5);
     }
 
     .chat-card-user.active::before,
@@ -1076,16 +1080,10 @@
         padding:  1rem;
     }
 
-
     .chat-content-header {
         padding: .5rem .4rem .5rem .2rem
     }
-
-    .chat-content-header .current-user-info-box .current-user-info-box-image,
-    .chat-content-header .current-user-info-box .current-user-info-box-user-name {
-        display: none;
-    }
-
+   
     .chat-bubble-wrapper {
         display: grid;
         padding: .75rem .8rem;
@@ -1105,7 +1103,10 @@
 
 @media(max-width: 350px) {
 
- 
+    .chat-image-container {
+        max-width: 260px;
+    }
+
     .chat-input-container {
         height: 44px;
     }
