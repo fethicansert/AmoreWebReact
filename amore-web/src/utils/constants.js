@@ -1,4 +1,3 @@
-
 //APP INFO
 export const APP_INFO = {
     TITLE: "Amore",

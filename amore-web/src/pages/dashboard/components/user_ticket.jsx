@@ -10,6 +10,7 @@ import UserNewTicket from "./user_new_ticket";
 import FlexBox from "../../../copmonents/flex_box";
 import FixedOverflow from "../../../copmonents/fixed_overflow";
 import { axiosAmore } from "../../../api/axios";
+import { useTranslation } from "react-i18next";
 
 const UserTicket = ({ ticket, setTickets }) => {
   const [showTicket, setShowTicket] = useState(false);
@@ -23,11 +24,11 @@ const UserTicket = ({ ticket, setTickets }) => {
 
   const [messageImage, setMessageImage] = useState("");
 
-  // const [questionImage, setQuestionImage] = useState();
+  const { t } = useTranslation();
 
   const placeHolderTicket = {
     sender: "admin",
-    message: "Müşteri Hizmetleri en kısa sürede dönüş yapacaktır.",
+    message: t("DASHBOARD.PROFILE.SUPPORT.PLACEHOLDER_TICKET"),
   };
 
   return (
@@ -156,7 +157,9 @@ const UserTicket = ({ ticket, setTickets }) => {
             {isAdmin && (
               <FlexBox gap="0 7px" style={{ marginBottom: "1rem" }}>
                 <HeadphoneIcon color={colors.brand1} />
-                <h4>Amore - Müşteri Hizmetleri</h4>
+                <h4>
+                  Amore - {t("DASHBOARD.PROFILE.SUPPORT.CUSTOMER_SERVICE")}
+                </h4>
               </FlexBox>
             )}
             <p>{message.message}</p>

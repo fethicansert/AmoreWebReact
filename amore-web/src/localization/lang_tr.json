@@ -10,7 +10,8 @@
       "INTEREST": "İlgi alanlarınız"
     },
     "PLACEHOLDERS": {
-      "SHORT_DESCRIPTION": "Kısa Açıklama"
+      "SHORT_DESCRIPTION": "Kısa Açıklama",
+      "TITLE": "Başlık"
     },
     "BLOCK": {
       "BLOCK_BUTTON": "Kişiyi Engelle",
@@ -72,9 +73,11 @@
       "YES": "Evet",
       "CANCEL": "İptal",
       "SEND": "Gönder",
-      "SEND_MESSAGE_BUTTON": "Mesaj Gönder",
+      "SEND_MESSAGE": "Mesaj Gönder",
+      "BACK_TO_SWIPE": "Kaydırmaya Devam Et",
       "PAY_BUTTON": "Ödeme Yap",
-      "OKAY_BUTTON": "Tamam"
+      "OKAY_BUTTON": "Tamam",
+      "LOGOUT_BUTTON": "Çıkış Yap"
     },
     "USER_CARD": {
       "ONLY_PREMIUM_USERS": "Sadece Premim Üyeler"
@@ -96,6 +99,10 @@
       },
       "NAVIGATE_MARKET": "Tüm Jetonları Gör",
       "NAVIGATE_SUBSCRIPTIONS": "Tüm Abonelikleri Gör"
+    },
+    "MATCH_POPUP": {
+      "TITLE": "Eşleşme!",
+      "SUB_TITLE": "Harika, {{user}} ile eşleştiniz."
     },
     "LOGIN_POPUP": {
       "TITLE": "Hemen Başla !",
@@ -431,6 +438,29 @@
           "SETTINGS": "Ayarlar",
           "BLOCKED_USERS": "Engellenmiş Kullanıcılar",
           "SUPPORT": "Destek Sistemi"
+        },
+        "LANGUAGE": {
+          "LANGUAGE_CHANGING": "Dil Değitiriliyor lütfen bekliyin."
+        },
+        "SETTINGS": {
+          "NOTIFICATION": "Bildirim",
+          "NOTIFICATION_SOUND": "Bildirim Sesi",
+          "PRIVACY_POLICY": "Gizlilik Politikası",
+          "TERMS_OF_SERVICE": "Hizmet Şartları",
+          "VERSION": "Versiyon",
+          "DELETE_ACCOUNT_BUTTON": "Hesap Sil"
+        },
+        "BLOCKED_USER": {
+          "NO_BLOCKED_USERS": "Engellenmiş kullanıcı bulunmuyor."
+        },
+        "SUPPORT": {
+          "NEW_QUESTION": "Yeni Soru",
+          "OLD_QUESTIONS": "Önceki Sorular",
+          "SEND_QUESTION_BUTTON": "Soruyu Gönder",
+          "ADD_IMAGE_PLACEHOLDER": "Konu ile alakalı fotoğraf",
+          "CUSTOMER_SERVICE": "Müşteri Hizmetleri",
+          "PLACEHOLDER_TICKET": "Müşteri Hizmetleri en kısa sürede dönüş yapacaktır.",
+          "NO_QUESTIONS": "Soru bulunmuyor."
         }
       }
     }

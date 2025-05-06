@@ -26,10 +26,10 @@ const ChatVoiceRecord = ({ setIsShowRecording, sendVoice }) => {
   const totalDurationCounterRef = useRef();
   const voicePlayerRef = useRef();
 
+  const [url, setUrl] = useState("");
+
   const [wavesurfer, setWavesurfer] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-
-  const [url, setUrl] = useState("");
 
   const onReady = (ws) => {
     setWavesurfer(ws);

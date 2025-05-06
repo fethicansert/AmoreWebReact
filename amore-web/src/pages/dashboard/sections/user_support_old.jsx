@@ -4,10 +4,13 @@ import UserTicket from "../components/user_ticket";
 import { ClipLoader } from "react-spinners";
 import { colors } from "../../../utils/theme";
 import { useOutletContext } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const UserSupportOld = () => {
   const [tickets, setTickets] = useState([]);
   const [ticketsLoading, setTicketsLoading] = useState(true);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     getTickets();
@@ -37,7 +40,7 @@ const UserSupportOld = () => {
           ))}
         </div>
       ) : (
-        <p>Soru Bulunmuyor</p>
+        <p>{t("DASHBOARD.PROFILE.SUPPORT.NO_QUESTIONS")}</p>
       )}
     </div>
   );

@@ -18,7 +18,7 @@ const UserSupport = () => {
     imageFile: "",
   });
 
-  const { t, _ } = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const location = useLocation().pathname.split("/").slice(-1).pop();
@@ -34,10 +34,13 @@ const UserSupport = () => {
             className={({ isActive, _ }) => (isActive ? "active" : "")}
             to={""}
           >
-            Yeni Soru
+            {t("DASHBOARD.PROFILE.SUPPORT.NEW_QUESTION")}
           </NavLink>
 
-          <NavLink to={"old"}>Önceki Sorular</NavLink>
+          <NavLink to={"old"}>
+            {" "}
+            {t("DASHBOARD.PROFILE.SUPPORT.OLD_QUESTIONS")}
+          </NavLink>
         </FlexBox>
 
         <Outlet
@@ -67,7 +70,7 @@ const UserSupport = () => {
             {submitting ? (
               <BeatLoader color={colors.backGround3} size={8} />
             ) : (
-              "Soruyu Gönder"
+              t("DASHBOARD.PROFILE.SUPPORT.SEND_QUESTION_BUTTON")
             )}
           </BasicButton>
         </div>

@@ -71,7 +71,7 @@ const Discover = () => {
           <div className="discover-users-filter-header">
             {!showCurrentUserBox && <CurrentUserInfoBox />}
 
-            <div style={{ padding: ".7rem", width: "100%" }}>
+            <div style={{ padding: isMobile ? ".7rem" : "0", width: "100%" }}>
               <BasicButton
                 onClick={() => setShowFilter((prev) => !prev)}
                 className="discover-users-filter-header-btn"

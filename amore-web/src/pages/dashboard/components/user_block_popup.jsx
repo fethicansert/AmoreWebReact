@@ -7,18 +7,10 @@ import { ClipLoader } from "react-spinners";
 import { useTranslation } from "react-i18next";
 import SimpleLoading from "./simple_loading";
 
-const UserBlockPopup = ({
-  user,
-  onYes,
-  onClose,
-  loading,
-  overflowColor,
-  isBlock = false,
-  bottom,
-}) => {
+const UserBlockPopup = ({ user, onYes, onClose, loading, isBlock = false }) => {
   const { t, _ } = useTranslation();
   return (
-    <FixedOverflow color={"rgba(0, 0, 0, 0.45)"} bottom={bottom}>
+    <>
       {!loading ? (
         <div className="unblock-popup">
           <img
@@ -63,7 +55,7 @@ const UserBlockPopup = ({
           }
         />
       )}
-    </FixedOverflow>
+    </>
   );
 };
 
@@ -76,4 +68,8 @@ export default UserBlockPopup;
     ? t("BLOCK.BLOCKING", { user: user.name })
     : t("BLOCK.UNBLOCKING", { user: user.name })}
 </p> */
+}
+
+{
+  /* <FixedOverflow color={"rgba(0, 0, 0, 0.45)"} bottom={bottom}> */
 }

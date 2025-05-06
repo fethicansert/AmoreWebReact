@@ -7,6 +7,8 @@ import { ClipLoader } from "react-spinners";
 import UserBlockPopup from "../components/user_block_popup";
 import { useOutletContext } from "react-router-dom";
 import UserProfileHeader from "../components/user_profile_header";
+import FixedOverflow from "../../../copmonents/fixed_overflow";
+import { useTranslation } from "react-i18next";
 
 const UserBlockedUsers = () => {
   const [blockedUsers, setBlockedUsers] = useState([]);
@@ -16,6 +18,8 @@ const UserBlockedUsers = () => {
   const blockedUserRef = useRef();
 
   const { userRightColumnRef } = useOutletContext();
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     getBlockedUser();
@@ -80,18 +84,26 @@ const UserBlockedUsers = () => {
           ))
         ) : (
           <p style={{ fontSize: ".95rem" }}>
-            Engellenmiş kullanıcı bulunmuyor.
+            {t("DASHBOARD.PROFILE.BLOCKED_USER.NO_BLOCKED_USERS")}
           </p>
         )}
 
         {showPopup && (
-          <UserBlockPopup
-            user={blockedUserRef.current}
-            onClose={handleClosePopup}
-            loading={isUnBlocking}
-            onYes={() => unBlockUser(blockedUserRef.current.id)}
-            bottom={`-${userRightColumnRef?.current?.scrollTop}px`}
-          />
+          <FixedOverflow
+            onClick={(e) => {
+              if (e.target.className === "fixed-overflow") {
+                setShowPopup(false);
+              }
+            }}
+          >
+            <UserBlockPopup
+              user={blockedUserRef.current}
+              onClose={handleClosePopup}
+              loading={isUnBlocking}
+              onYes={() => unBlockUser(blockedUserRef.current.id)}
+              bottom={`-${userRightColumnRef?.current?.scrollTop}px`}
+            />
+          </FixedOverflow>
         )}
       </div>
     </div>

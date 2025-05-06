@@ -1,7 +1,8 @@
 {
   "translation": {
     "PLACEHOLDERS": {
-      "SHORT_DESCRIPTION": "Short Description"
+      "SHORT_DESCRIPTION": "Short Description",
+      "TITLE": "Title"
     },
     "BLOCK": {
       "BLOCK_BUTTON": "Block User",
@@ -28,6 +29,14 @@
       "SENDING": "Your report is being submitted, please wait."
     },
     "ERRORS": {
+      "DAILY_MESSAGE_DIFFERENT_USER_LIMIT_REACHED": {
+        "TITLE": "Daily New Conversation Limit Reached",
+        "SUB_TITLE": "You have exceeded your daily limit for starting new conversations. Go Premium now and start unlimited new chats."
+      },
+      "USER_BLOCKED_YOU": {
+        "TITLE": "You’ve Been Blocked",
+        "SUB_TITLE": "You cannot send a message because this user has blocked you."
+      },
       "DELETE_ACCOUNT": {
         "OTP_WAIT_FOR_NEW_CODE": "You need to wait {{time}} seconds before starting a new deletion process."
       },
@@ -57,9 +66,11 @@
       "YES": "Yes",
       "CANCEL": "Cancel",
       "SEND": "Send",
-      "SEND_MESSAGE_BUTTON": "Send Message",
+      "SEND_MESSAGE": "Send Message",
+      "BACK_TO_SWIPE": "Keep Swiping",
       "PAY_BUTTON": "Make Payment",
-      "OKAY_BUTTON": "Okay"
+      "OKAY_BUTTON": "Okay",
+      "LOGOUT_BUTTON": "Log Out"
     },
     "USER_CARD": {
       "ONLY_PREMIUM_USERS": "Premium Members Only"
@@ -81,6 +92,10 @@
       },
       "NAVIGATE_MARKET": "View All Tokens",
       "NAVIGATE_SUBSCRIPTIONS": "View All Subscriptions"
+    },
+    "MATCH_POPUP": {
+      "TITLE": "It's a Match!",
+      "SUB_TITLE": "Awesome, you've matched with {{user}}."
     },
     "LOGIN_POPUP": {
       "TITLE": "Get Started Now !",
@@ -417,6 +432,29 @@
           "SETTINGS": "Settings",
           "BLOCKED_USERS": "Blocked Users",
           "SUPPORT": "Support System"
+        },
+        "LANGUAGE": {
+          "LANGUAGE_CHANGING": "Changing language, please wait."
+        },
+        "SETTINGS": {
+          "NOTIFICATION": "Notification",
+          "NOTIFICATION_SOUND": "Notification Sound",
+          "PRIVACY_POLICY": "Privacy Policy",
+          "TERMS_OF_SERVICE": "Terms of Service",
+          "VERSION": "Version",
+          "DELETE_ACCOUNT_BUTTON": "Delete Account"
+        },
+        "BLOCKED_USER": {
+          "NO_BLOCKED_USERS": "No blocked users found."
+        },
+        "SUPPORT": {
+          "NEW_QUESTION": "New Question",
+          "OLD_QUESTIONS": "Previous Questions",
+          "SEND_QUESTION_BUTTON": "Send Question",
+          "ADD_IMAGE_PLACEHOLDER": "Photo related to the topic",
+          "CUSTOMER_SERVICE": "Customer Service",
+          "PLACEHOLDER_TICKET": "Customer support will get back to you as soon as possible.",
+          "NO_QUESTIONS": "No questions found."
         }
       }
     }

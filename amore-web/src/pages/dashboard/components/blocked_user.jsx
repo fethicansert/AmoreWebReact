@@ -20,7 +20,7 @@ const BlockedUser = ({ user, onClick, loading }) => {
         backgroundColor: colors.backGround3,
         border: `1px solid ${colors.borderColor1}`,
         borderRadius: "12px",
-        width: "100",
+        width: "100%",
         maxWidth: "290px",
         textAlign: "center",
       }}

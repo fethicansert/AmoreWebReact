@@ -1,65 +1,65 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { colors } from "../../../utils/theme";
 import { PauseIcon, PlayIcon } from "../../../assets/svg/svg_package";
 import { getTimeFromISO } from "../../../utils/functions";
 import { BeatLoader } from "react-spinners";
+import WavesurferPlayer, { useWavesurfer } from "@wavesurfer/react";
+import Timeline from "wavesurfer.js/dist/plugins/timeline.esm.js";
 
 const ChatAudio = ({ message, isSender }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const durationRef = useRef(0);
+  const containerRef = useRef(null);
 
-  const audioRef = useRef(new Audio(message.dataUrl));
-  const currentTimeRef = useRef(0);
-  const durationRef = useRef(message?.metadata?.duration ?? 0);
-
-  fetch(`https://cors.albsoftware.tech/${message.dataUrl}`)
-    .then((res) => res.blob())
-    .then((data) => console.log(data));
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
-
-    audioRef.current.addEventListener(
-      "loadedmetadata",
-      (e) => {
-        if (e.target.duration !== Infinity)
-          durationRef.current = e.target.duration;
-      },
-      { signal }
-    );
-
-    audioRef.current.addEventListener(
-      "timeupdate",
-      (e) => {
-        const progress = (e.target.currentTime / durationRef.current) * 100;
-        setProgress(progress > 100 ? 100 : progress);
-        currentTimeRef.current = Math.round(e.target.currentTime);
-      },
-      { signal }
-    );
-
-    audioRef.current.addEventListener(
-      "ended",
-      () => {
-        currentTimeRef.current = 0;
-        setIsPlaying(false);
-        setProgress(0);
-      },
-      { signal }
-    );
-
-    return () => controller.abort();
-  }, []);
-
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
+  const onReady = (ws) => {
+    if (ws) durationRef.current = ws.getDuration();
+    setWavesurfer(ws);
+    setIsPlaying(false);
   };
+
+  {
+    /* <WavesurferPlayer
+          mediaControls={false}
+          hideScrollbar={true}
+          minPxPerSec={90}
+          height={30}
+          width={"100%"}
+          barWidth={2}
+          barGap={2.5}
+          barHeight={2}
+          barRadius={10}
+          waveColor={colors.fadedText}
+          cursorColor={colors.brand2}
+          progressColor={colors.brand2}
+          cursorWidth={2}
+          url={`https://cors.albsoftware.tech/${message.dataUrl}`}
+          onReady={onReady}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+          onAudioprocess={(currentTime) => {
+            console.log("Current time:", currentTime);
+          }}
+        /> */
+  }
+
+  const { wavesurfer, isPlaying, currentTime } = useWavesurfer({
+    container: containerRef,
+    hideScrollbar: true,
+    mediaControls: false,
+    minPxPerSec: 90,
+    barWidth: 2,
+    barHeight: 2,
+    cursorWidth: 2,
+    cursorColor: colors.brand2,
+    width: "100%",
+    height: 35,
+    waveColor: colors.fadedText,
+    progressColor: colors.brand2,
+    url: `https://cors.albsoftware.tech/${message.dataUrl}`,
+  });
+
+  const onPlayPause = useCallback(() => {
+    wavesurfer && wavesurfer.playPause();
+  }, [wavesurfer]);
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
@@ -82,42 +82,72 @@ const ChatAudio = ({ message, isSender }) => {
     >
       {isPlaying ? (
         <PauseIcon
+          width="23"
+          height="26"
           color={isSender ? colors.darkText : colors.backGround3}
-          onClick={togglePlay}
+          onClick={onPlayPause}
         />
       ) : (
         <PlayIcon
-          onClick={togglePlay}
+          width="23"
+          height="26"
+          onClick={onPlayPause}
           color={isSender ? colors.darkText : colors.backGround3}
         />
       )}
 
+      <div>
+        <span style={{ fontSize: ".62rem" }}>
+          {formatTime(
+            isPlaying ? currentTime : wavesurfer ? wavesurfer.getDuration() : 0
+          )}
+        </span>
+      </div>
+
       <div
         style={{
-          height: "2.5px",
-          background: isSender ? "#00000033" : "#FFFFFF33",
-          borderRadius: "2px",
-          position: "relative",
+          padding: ".3rem",
+          background: colors.backGround3,
+          borderRadius: "12px",
         }}
       >
-        <div
-          style={{
-            width: `${progress}%`,
-            height: "100%",
-            background: colors.backGround3,
-            position: "relative",
-            transition: isPlaying ? `width 0.25s ease-in` : "none",
-          }}
-        >
-          <div
-            className="audio-duration-progress-circle"
-            style={{
-              background: isSender ? colors.darkText : colors.backGround3,
-            }}
-          ></div>
-        </div>
+        <div ref={containerRef}></div>
+      </div>
 
-        <span className="chat-audio-duration">
+      <span
+        style={{
+          position: "relative",
+          bottom: "-2.5px",
+          right: "-1px",
+          marginTop: ".1rem",
+          fontSize: ".6rem",
+          alignSelf: "center",
+          color: isSender ? "rgba(0, 0, 0, .65)" : "rgba(255, 255, 255, .8)",
+        }}
+      >
+        {message.isSending ? (
+          <BeatLoader
+            size={4}
+            color={"rgba(255, 255, 255, .8)"}
+            style={{
+              alignSelf: "self-end",
+              jusifySelf: "center",
+              position: "relative",
+              top: "2px",
+            }}
+          />
+        ) : (
+          getTimeFromISO(message?.createdDate)
+        )}
+      </span>
+    </div>
+  );
+};
+
+export default ChatAudio;
+
+{
+  /* <span className="chat-audio-duration">
           {formatTime(currentTimeRef.current)} /{" "}
           {formatTime(durationRef.current)}
         </span>
@@ -142,10 +172,5 @@ const ChatAudio = ({ message, isSender }) => {
           ) : (
             getTimeFromISO(message?.createdDate)
           )}
-        </span>
-      </div>
-    </div>
-  );
-};
-
-export default ChatAudio;
+        </span> */
+}

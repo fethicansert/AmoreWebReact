@@ -10,9 +10,12 @@ const FixedOverflow = ({
   right = 0,
   bottom = 0,
   left = 0,
+  onClick,
 }) => {
   return (
     <div
+      className="fixed-overflow"
+      onClick={onClick}
       style={{
         position: "fixed",
         top,

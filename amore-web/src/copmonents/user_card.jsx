@@ -109,7 +109,7 @@ const UserCard = ({
               {sendingMessage ? (
                 <BeatLoader size={8} color={colors.brand2} />
               ) : (
-                t("BUTTONS.SEND_MESSAGE_BUTTON")
+                t("BUTTONS.SEND_MESSAGE")
               )}
             </BasicButton>
           )}

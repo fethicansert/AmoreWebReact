@@ -169,6 +169,7 @@ const UserReportPopup = ({ onClose }) => {
           {isSelected && (
             <div
               style={{
+                animation: "fade 150ms ease",
                 width: "11px",
                 height: "11px",
                 borderRadius: "50%",

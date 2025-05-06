@@ -30,6 +30,7 @@ import { axiosAmore } from "../../../api/axios";
 import BlockedUser from "./blocked_user";
 import UserReportPopup from "./user_report_popup";
 import { useUserActivty } from "../../../hooks/use_user_activity";
+import FixedOverflow from "../../../copmonents/fixed_overflow";
 
 const SwipeItem = ({
   user,
@@ -103,14 +104,18 @@ const SwipeItem = ({
           )}
 
           {showBlockPopup && (
-            <UserBlockPopup
-              isBlock={true}
-              user={user}
-              loading={isBlocking}
-              onClose={() => setShowBlockPopup(false)}
-              onYes={() => handleBlock({ userId: user.id, operation: "block" })}
-              overflowColor="rgba(0, 0, 0, 0.3)"
-            />
+            <FixedOverflow color={"rgba(0, 0, 0, 0.45)"}>
+              <UserBlockPopup
+                isBlock={true}
+                user={user}
+                loading={isBlocking}
+                onClose={() => setShowBlockPopup(false)}
+                onYes={() =>
+                  handleBlock({ userId: user.id, operation: "block" })
+                }
+                overflowColor="rgba(0, 0, 0, 0.3)"
+              />
+            </FixedOverflow>
           )}
 
           {showGalery && (

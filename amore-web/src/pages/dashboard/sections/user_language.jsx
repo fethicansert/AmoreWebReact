@@ -9,6 +9,7 @@ import { axiosAmore } from "../../../api/axios";
 import FixedOverflow from "../../../copmonents/fixed_overflow";
 import { ClipLoader, ClockLoader } from "react-spinners";
 import SimpleLoading from "../components/simple_loading";
+import { useTranslation } from "react-i18next";
 
 const languages = [
   { country: "GB", text: "English", value: "en" },
@@ -28,6 +29,8 @@ const UserLanguage = () => {
 
   //STATE
   const [loading, setLoading] = useState();
+
+  const { t } = useTranslation();
 
   return (
     <div className="language">
@@ -58,7 +61,9 @@ const UserLanguage = () => {
 
       {loading && (
         <FixedOverflow>
-          <SimpleLoading text={"Dil Değitiriliyor lütfen bekliyin."} />
+          <SimpleLoading
+            text={t("DASHBOARD.PROFILE.LANGUAGE.LANGUAGE_CHANGING")}
+          />
         </FixedOverflow>
       )}
     </div>

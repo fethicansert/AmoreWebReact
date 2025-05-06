@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ArrorHeadLeft,
+  ArrowHeadRight,
   ArrowLeftIcon,
+  CrossCloseIcon,
   NotificationConfirmIcon,
   NotificationIcon,
   TrashIcon,
@@ -61,7 +64,9 @@ const HeaderNotifications = ({
           className="notifications-header"
         >
           <FlexBox gap="0 14px" onClick={onBackBottunClick}>
-            {showBackButton && <ArrowLeftIcon color={colors.brand1} />}
+            {showBackButton && (
+              <ArrorHeadLeft color={colors.brand1} strokeWidth="2" />
+            )}
             <h3>{t("DASHBOARD.TITLES.NOTIFICATIONS_TITLE")}</h3>
           </FlexBox>
 

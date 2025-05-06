@@ -160,7 +160,11 @@ const Chat = () => {
       }}
     >
       {error?.message && (
-        <FixedOverflow>
+        <FixedOverflow
+          onClick={(e) => {
+            if (e.target.className === "fixed-overflow") setError({});
+          }}
+        >
           <SimpleOkPopup
             containerStyle={{ padding: "1rem" }}
             onClick={error.buttonOptions.onClick}

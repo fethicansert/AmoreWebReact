@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { DeleteAccountIcon } from "../../../assets/svg/svg_package";
 import { colors } from "../../../utils/theme";
+import { useTranslation } from "react-i18next";
 
 const UserDeleteButton = ({ onClick }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       onClick={onClick}
@@ -23,7 +26,9 @@ const UserDeleteButton = ({ onClick }) => {
       }}
     >
       <DeleteAccountIcon color={colors.negative} />
-      <span style={{ fontSize: ".95rem" }}>Hesap Sil</span>
+      <span style={{ fontSize: ".95rem" }}>
+        {t("DASHBOARD.PROFILE.SETTINGS.DELETE_ACCOUNT_BUTTON")}
+      </span>
     </div>
   );
 };

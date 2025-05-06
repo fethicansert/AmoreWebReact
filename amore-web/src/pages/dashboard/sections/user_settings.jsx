@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import CustomRadioKey from "../../../copmonents/custom_radio_key";
 import { colors } from "../../../utils/theme";
 import UserSettingsButton from "../components/user_settings_button";
@@ -67,7 +67,7 @@ const UserSettings = () => {
             height={"53px"}
             isActive={notificationOptions?.show}
             leading={<VibrationIcon />}
-            text={"Bildirim"}
+            text={t("DASHBOARD.PROFILE.SETTINGS.NOTIFICATION")}
             activeColor={colors.brand1}
             notActiveColor={colors.fadedText}
           />
@@ -82,14 +82,14 @@ const UserSettings = () => {
             isActive={notificationOptions?.sound}
             leading={<VibrationIcon />}
             activeColor={colors.brand1}
-            text={"Bildirim Sesi"}
+            text={t("DASHBOARD.PROFILE.SETTINGS.NOTIFICATION_SOUND")}
             notActiveColor={colors.fadedText}
           />
           <UserSettingsButton
             onClick={() => fetchText("privacy_policy")}
             height={"53px"}
             leading={<PrivacyPolicyIcon />}
-            text={"Gizlilik Politikası"}
+            text={t("DASHBOARD.PROFILE.SETTINGS.PRIVACY_POLICY")}
             trealing={
               <ArrowHeadRight
                 width="19px"
@@ -102,7 +102,7 @@ const UserSettings = () => {
             onClick={() => fetchText("terms")}
             height={"53px"}
             leading={<TermsOfServiceIcon />}
-            text={"Hizmet Şartları"}
+            text={t("DASHBOARD.PROFILE.SETTINGS.TERMS_OF_SERVICE")}
             trealing={
               <ArrowHeadRight
                 width="19px"
@@ -117,7 +117,7 @@ const UserSettings = () => {
           onClick={null}
           height={"53px"}
           leading={<AppVersionIcon />}
-          text={"Versiyon"}
+          text={t("DASHBOARD.PROFILE.SETTINGS.VERSION")}
           trealing={
             <span style={{ fontSize: ".85rem", fontWeight: "300" }}>
               2.0.9+209
@@ -140,7 +140,18 @@ const UserSettings = () => {
       </div>
 
       {showOverflow && (
-        <FixedOverflow blur={"2px"}>
+        <FixedOverflow
+          blur={"2px"}
+          onClick={(e) => {
+            if (e.target.className === "fixed-overflow") {
+              setShowOverflow(false);
+              setShowDeletePopup(false);
+              setShowVerifyDelete(false);
+              setText(false);
+              setTextLoading(false);
+            }
+          }}
+        >
           {otpLoading && (
             <SimpleLoading
               text={"4 haneli kodunuz cep telofunuza gönderiliyor"}
@@ -185,8 +196,8 @@ const UserSettings = () => {
                   width: "30px",
                   height: "30px",
                   position: "absolute",
-                  left: "-15px",
-                  top: "-15px",
+                  right: "-12px",
+                  top: "-20px",
                   background: colors.negativeBlack,
                   borderRadius: "50%",
                   display: "flex",

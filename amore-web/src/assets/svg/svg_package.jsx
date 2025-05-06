@@ -1777,8 +1777,8 @@ export const SendMessageIcon = ({
 );
 
 export const PlayIcon = ({
-  width = "35",
-  height = "35",
+  width = "21",
+  height = "25",
   color = "#FFFFFF",
   style,
   className = "",
@@ -1788,14 +1788,16 @@ export const PlayIcon = ({
     onClick={onClick}
     width={width}
     height={height}
-    viewBox="0 0 36 36"
+    style={style}
+    className={className}
+    viewBox="0 0 21 25"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M25.6495 21.8016C22.6155 24.5495 18.8242 27.0216 14.652 28.7028C11.1014 30.1023 8.12724 28.3569 7.69091 24.8575C7.15971 19.6987 7.17138 14.7604 7.69091 10.1504C8.16665 6.51371 11.4428 4.96974 14.652 6.32108C18.76 8.00368 22.4448 10.2875 25.6495 13.2222C28.3872 15.7016 28.4514 19.2259 25.6495 21.8016Z"
+      d="M18.6495 16.8017C15.6155 19.5496 11.8242 22.0217 7.65197 23.7029C4.10136 25.1024 1.12724 23.357 0.690906 19.8575C0.15971 14.6988 0.171385 9.76046 0.690906 5.15044C1.16665 1.5138 4.44284 -0.0301684 7.65197 1.32117C11.76 3.00377 15.4448 5.28762 18.6495 8.22233C21.3872 10.7017 21.4514 14.226 18.6495 16.8017Z"
       fill={color}
     />
   </svg>
@@ -1811,10 +1813,13 @@ export const PauseIcon = ({
 }) => (
   <svg
     onClick={onClick}
+    className={className}
+    style={style}
     width={width}
     height={height}
     viewBox="0 0 24 24"
     fill="none"
+    xmlns="http://www.w3.org/2000/svg"
   >
     <path
       fillRule="evenodd"

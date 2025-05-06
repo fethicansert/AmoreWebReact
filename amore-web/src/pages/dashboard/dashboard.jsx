@@ -14,7 +14,6 @@ import {
   UserIcon,
   LocationSettingIcon,
   NotificationPermissionIcon,
-  CrossCloseIcon,
 } from "../../assets/svg/svg_package";
 import LayoutLinkIcon from "./components/layout_link_icon";
 import { colors } from "../../utils/theme";
@@ -36,12 +35,10 @@ import { useAppData } from "../../hooks/use_add_data";
 import HeaderNotifications from "./components/header_notifications";
 import { axiosAmore } from "../../api/axios";
 import { useSocket } from "../../hooks/use_socket";
-import { TbBurger, TbMenu2, TbMenu3 } from "react-icons/tb";
-import CurrentUserInfoBox from "../../copmonents/current_user_info_box";
 import { useMediaPredicate } from "react-media-hook";
-import MobileNavigationItem from "./components/mobile_navigation_item";
+import MobileHeader from "./components/mobile_header";
 
-const ROUTE_LIST = [
+export const DASH_BOARD_ROUTE_LIST = [
   { path: ROUTES.USER_SWIPE, icon: <HomeIcon /> },
   { path: null, icon: <NotificationIcon /> },
   { path: ROUTES.DISCOVER, icon: <DiscoverIcon /> },
@@ -147,8 +144,8 @@ const Dashboard = () => {
       className="layout"
       style={{
         padding: isUserProfilePage
-          ? "0 clamp(.3rem, .8vw, .8rem) clamp(.3rem, .8vw, .8rem)  clamp(.3rem, .8vw, .8rem)"
-          : "clamp(.3rem, .8vw, .8rem)",
+          ? "0 clamp(.3rem, .8vw, .8rem) 0  clamp(.3rem, .8vw, .8rem)"
+          : "clamp(.3rem, .8vw, .8rem) clamp(.3rem, .8vw, .8rem) 0 clamp(.3rem, .8vw, .8rem)",
       }}
     >
       {showLocationSetting && (
@@ -185,100 +182,17 @@ const Dashboard = () => {
       }
 
       {isMobile && (
-        <div
-          style={{
-            border: `1px solid ${colors.borderColor1}`,
-            borderRadius: "12px",
-            marginBottom: "5px",
-            background: colors.backGround3,
-            display: "grid",
-            gridTemplateColumns: "auto 1fr auto",
-            alignItems: "center",
-            padding: ".7rem",
-          }}
-        >
-          {showNotification && (
-            <HeaderNotifications
-              readAllNotifications={readAllNotifications}
-              showBackButton={true}
-              onBackBottunClick={() => setShowNotification(false)}
-            />
-          )}
-
-          {showMobileNavigation && (
-            <div className="mobile-header-navigation">
-              <div
-                onClick={() => setShowMobileNavigation(false)}
-                style={{
-                  padding: "1rem",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0 5px",
-                }}
-              >
-                <CrossCloseIcon color={colors.brand1} />
-                <span style={{ fontWeight: 600, color: colors.brand1 }}>
-                  Kapat
-                </span>
-              </div>
-
-              {ROUTE_LIST.map((route, index) =>
-                route.path ? (
-                  <MobileNavigationItem
-                    closeMobileNavigation={() => setShowMobileNavigation(false)}
-                    key={index}
-                    route={route}
-                  ></MobileNavigationItem>
-                ) : null
-              )}
-
-              <div
-                style={{ marginTop: "auto" }}
-                className="mobile-navigation-item"
-                onClick={() => {
-                  setShowMobileNavigation(false);
-                  setShowLogout(true);
-                }}
-              >
-                <LogoutIcon />
-                Çıkış Yap
-              </div>
-            </div>
-          )}
-          <TbMenu2
-            color={colors.brand1}
-            size={25}
-            onClick={() => setShowMobileNavigation(true)}
-          />
-
-          <CurrentUserInfoBox style={{ padding: 0, border: "none" }} />
-
-          <div
-            onClick={() => setShowNotification((prev) => !prev)}
-            style={{ position: "relative", cursor: "pointer" }}
-            className={`center`}
-          >
-            {isUnReadedLoading ? (
-              <div
-                style={{ top: "-8px" }}
-                className="unreaded-notification-spinner"
-              >
-                <ClipLoader color={colors.brand1} size={15} />
-              </div>
-            ) : (
-              <div
-                style={{ top: "-8px" }}
-                className="unreaded-notification-count"
-              >
-                {" "}
-                {unReadedCount < 99 ? unReadedCount : 99}{" "}
-              </div>
-            )}
-            <NotificationIcon
-              color={showNotification ? colors.brand1 : colors.iconColor}
-            />
-          </div>
-        </div>
+        <MobileHeader
+          showNotification={showNotification}
+          setShowNotification={setShowNotification}
+          showMobileNavigation={showMobileNavigation}
+          setShowMobileNavigation={setShowMobileNavigation}
+          setShowLogout={setShowLogout}
+          isUnReadedLoading={isUnReadedLoading}
+          unReadedCount={unReadedCount}
+          readAllNotifications={readAllNotifications}
+          routeList={DASH_BOARD_ROUTE_LIST}
+        />
       )}
 
       {!isMobile && (
@@ -308,7 +222,7 @@ const Dashboard = () => {
                 className="layout-header-navigation-postion"
               ></span>
 
-              {ROUTE_LIST.map((route, index) =>
+              {DASH_BOARD_ROUTE_LIST.map((route, index) =>
                 route.path ? (
                   <LayoutLinkIcon
                     state={route?.state}
@@ -370,7 +284,7 @@ const Dashboard = () => {
               <h2 className="layout-header-title">Amore</h2>
 
               <nav className="layout-header-active-part-navigation">
-                {ROUTE_LIST.map((route, index) => (
+                {DASH_BOARD_ROUTE_LIST.map((route, index) => (
                   <LayoutLinkBox
                     buttonClick={onNotificationButtonClick}
                     key={index}
@@ -394,14 +308,14 @@ const Dashboard = () => {
                 marginTop: "auto",
                 fontSize: ".8rem",
                 fontWeight: 600,
-                display: "flex-end",
-                alignItems: "end",
+                display: "flex",
+                alignItems: "flex-end",
                 borderTop: `1px solid ${colors.borderColor1}`,
                 height: "40px",
                 paddingBottom: "3px",
               }}
             >
-              Çıkış Yap
+              {t("BUTTONS.LOGOUT_BUTTON")}
             </div>
           </div>
           {showNotification && (
