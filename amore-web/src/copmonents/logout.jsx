@@ -66,6 +66,7 @@ const Logout = () => {
         });
         localStorage.clear("fcmToken");
       }
+      localStorage.clear("notificationOptions");
       setShowLogout(false);
       setAuth({});
       navigate("/");

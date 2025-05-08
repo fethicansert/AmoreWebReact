@@ -10,6 +10,7 @@ import FixedOverflow from "../../../copmonents/fixed_overflow";
 import { ClipLoader, ClockLoader } from "react-spinners";
 import SimpleLoading from "../components/simple_loading";
 import { useTranslation } from "react-i18next";
+import { useMediaPredicate } from "react-media-hook";
 
 const languages = [
   { country: "GB", text: "English", value: "en" },
@@ -32,6 +33,8 @@ const UserLanguage = () => {
 
   const { t } = useTranslation();
 
+  const isMobile = useMediaPredicate("(max-width:500px)");
+
   return (
     <div className="language">
       <UserProfileHeader />
@@ -41,7 +44,7 @@ const UserLanguage = () => {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "15px",
-          marginTop: "2rem",
+          marginTop: `${isMobile ? "1rem" : "2rem"}`,
         }}
       >
         {languages.map((radioLanguage, index) => (

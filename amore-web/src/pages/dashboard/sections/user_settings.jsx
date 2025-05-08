@@ -24,6 +24,7 @@ import SimplePopup from "../../../copmonents/simple_popup";
 import SimpleLoading from "../components/simple_loading";
 import { useTranslation } from "react-i18next";
 import { useLocalStorage } from "../../../hooks/use_localstorage";
+import { useMediaPredicate } from "react-media-hook";
 
 const UserSettings = () => {
   //STATES
@@ -44,6 +45,8 @@ const UserSettings = () => {
   const { auth } = useAuth();
   const { t } = useTranslation();
 
+  const isMobile = useMediaPredicate("(max-width:500px)");
+
   return (
     <>
       <div className="user-settings">
@@ -54,7 +57,7 @@ const UserSettings = () => {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "15px",
-            marginBlock: "2rem 15px",
+            marginBlock: `${isMobile ? "1rem" : "2rem"} 15px`,
           }}
         >
           <CustomRadioKey

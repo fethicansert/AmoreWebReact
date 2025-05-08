@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { useAuth } from "../hooks/use_auth";
 import { axiosAmore } from "../api/axios";
 import { useMemo } from "react";
@@ -11,6 +11,8 @@ const ConversationProvider = ({ children }) => {
   const [isConversationsLoading, setIsConversationsLoading] = useState(true);
   const isConversationNotEmpty = conversations.length > 0;
 
+  const currentPageRef = useRef(1);
+
   const sortedConversations = useMemo(() => {
     return [...conversations].sort(
       (a, b) =>
@@ -22,11 +24,13 @@ const ConversationProvider = ({ children }) => {
   //CONTEXT
   const { auth, isAuthenticated } = useAuth();
 
-  console.log(sortedConversations);
-
   //SIDE-EFFECTS
   useEffect(() => {
-    if (isAuthenticated) getMessages();
+    if (isAuthenticated)
+      getConversations({
+        onLoad: () => setIsConversationsLoading(true),
+        onFinaly: () => setIsConversationsLoading(false),
+      });
   }, [isAuthenticated]);
 
   return (
@@ -37,26 +41,31 @@ const ConversationProvider = ({ children }) => {
         setConversations,
         isConversationsLoading,
         isConversationNotEmpty,
+        getConversations,
       }}
     >
       {children}
     </ConversationContext.Provider>
   );
 
-  async function getMessages() {
-    setIsConversationsLoading(true);
+  async function getConversations({ onLoad, onFinaly }) {
+    onLoad();
     try {
-      const response = await axiosAmore.get("/chat/conversations?page=1", {
-        headers: { Authorization: auth.token },
-      });
+      const response = await axiosAmore.get(
+        `/chat/conversations?page=${currentPageRef.current}`,
+        {
+          headers: { Authorization: auth.token },
+        }
+      );
 
       if (response?.data.response.code === 200) {
-        setConversations(response.data.data);
+        setConversations((prev) => [...prev, ...response.data.data]);
+        currentPageRef.current = currentPageRef.current + 1;
       }
     } catch (e) {
       console.log(e);
     } finally {
-      setIsConversationsLoading(false);
+      onFinaly();
     }
   }
 };

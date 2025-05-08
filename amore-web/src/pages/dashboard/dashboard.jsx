@@ -38,7 +38,7 @@ import { useSocket } from "../../hooks/use_socket";
 import { useMediaPredicate } from "react-media-hook";
 import MobileHeader from "./components/mobile_header";
 
-export const DASH_BOARD_ROUTE_LIST = [
+const DASH_BOARD_ROUTE_LIST = [
   { path: ROUTES.USER_SWIPE, icon: <HomeIcon /> },
   { path: null, icon: <NotificationIcon /> },
   { path: ROUTES.DISCOVER, icon: <DiscoverIcon /> },
@@ -75,6 +75,8 @@ const Dashboard = () => {
 
   const isMobile = useMediaPredicate("(max-width:500px)");
 
+  const locationRef = useRef(location.pathname);
+
   const {
     setShowLogout,
     setShowLocationBanner,
@@ -84,59 +86,97 @@ const Dashboard = () => {
     setShowNotificationPermission,
   } = useBanner();
 
-  useEffect(() => {
-    if (isSocketConnected) {
-      socket.on("refreshNotifications", () => {
-        getUnReadedCount({ showLoading: false });
-      });
-    }
-  }, [isSocketConnected]);
-
   //REFS
   const notificationSoundRef = useRef(
     new Audio("/sounds/notification_sound.mp3")
   );
 
+  const notificationOptions = JSON.parse(
+    localStorage.getItem("notificationOptions")
+  );
+  const toastOptions = {
+    // onOpen: () =>
+    //   notificationOptions.sound ? notificationSoundRef.current.play : undefined,
+    style: { padding: "10px 8px", marginBottom: isMobile ? ".5rem" : "" },
+    className: "toast-notification",
+    progressClassName: "toast-notification-progress",
+    position: "top-center",
+    autoClose: 10000,
+    closeButton: false,
+  };
+
   useEffect(() => {
     setShowNotification(false);
+    locationRef.current = location.pathname;
   }, [currentposition]);
 
   useEffect(() => {
-    getUnReadedCount({ showLoading: true });
-
     //Change Roout Color Better Visualtion on Mobile
     document
       .querySelector('meta[name="theme-color"]')
       .setAttribute("content", colors.backGround2);
 
+    localStorage.setItem(
+      "notificationOptions",
+      JSON.stringify({
+        show: true,
+        sound: true,
+      })
+    );
+
+    notificationSoundRef.current.autoplay = true;
+  }, []);
+
+  useEffect(() => {
+    getUnReadedCount({ showLoading: true });
     //Ask Location Permission the User
     handleLocationPermissionOnFistOpen();
+  }, []);
 
+  useEffect(() => {
+    //Check for notificaiton permission !
     requestPermission();
 
-    onMessage(messaging, (payload) => {
-      const notificationOptions = JSON.parse(
-        localStorage.getItem("notificationOptions")
-      );
-
-      if (!notificationOptions.show || location.pathname === "/dashboard/chat")
-        return;
-
-      toast(<PushNotification payload={payload} />, {
-        onOpen: () =>
-          notificationOptions.sound
-            ? notificationSoundRef.current.play()
-            : undefined,
-        toastId: payload.messageId,
-        style: { padding: "10px 8px" },
-        className: "toast-notification",
-        progressClassName: "toast-notification-progress",
-        position: "top-center",
-        autoClose: 10000,
-        closeButton: false,
+    //If permission given and has fcmToken listen FCM Firebase Cloud Messaging
+    localStorage.getItem("fcmToken") &&
+      onMessage(messaging, (notification) => {
+        if (
+          !notificationOptions.show ||
+          (locationRef.current === "/dashboard/chat" &&
+            notification.data.type === "MESSAGE") //MESSAGE => text-image-audio
+        )
+          return;
+        toast(<PushNotification payload={notification} />, {
+          ...toastOptions,
+          toastId: notification.messageId,
+        });
       });
-    });
   }, []);
+
+  //SOCKET OPERATIONS
+  useEffect(() => {
+    if (isSocketConnected) {
+      //FCM yok ise socketten mesajlar dinlenecek !
+      !localStorage.getItem("fcmToken") &&
+        socket.on("onMessageWithConversation", (message) => {
+          if (
+            !JSON.parse(localStorage.getItem("notificationOptions")).show ||
+            locationRef.current === "/dashboard/chat"
+          )
+            return;
+
+          toast(<PushNotification payload={message} isMessage={true} />, {
+            ...toastOptions,
+            toastId: message.id,
+          });
+        });
+
+      //Notificationslar yenilenebilir sadece unReadAlmak yeterli zaten her açılışta yenileniyor !!!
+      socket.on("refreshNotifications", () => {
+        getUnReadedCount({ showLoading: false });
+      });
+    }
+  }, [isSocketConnected]);
 
   //UI
   return (
@@ -339,7 +379,6 @@ const Dashboard = () => {
       });
       if (response.data.response.code === 200)
         setUnReadedCount(response.data.data.status);
-      console.log(response.data.data.status);
     } catch (e) {
       console.log(e);
     } finally {
@@ -426,13 +465,6 @@ const Dashboard = () => {
             });
 
             localStorage.setItem("fcmToken", JSON.stringify(token));
-            localStorage.setItem(
-              "notificationOptions",
-              JSON.stringify({
-                show: true,
-                sound: true,
-              })
-            );
           } else {
             // console.log("Old Token and Token Same !");
           }
@@ -444,13 +476,6 @@ const Dashboard = () => {
           });
 
           localStorage.setItem("fcmToken", JSON.stringify(token));
-          localStorage.setItem(
-            "notificationOptions",
-            JSON.stringify({
-              show: true,
-              sound: true,
-            })
-          );
         }
       } catch (e) {
         console.log(e);

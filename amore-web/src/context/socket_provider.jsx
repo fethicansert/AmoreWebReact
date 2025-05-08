@@ -49,7 +49,6 @@ const SocketProvider = ({ children }) => {
       console.error("Socket Error:", error);
     });
 
-
     return () => newSocket.disconnect();
   }, [auth]);
 

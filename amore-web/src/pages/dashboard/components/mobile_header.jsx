@@ -105,7 +105,7 @@ const MobileHeader = ({
           <img
             width={35}
             height={35}
-            style={{ borderRadius: "50%" }}
+            style={{ borderRadius: "50%", objectFit: "cover" }}
             src={auth?.photos?.[0]?.url}
           />
           <span style={{ fontWeight: 300, fontSize: ".93rem" }}>

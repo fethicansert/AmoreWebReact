@@ -9,6 +9,7 @@ import { useOutletContext } from "react-router-dom";
 import UserProfileHeader from "../components/user_profile_header";
 import FixedOverflow from "../../../copmonents/fixed_overflow";
 import { useTranslation } from "react-i18next";
+import { useMediaPredicate } from "react-media-hook";
 
 const UserBlockedUsers = () => {
   const [blockedUsers, setBlockedUsers] = useState([]);
@@ -20,6 +21,8 @@ const UserBlockedUsers = () => {
   const { userRightColumnRef } = useOutletContext();
 
   const { t } = useTranslation();
+
+  const isMobile = useMediaPredicate("(max-width:500px)");
 
   useEffect(() => {
     getBlockedUser();
@@ -39,7 +42,7 @@ const UserBlockedUsers = () => {
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "15px",
-          marginTop: "2rem",
+          marginTop: `${isMobile ? "1rem" : "2rem"}`,
         }}
       >
         {blockedUsersLoading ? (

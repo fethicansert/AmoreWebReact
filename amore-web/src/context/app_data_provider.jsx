@@ -30,7 +30,6 @@ const AppDataProvider = ({ children }) => {
 
   console.log(appData.gifts);
 
-
   // newSocket.on('onAppData', (data) => {
   //     console.log('App Data:', data);
   // });
@@ -66,13 +65,11 @@ const AppDataProvider = ({ children }) => {
     </AppDataContext.Provider>
   );
 
-
-
   async function fetchAppData() {
     setIsDataLoading(true);
 
     //Create Request Promises in Array
-    const requests = ["interest", "countries", "ip", "data", "gifts"].map(
+    const requests = ["interest", "countries", "data", "gifts"].map(
       (endpoint) => axiosAmore.get(`api/${endpoint}`)
     );
     // const requests = ['interest', 'countries', 'data', 'gifts'].map(url => axiosAmore.get(`api/${url}`));
@@ -83,15 +80,13 @@ const AppDataProvider = ({ children }) => {
 
       //IF All Response Status 200 => Set Datas
       if (appDataResponse.every((response) => response.status === 200)) {
-        [setInterests, setLocations, setIpLocation, setData, setGifts].forEach(
+        [setInterests, setLocations, setData, setGifts].forEach(
           (setter, index) => setter(appDataResponse[index].data.data)
         );
         // [setInterests, setLocations, setData, setGifts].forEach((setter, index) => setter(appDataResponse[index].data.data));
-        ["interests", "locations", "ip", "data", "gifts"].forEach(
-          (key, index) => {
-            dispatch({ type: key, payload: appDataResponse[index].data.data });
-          }
-        );
+        ["interests", "locations", "data", "gifts"].forEach((key, index) => {
+          dispatch({ type: key, payload: appDataResponse[index].data.data });
+        });
       }
     } catch (e) {
       console.log(e);
@@ -104,8 +99,8 @@ const AppDataProvider = ({ children }) => {
   function getUserInterests(interestIds) {
     return appData.interests
       ? appData.interests.filter((interest) => {
-        return interestIds?.includes(interest._id);
-      })
+          return interestIds?.includes(interest._id);
+        })
       : [];
   }
 };

@@ -29,7 +29,7 @@ const UserCard = ({
   const { t, _ } = useTranslation();
   const { auth } = useAuth();
   const { checkUsersStatus } = useUserActivty();
-  const { setConversations } = useConversation();
+  const { setConversations, conversations } = useConversation();
 
   const [sendingMessage, setSendingMessage] = useState(false);
 
@@ -134,7 +134,7 @@ const UserCard = ({
     setSendingMessage(true);
     try {
       const response = await axiosAmore.get(
-        `chat/conversation?user=${userId}`,
+        `chat/conversation_web?user=${userId}`,
         {
           useAuth: true,
         }
@@ -143,18 +143,16 @@ const UserCard = ({
 
       setConversations((prev) => {
         if (
-          prev.every(
-            (conversation) => conversation.id !== response.data.data.id
-          )
-        )
-          return [
-            ...prev,
-            {
-              ...response.data.data,
-              updatedDate: new Date().toISOString(),
-            },
-          ];
-        return prev;
+          prev.some((convesation) => convesation.id === response.data.data.id)
+        ) {
+          return prev.map((_conversation) =>
+            _conversation.id === response.data.data.id
+              ? response.data.data
+              : _conversation
+          );
+        } else {
+          return [response.data.data, ...prev];
+        }
       });
 
       navigate("/dashboard/chat", { state: { userId: userId } });

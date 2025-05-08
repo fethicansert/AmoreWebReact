@@ -67,7 +67,7 @@ const routeItems = [
   },
 ];
 
-const UserProfileNavigation = () => {
+const UserProfileNavigation = ({ setHideContent }) => {
   const { setShowLogout } = useBanner();
   const { t, _ } = useTranslation();
 
@@ -76,6 +76,7 @@ const UserProfileNavigation = () => {
       {routeItems.map((route, index) =>
         route?.type !== "button" ? (
           <NavLink
+            onClick={() => setHideContent(false)}
             className={({ isActive }) =>
               isActive
                 ? "user-profile-navigation-item active"

@@ -121,6 +121,7 @@ const Chat = () => {
   useEffect(() => {
     if (isSocketConnected && isConversationNotEmpty) {
       socket.on("onMessageWithConversation", (message) => {
+        console.log(message);
         handleNewMessage(message);
       });
     }
@@ -131,10 +132,12 @@ const Chat = () => {
 
   //if message conversation id equal to currentConversation add message to messages state
   const handleNewMessage = (message) => {
+    console.log(message);
+
     setConversations((prev) =>
       prev.map((conversation) => {
         if (message.conversation.id === conversation.id) {
-          return message.conversation;
+          return { ...message.conversation };
         }
         return conversation;
       })
@@ -199,7 +202,6 @@ const Chat = () => {
             getUser={getUser}
             currentConversationUser={currentConversationUser.current}
             isConversationsLoading={isConversationsLoading}
-            convesations={sortedConversations}
             handleConversationChange={handleConversationChange}
           />
         </div>

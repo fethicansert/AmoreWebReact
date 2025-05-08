@@ -213,8 +213,6 @@ const Matches = () => {
         //get fetched users
         const fetchedUsers = response.data.data;
 
-        console.log(fetchedUsers.length);
-
         setUsers((prev) => [...prev, ...filterUserData(response.data.data)]);
 
         //Incresae page count to get next page on next fetch

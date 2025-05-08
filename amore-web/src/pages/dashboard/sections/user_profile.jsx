@@ -69,31 +69,6 @@ const UserProfile = () => {
     interestWarning: "",
   });
 
-  console.log(userImages);
-
-  // const renderedCountries = useMemo(() => locations.map((location, index) => (
-  //     <FlexBox
-  //       onClick={() => handleSelectCountry(index)}
-  //       key={index}
-  //       className='dropdown-item'
-  //       gap='0 10px'
-  //       width={'100%'}>
-  //       <Flag country={location?.countryCode} />
-  //       {location?.name}
-  //     </FlexBox>
-  //   )), [locations]);
-
-  //   const renderedStates = useMemo(() => location.states?.map((state, index) => (
-  //     <FlexBox
-  //       onClick={() => handleSelectState(index)}
-  //       key={index}
-  //       className='dropdown-item'
-  //       gap='0 10px'
-  //       width={'100%'}>
-  //       {state.name}
-  //     </FlexBox>
-  //   )), [location.states]);
-
   //Locations can empty if locations change and has data setLocation with new data
   useEffect(() => {
     if (locations?.length > 0) {
@@ -215,7 +190,11 @@ const UserProfile = () => {
                   marginLeft: ".5rem",
                 }}
                 textStyle={{ fontSize: ".9rem" }}
-                wrapperStyle={{ marginBlock: "0", flex: "1" }}
+                wrapperStyle={{
+                  marginBlock: "0",
+                  flex: "1",
+                  minWidth: "250px",
+                }}
                 dropdownStyle={{ height: "53px" }}
                 onDropDown={showCountryList}
                 showDropdown={showCountry}
@@ -244,7 +223,11 @@ const UserProfile = () => {
                   marginLeft: ".5rem",
                 }}
                 textStyle={{ fontSize: ".9rem" }}
-                wrapperStyle={{ marginBlock: "0", flex: "1" }}
+                wrapperStyle={{
+                  marginBlock: "0",
+                  flex: "1",
+                  minWidth: "250px",
+                }}
                 dropdownStyle={{ height: "53px" }}
                 onDropDown={showStateList}
                 showDropdown={showStates}

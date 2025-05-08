@@ -443,27 +443,26 @@
     gap: 0 6px;
 }
 
+
 .chat-audio {
     display: grid;
     gap: 0 6px;
-    grid-template-columns:auto 32px 200px auto;
+    grid-template-columns:auto 200px;
     align-items: center;
-    padding: .6rem;
+    padding-block: .65rem 1.25rem;
+    padding-inline: .65rem;
     padding-right: .7rem;
     margin-block: .65rem;
     border-radius: 20px;
     position: relative;
 }
 
-.audio-duration-progress-circle {
-    width: 10px;
-    height: 10px;
+#waveform ::part(cursor) {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    background: var(--backGround3);
-    position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    right: -5px;
 }
 
 .chat-input-icon {
