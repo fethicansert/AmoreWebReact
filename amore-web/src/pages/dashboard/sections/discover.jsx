@@ -17,6 +17,7 @@ import PremiumBox from "../../../copmonents/premium_box.jsx";
 import { useTranslation } from "react-i18next";
 import SimpleOkPopup from "../components/simple_ok_popup.jsx";
 import { useNavigate } from "react-router-dom";
+import { useBanner } from "../../../hooks/use_banner.jsx";
 
 const Discover = () => {
   //STATES

@@ -25,8 +25,6 @@ const HeaderNotifications = ({
 }) => {
   const [notifications, setNotifications] = useState([]);
 
-  console.log(notifications);
-
   const [isNotificationsLoading, setIsNotificationsLoadings] = useState(true);
   const [isNotificationsScollLoading, setIsNotificationsScollLoading] =
     useState(false);
@@ -42,14 +40,15 @@ const HeaderNotifications = ({
   useEffect(() => {
     getNotificationList({ setLoading: setIsNotificationsLoadings });
 
-    handlePushPermission({
-      timeOut: 1200,
-      showPrompt: true,
-      onGranted: () => setShowNotificationBanner(false),
-      onDenied: () => setShowNotificationBanner(true),
-      onPrompt: () => setShowNotificationBanner(true),
-      onPromptGranted: () => setShowNotificationBanner(false),
-    });
+    if ("Notification" in window) {
+      if (Notification.permission === "granted") {
+        setShowNotificationBanner(false);
+      } else if (Notification.permission === "default") {
+        setShowNotificationBanner(true);
+      } else if (Notification.permission === "denied") {
+        setShowNotificationBanner(true);
+      }
+    }
 
     return () => {
       abortControllerRef.current.abort();

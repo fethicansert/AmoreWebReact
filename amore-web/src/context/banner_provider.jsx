@@ -10,12 +10,12 @@ const BannerProvider = ({ children }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [showLogout, setShowLogout] = useState(false);
 
-  //Bunlar ayri bir contexte alinabilir popUpContext
   const [showLocationBanner, setShowLocationBanner] = useState(false);
-  const [showLocationSetting, setShowLocationSetting] = useState(false);
+  const [showLocationPermissionPopup, setShowLocationPermissionPopup] =
+    useState(false);
 
   const [showNotificationBanner, setShowNotificationBanner] = useState(false);
-  const [showNotificationPermission, setShowNotificationPermission] =
+  const [showNotificationPermissionPopup, setShowNotificationPermissionPopup] =
     useState(false);
 
   return (
@@ -27,14 +27,14 @@ const BannerProvider = ({ children }) => {
         setShowLogin,
         showLocationBanner,
         setShowLocationBanner,
-        showLocationSetting,
-        setShowLocationSetting,
+        showLocationPermissionPopup,
+        setShowLocationPermissionPopup,
         showNotificationBanner,
         setShowNotificationBanner,
-        showNotificationPermission,
-        setShowNotificationPermission,
+        showNotificationPermissionPopup,
+        setShowNotificationPermissionPopup,
         showLogout,
-        setShowLogout
+        setShowLogout,
       }}
     >
       {children}

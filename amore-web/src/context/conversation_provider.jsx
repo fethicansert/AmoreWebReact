@@ -33,6 +33,8 @@ const ConversationProvider = ({ children }) => {
       });
   }, [isAuthenticated]);
 
+  // console.log(sortedConversations);
+
   return (
     <ConversationContext.Provider
       value={{

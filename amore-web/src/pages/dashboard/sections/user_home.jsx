@@ -54,8 +54,7 @@ const UserHome = () => {
 
   //CONTEXT
   const { likes, isLikesLoading } = useLikes();
-  const { conversations, isConversationsLoading, sortedConversations } =
-    useConversation();
+  const { isConversationsLoading, sortedConversations } = useConversation();
   const { auth, setAuth, isPremium } = useAuth();
   const { t, _ } = useTranslation();
   const {
@@ -80,17 +79,12 @@ const UserHome = () => {
 
   //SIDE-EFFECTS
   useEffect(() => {
-    //Fetch likes
-
     handleLocationPermission({
       permissionType: "geolocation",
       onPrompt: () => setShowLocationBanner(true),
       onDenied: () => setShowLocationBanner(true),
     });
-  }, []);
 
-  //fetch swipelist data
-  useEffect(() => {
     getSwipeList({
       showLoading: true,
       isAutoDistance: true,
@@ -104,6 +98,9 @@ const UserHome = () => {
     };
     return clean;
   }, []);
+
+  //fetch swipelist data
+  useEffect(() => {}, []);
 
   //Try fetch swipe list if user half of the list or swipelist not empty or is not fetchind data at the moment
   useEffect(() => {
@@ -336,7 +333,7 @@ const UserHome = () => {
           isLoading={isConversationsLoading}
           type="message"
         >
-          {conversations
+          {sortedConversations
             .slice(0, 4)
             .map((message, index) =>
               message ? (

@@ -28,8 +28,6 @@ const AppDataProvider = ({ children }) => {
     gifts: [],
   });
 
-  console.log(appData.gifts);
-
   // newSocket.on('onAppData', (data) => {
   //     console.log('App Data:', data);
   // });

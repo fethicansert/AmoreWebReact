@@ -12,7 +12,7 @@ const ChatSidebarUsers = ({
   getUser,
 }) => {
   const { checkUsersStatus } = useUserActivty();
-  const { getConversations, conversations } = useConversation();
+  const { getConversations, sortedConversations } = useConversation();
   const [scrollLoading, setScrollLoading] = useState();
 
   return (
@@ -28,9 +28,9 @@ const ChatSidebarUsers = ({
               <NotificationShimmer key={index} marginBlock="27px" />
             ))}
         </div>
-      ) : conversations.length > 0 ? (
+      ) : sortedConversations.length > 0 ? (
         <>
-          {conversations.map((conversation) => {
+          {sortedConversations.map((conversation) => {
             const user = getUser({ conversation: conversation });
             const text = getLastMessage({ conversation: conversation });
             const time = conversation?.updatedDate;

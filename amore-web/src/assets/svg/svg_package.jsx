@@ -1583,6 +1583,7 @@ export const LocationSettingIcon = ({
   width = "25",
   height = "25",
   color = "#000000",
+  strokeWidth = "3",
 }) => (
   <svg
     width={width}
@@ -1594,28 +1595,28 @@ export const LocationSettingIcon = ({
     <path
       d="M34.9993 15.0254V12.3971C34.9993 8.81373 32.0943 5.9104 28.511 5.9104H26.416"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M5 15.0254V12.3971C5 8.81373 7.905 5.9104 11.4883 5.9104H13.6367"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M5 26.7957V29.4242C5 33.0075 7.905 35.9107 11.4883 35.9107H13.5833"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M35.0004 26.7957V29.4242C35.0004 33.0075 32.0954 35.9107 28.5121 35.9107H26.3638"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -1624,14 +1625,14 @@ export const LocationSettingIcon = ({
       clipRule="evenodd"
       d="M19.9697 28.8253C18.9113 28.8253 13.3496 24.3237 13.3496 19.6137C13.3496 15.957 16.3129 12.9937 19.9697 12.9937C23.6263 12.9937 26.5897 15.957 26.5897 19.6137C26.5897 24.3237 21.028 28.8253 19.9697 28.8253Z"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M19.973 19.1882V19.2681M20.2972 19.2053C20.2972 19.3855 20.1512 19.5315 19.971 19.5315C19.791 19.5315 19.645 19.3855 19.645 19.2053C19.645 19.0251 19.791 18.8792 19.971 18.8792C20.1512 18.8792 20.2972 19.0251 20.2972 19.2053Z"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -1642,6 +1643,7 @@ export const NotificationPermissionIcon = ({
   width = "25",
   height = "25",
   color = "#000000",
+  strokeWidth = "2.4",
 }) => (
   <svg
     width={width}
@@ -1655,35 +1657,35 @@ export const NotificationPermissionIcon = ({
       clipRule="evenodd"
       d="M9.83842 17.3314C9.83842 11.7191 14.3886 7.16895 19.9992 7.16895C25.6115 7.16895 30.1617 11.7191 30.1617 17.3314L30.1633 19.3714C30.1633 20.5777 30.4292 21.7697 30.9433 22.8626L31.6648 24.3951C32.7675 26.7382 31.0568 29.4316 28.4687 29.4316H11.5313C8.94169 29.4316 7.23254 26.7382 8.33521 24.3951L9.05682 22.8626C9.57086 21.7697 9.83679 20.5777 9.83679 19.3714L9.83842 17.3314Z"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M20 5.02539V7.16912"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M7.39258 10.8275C8.14984 9.17836 9.35631 7.63299 10.9195 6.41357"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M32.6054 10.8275C31.8483 9.17836 30.6418 7.63299 29.0786 6.41357"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M15.2017 30.229C15.2017 32.877 17.3487 35.0255 19.9983 35.0255C22.6463 35.0255 24.7933 32.877 24.7933 30.229"
       stroke={color}
-      strokeWidth="3"
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
     />

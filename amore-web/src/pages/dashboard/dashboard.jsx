@@ -24,7 +24,6 @@ import { ClipLoader } from "react-spinners";
 import { useTranslation } from "react-i18next";
 import { useBanner } from "../../hooks/use_banner";
 import { handleLocationPermission } from "../../utils/functions";
-import PermissionPopup from "../../copmonents/permission_popup";
 import PushNotification from "../../copmonents/push_notification";
 import { toast } from "react-toastify";
 import { getToken, onMessage } from "firebase/messaging";
@@ -36,7 +35,10 @@ import HeaderNotifications from "./components/header_notifications";
 import { axiosAmore } from "../../api/axios";
 import { useSocket } from "../../hooks/use_socket";
 import { useMediaPredicate } from "react-media-hook";
-import MobileHeader from "./components/mobile_header";
+
+import SimplePopup from "../../copmonents/simple_popup";
+import FixedOverflow from "../../copmonents/fixed_overflow";
+import DashboardMobileHeader from "./components/dashboard_mobile_header";
 
 const DASH_BOARD_ROUTE_LIST = [
   { path: ROUTES.USER_SWIPE, icon: <HomeIcon /> },
@@ -55,13 +57,11 @@ const DASH_BOARD_ROUTE_LIST = [
 const Dashboard = () => {
   //STATES
   const [showOverlay, setShowOverlay] = useState(false);
-  const [currentposition, setCurrentPosition] = useState(0);
+  const [currentPosition, setCurrentPosition] = useState(0);
   const [hoverPosition, setHoverPosition] = useState(0);
   const [showNotification, setShowNotification] = useState(false);
-
   const [unReadedCount, setUnReadedCount] = useState(0);
   const [isUnReadedLoading, setIsUnReadedLoading] = useState(false);
-
   const [showMobileNavigation, setShowMobileNavigation] = useState(false);
 
   //CONTEXT
@@ -71,32 +71,36 @@ const Dashboard = () => {
   const location = useLocation();
   const { socket, isSocketConnected } = useSocket();
 
-  const isUserProfilePage = location.pathname.includes("user-profile");
-
-  const isMobile = useMediaPredicate("(max-width:500px)");
-
-  const locationRef = useRef(location.pathname);
-
+  //Popup and Banner States
   const {
     setShowLogout,
     setShowLocationBanner,
-    setShowLocationSetting,
-    showLocationSetting,
-    showNotificationPermission,
-    setShowNotificationPermission,
+    setShowLocationPermissionPopup,
+    showLocationPermissionPopup,
+    showNotificationPermissionPopup,
+    setShowNotificationPermissionPopup,
   } = useBanner();
 
-  //REFS
-  const notificationSoundRef = useRef(
-    new Audio("/sounds/notification_sound.mp3")
-  );
+  //MEDIA
+  const isMobile = useMediaPredicate("(max-width:500px)");
+  const locationRef = useRef(location.pathname);
+  //In user profile page different margin and padding style used!
+  const isUserProfilePage = location.pathname.includes("user-profile");
 
+  //REFS
+  const isInitialLocationPermissinRequested = useRef(false);
+  const isInitialNotificationPermissinRequested = useRef(false);
+
+  const permissionsRef = useRef({
+    location: false,
+  });
+
+  //OPTIONS
   const notificationOptions = JSON.parse(
     localStorage.getItem("notificationOptions")
   );
+
   const toastOptions = {
-    // onOpen: () =>
-    //   notificationOptions.sound ? notificationSoundRef.current.play : undefined,
     style: { padding: "10px 8px", marginBottom: isMobile ? ".5rem" : "" },
     className: "toast-notification",
     progressClassName: "toast-notification-progress",
@@ -105,11 +109,42 @@ const Dashboard = () => {
     closeButton: false,
   };
 
+  //Close Notification and update locationRef on current
   useEffect(() => {
     setShowNotification(false);
     locationRef.current = location.pathname;
-  }, [currentposition]);
+  }, [currentPosition]);
 
+  //Show Permission Popup only once when page openned
+  //Show Notification Permission only user-swipe (home-page)
+  //  => user can allow location permission with location permission banner in swipe item
+  //Show Location Permissin only discover-page
+  // => user can allow notification permission with noticafication permission banner in notifications
+  useEffect(() => {
+    if (
+      location.pathname.includes("discover") &&
+      !isInitialLocationPermissinRequested.current
+    ) {
+      isInitialLocationPermissinRequested.current = true;
+      navigator.permissions.query({ name: "geolocation" }).then((result) => {
+        if (result.state === "prompt") {
+          setShowLocationPermissionPopup(true);
+        }
+      });
+    } else if (
+      location.pathname.includes("user-swipe") &&
+      !isInitialNotificationPermissinRequested.current
+    ) {
+      isInitialNotificationPermissinRequested.current = true;
+      if ("Notification" in window) {
+        if (Notification.permission === "default") {
+          setShowNotificationPermissionPopup(true);
+        }
+      }
+    }
+  }, [location.pathname]);
+
+  //Intial Operations
   useEffect(() => {
     //Change Roout Color Better Visualtion on Mobile
     document
@@ -124,21 +159,13 @@ const Dashboard = () => {
       })
     );
 
-    notificationSoundRef.current.autoplay = true;
-  }, []);
-
-  useEffect(() => {
     getUnReadedCount({ showLoading: true });
-    //Ask Location Permission the User
-    handleLocationPermissionOnFistOpen();
   }, []);
 
+  //FCM NOTIFICATIONS AND MESSAGES
   useEffect(() => {
-    //Check for notificaiton permission !
-    requestPermission();
-
     //If permission given and has fcmToken listen FCM Firebase Cloud Messaging
-    localStorage.getItem("fcmToken") &&
+    if (localStorage.getItem("fcmToken")) {
       onMessage(messaging, (notification) => {
         if (
           !notificationOptions.show ||
@@ -151,9 +178,10 @@ const Dashboard = () => {
           toastId: notification.messageId,
         });
       });
+    }
   }, []);
 
-  //SOCKET OPERATIONS
+  //SOCKET MESSAGES
   useEffect(() => {
     if (isSocketConnected) {
       //FCM yok ise socketten mesajlar dinlenecek !
@@ -188,29 +216,53 @@ const Dashboard = () => {
           : "clamp(.3rem, .8vw, .8rem) clamp(.3rem, .8vw, .8rem) 0 clamp(.3rem, .8vw, .8rem)",
       }}
     >
-      {showLocationSetting && (
-        <PermissionPopup
-          onClick={() => setShowLocationSetting(false)}
-          title={t("PERMISSION.LOCATION_POPUP_TITLE")}
-          text={t("PERMISSION.LOCATION_POPUP_TEXT")}
-          icon={<LocationSettingIcon width="40px" height="40px" />}
-        />
+      {showLocationPermissionPopup && (
+        <FixedOverflow color="#00000073">
+          <SimplePopup
+            containerStyle={{ padding: "1rem", maxWidth: "300px" }}
+            onNo={() => setShowLocationPermissionPopup(false)}
+            onYes={() => {
+              setShowLocationPermissionPopup(false);
+              handleLocationPermissionInitial();
+            }}
+            icon={
+              <LocationSettingIcon
+                width="45px"
+                height="45px"
+                strokeWidth="2.4"
+              />
+            }
+            title={"Konumunu Paylaş"}
+            text={
+              "Sana en yakın kişileri bulabilmemiz için konum bilgini kullanmamıza izin verir misin? 📍"
+            }
+          />
+        </FixedOverflow>
       )}
 
-      {showNotificationPermission && (
-        <PermissionPopup
-          onClick={() => setShowNotificationPermission(false)}
-          title={t("PERMISSION.NOTIFICATION_POPUP_TITLE")}
-          text={t("PERMISSION.NOTIFICATION_POPUP_TEXT")}
-          icon={
-            <NotificationPermissionIcon
-              className=""
-              color={colors.darkText}
-              width="40px"
-              height="40px"
-            />
-          }
-        />
+      {showNotificationPermissionPopup && (
+        <FixedOverflow color="#00000073">
+          <SimplePopup
+            containerStyle={{ padding: "1rem", maxWidth: "300px" }}
+            onNo={() => setShowNotificationPermissionPopup(false)}
+            onYes={() => {
+              setShowNotificationPermissionPopup(false);
+              handleNotificationPermission();
+            }}
+            icon={
+              <NotificationPermissionIcon
+                width="45px"
+                height="45px"
+                xw
+                strokeWidth="2.2"
+              />
+            }
+            title={"Bildirimleri Aç"}
+            text={
+              "Yeni eşleşme ve mesajlardan seni haberdar edebilmemiz için bildirim izni vermek ister misin? 🔔"
+            }
+          />
+        </FixedOverflow>
       )}
 
       {
@@ -222,7 +274,7 @@ const Dashboard = () => {
       }
 
       {isMobile && (
-        <MobileHeader
+        <DashboardMobileHeader
           showNotification={showNotification}
           setShowNotification={setShowNotification}
           showMobileNavigation={showMobileNavigation}
@@ -245,7 +297,7 @@ const Dashboard = () => {
           } `}
           onMouseEnter={() => setShowOverlay(true)}
           onMouseLeave={() => {
-            setHoverPosition(currentposition * 61);
+            setHoverPosition(currentPosition * 61);
             setShowNotification(false);
             setShowOverlay(false);
           }}
@@ -276,7 +328,7 @@ const Dashboard = () => {
                   <div
                     key={index}
                     onMouseEnter={() => setHoverPosition(index * 61)}
-                    onClick={onNotificationButtonClick}
+                    onClick={() => setShowNotification((prev) => !prev)}
                     className={`notification-button center ${
                       showNotification ? "active" : ""
                     }`}
@@ -316,7 +368,7 @@ const Dashboard = () => {
           <div
             className="layout-header-active-part"
             onMouseLeave={() => {
-              setHoverPosition(currentposition * 61);
+              setHoverPosition(currentPosition * 61);
               setShowOverlay(false);
             }}
           >
@@ -326,7 +378,7 @@ const Dashboard = () => {
               <nav className="layout-header-active-part-navigation">
                 {DASH_BOARD_ROUTE_LIST.map((route, index) => (
                   <LayoutLinkBox
-                    buttonClick={onNotificationButtonClick}
+                    buttonClick={() => setShowNotification((prev) => !prev)}
                     key={index}
                     path={route.path}
                     title={t(
@@ -404,12 +456,7 @@ const Dashboard = () => {
     }
   }
 
-  //Show Notifications and handle notification permissions for fist openning of Show Notifications
-  function onNotificationButtonClick() {
-    setShowNotification((prev) => !prev);
-  }
-
-  function handleLocationPermissionOnFistOpen() {
+  function handleLocationPermissionInitial() {
     handleLocationPermission({
       permissionType: "geolocation",
       listenChange: true,
@@ -417,23 +464,32 @@ const Dashboard = () => {
         if (e.currentTarget.state === "denied") setShowLocationBanner(true);
         else {
           setShowLocationBanner(false);
-          setShowLocationSetting(false);
+          setShowLocationPermissionPopup(false);
         }
       },
       onGranted: () => {
         setShowLocationBanner(false);
       },
-      onDenied: () => setShowLocationBanner(true),
+      onDenied: () => {
+        setShowLocationBanner(true);
+      },
       onPositionReveal: (positon) => {
+        //Konum alındığında
         setShowLocationBanner(false);
       },
-      onPositionDenied: (error) => setShowLocationBanner(true),
+      //Konum alınamadı ERROR
+      onPositionDenied: (error) => {
+        setShowLocationBanner(true);
+      },
     });
   }
 
-  async function requestPermission() {
+  async function handleNotificationPermission() {
+    //If not notification permissin granted request notification permission
+
     const permission = await Notification.requestPermission();
 
+    //If user allowed permission, permission now granted set FCM Token to user to get nototification - messages
     if (permission === "granted") {
       try {
         // Voluntary Application Server Identification => Gönüllü Uygulama Sunucusu Tanımlaması
@@ -443,8 +499,6 @@ const Dashboard = () => {
         const token = await getToken(messaging, {
           vapidKey: vapidKey,
         });
-
-        // console.log(token);
 
         if (!token || !auth) return;
 
@@ -466,7 +520,7 @@ const Dashboard = () => {
 
             localStorage.setItem("fcmToken", JSON.stringify(token));
           } else {
-            // console.log("Old Token and Token Same !");
+            console.warn("Old Token and Token Same !");
           }
         } else {
           const addResponse = await userFcmToken({
@@ -478,8 +532,10 @@ const Dashboard = () => {
           localStorage.setItem("fcmToken", JSON.stringify(token));
         }
       } catch (e) {
-        console.log(e);
+        console.error(e);
       }
+    } else if (permission === "default") {
+    } else if (permission === "denied") {
     }
   }
 };

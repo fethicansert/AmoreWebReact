@@ -15,7 +15,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../../../hooks/use_auth";
 import FlexBox from "../../../copmonents/flex_box";
 
-const MobileHeader = ({
+const DashboardMobileHeader = ({
   showNotification,
   setShowNotification,
   showMobileNavigation,
@@ -149,4 +149,4 @@ const MobileHeader = ({
   );
 };
 
-export default MobileHeader;
+export default DashboardMobileHeader;
